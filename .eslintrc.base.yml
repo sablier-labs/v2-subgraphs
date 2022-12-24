@@ -1,0 +1,15 @@
+extends:
+  - "eslint:recommended"
+  - "plugin:@typescript-eslint/eslint-recommended"
+  - "plugin:@typescript-eslint/recommended"
+  - "prettier"
+parser: "@typescript-eslint/parser"
+parserOptions:
+  project: ["**/tsconfig.json"]
+plugins:
+  - "@typescript-eslint"
+root: true
+rules:
+  "prefer-const": "off"
+  "@typescript-eslint/ban-types": "off"
+  "@typescript-eslint/no-empty-function": "off"

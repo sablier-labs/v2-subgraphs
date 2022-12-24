@@ -1,0 +1,1 @@
+export { handleInitializer } from "./initializer";

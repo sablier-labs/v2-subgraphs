@@ -1,24 +1,52 @@
 {
-  "name": "sablier-v2",
-  "version": "0.1.0",
-  "scripts": {
-    "build-contract": "solc contracts/Gravity.sol --abi -o abis --overwrite && solc contracts/Gravity.sol --bin -o bin --overwrite",
-    "create": "graph create sablierhq/sablier-v2 --node https://api.thegraph.com/deploy/",
-    "create-local": "graph create sablierhq/sablier-v2 --node http://127.0.0.1:8020",
-    "codegen": "graph codegen",
-    "build": "graph build",
-    "deploy": "graph deploy sablierhq/sablier-v2 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy sablierhq/sablier-v2 --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
+  "name": "sablier-v2-subgraph",
+  "description": "Sablier V2 official subgraph",
+  "version": "1.0.0",
+  "author": {
+    "name": "Sablier Labs Ltd",
+    "url": "https://sablier.finance"
+  },
+  "bugs": {
+    "url": "https://github.com/sablierhq/v2-subgraph/issues"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.30.2",
-    "@graphprotocol/graph-ts": "^0.27.0"
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@trivago/prettier-plugin-sort-imports": "^3.4.0",
+    "@typescript-eslint/parser": "^5.40.1",
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.25.0",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2"
   },
-  "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "babel-register": "^6.26.0",
-    "truffle": "^5.0.4",
-    "truffle-contract": "^4.0.5",
-    "truffle-hdwallet-provider": "^1.0.4"
-  }
+  "homepage": "https://github.com/sablierhq/v2-subgraph#readme",
+  "license": "LGPL-3.0",
+  "packageManager": "yarn@3.3.1",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sablierhq/v2-subgraph"
+  },
+  "scripts": {
+    "g:all-check": "yarn g:prettier-check && yarn g:lint-check",
+    "g:all-fix": "yarn g:prettier-fix && yarn g:lint-fix",
+    "g:clean": "yarn workspaces foreach --parallel --topological --verbose run clean",
+    "g:clean-modules": "yarn workspaces foreach --parallel --topological --verbose run clean-modules && rimraf node_modules",
+    "g:commit": "cz",
+    "g:lint-check": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run lint-check",
+    "g:lint-fix": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run lint-fix",
+    "g:prettier-check": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run prettier-check",
+    "g:prettier-fix": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run prettier-fix",
+    "postinstall": "husky install"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

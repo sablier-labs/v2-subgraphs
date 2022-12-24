@@ -1,0 +1,9 @@
+.yarn
+**/.vscode
+**/.next
+**/build
+**/dist
+**/generated
+**/lib
+**/out
+**/tmp

@@ -1,0 +1,22 @@
+bracketSpacing: true
+endOfLine: "auto"
+printWidth: 80
+proseWrap: "always"
+semi: true
+singleQuote: false
+tabWidth: 2
+trailingComma: "all"
+useTabs: false
+
+overrides:
+  - files: "*.md"
+    options:
+      printWidth: 120
+  - files: ["*.d.ts", "*.ts", "*.tsx"]
+    options:
+      importOrderSeparation: false
+      importOrderSortSpecifiers: true
+  - files: ["*.yml", "*.yaml"]
+    options:
+      bracketSpacing: false
+      printWidth: 120

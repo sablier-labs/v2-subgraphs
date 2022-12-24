@@ -1,3 +1,4 @@
-# Example Subgraph
+# Sablier V2 Subgraph
 
-An example to help you get started with The Graph. For more information see the docs on https://thegraph.com/docs/.
+Make sure to run `yarn setup:goerli` or `yarn setup:<network_name>` to generate imports before `codegen` and
+`deploy:<network_name>`.

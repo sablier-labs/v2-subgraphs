@@ -1,0 +1,28 @@
+specVersion: 0.0.4
+description: Sablier V2 Subgraph
+repository: https://github.com/sablierhq/v2-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Initializer
+    network: {{network}}
+    source:
+      address: "{{initializer}}"
+      abi: SablierV2Linear
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Stream
+      abis:
+        - name: SablierV2Linear
+          file: ../../abis/SablierV2Linear.json
+        - name: ERC20
+          file: ../../abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleInitializer
+      file: ./src/mappings/index.ts
