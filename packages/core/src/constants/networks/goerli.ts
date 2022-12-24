@@ -7,7 +7,7 @@ export let pro = ["0x3F1EB5f4426a6e1563F30532dDd16cc73C804529"];
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.
- * It should be a LINEAR contract, the oldest/first one deployed on this chain.
+ * It should be a linear contract, the oldest/first one deployed on this chain.
  */
 
 export let initializer = linear[0];

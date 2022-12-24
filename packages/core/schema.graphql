@@ -1,3 +1,8 @@
 type Stream @entity {
+  "unique identifier resolving to the id of the stream NFT"
   id: ID!
+  "address of the contract that produced this stream"
+  source: Bytes!
+  "hash of the create transaction"
+  hash: Bytes!
 }

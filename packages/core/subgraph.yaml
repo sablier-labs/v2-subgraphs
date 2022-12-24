@@ -23,6 +23,31 @@ dataSources:
         - name: ERC20
           file: ../../abis/ERC20.json
       eventHandlers:
-        - event: Transfer(indexed address,indexed address,indexed uint256)
+        - event:
+            CreateLinearStream(uint256,indexed address,indexed address,indexed
+            address,uint128,address,uint40,uint40,uint40,bool)
           handler: handleInitializer
+      file: ./src/mappings/index.ts
+templates:
+  - kind: ethereum/contract
+    name: Linear
+    network: goerli
+    source:
+      abi: SablierV2Linear
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Stream
+      abis:
+        - name: SablierV2Linear
+          file: ../../abis/SablierV2Linear.json
+        - name: ERC20
+          file: ../../abis/ERC20.json
+      eventHandlers:
+        - event:
+            CreateLinearStream(uint256,indexed address,indexed address,indexed
+            address,uint128,address,uint40,uint40,uint40,bool)
+          handler: handleCreateLinear
       file: ./src/mappings/index.ts
