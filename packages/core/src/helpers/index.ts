@@ -12,7 +12,6 @@ export function getOrCreateStream(event: CreateLinearStream): Stream {
   if (entity == null) {
     entity = new Stream(id);
     entity.hash = event.transaction.hash;
-    entity.source = event.address;
     entity.save();
   }
 

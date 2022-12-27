@@ -1,8 +1,96 @@
+enum ContractType{
+  Linear,
+  Cliff,
+  Pro,
+}
+
+enum ActionType{
+  Transfer,
+  Approve,
+  Create,
+  Cancel,
+  Renounce,
+  Withdraw,
+}
+
+type Contract @entity{
+  id: String!
+  type: ContractType!
+  address: Bytes!
+  streams: [Stream!]! @derivedFrom(field: "contract")
+  actions: [Action!]! @derivedFrom(field: "contract")
+}
+
+type Action @entity{
+  id: String!
+  "contract that produced triggered the action"
+  contract: Contract!
+  stream: Stream!
+  type: ActionType!,
+  hash: Bytes!,
+  timestamp: BigInt!,
+  block: BigInt!,
+
+  addressA: Bytes,
+  addressB: Bytes,
+
+  amountA: BigInt,
+  amountB: BigInt
+}
+
+type Token @entity (immutable: true){
+  id: String!
+  address: Bytes!
+  decimals: BigInt!
+  symbol: String!
+  streams: [Stream!]! @derivedFrom(field: "token")
+}
+
 type Stream @entity {
   "unique identifier resolving to the id of the stream NFT"
-  id: ID!
-  "address of the contract that produced this stream"
-  source: Bytes!
+  id: String!
+  "contract that produced this stream"
+  contract: Contract!
+  funder: Bytes!
+  sender: Bytes!
+  recipient: Bytes!
   "hash of the create transaction"
   hash: Bytes!
+  timestamp: BigInt!
+  depositAmount: BigInt!
+  token: Token!
+  startTime: Int!
+  endTime: Int!
+  cliffTime: Int!
+  cliffAmount: BigInt!
+  cancelable: Boolean!
+  cancelableAction: Action
+  canceled: Boolean!
+  canceledAction: Action
+  withdrawnAmount: BigInt
+  actions:[Action!]! @derivedFrom(field: "stream")
+  segments:[Segment!]! @derivedFrom(field: "stream")
+  group: Group!
+}
+
+type Segment @entity{
+  id: String!
+  stream: Stream!
+  exponent: BigInt!
+  "milestone param from event"
+  endTime: Int!
+  "end time of previous segment or stream start time for first segment"
+  startTime: Int!
+  startAmount: BigInt!
+  endAmount: BigInt!
+}
+
+
+type Group @entity{
+  id: String!
+  "index of group not null when the group has at least two streams, derived from group index filtered by sender"
+  label: String
+  streams: [Stream!]! @derivedFrom(field: "group")
+  hash: Bytes!
+  count: Int!
 }
