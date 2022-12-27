@@ -69,7 +69,7 @@ export function handleTransfer(event: EventTransfer): void {
     return;
   }
 }
-export function handleWitdraw(event: EventWithdraw): void {
+export function handleWithdraw(event: EventWithdraw): void {
   let id = event.params.streamId.toHexString();
   let stream = getStreamById(id);
 

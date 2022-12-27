@@ -2,7 +2,7 @@ export {
   handleCancel,
   handleRenounce,
   handleTransfer,
-  handleWitdraw,
+  handleWithdraw,
   handleCreateLinear,
   handleCreatePro,
 } from "./actions";

@@ -24,11 +24,11 @@ function createStream(id: string, event: ethereum.Event): Stream {
   entity.withdrawnAmount = zero;
 
   /** --------------- */
-  let contract = getContractById(dataSource.address().toString());
+  let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.critical(
       "Contract hasn't been registered before this create event: {}",
-      [dataSource.address().toString()],
+      [dataSource.address().toHexString()],
     );
   } else {
     entity.contract = contract.id;

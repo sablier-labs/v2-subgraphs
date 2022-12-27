@@ -26,11 +26,16 @@ export function createAction(event: ethereum.Event): Action {
   let id = generateActionId(event);
   let entity = new Action(id);
 
-  let contract = getContractById(dataSource.address().toString());
+  entity.block = event.block.number;
+  entity.hash = event.transaction.hash;
+  entity.timestamp = event.block.timestamp;
+
+  /** --------------- */
+  let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.critical(
       "Contract hasn't been registered before this create event: {}",
-      [dataSource.address().toString()],
+      [dataSource.address().toHexString()],
     );
   } else {
     entity.contract = contract.id;
