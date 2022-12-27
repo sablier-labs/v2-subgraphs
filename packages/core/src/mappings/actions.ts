@@ -19,6 +19,10 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
   action.addressB = event.params.recipient;
   action.amountA = event.params.depositAmount;
 
+  if (stream.cancelable == false) {
+    stream.cancelableAction = action.id;
+  }
+
   action.save();
   stream.save();
 }
@@ -32,6 +36,10 @@ export function handleCreatePro(event: EventCreateProStream): void {
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
   action.amountA = event.params.depositAmount;
+
+  if (stream.cancelable == false) {
+    stream.cancelableAction = action.id;
+  }
 
   action.save();
   stream.save();

@@ -39,7 +39,12 @@ templates:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
+        - Action
+        - Contract
+        - Group
+        - Segment
         - Stream
+        - Token
       abis:
         - name: SablierV2Linear
           file: ../../abis/SablierV2Linear.json
@@ -69,7 +74,12 @@ templates:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
+        - Action
+        - Contract
+        - Group
+        - Segment
         - Stream
+        - Token
       abis:
         - name: SablierV2Pro
           file: ../../abis/SablierV2Pro.json

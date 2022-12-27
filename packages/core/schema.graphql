@@ -12,63 +12,101 @@ enum ActionType {
 }
 
 type Contract @entity {
+  "unique identifier resolving to contract address"
   id: String!
-  type: ContractType!
+  "address of the contract"
   address: Bytes!
+  "type of contract e.g. Linear or Pro"
+  type: ContractType!
+  "streams created through this contract"
   streams: [Stream!]! @derivedFrom(field: "contract")
+  "actions on streams, triggered through this contract"
   actions: [Action!]! @derivedFrom(field: "contract")
 }
 
 type Action @entity {
+  "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx)"
   id: String!
-  "contract that produced triggered the action"
+  "contract through which the stream actions has been triggered"
   contract: Contract!
+  "stream linked to this action"
   stream: Stream!
+  "type of action e.g. Deposit or Withdraw"
   type: ActionType!
-  hash: Bytes!
 
+  "transaction details: hash"
+  hash: Bytes!
+  "transaction details: block number"
   block: BigInt!
+  "transaction details: timestamp"
   timestamp: BigInt!
 
+  "address of an actor, differs based on action type e.g. for Create it resolves to the sender"
   addressA: Bytes
+  "address of an actor, differs based on action type e.g. for Transfer it resolves to the new recipient"
   addressB: Bytes
 
+  "amount, differs based on action type e.g. for Deposit it resolves to the depositAmount"
   amountA: BigInt
+  "amount, differs based on action type e.g. for Withdraw it resolves to the remainingAmount"
   amountB: BigInt
 }
 
 type Token @entity(immutable: true) {
-  id: String!
+  "unique identifier resolving to the ERC20 token address"
+  id: ID!
+  "address of the ERC20 token"
   address: Bytes!
+  "decimals of the ERC20 token"
   decimals: BigInt!
+  "symbol of the ERC20 token"
   symbol: String!
+  "streams that rely on this token"
   streams: [Stream!]! @derivedFrom(field: "token")
 }
 
 type Stream @entity {
   "unique identifier resolving to the id of the stream NFT"
   id: String!
-  "contract that produced this stream"
+  "contract through which this stream has been created"
   contract: Contract!
+  "source of funds for the stream (anyone can create and fund a stream on any sender's behalf)"
   funder: Bytes!
+  "manager of the stream, defined at creation by the funder (usually the same as the funder)"
   sender: Bytes!
+  "current recipient of the stream, can withdraw the funds (the recipient can change on stream/nft transfer)"
   recipient: Bytes!
-  "hash of the create transaction"
+  "transaction hash for the stream creation"
   hash: Bytes!
+  "timestamp of the stream creation (for sorting reasons)"
   timestamp: BigInt!
+  "amount deposit in the stream (without fees)"
   depositAmount: BigInt!
+  "token supported by this stream"
   token: Token!
+  "timestamp for the start of the stream"
   startTime: BigInt!
+  "timestamp for the end of the stream"
   endTime: BigInt!
+  "timestamp for the start of the cliff, only available on linear streams"
   cliffTime: BigInt
+  "derived amount of the cliff, only available on linear streams"
   cliffAmount: BigInt
+  "flag showing the cancelability of the stream (making it false is a one-way trip)"
   cancelable: Boolean!
+  "action in which the stream has been made non-cancelable (can be the deposit transaction or a different one)"
   cancelableAction: Action
+  "flag showing if the stream has been canceled (making it true is a one-way trip)"
   canceled: Boolean!
+  "action in which the stream has been canceled"
   canceledAction: Action
-  withdrawnAmount: BigInt
+  "amount resolving to the sum of all withdrawals"
+  withdrawnAmount: BigInt!
+  "actions triggered in the context of this stream"
   actions: [Action!]! @derivedFrom(field: "stream")
+  "segments of the stream curve, only available on pro streams"
   segments: [Segment!]! @derivedFrom(field: "stream")
+  "group/batch the stream is part of, only available when created within a batch create transaction"
   group: Group!
 }
 
@@ -76,19 +114,29 @@ type Segment @entity {
   id: String!
   stream: Stream!
   exponent: BigInt!
-  "milestone param from event"
+  "timestamp resolving to the *milestone* parameter of the contracts, stores the end moment of the segment"
   endTime: BigInt!
-  "end time of previous segment or stream start time for first segment"
+  "timestamp resolving to the end time of previous segment or the startTime of the stream, stores the start moment of the segment"
   startTime: BigInt!
+  "amount resolving to the amount streamed during this segment"
+  amount: BigInt!
+  "derived amount resoling to the total amount streamed until the start of the segment"
   startAmount: BigInt!
+  "derived amount resoling to the total amount streamed until the end of the segment"
   endAmount: BigInt!
 }
 
 type Group @entity {
+  "unique identifier of the group/batch"
   id: String!
-  "index of group not null when the group has at least two streams, derived from group index filtered by sender"
-  label: String
-  streams: [Stream!]! @derivedFrom(field: "group")
-  hash: Bytes!
+  "number of streams that are part of this group"
   count: Int!
+  "index of group resolving to a conditional counter of 2+ stream groups, filtered by sender (label is null for groups containing a single stream, for filtering)"
+  label: String
+  "streams that are part of this group"
+  streams: [Stream!]! @derivedFrom(field: "group")
+  "hash of the transaction that created this group/batch"
+  hash: Bytes!
+  "timestamp of the transaction that created this group/batch"
+  timestamp: BigInt!
 }
