@@ -19,9 +19,9 @@ dataSources:
         - Stream
       abis:
         - name: SablierV2Linear
-          file: ../../abis/SablierV2Linear.json
+          file: ./abis/SablierV2Linear.json
         - name: ERC20
-          file: ../../abis/ERC20.json
+          file: ./abis/ERC20.json
       eventHandlers:
         - event:
             CreateLinearStream(uint256,indexed address,indexed address,indexed
@@ -39,12 +39,17 @@ templates:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
+        - Action
+        - Contract
+        - Group
+        - Segment
         - Stream
+        - Token
       abis:
         - name: SablierV2Linear
-          file: ../../abis/SablierV2Linear.json
+          file: ./abis/SablierV2Linear.json
         - name: ERC20
-          file: ../../abis/ERC20.json
+          file: ./abis/ERC20.json
       eventHandlers:
         - event: Cancel(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel
@@ -69,12 +74,17 @@ templates:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
+        - Action
+        - Contract
+        - Group
+        - Segment
         - Stream
+        - Token
       abis:
         - name: SablierV2Pro
-          file: ../../abis/SablierV2Pro.json
+          file: ./abis/SablierV2Pro.json
         - name: ERC20
-          file: ../../abis/ERC20.json
+          file: ./abis/ERC20.json
       eventHandlers:
         - event: Cancel(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel

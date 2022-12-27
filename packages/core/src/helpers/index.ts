@@ -21,10 +21,6 @@ export function getStreamById(id: string): Stream | null {
   return Stream.load(id);
 }
 
-export function getContractById(id: string): Contract | null {
-  return Contract.load(id);
-}
-
 export function getOrCreateToken(address: Address): Token {
   let id = address.toHexString();
   let entity = Token.load(id);
@@ -39,12 +35,15 @@ export function getOrCreateToken(address: Address): Token {
     entity.address = address;
     entity.symbol = symbol;
     entity.decimals = BigInt.fromI32(decimals);
-    entity.streams = [];
 
     entity.save();
   }
 
   return entity;
+}
+
+export function getContractById(id: string): Contract | null {
+  return Contract.load(id);
 }
 
 export function createContract(address: Address, type: string): Contract {
@@ -55,8 +54,6 @@ export function createContract(address: Address, type: string): Contract {
   }
 
   entity.address = address;
-  entity.streams = [];
-  entity.actions = [];
   entity.type = type;
 
   entity.save();

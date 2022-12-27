@@ -18,8 +18,6 @@ function createStream(id: string, event: ethereum.Event): Stream {
   entity.cliffAmount = null;
   entity.cliffTime = null;
   entity.withdrawnAmount = zero;
-  entity.actions = [];
-  entity.segments = [];
 
   /** --------------- */
   let contract = getContractById(event.address.toHexString());
