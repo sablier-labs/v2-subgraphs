@@ -13,7 +13,6 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
   let stream = createLinearStream(event);
   let action = createAction(event);
 
-  action.stream = stream.id;
   action.type = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
@@ -22,16 +21,15 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
   if (stream.cancelable == false) {
     stream.cancelableAction = action.id;
   }
-
-  action.save();
   stream.save();
+  action.stream = stream.id;
+  action.save();
 }
 
 export function handleCreatePro(event: EventCreateProStream): void {
   let stream = createProStream(event);
   let action = createAction(event);
 
-  action.stream = stream.id;
   action.type = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
@@ -41,8 +39,9 @@ export function handleCreatePro(event: EventCreateProStream): void {
     stream.cancelableAction = action.id;
   }
 
-  action.save();
   stream.save();
+  action.stream = stream.id;
+  action.save();
 }
 
 export function handleCancel(event: EventCancel): void {

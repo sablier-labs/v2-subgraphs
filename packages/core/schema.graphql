@@ -127,16 +127,29 @@ type Segment @entity {
 }
 
 type Group @entity {
-  "unique identifier of the group/batch"
+  "unique identifier of the group/batch, resolving to the hash of the parent transaction"
   id: String!
   "number of streams that are part of this group"
   count: Int!
   "index of group resolving to a conditional counter of 2+ stream groups, filtered by sender (label is null for groups containing a single stream, for filtering)"
   label: String
+  "grouper (sender) that started this group"
+  grouper: Grouper
   "streams that are part of this group"
   streams: [Stream!]! @derivedFrom(field: "group")
   "hash of the transaction that created this group/batch"
   hash: Bytes!
   "timestamp of the transaction that created this group/batch"
   timestamp: BigInt!
+}
+
+type Grouper @entity {
+  "unique identifier of the sender, resolving to their address"
+  id: String!
+  "address of the sender"
+  address: Bytes!
+  "numeric index, will be used to construct the group label"
+  groupIndex: Int!
+  "groups started by this grouper"
+  groups: [Group!]! @derivedFrom(field: "grouper")
 }

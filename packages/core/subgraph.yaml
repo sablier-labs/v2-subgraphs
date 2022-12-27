@@ -42,6 +42,7 @@ templates:
         - Action
         - Contract
         - Group
+        - Grouper
         - Segment
         - Stream
         - Token
@@ -77,6 +78,7 @@ templates:
         - Action
         - Contract
         - Group
+        - Grouper
         - Segment
         - Stream
         - Token

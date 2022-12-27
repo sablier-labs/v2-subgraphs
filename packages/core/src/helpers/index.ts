@@ -1,5 +1,18 @@
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
-import { Action, Contract, Stream, Token } from "../generated/types/schema";
+import {
+  Address,
+  BigInt,
+  dataSource,
+  ethereum,
+  log,
+} from "@graphprotocol/graph-ts";
+import {
+  Action,
+  Contract,
+  Group,
+  Grouper,
+  Stream,
+  Token,
+} from "../generated/types/schema";
 import { ERC20 as ERC20Contract } from "../generated/types/templates/ContractLinear/ERC20";
 
 export function generateActionId(event: ethereum.Event): string {
@@ -13,7 +26,16 @@ export function createAction(event: ethereum.Event): Action {
   let id = generateActionId(event);
   let entity = new Action(id);
 
-  entity.save();
+  let contract = getContractById(dataSource.address().toString());
+  if (contract == null) {
+    log.critical(
+      "Contract hasn't been registered before this create event: {}",
+      [dataSource.address().toString()],
+    );
+  } else {
+    entity.contract = contract.id;
+  }
+
   return entity;
 }
 
@@ -55,6 +77,48 @@ export function createContract(address: Address, type: string): Contract {
 
   entity.address = address;
   entity.type = type;
+
+  entity.save();
+
+  return entity;
+}
+
+export function getOrCreateGrouper(sender: Address): Grouper {
+  let id = sender.toHexString();
+  let entity = Grouper.load(id);
+
+  if (entity == null) {
+    entity = new Grouper(id);
+    entity.address = sender;
+    entity.groupIndex = 0;
+  }
+
+  return entity;
+}
+
+export function getOrCreateGroup(
+  event: ethereum.Event,
+  sender: Address,
+): Group {
+  let id = event.transaction.hash.toHexString();
+  let entity = Group.load(id);
+  let grouper = getOrCreateGrouper(sender);
+
+  if (entity == null) {
+    entity = new Group(id);
+    entity.hash = event.transaction.hash;
+    entity.timestamp = event.block.timestamp;
+    entity.grouper = grouper.id;
+    entity.count = 1;
+  } else {
+    entity.count += 1;
+    if (entity.count > 1 && entity.label == null) {
+      let label = (grouper.groupIndex + 1).toString();
+      entity.label = label;
+      grouper.groupIndex += 1;
+      grouper.save();
+    }
+  }
 
   entity.save();
 
