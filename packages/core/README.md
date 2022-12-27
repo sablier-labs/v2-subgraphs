@@ -1,1 +1,1 @@
-# Sablier V2 Core Subgraph
+# Sablier V2 Core Subgraphs

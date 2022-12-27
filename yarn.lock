@@ -919,9 +919,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sablier/subgraph-core@workspace:packages/core":
+"@sablier/subgraphs-core@workspace:packages/core":
   version: 0.0.0-use.local
-  resolution: "@sablier/subgraph-core@workspace:packages/core"
+  resolution: "@sablier/subgraphs-core@workspace:packages/core"
   dependencies:
     "@graphprotocol/graph-cli": ^0.35.0
     "@graphprotocol/graph-ts": ^0.29.1
@@ -7063,9 +7063,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sablier-v2-subgraph@workspace:.":
+"sablier-v2-subgraphs@workspace:.":
   version: 0.0.0-use.local
-  resolution: "sablier-v2-subgraph@workspace:."
+  resolution: "sablier-v2-subgraphs@workspace:."
   dependencies:
     "@commitlint/cli": ^17.1.2
     "@commitlint/config-conventional": ^17.1.0

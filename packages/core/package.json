@@ -1,13 +1,13 @@
 {
-  "name": "@sablier/subgraph-core",
-  "description": "Sablier V2 core subgraph",
+  "name": "@sablier/subgraphs-core",
+  "description": "Sablier V2 core subgraphs",
   "version": "1.0.0",
   "author": {
     "name": "Sablier Labs Ltd",
     "url": "https://sablier.finance"
   },
   "bugs": {
-    "url": "https://github.com/sablierhq/v2-subgraph/issues"
+    "url": "https://github.com/sablierhq/v2-subgraphs/issues"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -26,13 +26,13 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.9.4"
   },
-  "homepage": "https://github.com/sablierhq/v2-subgraph#readme",
+  "homepage": "https://github.com/sablierhq/v2-subgraphs#readme",
   "license": "LGPL-3.0",
   "packageManager": "yarn@3.2.2",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/sablierhq/v2-subgraph"
+    "url": "https://github.com/sablierhq/v2-subgraphs"
   },
   "config": {
     "dir_networks": "src/constants/networks",

@@ -1,6 +1,6 @@
 specVersion: 0.0.4
-description: Sablier V2 Subgraph
-repository: https://github.com/sablierhq/v2-subgraph
+description: Sablier V2 Subgraphs
+repository: https://github.com/sablierhq/v2-subgraphs
 schema:
   file: ./schema.graphql
 dataSources:
