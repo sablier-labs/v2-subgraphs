@@ -52,9 +52,11 @@ export function createLinearStream(event: EventCreateLinearStream): Stream {
 
   /** --------------- */
   entity.cliffTime = event.params.cliffTime;
-  let duration = entity.endTime.minus(entity.startTime);
-  let cliff = event.params.cliffTime.minus(entity.startTime);
-  entity.cliffAmount = entity.depositAmount.times(duration.div(cliff));
+  let duration = event.params.stopTime.minus(event.params.startTime);
+  let cliff = event.params.cliffTime.minus(event.params.startTime);
+  if (!cliff.isZero()) {
+    entity.cliffAmount = entity.depositAmount.times(duration.div(cliff));
+  }
 
   /** --------------- */
   let token = getOrCreateToken(event.params.token);
