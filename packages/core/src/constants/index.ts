@@ -17,13 +17,13 @@ export function getInitializerContract(): string {
   return initializer.toLowerCase();
 }
 
-export function getLinearContracts(): string[] {
+export function getContractsLinear(): string[] {
   return linear.map<string>((item) => item.toString().toLowerCase());
 }
-export function getPeripheryContracts(): string[] {
+export function getContractsPeriphery(): string[] {
   return periphery.map<string>((item) => item.toString().toLowerCase());
 }
 
-export function getProContracts(): string[] {
+export function getContractsPro(): string[] {
   return pro.map<string>((item) => item.toString().toLowerCase());
 }

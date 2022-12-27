@@ -1,9 +1,19 @@
-import { getLinearContracts } from "../constants";
-import { Linear as LinearTemplate } from "../generated/types/templates";
-import { CreateLinearStream } from "../generated/types/templates/Linear/SablierV2Linear";
-import { getStreamById } from "../helpers";
-import { handleCreateLinear } from "./actions";
 import { Address } from "@graphprotocol/graph-ts";
+import { ContractLinear, ContractPro } from "../generated/types/templates";
+import { CreateLinearStream } from "../generated/types/templates/ContractLinear/SablierV2Linear";
+import { getContractsLinear, getContractsPro } from "../constants";
+import { createContract, getStreamById } from "../helpers";
+import { handleCreateLinear } from "./actions";
+
+function createContractLinear(address: Address): void {
+  ContractLinear.create(address);
+  createContract(address, "Linear");
+}
+
+function createContractPro(address: Address): void {
+  ContractPro.create(address);
+  createContract(address, "Pro");
+}
 
 /**
  * Use the oldest linear contract as a trigger to start indexing all the other contracts.
@@ -18,29 +28,23 @@ export function handleInitializer(event: CreateLinearStream): void {
     return;
   }
 
-  let linears = getLinearContracts();
+  let linears = getContractsLinear();
   if (linears.length > 0) {
     for (let i = 0; i < linears.length; i++) {
-      let id = linears[i];
-      LinearTemplate.create(Address.fromString(id));
+      createContractLinear(Address.fromString(linears[i]));
     }
   }
 
-  //   let periphery = getPeripheryContracts();
-  //   if (periphery.length > 0) {
-  //     for (let i = 0; i < periphery.length; i++) {
-  //         let id = periphery[i];
-  //         PeripheryContract.create(Address.fromString(id));
-  //       }
-  //   }
+  let pros = getContractsPro();
+  if (pros.length > 0) {
+    for (let i = 0; i < pros.length; i++) {
+      createContractPro(Address.fromString(pros[i]));
+    }
+  }
 
-  //   let pros = getProContracts();
-  //   if (pros.length > 0) {
-  //     for (let i = 0; i < pros.length; i++) {
-  //         let id = pros[i];
-  //         ProContract.create(Address.fromString(id));
-  //       }
-  //   }
-
+  /**
+   * By registering the contract on the 1st create event,
+   * we need to manually handle the registration of that one stream
+   */
   handleCreateLinear(event);
 }

@@ -5,7 +5,7 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Initializer
+    name: ContractInitializer
     network: {{network}}
     source:
       address: "{{initializer}}"
@@ -30,7 +30,7 @@ dataSources:
       file: ./src/mappings/index.ts
 templates:
   - kind: ethereum/contract
-    name: Linear
+    name: ContractLinear
     network: {{network}}
     source:
       abi: SablierV2Linear
@@ -46,8 +46,46 @@ templates:
         - name: ERC20
           file: ../../abis/ERC20.json
       eventHandlers:
+        - event: Cancel(indexed uint256,indexed address,indexed address,uint128,uint128)
+          handler: handleCancel
         - event:
             CreateLinearStream(uint256,indexed address,indexed address,indexed
             address,uint128,address,uint40,uint40,uint40,bool)
           handler: handleCreateLinear
+        - event: Renounce(indexed uint256)
+          handler: handleRenounce
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Withdraw(indexed uint256,indexed address,uint128)
+          handler: handleWithdraw
+      file: ./src/mappings/index.ts
+  - kind: ethereum/contract
+    name: ContractPro
+    network: {{network}}
+    source:
+      abi: SablierV2Pro
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Stream
+      abis:
+        - name: SablierV2Pro
+          file: ../../abis/SablierV2Pro.json
+        - name: ERC20
+          file: ../../abis/ERC20.json
+      eventHandlers:
+        - event: Cancel(indexed uint256,indexed address,indexed address,uint128,uint128)
+          handler: handleCancel
+        - event:
+            CreateProStream(uint256,indexed address,indexed address,indexed
+            address,uint128,address,uint40,uint40,uint128[],int64[],uint40[],bool)
+          handler: handleCreatePro
+        - event: Renounce(indexed uint256)
+          handler: handleRenounce
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Withdraw(indexed uint256,indexed address,uint128)
+          handler: handleWithdraw
       file: ./src/mappings/index.ts

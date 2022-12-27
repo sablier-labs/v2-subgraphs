@@ -3,11 +3,97 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "x",
+        "name": "maxSegmentCount",
         "type": "uint256"
       }
     ],
-    "name": "PRBMathUD60x18__ToUD60x18Overflow",
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "PRBMathSD59x18__DivInputTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      },
+      {
+        "internalType": "SD59x18",
+        "name": "y",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__DivOverflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__Exp2InputTooBig",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__LogInputTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PRBMathSD59x18__MulInputTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      },
+      {
+        "internalType": "SD59x18",
+        "name": "y",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__MulOverflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__ToSD59x18Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__ToSD59x18Underflow",
     "type": "error"
   },
   {
@@ -50,17 +136,75 @@
   {
     "inputs": [
       {
+        "internalType": "uint128",
+        "name": "depositAmount",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "segmentAmountsSum",
+        "type": "uint128"
+      }
+    ],
+    "name": "SablierV2Pro__DepositAmountNotEqualToSegmentAmountsSum",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      }
+    ],
+    "name": "SablierV2Pro__SegmentCountOutOfBounds",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SablierV2Pro__SegmentCountZero",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountsCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "exponentsCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "milestonesCount",
+        "type": "uint256"
+      }
+    ],
+    "name": "SablierV2Pro__SegmentCountsNotEqual",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint40",
-        "name": "cliffTime",
+        "name": "previousMilestone",
         "type": "uint40"
       },
       {
         "internalType": "uint40",
-        "name": "stopTime",
+        "name": "currentMilestone",
         "type": "uint40"
       }
     ],
-    "name": "SablierV2Linear__CliffTimeGreaterThanStopTime",
+    "name": "SablierV2Pro__SegmentMilestonesNotOrdered",
     "type": "error"
   },
   {
@@ -72,11 +216,11 @@
       },
       {
         "internalType": "uint40",
-        "name": "cliffTime",
+        "name": "segmentMilestone",
         "type": "uint40"
       }
     ],
-    "name": "SablierV2Linear__StartTimeGreaterThanCliffTime",
+    "name": "SablierV2Pro__StartTimeGreaterThanFirstMilestone",
     "type": "error"
   },
   {
@@ -278,6 +422,19 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "MAX_SEGMENT_COUNT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -368,14 +525,19 @@
         "type": "uint40"
       },
       {
-        "internalType": "uint40",
-        "name": "cliffTime",
-        "type": "uint40"
+        "internalType": "uint128[]",
+        "name": "segmentAmounts",
+        "type": "uint128[]"
       },
       {
-        "internalType": "uint40",
-        "name": "stopTime",
-        "type": "uint40"
+        "internalType": "SD1x18[]",
+        "name": "segmentExponents",
+        "type": "int64[]"
+      },
+      {
+        "internalType": "uint40[]",
+        "name": "segmentMilestones",
+        "type": "uint40[]"
       },
       {
         "internalType": "bool",
@@ -417,14 +579,19 @@
         "type": "address"
       },
       {
-        "internalType": "uint40",
-        "name": "cliffDuration",
-        "type": "uint40"
+        "internalType": "uint128[]",
+        "name": "segmentAmounts",
+        "type": "uint128[]"
       },
       {
-        "internalType": "uint40",
-        "name": "totalDuration",
-        "type": "uint40"
+        "internalType": "SD1x18[]",
+        "name": "segmentExponents",
+        "type": "int64[]"
+      },
+      {
+        "internalType": "uint40[]",
+        "name": "segmentDeltas",
+        "type": "uint40[]"
       },
       {
         "internalType": "bool",
@@ -457,25 +624,6 @@
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getCliffTime",
-    "outputs": [
-      {
-        "internalType": "uint40",
-        "name": "cliffTime",
-        "type": "uint40"
       }
     ],
     "stateMutability": "view",
@@ -533,6 +681,63 @@
         "internalType": "uint128",
         "name": "returnableAmount",
         "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getSegmentAmounts",
+    "outputs": [
+      {
+        "internalType": "uint128[]",
+        "name": "segmentAmounts",
+        "type": "uint128[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getSegmentExponents",
+    "outputs": [
+      {
+        "internalType": "SD1x18[]",
+        "name": "segmentExponents",
+        "type": "int64[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getSegmentMilestones",
+    "outputs": [
+      {
+        "internalType": "uint40[]",
+        "name": "segmentMilestones",
+        "type": "uint40[]"
       }
     ],
     "stateMutability": "view",
@@ -608,6 +813,21 @@
       {
         "components": [
           {
+            "internalType": "uint128[]",
+            "name": "segmentAmounts",
+            "type": "uint128[]"
+          },
+          {
+            "internalType": "SD1x18[]",
+            "name": "segmentExponents",
+            "type": "int64[]"
+          },
+          {
+            "internalType": "uint40[]",
+            "name": "segmentMilestones",
+            "type": "uint40[]"
+          },
+          {
             "internalType": "uint128",
             "name": "depositAmount",
             "type": "uint128"
@@ -629,7 +849,7 @@
           },
           {
             "internalType": "uint40",
-            "name": "cliffTime",
+            "name": "stopTime",
             "type": "uint40"
           },
           {
@@ -646,14 +866,9 @@
             "internalType": "address",
             "name": "token",
             "type": "address"
-          },
-          {
-            "internalType": "uint40",
-            "name": "stopTime",
-            "type": "uint40"
           }
         ],
-        "internalType": "struct DataTypes.LinearStream",
+        "internalType": "struct DataTypes.ProStream",
         "name": "stream",
         "type": "tuple"
       }
@@ -1129,14 +1344,26 @@
       {
         "indexed": false,
         "internalType": "uint40",
-        "name": "cliffTime",
+        "name": "stopTime",
         "type": "uint40"
       },
       {
         "indexed": false,
-        "internalType": "uint40",
-        "name": "stopTime",
-        "type": "uint40"
+        "internalType": "uint128[]",
+        "name": "segmentAmounts",
+        "type": "uint128[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "SD1x18[]",
+        "name": "segmentExponents",
+        "type": "int64[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint40[]",
+        "name": "segmentMilestones",
+        "type": "uint40[]"
       },
       {
         "indexed": false,
@@ -1145,7 +1372,7 @@
         "type": "bool"
       }
     ],
-    "name": "CreateLinearStream",
+    "name": "CreateProStream",
     "type": "event"
   },
   {
