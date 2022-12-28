@@ -67,6 +67,7 @@ export function createLinearStream(
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
   entity.depositAmount = event.params.depositAmount;
+  entity.intactAmount = event.params.depositAmount;
   entity.startTime = event.params.startTime;
   entity.endTime = event.params.stopTime;
   entity.cancelable = event.params.cancelable;
@@ -104,6 +105,7 @@ export function createProStream(event: EventCreateProStream): Stream | null {
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
   entity.depositAmount = event.params.depositAmount;
+  entity.intactAmount = event.params.depositAmount;
   entity.startTime = event.params.startTime;
   entity.endTime = event.params.stopTime;
   entity.cancelable = event.params.cancelable;
@@ -115,6 +117,8 @@ export function createProStream(event: EventCreateProStream): Stream | null {
   /** --------------- */
   let group = getOrCreateGroup(event, event.params.sender);
   entity.group = group.id;
+
+  // TODO: Store segments
 
   entity.save();
   return entity;

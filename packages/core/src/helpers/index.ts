@@ -29,6 +29,7 @@ export function createAction(event: ethereum.Event): Action {
   let entity = new Action(id);
 
   entity.block = event.block.number;
+  entity.from = event.transaction.from;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
 

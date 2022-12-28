@@ -40,6 +40,8 @@ type Action @entity {
   block: BigInt!
   "transaction details: timestamp"
   timestamp: BigInt!
+  "address that triggered the transaction"
+  from: Bytes!
 
   "address of an actor, differs based on action type e.g. for Create it resolves to the sender"
   addressA: Bytes
@@ -106,6 +108,8 @@ type Stream @entity {
   canceledAction: Action
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
+  "amount resolving to the sum still inside the stream (regardless of it being locked or not)"
+  intactAmount: BigInt!
   "actions triggered in the context of this stream"
   actions: [Action!]! @derivedFrom(field: "stream")
   "segments of the stream curve, only available on pro streams"
