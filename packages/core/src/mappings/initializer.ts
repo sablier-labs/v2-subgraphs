@@ -2,7 +2,7 @@ import { Address } from "@graphprotocol/graph-ts";
 import { ContractLinear, ContractPro } from "../generated/types/templates";
 import { CreateLinearStream } from "../generated/types/templates/ContractLinear/SablierV2Linear";
 import { getContractsLinear, getContractsPro } from "../constants";
-import { createContract, getStreamById } from "../helpers";
+import { createContract, getOrCreateWatcher } from "../helpers";
 import { handleCreateLinear } from "./actions";
 
 function createContractLinear(address: Address): void {
@@ -22,11 +22,15 @@ function createContractPro(address: Address): void {
  * @returns
  */
 export function handleInitializer(event: CreateLinearStream): void {
-  let id = event.params.streamId.toHexString();
-
-  if (getStreamById(id) != null) {
+  let watcher = getOrCreateWatcher();
+  if (watcher.isInitialized) {
     return;
+  } else {
+    watcher.isInitialized = true;
+    watcher.save();
   }
+
+  /** --------------- */
 
   let linears = getContractsLinear();
   if (linears.length > 0) {
@@ -43,8 +47,11 @@ export function handleInitializer(event: CreateLinearStream): void {
   }
 
   /**
+   * ---------------
    * By registering the contract on the 1st create event,
    * we need to manually handle the registration of that one stream
-   */
+   * ---------------
+   * */
+
   handleCreateLinear(event);
 }

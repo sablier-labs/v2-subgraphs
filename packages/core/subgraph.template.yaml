@@ -46,6 +46,7 @@ templates:
         - Segment
         - Stream
         - Token
+        - Watcher
       abis:
         - name: SablierV2Linear
           file: ./abis/SablierV2Linear.json
@@ -82,6 +83,7 @@ templates:
         - Segment
         - Stream
         - Token
+        - Watcher
       abis:
         - name: SablierV2Pro
           file: ./abis/SablierV2Pro.json

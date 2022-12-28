@@ -12,8 +12,10 @@ import {
   Grouper,
   Stream,
   Token,
+  Watcher,
 } from "../generated/types/schema";
 import { ERC20 as ERC20Contract } from "../generated/types/templates/ContractLinear/ERC20";
+import { one, zero } from "../constants";
 
 export function generateActionId(event: ethereum.Event): string {
   return event.transaction.hash
@@ -44,7 +46,27 @@ export function createAction(event: ethereum.Event): Action {
   return entity;
 }
 
-export function getStreamById(id: string): Stream | null {
+export function generateStreamId(localId: BigInt): string {
+  let contract = getContractById(dataSource.address().toHexString());
+  if (contract == null) {
+    log.critical(
+      "Contract hasn't been registered before this create event: {}",
+      [dataSource.address().toHexString()],
+    );
+    return "";
+  }
+
+  let id = contract.address
+    .toHexString()
+    .substr(2, 8)
+    .concat("-")
+    .concat(localId.toString());
+
+  return id;
+}
+
+export function getStreamByIdFromSource(localId: BigInt): Stream | null {
+  let id = generateStreamId(localId);
   return Stream.load(id);
 }
 
@@ -95,7 +117,7 @@ export function getOrCreateGrouper(sender: Address): Grouper {
   if (entity == null) {
     entity = new Grouper(id);
     entity.address = sender;
-    entity.groupIndex = 0;
+    entity.groupIndex = zero;
   }
 
   return entity;
@@ -114,18 +136,31 @@ export function getOrCreateGroup(
     entity.hash = event.transaction.hash;
     entity.timestamp = event.block.timestamp;
     entity.grouper = grouper.id;
-    entity.count = 1;
+    entity.count = one;
   } else {
-    entity.count += 1;
-    if (entity.count > 1 && entity.label == null) {
-      let label = (grouper.groupIndex + 1).toString();
+    entity.count = entity.count.plus(one);
+    if (BigInt.compare(entity.count, one) == 1 && entity.label == null) {
+      let label = grouper.groupIndex.plus(one).toString();
       entity.label = label;
-      grouper.groupIndex += 1;
+      grouper.groupIndex = grouper.groupIndex.plus(one);
       grouper.save();
     }
   }
 
   entity.save();
+
+  return entity;
+}
+
+export function getOrCreateWatcher(): Watcher {
+  let id = "1";
+  let entity = Watcher.load(id);
+
+  if (entity == null) {
+    entity = new Watcher(id);
+    entity.streamIndex = one;
+    entity.isInitialized = false;
+  }
 
   return entity;
 }

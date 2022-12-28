@@ -66,8 +66,12 @@ type Token @entity(immutable: true) {
 }
 
 type Stream @entity {
-  "unique identifier resolving to the id of the stream NFT"
+  "unique identifier for the stream, resolving to the origin contract address concatenated with the streamId/tokenId"
   id: String!
+  "unique identifier for the stream released by the origin contract"
+  streamId: BigInt!
+  "unique global id tracked by the subgraph watcher"
+  globalId: BigInt!
   "contract through which this stream has been created"
   contract: Contract!
   "source of funds for the stream (anyone can create and fund a stream on any sender's behalf)"
@@ -130,7 +134,7 @@ type Group @entity {
   "unique identifier of the group/batch, resolving to the hash of the parent transaction"
   id: String!
   "number of streams that are part of this group"
-  count: Int!
+  count: BigInt!
   "index of group resolving to a conditional counter of 2+ stream groups, filtered by sender (label is null for groups containing a single stream, for filtering)"
   label: String
   "grouper (sender) that started this group"
@@ -149,7 +153,16 @@ type Grouper @entity {
   "address of the sender"
   address: Bytes!
   "numeric index, will be used to construct the group label"
-  groupIndex: Int!
+  groupIndex: BigInt!
   "groups started by this grouper"
   groups: [Group!]! @derivedFrom(field: "grouper")
+}
+
+type Watcher @entity {
+  "unique identifier for the watcher - there is only one watcher for the entire subgraph"
+  id: String!
+  "global index for streams"
+  streamIndex: BigInt!
+  "flag that defines the initialization status of the subgraph"
+  isInitialized: Boolean!
 }

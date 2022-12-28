@@ -1,17 +1,39 @@
-import { dataSource, ethereum, log } from "@graphprotocol/graph-ts";
+import { BigInt, dataSource, ethereum, log } from "@graphprotocol/graph-ts";
 import { Stream } from "../generated/types/schema";
 import { CreateLinearStream as EventCreateLinearStream } from "../generated/types/templates/ContractLinear/SablierV2Linear";
 import { CreateProStream as EventCreateProStream } from "../generated/types/templates/ContractPro/SablierV2Pro";
-import { zero } from "../constants";
+import { one, zero } from "../constants";
 import {
+  generateStreamId,
   getContractById,
   getOrCreateGroup,
   getOrCreateToken,
+  getOrCreateWatcher,
 } from "../helpers";
 
-function createStream(id: string, event: ethereum.Event): Stream {
+function createStream(streamId: BigInt, event: ethereum.Event): Stream | null {
+  let watcher = getOrCreateWatcher();
+  let contract = getContractById(dataSource.address().toHexString());
+  if (contract == null) {
+    log.critical(
+      "Contract hasn't been registered before this create event: {}",
+      [dataSource.address().toHexString()],
+    );
+    return null;
+  }
+
+  /** --------------- */
+  let id = generateStreamId(streamId);
+  if (id == null) {
+    return null;
+  }
+
+  /** --------------- */
   let entity = new Stream(id);
   /** --------------- */
+  entity.streamId = streamId;
+  entity.contract = contract.id;
+  entity.globalId = watcher.streamIndex;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
 
@@ -24,22 +46,21 @@ function createStream(id: string, event: ethereum.Event): Stream {
   entity.withdrawnAmount = zero;
 
   /** --------------- */
-  let contract = getContractById(dataSource.address().toHexString());
-  if (contract == null) {
-    log.critical(
-      "Contract hasn't been registered before this create event: {}",
-      [dataSource.address().toHexString()],
-    );
-  } else {
-    entity.contract = contract.id;
-  }
+  watcher.streamIndex = watcher.streamIndex.plus(one);
+  watcher.save();
 
   return entity;
 }
 
-export function createLinearStream(event: EventCreateLinearStream): Stream {
-  let id = event.params.streamId.toHexString();
-  let entity = createStream(id, event);
+export function createLinearStream(
+  event: EventCreateLinearStream,
+): Stream | null {
+  let streamId = event.params.streamId;
+  let entity = createStream(streamId, event);
+
+  if (entity == null) {
+    return null;
+  }
 
   /** --------------- */
   entity.funder = event.params.funder;
@@ -70,9 +91,13 @@ export function createLinearStream(event: EventCreateLinearStream): Stream {
   return entity;
 }
 
-export function createProStream(event: EventCreateProStream): Stream {
-  let id = event.params.streamId.toHexString();
-  let entity = createStream(id, event);
+export function createProStream(event: EventCreateProStream): Stream | null {
+  let streamId = event.params.streamId;
+  let entity = createStream(streamId, event);
+
+  if (entity == null) {
+    return null;
+  }
 
   /** --------------- */
   entity.funder = event.params.funder;
