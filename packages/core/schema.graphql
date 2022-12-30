@@ -74,10 +74,10 @@ type Token @entity(immutable: true) {
 }
 
 type Stream @entity {
-  "unique identifier for the stream, resolving to the origin contract address concatenated with the tokenId"
+  "unique identifier for the stream, resolving to the origin contract address concatenated with the localId"
   id: String!
-  "unique identifier for the stream released by the origin contract"
-  tokenId: BigInt!
+  "unique identifier for the stream released by the origin contract - same as the tokenId or streamId values given by the contract"
+  localId: BigInt!
   "unique global id tracked by the subgraph watcher"
   globalId: BigInt!
   "contract through which this stream has been created"

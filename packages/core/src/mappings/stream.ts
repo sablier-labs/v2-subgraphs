@@ -12,7 +12,7 @@ import {
 } from "../helpers";
 import { createSegments } from "./segments";
 
-function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
+function createStream(localId: BigInt, event: ethereum.Event): Stream | null {
   let watcher = getOrCreateWatcher();
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
@@ -24,7 +24,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   }
 
   /** --------------- */
-  let id = generateStreamId(tokenId);
+  let id = generateStreamId(localId);
   if (id == null) {
     return null;
   }
@@ -32,7 +32,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   /** --------------- */
   let entity = new Stream(id);
   /** --------------- */
-  entity.tokenId = tokenId;
+  entity.localId = localId;
   entity.contract = contract.id;
   entity.globalId = watcher.streamIndex;
   entity.hash = event.transaction.hash;
@@ -57,8 +57,8 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
 export function createLinearStream(
   event: EventCreateLinearStream,
 ): Stream | null {
-  let tokenId = event.params.streamId;
-  let entity = createStream(tokenId, event);
+  let localId = event.params.streamId;
+  let entity = createStream(localId, event);
 
   if (entity == null) {
     return null;
@@ -96,8 +96,8 @@ export function createLinearStream(
 }
 
 export function createProStream(event: EventCreateProStream): Stream | null {
-  let tokenId = event.params.streamId;
-  let entity = createStream(tokenId, event);
+  let localId = event.params.streamId;
+  let entity = createStream(localId, event);
 
   if (entity == null) {
     return null;

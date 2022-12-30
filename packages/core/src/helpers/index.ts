@@ -47,7 +47,7 @@ export function createAction(event: ethereum.Event): Action {
   return entity;
 }
 
-export function generateStreamId(tokenId: BigInt): string {
+export function generateStreamId(localId: BigInt): string {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.critical(
@@ -60,13 +60,13 @@ export function generateStreamId(tokenId: BigInt): string {
   let id = contract.address
     .toHexString()
     .concat("-")
-    .concat(tokenId.toString());
+    .concat(localId.toString());
 
   return id;
 }
 
-export function getStreamByIdFromSource(tokenId: BigInt): Stream | null {
-  let id = generateStreamId(tokenId);
+export function getStreamByIdFromSource(localId: BigInt): Stream | null {
+  let id = generateStreamId(localId);
   return Stream.load(id);
 }
 
