@@ -15,7 +15,7 @@ import {
   Watcher,
 } from "../generated/types/schema";
 import { ERC20 as ERC20Contract } from "../generated/types/templates/ContractLinear/ERC20";
-import { one, zero } from "../constants";
+import { getChainId, one, zero } from "../constants";
 
 export function generateActionId(event: ethereum.Event): string {
   return event.transaction.hash
@@ -158,6 +158,7 @@ export function getOrCreateWatcher(): Watcher {
 
   if (entity == null) {
     entity = new Watcher(id);
+    entity.chainId = getChainId();
     entity.streamIndex = one;
     entity.isInitialized = false;
   }

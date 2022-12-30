@@ -1,5 +1,5 @@
-import { initializer, linear, periphery, pro } from "../generated/env";
 import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { chainId, initializer, linear, periphery, pro } from "../generated/env";
 
 export let zero = BigInt.fromI32(0);
 export let one = BigInt.fromI32(1);
@@ -26,4 +26,8 @@ export function getContractsPeriphery(): string[] {
 
 export function getContractsPro(): string[] {
   return pro.map<string>((item) => item.toString().toLowerCase());
+}
+
+export function getChainId(): i32 {
+  return chainId;
 }

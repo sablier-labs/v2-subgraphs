@@ -11,5 +11,5 @@
 
 2. Generate configuration
 
-   Make sure to run `yarn setup:goerli` or `yarn setup:<network_name>` to generate imports before `codegen` and
-   `deploy:<network_name>`.
+   Make sure to run `yarn setup:goerli` or `yarn setup:<chain_name>` to generate imports before `codegen` and
+   `deploy:<chain_name>`.

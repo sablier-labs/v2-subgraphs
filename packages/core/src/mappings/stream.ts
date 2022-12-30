@@ -2,7 +2,7 @@ import { BigInt, dataSource, ethereum, log } from "@graphprotocol/graph-ts";
 import { Stream } from "../generated/types/schema";
 import { CreateLinearStream as EventCreateLinearStream } from "../generated/types/templates/ContractLinear/SablierV2Linear";
 import { CreateProStream as EventCreateProStream } from "../generated/types/templates/ContractPro/SablierV2Pro";
-import { one, zero } from "../constants";
+import { getChainId, one, zero } from "../constants";
 import {
   generateStreamId,
   getContractById,
@@ -37,6 +37,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   entity.globalId = watcher.streamIndex;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
+  entity.chainId = getChainId();
 
   /** --------------- */
   entity.canceled = false;

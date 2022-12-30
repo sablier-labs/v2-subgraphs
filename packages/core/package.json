@@ -35,7 +35,7 @@
     "url": "https://github.com/sablierhq/v2-subgraphs"
   },
   "config": {
-    "dir_networks": "src/constants/networks",
+    "dir_chains": "src/constants/chains",
     "dir_generated": "src/generated",
     "flags_deploy": "--ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "flags_lint": "--ignore-path ../../.eslintignore .",
@@ -48,17 +48,17 @@
     "clean-generated": "rimraf $npm_package_config_dir_generated",
     "codegen": "graph codegen --output-dir $npm_package_config_dir_generated/types/",
     "deploy": "graph deploy $npm_package_config_flags_deploy sablierhq/$NAME",
-    "deploy:goerli": "NETWORK=goerli yarn setup && NAME=sablier-v2 yarn deploy",
+    "deploy:goerli": "CHAIN=goerli yarn setup && NAME=sablier-v2 yarn deploy",
     "lint-check": "eslint --ignore-path ../../.eslintignore .",
     "lint-fix": "eslint --fix --ignore-path ../../.eslintignore .",
     "prettier-check": "yarn prettier $npm_package_config_flags_prettier --check .",
     "prettier-fix": "yarn prettier $npm_package_config_flags_prettier --loglevel warn --write .",
     "setup": "yarn clean && yarn template && yarn codegen",
-    "setup:goerli": "yarn clean-generated && NETWORK=goerli yarn setup",
-    "template": "yarn template-network && yarn template-subgraph && yarn template-env",
-    "template-network": "tsc $npm_package_config_dir_networks/$NETWORK.ts --outDir $npm_package_config_dir_generated",
-    "template-subgraph": "mustache $npm_package_config_dir_generated/$NETWORK.js subgraph.template.yaml > subgraph.yaml",
-    "template-env": "cp $npm_package_config_dir_networks/$NETWORK.ts $npm_package_config_dir_generated/env.ts",
+    "setup:goerli": "yarn clean-generated && CHAIN=goerli yarn setup",
+    "template": "yarn template-chain && yarn template-subgraph && yarn template-env",
+    "template-chain": "tsc $npm_package_config_dir_chains/$CHAIN.ts --outDir $npm_package_config_dir_generated",
+    "template-subgraph": "mustache $npm_package_config_dir_generated/$CHAIN.js subgraph.template.yaml > subgraph.yaml",
+    "template-env": "cp $npm_package_config_dir_chains/$CHAIN.ts $npm_package_config_dir_generated/env.ts",
     "tscx": "tsc"
   }
 }

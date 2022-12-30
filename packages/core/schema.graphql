@@ -82,6 +82,8 @@ type Stream @entity {
   globalId: BigInt!
   "contract through which this stream has been created"
   contract: Contract!
+  "hardcoded chain id"
+  chainId: Int!
   "type of stream (for sorting reasons)"
   type: StreamType!
   "source of funds for the stream (anyone can create and fund a stream on any sender's behalf)"
@@ -180,6 +182,8 @@ type Grouper @entity {
 type Watcher @entity {
   "unique identifier for the watcher - there is only one watcher for the entire subgraph"
   id: String!
+  "hardcoded chain id"
+  chainId: Int!
   "global index for streams"
   streamIndex: BigInt!
   "flag that defines the initialization status of the subgraph"

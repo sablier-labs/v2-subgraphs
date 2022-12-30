@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ContractInitializer
-    network: {{network}}
+    network: {{chain}}
     source:
       address: "{{initializer}}"
       abi: SablierV2Linear
@@ -31,7 +31,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: ContractLinear
-    network: {{network}}
+    network: {{chain}}
     source:
       abi: SablierV2Linear
     mapping:
@@ -68,7 +68,7 @@ templates:
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
     name: ContractPro
-    network: {{network}}
+    network: {{chain}}
     source:
       abi: SablierV2Pro
     mapping:
