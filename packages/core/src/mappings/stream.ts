@@ -10,20 +10,21 @@ import {
   getOrCreateToken,
   getOrCreateWatcher,
 } from "../helpers";
+import { createSegments } from "./segments";
 
-function createStream(streamId: BigInt, event: ethereum.Event): Stream | null {
+function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   let watcher = getOrCreateWatcher();
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.critical(
-      "Contract hasn't been registered before this create event: {}",
+      "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
     return null;
   }
 
   /** --------------- */
-  let id = generateStreamId(streamId);
+  let id = generateStreamId(tokenId);
   if (id == null) {
     return null;
   }
@@ -31,7 +32,7 @@ function createStream(streamId: BigInt, event: ethereum.Event): Stream | null {
   /** --------------- */
   let entity = new Stream(id);
   /** --------------- */
-  entity.streamId = streamId;
+  entity.tokenId = tokenId;
   entity.contract = contract.id;
   entity.globalId = watcher.streamIndex;
   entity.hash = event.transaction.hash;
@@ -55,14 +56,15 @@ function createStream(streamId: BigInt, event: ethereum.Event): Stream | null {
 export function createLinearStream(
   event: EventCreateLinearStream,
 ): Stream | null {
-  let streamId = event.params.streamId;
-  let entity = createStream(streamId, event);
+  let tokenId = event.params.streamId;
+  let entity = createStream(tokenId, event);
 
   if (entity == null) {
     return null;
   }
 
   /** --------------- */
+  entity.type = event.params.cliffTime.isZero() ? "Linear" : "Cliff";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
@@ -93,14 +95,15 @@ export function createLinearStream(
 }
 
 export function createProStream(event: EventCreateProStream): Stream | null {
-  let streamId = event.params.streamId;
-  let entity = createStream(streamId, event);
+  let tokenId = event.params.streamId;
+  let entity = createStream(tokenId, event);
 
   if (entity == null) {
     return null;
   }
 
   /** --------------- */
+  entity.type = "Pro";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
@@ -118,8 +121,12 @@ export function createProStream(event: EventCreateProStream): Stream | null {
   let group = getOrCreateGroup(event, event.params.sender);
   entity.group = group.id;
 
-  // TODO: Store segments
-
+  /** --------------- */
   entity.save();
+
+  /** --------------- */
+  entity = createSegments(entity, event);
+
+  /** --------------- */
   return entity;
 }

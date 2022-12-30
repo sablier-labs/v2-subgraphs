@@ -3,6 +3,12 @@ enum ContractType {
   Pro
 }
 
+enum StreamType {
+  Cliff
+  Linear
+  Pro
+}
+
 enum ActionType {
   Transfer
   Create
@@ -68,14 +74,16 @@ type Token @entity(immutable: true) {
 }
 
 type Stream @entity {
-  "unique identifier for the stream, resolving to the origin contract address concatenated with the streamId/tokenId"
+  "unique identifier for the stream, resolving to the origin contract address concatenated with the tokenId"
   id: String!
   "unique identifier for the stream released by the origin contract"
-  streamId: BigInt!
+  tokenId: BigInt!
   "unique global id tracked by the subgraph watcher"
   globalId: BigInt!
   "contract through which this stream has been created"
   contract: Contract!
+  "type of stream (for sorting reasons)"
+  type: StreamType!
   "source of funds for the stream (anyone can create and fund a stream on any sender's behalf)"
   funder: Bytes!
   "manager of the stream, defined at creation by the funder (usually the same as the funder)"
@@ -119,15 +127,22 @@ type Stream @entity {
 }
 
 type Segment @entity {
+  "unique id resolving to stream id concatenated with the position of the segment"
   id: String!
+  "stream upon which the segment is used"
   stream: Stream!
-  exponent: BigInt!
-  "timestamp resolving to the *milestone* parameter of the contracts, stores the end moment of the segment"
-  endTime: BigInt!
-  "timestamp resolving to the end time of previous segment or the startTime of the stream, stores the start moment of the segment"
-  startTime: BigInt!
-  "amount resolving to the amount streamed during this segment"
+  "amount resolving to the value streamed during this segment"
   amount: BigInt!
+  "exponent for the time passed percentage of the main amount compute function"
+  exponent: BigInt!
+  "timestamp resolving to the end moment of the segment"
+  milestone: BigInt!
+
+  "timestamp resolving to the *milestone* parameter"
+  endTime: BigInt!
+  "timestamp resolving to the start moment of the segment (the end time of previous segment or the startTime of the stream)"
+  startTime: BigInt!
+
   "derived amount resoling to the total amount streamed until the start of the segment"
   startAmount: BigInt!
   "derived amount resoling to the total amount streamed until the end of the segment"

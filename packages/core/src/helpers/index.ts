@@ -37,7 +37,7 @@ export function createAction(event: ethereum.Event): Action {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.critical(
-      "Contract hasn't been registered before this create event: {}",
+      "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
   } else {
@@ -47,11 +47,11 @@ export function createAction(event: ethereum.Event): Action {
   return entity;
 }
 
-export function generateStreamId(localId: BigInt): string {
+export function generateStreamId(tokenId: BigInt): string {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.critical(
-      "Contract hasn't been registered before this create event: {}",
+      "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
     return "";
@@ -59,15 +59,14 @@ export function generateStreamId(localId: BigInt): string {
 
   let id = contract.address
     .toHexString()
-    .substr(2, 8)
     .concat("-")
-    .concat(localId.toString());
+    .concat(tokenId.toString());
 
   return id;
 }
 
-export function getStreamByIdFromSource(localId: BigInt): Stream | null {
-  let id = generateStreamId(localId);
+export function getStreamByIdFromSource(tokenId: BigInt): Stream | null {
+  let id = generateStreamId(tokenId);
   return Stream.load(id);
 }
 
