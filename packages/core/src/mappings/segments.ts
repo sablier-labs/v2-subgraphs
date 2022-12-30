@@ -51,14 +51,13 @@ export function createSegments(
   }
 
   let streamed = zero;
-  let length = a.length;
   let inputs: SegmentInput[] = [new SegmentInput(zero, zero, stream.startTime)];
 
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < a.length; i++) {
     inputs.push(new SegmentInput(a[i], e[i], m[i]));
   }
 
-  for (let i = 1; i < length; i++) {
+  for (let i = 1; i < inputs.length; i++) {
     let id = stream.id.concat("-").concat(i.toString());
     let segment: Segment = createSegment(
       id,
@@ -68,6 +67,7 @@ export function createSegments(
     );
 
     segment.stream = stream.id;
+    segment.position = BigInt.fromI32(i - 1);
     segment.save();
 
     streamed = streamed.plus(inputs[i].amount);

@@ -131,6 +131,8 @@ type Stream @entity {
 type Segment @entity {
   "unique id resolving to stream id concatenated with the position of the segment"
   id: String!
+  "position of the segment inside the array"
+  position: BigInt!
   "stream upon which the segment is used"
   stream: Stream!
   "amount resolving to the value streamed during this segment"

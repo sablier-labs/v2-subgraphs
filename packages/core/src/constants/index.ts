@@ -28,6 +28,6 @@ export function getContractsPro(): string[] {
   return pro.map<string>((item) => item.toString().toLowerCase());
 }
 
-export function getChainId() {
+export function getChainId(): BigInt {
   return BigInt.fromI32(chainId);
 }
