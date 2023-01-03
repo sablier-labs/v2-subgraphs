@@ -95,7 +95,7 @@ export function getContractById(id: string): Contract | null {
   return Contract.load(id);
 }
 
-export function createContract(address: Address, type: string): Contract {
+export function createContract(address: Address, category: string): Contract {
   let id = address.toHexString();
   let entity = getContractById(id);
   if (entity == null) {
@@ -103,7 +103,7 @@ export function createContract(address: Address, type: string): Contract {
   }
 
   entity.address = address;
-  entity.type = type;
+  entity.category = category;
 
   entity.save();
 

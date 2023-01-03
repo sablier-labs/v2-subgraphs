@@ -1,15 +1,15 @@
-enum ContractType {
+enum ContractCategory {
   Linear
   Pro
 }
 
-enum StreamType {
+enum StreamCategory {
   Cliff
   Linear
   Pro
 }
 
-enum ActionType {
+enum ActionCategory {
   Transfer
   Create
   Cancel
@@ -22,8 +22,8 @@ type Contract @entity {
   id: String!
   "address of the contract"
   address: Bytes!
-  "type of contract e.g. Linear or Pro"
-  type: ContractType!
+  "category of contract e.g. Linear or Pro"
+  category: ContractCategory!
   "streams created through this contract"
   streams: [Stream!]! @derivedFrom(field: "contract")
   "actions on streams, triggered through this contract"
@@ -37,8 +37,8 @@ type Action @entity {
   contract: Contract!
   "stream linked to this action"
   stream: Stream!
-  "type of action e.g. Deposit or Withdraw"
-  type: ActionType!
+  "category of action e.g. Deposit or Withdraw"
+  category: ActionCategory!
 
   "transaction details: hash"
   hash: Bytes!
@@ -85,7 +85,7 @@ type Stream @entity {
   "hardcoded chain id"
   chainId: BigInt!
   "type of stream (for sorting reasons)"
-  type: StreamType!
+  category: StreamCategory!
   "source of funds for the stream (anyone can create and fund a stream on any sender's behalf)"
   funder: Bytes!
   "manager of the stream, defined at creation by the funder (usually the same as the funder)"

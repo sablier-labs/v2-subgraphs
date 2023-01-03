@@ -65,7 +65,7 @@ export function createLinearStream(
   }
 
   /** --------------- */
-  entity.type = event.params.cliffTime.isZero() ? "Linear" : "Cliff";
+  entity.category = event.params.cliffTime.isZero() ? "Linear" : "Cliff";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
@@ -104,7 +104,7 @@ export function createProStream(event: EventCreateProStream): Stream | null {
   }
 
   /** --------------- */
-  entity.type = "Pro";
+  entity.category = "Pro";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;

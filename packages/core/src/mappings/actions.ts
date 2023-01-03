@@ -17,7 +17,7 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
   }
 
   let action = createAction(event);
-  action.type = "Create";
+  action.category = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
   action.amountA = event.params.depositAmount;
@@ -37,7 +37,7 @@ export function handleCreatePro(event: EventCreateProStream): void {
   }
 
   let action = createAction(event);
-  action.type = "Create";
+  action.category = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
   action.amountA = event.params.depositAmount;
@@ -59,7 +59,7 @@ export function handleCancel(event: EventCancel): void {
   }
 
   let action = createAction(event);
-  action.type = "Cancel";
+  action.category = "Cancel";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
   action.amountA = event.params.returnAmount;
@@ -87,7 +87,7 @@ export function handleRenounce(event: EventRenounce): void {
   }
 
   let action = createAction(event);
-  action.type = "Renounce";
+  action.category = "Renounce";
 
   /** --------------- */
 
@@ -106,7 +106,7 @@ export function handleTransfer(event: EventTransfer): void {
   }
 
   let action = createAction(event);
-  action.type = "Transfer";
+  action.category = "Transfer";
 
   action.addressA = event.params.from;
   action.addressB = event.params.to;
@@ -127,7 +127,7 @@ export function handleWithdraw(event: EventWithdraw): void {
   }
 
   let action = createAction(event);
-  action.type = "Withdraw";
+  action.category = "Withdraw";
   action.addressB = event.params.recipient;
   action.amountB = event.params.amount;
 
