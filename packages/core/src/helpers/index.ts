@@ -7,9 +7,9 @@ import {
 } from "@graphprotocol/graph-ts";
 import {
   Action,
+  Batch,
+  Batcher,
   Contract,
-  Group,
-  Grouper,
   Stream,
   Token,
   Watcher,
@@ -110,40 +110,40 @@ export function createContract(address: Address, category: string): Contract {
   return entity;
 }
 
-export function getOrCreateGrouper(sender: Address): Grouper {
+export function getOrCreateBatcher(sender: Address): Batcher {
   let id = sender.toHexString();
-  let entity = Grouper.load(id);
+  let entity = Batcher.load(id);
 
   if (entity == null) {
-    entity = new Grouper(id);
+    entity = new Batcher(id);
     entity.address = sender;
-    entity.groupIndex = zero;
+    entity.batchIndex = zero;
   }
 
   return entity;
 }
 
-export function getOrCreateGroup(
+export function getOrCreateBatch(
   event: ethereum.Event,
   sender: Address,
-): Group {
+): Batch {
   let id = event.transaction.hash.toHexString();
-  let entity = Group.load(id);
-  let grouper = getOrCreateGrouper(sender);
+  let entity = Batch.load(id);
+  let batcher = getOrCreateBatcher(sender);
 
   if (entity == null) {
-    entity = new Group(id);
+    entity = new Batch(id);
     entity.hash = event.transaction.hash;
     entity.timestamp = event.block.timestamp;
-    entity.grouper = grouper.id;
+    entity.batcher = batcher.id;
     entity.count = one;
   } else {
     entity.count = entity.count.plus(one);
     if (BigInt.compare(entity.count, one) == 1 && entity.label == null) {
-      let label = grouper.groupIndex.plus(one).toString();
+      let label = batcher.batchIndex.plus(one).toString();
       entity.label = label;
-      grouper.groupIndex = grouper.groupIndex.plus(one);
-      grouper.save();
+      batcher.batchIndex = batcher.batchIndex.plus(one);
+      batcher.save();
     }
   }
 

@@ -124,8 +124,8 @@ type Stream @entity {
   actions: [Action!]! @derivedFrom(field: "stream")
   "segments of the stream curve, only available on pro streams"
   segments: [Segment!]! @derivedFrom(field: "stream")
-  "group/batch the stream is part of, only available when created within a batch create transaction"
-  group: Group!
+  "batch the stream is part of, only available when created within a batch create transaction"
+  batch: Batch!
 }
 
 type Segment @entity {
@@ -153,32 +153,32 @@ type Segment @entity {
   endAmount: BigInt!
 }
 
-type Group @entity {
-  "unique identifier of the group/batch, resolving to the hash of the parent transaction"
+type Batch @entity {
+  "unique identifier of the batch, resolving to the hash of the parent transaction"
   id: String!
-  "number of streams that are part of this group"
+  "number of streams that are part of this batch"
   count: BigInt!
-  "index of group resolving to a conditional counter of 2+ stream groups, filtered by sender (label is null for groups containing a single stream, for filtering)"
+  "index of batch resolving to a conditional counter of 2+ stream batches, filtered by sender (label is null for batches containing a single stream, for filtering)"
   label: String
-  "grouper (sender) that started this group"
-  grouper: Grouper
-  "streams that are part of this group"
-  streams: [Stream!]! @derivedFrom(field: "group")
-  "hash of the transaction that created this group/batch"
+  "batcher (sender) that started this batch"
+  batcher: Batcher
+  "streams that are part of this batch"
+  streams: [Stream!]! @derivedFrom(field: "batch")
+  "hash of the transaction that created this batch"
   hash: Bytes!
-  "timestamp of the transaction that created this group/batch"
+  "timestamp of the transaction that created this batch"
   timestamp: BigInt!
 }
 
-type Grouper @entity {
+type Batcher @entity {
   "unique identifier of the sender, resolving to their address"
   id: String!
   "address of the sender"
   address: Bytes!
-  "numeric index, will be used to construct the group label"
-  groupIndex: BigInt!
-  "groups started by this grouper"
-  groups: [Group!]! @derivedFrom(field: "grouper")
+  "numeric index, will be used to construct the batch label"
+  batchIndex: BigInt!
+  "batches started by this batcher (sender)"
+  batches: [Batch!]! @derivedFrom(field: "batcher")
 }
 
 type Watcher @entity {

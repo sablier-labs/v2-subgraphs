@@ -6,7 +6,7 @@ import { getChainId, one, zero } from "../constants";
 import {
   generateStreamId,
   getContractById,
-  getOrCreateGroup,
+  getOrCreateBatch,
   getOrCreateToken,
   getOrCreateWatcher,
 } from "../helpers";
@@ -88,8 +88,8 @@ export function createLinearStream(
   entity.token = token.id;
 
   /** --------------- */
-  let group = getOrCreateGroup(event, event.params.sender);
-  entity.group = group.id;
+  let batch = getOrCreateBatch(event, event.params.sender);
+  entity.batch = batch.id;
 
   entity.save();
   return entity;
@@ -119,8 +119,8 @@ export function createProStream(event: EventCreateProStream): Stream | null {
   entity.token = token.id;
 
   /** --------------- */
-  let group = getOrCreateGroup(event, event.params.sender);
-  entity.group = group.id;
+  let batch = getOrCreateBatch(event, event.params.sender);
+  entity.batch = batch.id;
 
   /** --------------- */
   entity.save();

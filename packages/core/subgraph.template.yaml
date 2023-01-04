@@ -41,8 +41,8 @@ templates:
       entities:
         - Action
         - Contract
-        - Group
-        - Grouper
+        - Batch
+        - Batcher
         - Segment
         - Stream
         - Token
@@ -78,8 +78,8 @@ templates:
       entities:
         - Action
         - Contract
-        - Group
-        - Grouper
+        - Batch
+        - Batcher
         - Segment
         - Stream
         - Token
