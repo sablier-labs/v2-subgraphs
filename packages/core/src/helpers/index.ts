@@ -80,9 +80,12 @@ export function getOrCreateToken(address: Address): Token {
     let contract = ERC20Contract.bind(address);
     let decimals = contract.decimals();
     let symbol = contract.symbol();
+    let name = contract.name();
 
+    entity.chainId = getChainId();
     entity.address = address;
     entity.symbol = symbol;
+    entity.name = name;
     entity.decimals = BigInt.fromI32(decimals);
 
     entity.save();

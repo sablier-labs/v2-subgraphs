@@ -63,12 +63,16 @@ type Action @entity {
 type Token @entity(immutable: true) {
   "unique identifier resolving to the ERC20 token address"
   id: ID!
+  "hardcoded chain id"
+  chainId: BigInt!
   "address of the ERC20 token"
   address: Bytes!
   "decimals of the ERC20 token"
   decimals: BigInt!
   "symbol of the ERC20 token"
   symbol: String!
+  "name of the ERC20 token"
+  name: String!
   "streams that rely on this token"
   streams: [Stream!]! @derivedFrom(field: "token")
 }
