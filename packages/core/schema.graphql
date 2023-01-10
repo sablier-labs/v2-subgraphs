@@ -78,8 +78,8 @@ type Stream @entity {
   id: String!
   "unique identifier for the stream released by the origin contract - same as the tokenId or streamId values given by the contract"
   localId: BigInt!
-  "unique global id tracked by the subgraph watcher"
-  globalId: BigInt!
+  "unique global id tracked by the subgraph watcher - 🚨 these may change if new contracts are added and the chronological order of streams changes"
+  subgraphId: BigInt!
   "contract through which this stream has been created"
   contract: Contract!
   "hardcoded chain id"

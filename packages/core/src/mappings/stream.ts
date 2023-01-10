@@ -34,7 +34,7 @@ function createStream(localId: BigInt, event: ethereum.Event): Stream | null {
   /** --------------- */
   entity.localId = localId;
   entity.contract = contract.id;
-  entity.globalId = watcher.streamIndex;
+  entity.subgraphId = watcher.streamIndex;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
   entity.chainId = getChainId();
