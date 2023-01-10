@@ -69,6 +69,7 @@ export function createLinearStream(
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
+  entity.parties = [event.params.sender, event.params.recipient];
   entity.depositAmount = event.params.depositAmount;
   entity.intactAmount = event.params.depositAmount;
   entity.startTime = event.params.startTime;
@@ -108,6 +109,7 @@ export function createProStream(event: EventCreateProStream): Stream | null {
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
+  entity.parties = [event.params.sender, event.params.recipient];
   entity.depositAmount = event.params.depositAmount;
   entity.intactAmount = event.params.depositAmount;
   entity.startTime = event.params.startTime;

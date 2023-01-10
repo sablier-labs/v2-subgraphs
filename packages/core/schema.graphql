@@ -96,6 +96,8 @@ type Stream @entity {
   sender: Bytes!
   "current recipient of the stream, can withdraw the funds (the recipient can change on stream/nft transfer)"
   recipient: Bytes!
+  "list of relevant stream parties (for filtering) - usually sender and recipient"
+  parties: [Bytes!]!
   "transaction hash for the stream creation"
   hash: Bytes!
   "timestamp of the stream creation (for sorting reasons)"
