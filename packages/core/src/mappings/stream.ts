@@ -65,7 +65,6 @@ export function createLinearStream(
   }
 
   /** --------------- */
-  entity.category = event.params.cliffTime.isZero() ? "Linear" : "Cliff";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
@@ -83,6 +82,7 @@ export function createLinearStream(
   if (!cliff.isZero()) {
     entity.cliffAmount = entity.depositAmount.times(duration.div(cliff));
   }
+  entity.category = cliff.isZero() ? "Linear" : "Cliff";
 
   /** --------------- */
   let token = getOrCreateToken(event.params.token);
