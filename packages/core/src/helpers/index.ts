@@ -47,7 +47,7 @@ export function createAction(event: ethereum.Event): Action {
   return entity;
 }
 
-export function generateStreamId(localId: BigInt): string {
+export function generateStreamId(tokenId: BigInt): string {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.critical(
@@ -60,13 +60,34 @@ export function generateStreamId(localId: BigInt): string {
   let id = contract.address
     .toHexString()
     .concat("-")
-    .concat(localId.toString());
+    .concat(getChainId().toString())
+    .concat("-")
+    .concat(tokenId.toString());
 
   return id;
 }
 
-export function getStreamByIdFromSource(localId: BigInt): Stream | null {
-  let id = generateStreamId(localId);
+export function generateStreamAlias(tokenId: BigInt): string {
+  let contract = getContractById(dataSource.address().toHexString());
+  if (contract == null) {
+    log.critical(
+      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      [dataSource.address().toHexString()],
+    );
+    return "";
+  }
+
+  let id = contract.alias
+    .concat("-")
+    .concat(getChainId().toString())
+    .concat("-")
+    .concat(tokenId.toString());
+
+  return id;
+}
+
+export function getStreamByIdFromSource(tokenId: BigInt): Stream | null {
+  let id = generateStreamId(tokenId);
   return Stream.load(id);
 }
 
@@ -98,13 +119,18 @@ export function getContractById(id: string): Contract | null {
   return Contract.load(id);
 }
 
-export function createContract(address: Address, category: string): Contract {
+export function createContract(
+  address: Address,
+  alias: string,
+  category: string,
+): Contract {
   let id = address.toHexString();
   let entity = getContractById(id);
   if (entity == null) {
     entity = new Contract(id);
   }
 
+  entity.alias = alias;
   entity.address = address;
   entity.category = category;
 

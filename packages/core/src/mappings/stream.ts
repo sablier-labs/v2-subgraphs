@@ -4,6 +4,7 @@ import { CreateLinearStream as EventCreateLinearStream } from "../generated/type
 import { CreateProStream as EventCreateProStream } from "../generated/types/templates/ContractPro/SablierV2Pro";
 import { getChainId, one, zero } from "../constants";
 import {
+  generateStreamAlias,
   generateStreamId,
   getContractById,
   getOrCreateBatch,
@@ -12,7 +13,7 @@ import {
 } from "../helpers";
 import { createSegments } from "./segments";
 
-function createStream(localId: BigInt, event: ethereum.Event): Stream | null {
+function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   let watcher = getOrCreateWatcher();
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
@@ -24,15 +25,18 @@ function createStream(localId: BigInt, event: ethereum.Event): Stream | null {
   }
 
   /** --------------- */
-  let id = generateStreamId(localId);
+  let id = generateStreamId(tokenId);
   if (id == null) {
     return null;
   }
 
+  let alias = generateStreamAlias(tokenId);
+
   /** --------------- */
   let entity = new Stream(id);
   /** --------------- */
-  entity.localId = localId;
+  entity.tokenId = tokenId;
+  entity.alias = alias;
   entity.contract = contract.id;
   entity.subgraphId = watcher.streamIndex;
   entity.hash = event.transaction.hash;
@@ -57,8 +61,8 @@ function createStream(localId: BigInt, event: ethereum.Event): Stream | null {
 export function createLinearStream(
   event: EventCreateLinearStream,
 ): Stream | null {
-  let localId = event.params.streamId;
-  let entity = createStream(localId, event);
+  let tokenId = event.params.streamId;
+  let entity = createStream(tokenId, event);
 
   if (entity == null) {
     return null;
@@ -97,8 +101,8 @@ export function createLinearStream(
 }
 
 export function createProStream(event: EventCreateProStream): Stream | null {
-  let localId = event.params.streamId;
-  let entity = createStream(localId, event);
+  let tokenId = event.params.streamId;
+  let entity = createStream(tokenId, event);
 
   if (entity == null) {
     return null;
