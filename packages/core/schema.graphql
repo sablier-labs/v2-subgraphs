@@ -126,6 +126,8 @@ type Stream @entity {
   canceled: Boolean!
   "action in which the stream has been canceled"
   canceledAction: Action
+  "timestamp for the when the stream was canceled"
+  canceledTime: BigInt
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
   "amount resolving to the sum still inside the stream (regardless of it being locked or not)"
