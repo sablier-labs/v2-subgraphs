@@ -84,7 +84,7 @@ export function createLinearStream(
   let duration = event.params.stopTime.minus(event.params.startTime);
   let cliff = event.params.cliffTime.minus(event.params.startTime);
   if (!cliff.isZero()) {
-    entity.cliffAmount = entity.depositAmount.times(duration.div(cliff));
+    entity.cliffAmount = entity.depositAmount.times(cliff.div(duration));
   }
   entity.category = cliff.isZero() ? "Linear" : "Cliff";
 
