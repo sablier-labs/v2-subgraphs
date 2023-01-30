@@ -122,6 +122,8 @@ type Stream @entity {
   cancelable: Boolean!
   "action in which the stream has been made non-cancelable (can be the deposit transaction or a different one)"
   cancelableAction: Action
+  "timestamp for the when the stream was made non-cancelable"
+  cancelableTime: BigInt
   "flag showing if the stream has been canceled (making it true is a one-way trip)"
   canceled: Boolean!
   "action in which the stream has been canceled"

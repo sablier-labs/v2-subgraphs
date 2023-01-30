@@ -24,6 +24,7 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
 
   if (stream.cancelable == false) {
     stream.cancelableAction = action.id;
+    stream.cancelableTime = event.block.timestamp;
   }
   stream.save();
   action.stream = stream.id;
@@ -44,6 +45,7 @@ export function handleCreatePro(event: EventCreateProStream): void {
 
   if (stream.cancelable == false) {
     stream.cancelableAction = action.id;
+    stream.cancelableTime = event.block.timestamp;
   }
 
   stream.save();
@@ -94,6 +96,8 @@ export function handleRenounce(event: EventRenounce): void {
 
   stream.cancelable = false;
   stream.cancelableAction = action.id;
+  stream.cancelableTime = event.block.timestamp;
+
   stream.save();
   action.stream = stream.id;
   action.save();
