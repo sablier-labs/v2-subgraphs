@@ -119,6 +119,7 @@ export function handleTransfer(event: EventTransfer): void {
   /** --------------- */
 
   stream.recipient = event.params.to;
+  stream.parties = [stream.sender, event.params.to];
   stream.save();
   action.stream = stream.id;
   action.save();
