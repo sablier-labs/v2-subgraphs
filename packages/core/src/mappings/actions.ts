@@ -1,16 +1,16 @@
 import {
-  Cancel as EventCancel,
-  Renounce as EventRenounce,
+  CancelLockupStream as EventCancel,
+  RenounceLockupStream as EventRenounce,
   Transfer as EventTransfer,
-  Withdraw as EventWithdraw,
-} from "../generated/types/templates/ContractLinear/SablierV2Linear";
-import { CreateLinearStream as EventCreateLinearStream } from "../generated/types/templates/ContractLinear/SablierV2Linear";
-import { CreateProStream as EventCreateProStream } from "../generated/types/templates/ContractPro/SablierV2Pro";
+  WithdrawFromLockupStream as EventWithdraw,
+} from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
 import { zero } from "../constants";
 import { createAction, getStreamByIdFromSource } from "../helpers";
 import { createLinearStream, createProStream } from "./stream";
 
-export function handleCreateLinear(event: EventCreateLinearStream): void {
+export function handleCreateLinear(event: EventCreateLinear): void {
   let stream = createLinearStream(event);
   if (stream == null) {
     return;
@@ -20,7 +20,7 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
   action.category = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
-  action.amountA = event.params.depositAmount;
+  action.amountA = event.params.amounts.deposit;
 
   if (stream.cancelable == false) {
     stream.cancelableAction = action.id;
@@ -31,7 +31,7 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
   action.save();
 }
 
-export function handleCreatePro(event: EventCreateProStream): void {
+export function handleCreatePro(event: EventCreatePro): void {
   let stream = createProStream(event);
   if (stream == null) {
     return;
@@ -41,7 +41,7 @@ export function handleCreatePro(event: EventCreateProStream): void {
   action.category = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
-  action.amountA = event.params.depositAmount;
+  action.amountA = event.params.amounts.deposit;
 
   if (stream.cancelable == false) {
     stream.cancelableAction = action.id;
@@ -64,15 +64,15 @@ export function handleCancel(event: EventCancel): void {
   action.category = "Cancel";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
-  action.amountA = event.params.returnAmount;
-  action.amountB = event.params.withdrawAmount;
+  action.amountA = event.params.senderAmount;
+  action.amountB = event.params.recipientAmount;
   /** --------------- */
 
   stream.canceled = true;
   stream.canceledAction = action.id;
   stream.canceledTime = event.block.timestamp;
   stream.withdrawnAmount = stream.withdrawnAmount.plus(
-    event.params.withdrawAmount,
+    event.params.recipientAmount,
   );
   stream.intactAmount = zero;
 
@@ -134,7 +134,7 @@ export function handleWithdraw(event: EventWithdraw): void {
 
   let action = createAction(event);
   action.category = "Withdraw";
-  action.addressB = event.params.recipient;
+  action.addressB = event.params.to;
   action.amountB = event.params.amount;
 
   /** --------------- */

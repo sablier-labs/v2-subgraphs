@@ -1,14 +1,14 @@
 import { BigInt, dataSource, ethereum, log } from "@graphprotocol/graph-ts";
 import { Stream } from "../generated/types/schema";
-import { CreateLinearStream as EventCreateLinearStream } from "../generated/types/templates/ContractLinear/SablierV2Linear";
-import { CreateProStream as EventCreateProStream } from "../generated/types/templates/ContractPro/SablierV2Pro";
+import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
 import { getChainId, one, zero } from "../constants";
 import {
   generateStreamAlias,
   generateStreamId,
   getContractById,
+  getOrCreateAsset,
   getOrCreateBatch,
-  getOrCreateToken,
   getOrCreateWatcher,
 } from "../helpers";
 import { createSegments } from "./segments";
@@ -58,9 +58,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   return entity;
 }
 
-export function createLinearStream(
-  event: EventCreateLinearStream,
-): Stream | null {
+export function createLinearStream(event: EventCreateLinear): Stream | null {
   let tokenId = event.params.streamId;
   let entity = createStream(tokenId, event);
 
@@ -73,24 +71,28 @@ export function createLinearStream(
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
   entity.parties = [event.params.sender, event.params.recipient];
-  entity.depositAmount = event.params.depositAmount;
-  entity.intactAmount = event.params.depositAmount;
-  entity.startTime = event.params.startTime;
-  entity.endTime = event.params.stopTime;
+
+  entity.depositAmount = event.params.amounts.deposit;
+  entity.brokerFeeAmount = event.params.amounts.brokerFee;
+  entity.protocolFeeAmount = event.params.amounts.protocolFee;
+  entity.intactAmount = event.params.amounts.deposit;
+
+  entity.startTime = event.params.range.start;
+  entity.endTime = event.params.range.end;
   entity.cancelable = event.params.cancelable;
 
   /** --------------- */
-  entity.cliffTime = event.params.cliffTime;
-  let duration = event.params.stopTime.minus(event.params.startTime);
-  let cliff = event.params.cliffTime.minus(event.params.startTime);
+  entity.cliffTime = event.params.range.cliff;
+  let duration = event.params.range.end.minus(event.params.range.start);
+  let cliff = event.params.range.cliff.minus(event.params.range.start);
   if (!cliff.isZero()) {
     entity.cliffAmount = entity.depositAmount.times(cliff.div(duration));
   }
   entity.category = cliff.isZero() ? "Linear" : "Cliff";
 
   /** --------------- */
-  let token = getOrCreateToken(event.params.token);
-  entity.token = token.id;
+  let asset = getOrCreateAsset(event.params.asset);
+  entity.asset = asset.id;
 
   /** --------------- */
   let batch = getOrCreateBatch(event, event.params.sender);
@@ -100,7 +102,7 @@ export function createLinearStream(
   return entity;
 }
 
-export function createProStream(event: EventCreateProStream): Stream | null {
+export function createProStream(event: EventCreatePro): Stream | null {
   let tokenId = event.params.streamId;
   let entity = createStream(tokenId, event);
 
@@ -114,15 +116,19 @@ export function createProStream(event: EventCreateProStream): Stream | null {
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
   entity.parties = [event.params.sender, event.params.recipient];
-  entity.depositAmount = event.params.depositAmount;
-  entity.intactAmount = event.params.depositAmount;
-  entity.startTime = event.params.startTime;
-  entity.endTime = event.params.stopTime;
+
+  entity.depositAmount = event.params.amounts.deposit;
+  entity.brokerFeeAmount = event.params.amounts.brokerFee;
+  entity.protocolFeeAmount = event.params.amounts.protocolFee;
+  entity.intactAmount = event.params.amounts.deposit;
+
+  entity.startTime = event.params.range.start;
+  entity.endTime = event.params.range.end;
   entity.cancelable = event.params.cancelable;
 
   /** --------------- */
-  let token = getOrCreateToken(event.params.token);
-  entity.token = token.id;
+  let asset = getOrCreateAsset(event.params.asset);
+  entity.asset = asset.id;
 
   /** --------------- */
   let batch = getOrCreateBatch(event, event.params.sender);

@@ -8,8 +8,8 @@ dataSources:
     name: ContractInitializer
     network: goerli
     source:
-      address: "0xb0Ed8e11339F1d655a3029a1e3d7e448326556c6"
-      abi: SablierV2Linear
+      address: "0x0784fB3ff8F3d0386c1FFa3a0984A0c600D8F2Ab"
+      abi: SablierV2LockupLinear
       startBlock: 8122650
     mapping:
       kind: ethereum/events
@@ -18,22 +18,22 @@ dataSources:
       entities:
         - Stream
       abis:
-        - name: SablierV2Linear
-          file: ./abis/SablierV2Linear.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
         - event:
-            CreateLinearStream(uint256,indexed address,indexed address,indexed
-            address,uint128,address,uint40,uint40,uint40,bool)
+            CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
+            address,(uint128,uint128,uint128),address,bool,(uint40,uint40,uint40),address)
           handler: handleInitializer
       file: ./src/mappings/index.ts
 templates:
   - kind: ethereum/contract
-    name: ContractLinear
+    name: ContractLockupLinear
     network: goerli
     source:
-      abi: SablierV2Linear
+      abi: SablierV2LockupLinear
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -48,29 +48,29 @@ templates:
         - Token
         - Watcher
       abis:
-        - name: SablierV2Linear
-          file: ./abis/SablierV2Linear.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
-        - event: Cancel(indexed uint256,indexed address,indexed address,uint128,uint128)
+        - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel
         - event:
-            CreateLinearStream(uint256,indexed address,indexed address,indexed
-            address,uint128,address,uint40,uint40,uint40,bool)
+            CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
+            address,(uint128,uint128,uint128),address,bool,(uint40,uint40,uint40),address)
           handler: handleCreateLinear
-        - event: Renounce(indexed uint256)
+        - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-        - event: Withdraw(indexed uint256,indexed address,uint128)
+        - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
-    name: ContractPro
+    name: ContractLockupPro
     network: goerli
     source:
-      abi: SablierV2Pro
+      abi: SablierV2LockupPro
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -85,21 +85,21 @@ templates:
         - Token
         - Watcher
       abis:
-        - name: SablierV2Pro
-          file: ./abis/SablierV2Pro.json
+        - name: SablierV2LockupPro
+          file: ./abis/SablierV2LockupPro.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
-        - event: Cancel(indexed uint256,indexed address,indexed address,uint128,uint128)
+        - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel
         - event:
-            CreateProStream(uint256,indexed address,indexed address,indexed
-            address,uint128,address,uint40,uint40,uint128[],int64[],uint40[],bool)
+            CreateLockupProStream(uint256,indexed address,indexed address,indexed
+            address,(uint128,uint128,uint128),(uint128,uint64,uint40)[],address,bool,(uint40,uint40),address)
           handler: handleCreatePro
-        - event: Renounce(indexed uint256)
+        - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-        - event: Withdraw(indexed uint256,indexed address,uint128)
+        - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw
       file: ./src/mappings/index.ts

@@ -1,27 +1,30 @@
 import { Address } from "@graphprotocol/graph-ts";
-import { ContractLinear, ContractPro } from "../generated/types/templates";
-import { CreateLinearStream } from "../generated/types/templates/ContractLinear/SablierV2Linear";
+import {
+  ContractLockupLinear as ContractLinear,
+  ContractLockupPro as ContractPro,
+} from "../generated/types/templates";
+import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { getContractsLinear, getContractsPro } from "../constants";
 import { createContract, getOrCreateWatcher } from "../helpers";
 
 function createContractLinear(address: Address, alias: string): void {
   ContractLinear.create(address);
-  createContract(address, alias, "Linear");
+  createContract(address, alias, "LockupLinear");
 }
 
 function createContractPro(address: Address, alias: string): void {
   ContractPro.create(address);
-  createContract(address, alias, "Pro");
+  createContract(address, alias, "LockupPro");
 }
 
 /**
  * Use the oldest linear contract as a trigger to start indexing all the other contracts.
  *
- * @param {CreateLinearStream} _event
+ * @param {EventCreateLinear} _event
  * @returns
  */
 
-export function handleInitializer(_event: CreateLinearStream): void {
+export function handleInitializer(_event: EventCreateLinear): void {
   let watcher = getOrCreateWatcher();
   if (watcher.isInitialized) {
     return;

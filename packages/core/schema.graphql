@@ -1,6 +1,6 @@
 enum ContractCategory {
-  Linear
-  Pro
+  LockupLinear
+  LockupPro
 }
 
 enum StreamCategory {
@@ -24,7 +24,7 @@ type Contract @entity {
   alias: String!
   "address of the contract"
   address: Bytes!
-  "category of contract e.g. Linear or Pro"
+  "category of contract e.g. LockupLinear or LockupPro"
   category: ContractCategory!
   "streams created through this contract"
   streams: [Stream!]! @derivedFrom(field: "contract")
@@ -62,21 +62,21 @@ type Action @entity {
   amountB: BigInt
 }
 
-type Token @entity(immutable: true) {
-  "unique identifier resolving to the ERC20 token address"
+type Asset @entity(immutable: true) {
+  "unique identifier resolving to the ERC20 asset/token address"
   id: ID!
   "hardcoded chain id"
   chainId: BigInt!
-  "address of the ERC20 token"
+  "address of the ERC20 asset/token"
   address: Bytes!
-  "decimals of the ERC20 token"
+  "decimals of the ERC20 asset/token"
   decimals: BigInt!
-  "symbol of the ERC20 token"
+  "symbol of the ERC20 asset/token"
   symbol: String!
-  "name of the ERC20 token"
+  "name of the ERC20 asset/token"
   name: String!
-  "streams that rely on this token"
-  streams: [Stream!]! @derivedFrom(field: "token")
+  "streams that rely on this asset/token"
+  streams: [Stream!]! @derivedFrom(field: "asset")
 }
 
 type Stream @entity {
@@ -108,8 +108,12 @@ type Stream @entity {
   timestamp: BigInt!
   "amount deposit in the stream (without fees)"
   depositAmount: BigInt!
-  "token supported by this stream"
-  token: Token!
+  "amount of fees paid to the broker"
+  brokerFeeAmount: BigInt!
+  "amount of fees paid to the protocol"
+  protocolFeeAmount: BigInt!
+  "asset (ERC20 token) supported by this stream"
+  asset: Asset!
   "timestamp for the start of the stream"
   startTime: BigInt!
   "timestamp for the end of the stream"
@@ -132,7 +136,7 @@ type Stream @entity {
   canceledTime: BigInt
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
-  "amount resolving to the sum still inside the stream (regardless of it being locked or not)"
+  "amount resolving to the sum still inside the stream (regardless of it being locked or not) (difference between deposit and withdrawn)"
   intactAmount: BigInt!
   "actions triggered in the context of this stream"
   actions: [Action!]! @derivedFrom(field: "stream")

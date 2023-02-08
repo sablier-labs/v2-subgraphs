@@ -7,14 +7,14 @@ import {
 } from "@graphprotocol/graph-ts";
 import {
   Action,
+  Asset,
   Batch,
   Batcher,
   Contract,
   Stream,
-  Token,
   Watcher,
 } from "../generated/types/schema";
-import { ERC20 as ERC20Contract } from "../generated/types/templates/ContractLinear/ERC20";
+import { ERC20 as ERC20Contract } from "../generated/types/templates/ContractLockupLinear/ERC20";
 import { getChainId, one, zero } from "../constants";
 
 export function generateActionId(event: ethereum.Event): string {
@@ -91,12 +91,12 @@ export function getStreamByIdFromSource(tokenId: BigInt): Stream | null {
   return Stream.load(id);
 }
 
-export function getOrCreateToken(address: Address): Token {
+export function getOrCreateAsset(address: Address): Asset {
   let id = address.toHexString();
-  let entity = Token.load(id);
+  let entity = Asset.load(id);
 
   if (entity == null) {
-    entity = new Token(address.toHexString());
+    entity = new Asset(address.toHexString());
 
     let contract = ERC20Contract.bind(address);
     let decimals = contract.decimals();
