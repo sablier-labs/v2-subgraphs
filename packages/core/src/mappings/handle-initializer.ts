@@ -4,8 +4,16 @@ import {
   ContractLockupPro as ContractPro,
 } from "../generated/types/templates";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { getContractsLinear, getContractsPro } from "../constants";
-import { createContract, getOrCreateWatcher } from "../helpers";
+import {
+  getContractsComptroller,
+  getContractsLinear,
+  getContractsPro,
+} from "../constants";
+import {
+  createContract,
+  getOrCreateComptroller,
+  getOrCreateWatcher,
+} from "../helpers";
 
 function createContractLinear(address: Address, alias: string): void {
   ContractLinear.create(address);
@@ -15,6 +23,10 @@ function createContractLinear(address: Address, alias: string): void {
 function createContractPro(address: Address, alias: string): void {
   ContractPro.create(address);
   createContract(address, alias, "LockupPro");
+}
+
+function createContractComptroller(address: Address): void {
+  getOrCreateComptroller(address);
 }
 
 /**
@@ -34,6 +46,13 @@ export function handleInitializer(_event: EventCreateLinear): void {
   }
 
   /** --------------- */
+
+  let comptrollers = getContractsComptroller();
+  if (comptrollers.length > 0) {
+    for (let i = 0; i < comptrollers.length; i++) {
+      createContractComptroller(Address.fromString(comptrollers[i][0]));
+    }
+  }
 
   let linears = getContractsLinear();
   if (linears.length > 0) {

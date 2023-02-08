@@ -20,6 +20,10 @@ dataSources:
       abis:
         - name: SablierV2LockupLinear
           file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2LockupPro
+          file: ./abis/SablierV2LockupPro.json
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
@@ -53,6 +57,8 @@ templates:
       abis:
         - name: SablierV2LockupLinear
           file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2LockupPro
+          file: ./abis/SablierV2LockupPro.json
         - name: SablierV2Comptroller
           file: ./abis/SablierV2Comptroller.json
         - name: ERC20
@@ -103,6 +109,8 @@ templates:
       abis:
         - name: SablierV2LockupPro
           file: ./abis/SablierV2LockupPro.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
         - name: SablierV2Comptroller
           file: ./abis/SablierV2Comptroller.json
         - name: ERC20

@@ -1,5 +1,11 @@
 import { BigInt, Bytes } from "@graphprotocol/graph-ts";
-import { chainId, initializer, linear, periphery, pro } from "../generated/env";
+import {
+  chainId,
+  comptroller,
+  initializer,
+  linear,
+  pro,
+} from "../generated/env";
 
 export let zero = BigInt.fromI32(0);
 export let one = BigInt.fromI32(1);
@@ -17,17 +23,18 @@ export function getInitializerContract(): string {
   return initializer.toLowerCase();
 }
 
+export function getContractsComptroller(): string[][] {
+  return comptroller.map<string[]>((item) => [
+    item[0].toString().toLowerCase(),
+    item[1].toString().toLowerCase(),
+  ]);
+}
+
 export function getContractsLinear(): string[][] {
   if (linear.length === 0) {
     return [];
   }
   return linear.map<string[]>((item) => [
-    item[0].toString().toLowerCase(),
-    item[1].toString().toLowerCase(),
-  ]);
-}
-export function getContractsPeriphery(): string[][] {
-  return periphery.map<string[]>((item) => [
     item[0].toString().toLowerCase(),
     item[1].toString().toLowerCase(),
   ]);
@@ -42,8 +49,4 @@ export function getContractsPro(): string[][] {
 
 export function getChainId(): BigInt {
   return BigInt.fromI32(chainId);
-}
-
-export function getAliases(): string[] {
-  return periphery.map<string>((item) => item.toString().toLowerCase());
 }

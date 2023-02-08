@@ -2,14 +2,20 @@ export {
   handleApproval,
   handleApprovalForAll,
   handleCancel,
+  handleComptrollerSet,
   handleCreateLinear,
   handleCreatePro,
   handleFlashLoan,
   handleRenounce,
   handleTransfer,
   handleWithdraw,
-} from "./actions";
+} from "./handle-stream";
 
-export { handleComptrollerSet } from "./comptroller";
+export {
+  handleComptrollerFlashAsset,
+  handleComptrollerFlashFee,
+  handleComptrollerProtocolFee,
+  handleComptrollerTransferAdmin,
+} from "./handle-comptroller";
 
-export { handleInitializer } from "./initializer";
+export { handleInitializer } from "./handle-initializer";

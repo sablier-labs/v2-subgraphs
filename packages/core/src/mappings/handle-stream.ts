@@ -1,17 +1,24 @@
+import { dataSource, log } from "@graphprotocol/graph-ts";
 import {
   Approval as EventApproval,
   ApprovalForAll as EventApprovalForAll,
   CancelLockupStream as EventCancel,
   FlashLoan as EventFlashLoan,
   RenounceLockupStream as EventRenounce,
+  SetComptroller as EventSetComptroller,
   Transfer as EventTransfer,
   WithdrawFromLockupStream as EventWithdraw,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
 import { one, zero } from "../constants";
-import { createAction, getStreamByIdFromSource } from "../helpers";
-import { createLinearStream, createProStream } from "./stream";
+import {
+  createAction,
+  getContractById,
+  getOrCreateComptroller,
+  getStreamByIdFromSource,
+} from "../helpers";
+import { createLinearStream, createProStream } from "../helpers/stream";
 
 export function handleCreateLinear(event: EventCreateLinear): void {
   let stream = createLinearStream(event);
@@ -193,4 +200,22 @@ export function handleFlashLoan(event: EventFlashLoan): void {
   /** --------------- */
 
   action.save();
+}
+
+export function handleComptrollerSet(event: EventSetComptroller): void {
+  let contract = getContractById(dataSource.address().toHexString());
+  if (contract == null) {
+    log.critical(
+      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      [dataSource.address().toHexString()],
+    );
+    return;
+  }
+
+  let comptroller = getOrCreateComptroller(event.params.newComptroller);
+
+  comptroller.save();
+  contract.comptroller = comptroller.id;
+
+  contract.save();
 }

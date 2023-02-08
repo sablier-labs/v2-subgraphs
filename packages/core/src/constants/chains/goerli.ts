@@ -1,6 +1,6 @@
 export let chainId = 5;
 export let chain = "goerli";
-export let startBlock = 8122650;
+export let startBlock = 8415100;
 
 /**
  * Keep aliases unique and always in sync with the frontend
@@ -8,11 +8,15 @@ export let startBlock = 8122650;
  */
 
 export let linear: string[][] = [
-  ["0xb0Ed8e11339F1d655a3029a1e3d7e448326556c6", "linear"],
+  ["0x0784fB3ff8F3d0386c1FFa3a0984A0c600D8F2Ab", "linear"],
 ];
-export let periphery: string[][] = [];
+
 export let pro: string[][] = [
-  ["0x3F1EB5f4426a6e1563F30532dDd16cc73C804529", "pro"],
+  ["0x65015ebA44e3fB9e732Bc416C5346f9dc39e3296", "pro"],
+];
+/** Pre-register some comptrollers to make sure fees and flash assets are watched from the start, not at first indexed interaction */
+export let comptroller: string[][] = [
+  ["0x9b2f503946e9bf36a995e647604c6e4f64075c66", "comptroller-1-1"],
 ];
 
 /**

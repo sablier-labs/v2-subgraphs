@@ -44,7 +44,7 @@ type Asset @entity(immutable: true) {
 }
 
 type ComptrollerProtocolFee @entity {
-  "unique identifier resolving to the 'protocol' prefix concatenated with the comptroller address and the asset address"
+  "unique identifier resolving to the 'fee' prefix concatenated with the comptroller address and the asset address"
   id: String!
   "comptroller managing the fee"
   comptroller: Comptroller!
@@ -72,6 +72,8 @@ type Comptroller @entity {
   address: Bytes!
   "address of the comptroller admin"
   admin: Bytes!
+  "contracts governed by the comptroller"
+  contracts: [Contract!]! @derivedFrom(field: "comptroller")
   "amount resolving to the fee taken by the protocol for a flash loan"
   flashFee: BigInt!
   "comptroller link tracking assets that had their loan-ability toggled (at least once) by this comptroller"
@@ -89,6 +91,8 @@ type Contract @entity {
   address: Bytes!
   "category of contract e.g. LockupLinear or LockupPro"
   category: ContractCategory!
+  "comptroller governing the fees and configuration of this contract"
+  comptroller: Comptroller
   "streams created through this contract"
   streams: [Stream!]! @derivedFrom(field: "contract")
   "actions on streams, triggered through this contract"
