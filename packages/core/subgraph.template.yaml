@@ -9,7 +9,7 @@ dataSources:
     network: {{chain}}
     source:
       address: "{{initializer}}"
-      abi: SablierV2Linear
+      abi: SablierV2LockupLinear
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
@@ -18,59 +18,78 @@ dataSources:
       entities:
         - Stream
       abis:
-        - name: SablierV2Linear
-          file: ./abis/SablierV2Linear.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2LockupPro
+          file: ./abis/SablierV2LockupPro.json
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
         - event:
-            CreateLinearStream(uint256,indexed address,indexed address,indexed
-            address,uint128,address,uint40,uint40,uint40,bool)
+            CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
+            address,(uint128,uint128,uint128),address,bool,(uint40,uint40,uint40),address)
           handler: handleInitializer
       file: ./src/mappings/index.ts
 templates:
   - kind: ethereum/contract
-    name: ContractLinear
+    name: ContractLockupLinear
     network: {{chain}}
     source:
-      abi: SablierV2Linear
+      abi: SablierV2LockupLinear
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - Action
-        - Contract
         - Batch
         - Batcher
+        - Contract
+        - Comptroller
+        - ComptrollerProtocolFee
+        - ComptrollerFlashAsset
         - Segment
         - Stream
         - Token
         - Watcher
       abis:
-        - name: SablierV2Linear
-          file: ./abis/SablierV2Linear.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2LockupPro
+          file: ./abis/SablierV2LockupPro.json
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
-        - event: Cancel(indexed uint256,indexed address,indexed address,uint128,uint128)
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel
         - event:
-            CreateLinearStream(uint256,indexed address,indexed address,indexed
-            address,uint128,address,uint40,uint40,uint40,bool)
+            CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
+            address,(uint128,uint128,uint128),address,bool,(uint40,uint40,uint40),address)
           handler: handleCreateLinear
-        - event: Renounce(indexed uint256)
+        - event: FlashLoan(indexed address,indexed address,indexed address,uint256,uint256,bytes)
+          handler: handleFlashLoan
+        - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
+        - event: SetComptroller(indexed address,address,address)
+          handler: handleComptrollerSet
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-        - event: Withdraw(indexed uint256,indexed address,uint128)
+        - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
-    name: ContractPro
+    name: ContractLockupPro
     network: {{chain}}
     source:
-      abi: SablierV2Pro
+      abi: SablierV2LockupPro
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -80,26 +99,77 @@ templates:
         - Contract
         - Batch
         - Batcher
+        - Comptroller
+        - ComptrollerProtocolFee
+        - ComptrollerFlashAsset
         - Segment
         - Stream
         - Token
         - Watcher
       abis:
-        - name: SablierV2Pro
-          file: ./abis/SablierV2Pro.json
+        - name: SablierV2LockupPro
+          file: ./abis/SablierV2LockupPro.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
-        - event: Cancel(indexed uint256,indexed address,indexed address,uint128,uint128)
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel
         - event:
-            CreateProStream(uint256,indexed address,indexed address,indexed
-            address,uint128,address,uint40,uint40,uint128[],int64[],uint40[],bool)
+            CreateLockupProStream(uint256,indexed address,indexed address,indexed
+            address,(uint128,uint128,uint128),(uint128,uint64,uint40)[],address,bool,(uint40,uint40),address)
           handler: handleCreatePro
-        - event: Renounce(indexed uint256)
+        - event: FlashLoan(indexed address,indexed address,indexed address,uint256,uint256,bytes)
+          handler: handleFlashLoan
+        - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
+        - event: SetComptroller(indexed address,address,address)
+          handler: handleComptrollerSet
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-        - event: Withdraw(indexed uint256,indexed address,uint128)
+        - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw
+      file: ./src/mappings/index.ts
+  - kind: ethereum/contract
+    name: ContractComptroller
+    network: {{chain}}
+    source:
+      abi: SablierV2Comptroller
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Action
+        - Contract
+        - Batch
+        - Batcher
+        - Comptroller
+        - ComptrollerProtocolFee
+        - ComptrollerFlashAsset
+        - Segment
+        - Stream
+        - Token
+        - Watcher
+      abis:
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: SetProtocolFee(indexed address,indexed address,uint256,uint256)
+          handler: handleComptrollerProtocolFee
+        - event: SetFlashFee(indexed address,uint256,uint256)
+          handler: handleComptrollerFlashFee
+        - event: ToggleFlashAsset(indexed address,indexed address,bool)
+          handler: handleComptrollerFlashAsset
+        - event: TransferAdmin(indexed address,indexed address)
+          handler: handleComptrollerTransferAdmin
       file: ./src/mappings/index.ts

@@ -1,6 +1,6 @@
 enum ContractCategory {
-  Linear
-  Pro
+  LockupLinear
+  LockupPro
 }
 
 enum StreamCategory {
@@ -10,11 +10,76 @@ enum StreamCategory {
 }
 
 enum ActionCategory {
-  Transfer
+  Approval
+  ApprovalForAll
   Create
   Cancel
+  FlashLoan
   Renounce
+  Transfer
   Withdraw
+}
+
+type Asset @entity(immutable: true) {
+  "unique identifier resolving to the ERC20 asset/token address"
+  id: ID!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "address of the ERC20 asset/token"
+  address: Bytes!
+  "decimals of the ERC20 asset/token"
+  decimals: BigInt!
+  "symbol of the ERC20 asset/token"
+  symbol: String!
+  "name of the ERC20 asset/token"
+  name: String!
+  "streams that rely on this asset/token"
+  streams: [Stream!]! @derivedFrom(field: "asset")
+
+  "comptroller link tracking fees taken by the protocol for this asset/token"
+  comptrollerProtocolFees: [ComptrollerProtocolFee!]!
+    @derivedFrom(field: "asset")
+  "comptroller link tracking comptrollers that toggled (at least once) the loan-ability of this asset"
+  comptrollerFlashAsset: [ComptrollerFlashAsset!]! @derivedFrom(field: "asset")
+}
+
+type ComptrollerProtocolFee @entity {
+  "unique identifier resolving to the 'fee' prefix concatenated with the comptroller address and the asset address"
+  id: String!
+  "comptroller managing the fee"
+  comptroller: Comptroller!
+  "asset subject to the fee"
+  asset: Asset!
+  "amount of the fee"
+  amount: BigInt!
+}
+
+type ComptrollerFlashAsset @entity {
+  "unique identifier resolving to the 'flash' prefix concatenated with the comptroller address and the asset address "
+  id: String!
+  "comptroller managing the fee"
+  comptroller: Comptroller!
+  "asset subject to the fee"
+  asset: Asset!
+  "flag to enable of disable the loan-ability of a token"
+  isEnabled: Boolean!
+}
+
+type Comptroller @entity {
+  "unique identifier resolving to contract address"
+  id: String!
+  "address of the contract"
+  address: Bytes!
+  "address of the comptroller admin"
+  admin: Bytes!
+  "contracts governed by the comptroller"
+  contracts: [Contract!]! @derivedFrom(field: "comptroller")
+  "amount resolving to the fee taken by the protocol for a flash loan"
+  flashFee: BigInt!
+  "comptroller link tracking assets that had their loan-ability toggled (at least once) by this comptroller"
+  flashAssets: [ComptrollerFlashAsset!]! @derivedFrom(field: "comptroller")
+  "comptroller link tracking assets that had their protocol fees set (at least once) by this comptroller"
+  protocolFees: [ComptrollerProtocolFee!]! @derivedFrom(field: "comptroller")
 }
 
 type Contract @entity {
@@ -24,8 +89,10 @@ type Contract @entity {
   alias: String!
   "address of the contract"
   address: Bytes!
-  "category of contract e.g. Linear or Pro"
+  "category of contract e.g. LockupLinear or LockupPro"
   category: ContractCategory!
+  "comptroller governing the fees and configuration of this contract"
+  comptroller: Comptroller
   "streams created through this contract"
   streams: [Stream!]! @derivedFrom(field: "contract")
   "actions on streams, triggered through this contract"
@@ -37,8 +104,8 @@ type Action @entity {
   id: String!
   "contract through which the stream actions has been triggered"
   contract: Contract!
-  "stream linked to this action"
-  stream: Stream!
+  "stream linked to this action (or null if this is a contract level action)"
+  stream: Stream
   "category of action e.g. Deposit or Withdraw"
   category: ActionCategory!
 
@@ -60,23 +127,6 @@ type Action @entity {
   amountA: BigInt
   "amount, differs based on action type e.g. for Withdraw it resolves to the remainingAmount"
   amountB: BigInt
-}
-
-type Token @entity(immutable: true) {
-  "unique identifier resolving to the ERC20 token address"
-  id: ID!
-  "hardcoded chain id"
-  chainId: BigInt!
-  "address of the ERC20 token"
-  address: Bytes!
-  "decimals of the ERC20 token"
-  decimals: BigInt!
-  "symbol of the ERC20 token"
-  symbol: String!
-  "name of the ERC20 token"
-  name: String!
-  "streams that rely on this token"
-  streams: [Stream!]! @derivedFrom(field: "token")
 }
 
 type Stream @entity {
@@ -108,8 +158,12 @@ type Stream @entity {
   timestamp: BigInt!
   "amount deposit in the stream (without fees)"
   depositAmount: BigInt!
-  "token supported by this stream"
-  token: Token!
+  "amount of fees paid to the broker"
+  brokerFeeAmount: BigInt!
+  "amount of fees paid to the protocol"
+  protocolFeeAmount: BigInt!
+  "asset (ERC20 token) supported by this stream"
+  asset: Asset!
   "timestamp for the start of the stream"
   startTime: BigInt!
   "timestamp for the end of the stream"
@@ -132,7 +186,7 @@ type Stream @entity {
   canceledTime: BigInt
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
-  "amount resolving to the sum still inside the stream (regardless of it being locked or not)"
+  "amount resolving to the sum still inside the stream (regardless of it being locked or not) (difference between deposit and withdrawn)"
   intactAmount: BigInt!
   "actions triggered in the context of this stream"
   actions: [Action!]! @derivedFrom(field: "stream")

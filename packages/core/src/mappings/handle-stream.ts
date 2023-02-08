@@ -1,16 +1,26 @@
+import { dataSource, log } from "@graphprotocol/graph-ts";
 import {
-  Cancel as EventCancel,
-  Renounce as EventRenounce,
+  Approval as EventApproval,
+  ApprovalForAll as EventApprovalForAll,
+  CancelLockupStream as EventCancel,
+  FlashLoan as EventFlashLoan,
+  RenounceLockupStream as EventRenounce,
+  SetComptroller as EventSetComptroller,
   Transfer as EventTransfer,
-  Withdraw as EventWithdraw,
-} from "../generated/types/templates/ContractLinear/SablierV2Linear";
-import { CreateLinearStream as EventCreateLinearStream } from "../generated/types/templates/ContractLinear/SablierV2Linear";
-import { CreateProStream as EventCreateProStream } from "../generated/types/templates/ContractPro/SablierV2Pro";
-import { zero } from "../constants";
-import { createAction, getStreamByIdFromSource } from "../helpers";
-import { createLinearStream, createProStream } from "./stream";
+  WithdrawFromLockupStream as EventWithdraw,
+} from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
+import { one, zero } from "../constants";
+import {
+  createAction,
+  getContractById,
+  getOrCreateComptroller,
+  getStreamByIdFromSource,
+} from "../helpers";
+import { createLinearStream, createProStream } from "../helpers/stream";
 
-export function handleCreateLinear(event: EventCreateLinearStream): void {
+export function handleCreateLinear(event: EventCreateLinear): void {
   let stream = createLinearStream(event);
   if (stream == null) {
     return;
@@ -20,7 +30,7 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
   action.category = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
-  action.amountA = event.params.depositAmount;
+  action.amountA = event.params.amounts.deposit;
 
   if (stream.cancelable == false) {
     stream.cancelableAction = action.id;
@@ -31,7 +41,7 @@ export function handleCreateLinear(event: EventCreateLinearStream): void {
   action.save();
 }
 
-export function handleCreatePro(event: EventCreateProStream): void {
+export function handleCreatePro(event: EventCreatePro): void {
   let stream = createProStream(event);
   if (stream == null) {
     return;
@@ -41,7 +51,7 @@ export function handleCreatePro(event: EventCreateProStream): void {
   action.category = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
-  action.amountA = event.params.depositAmount;
+  action.amountA = event.params.amounts.deposit;
 
   if (stream.cancelable == false) {
     stream.cancelableAction = action.id;
@@ -64,15 +74,15 @@ export function handleCancel(event: EventCancel): void {
   action.category = "Cancel";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
-  action.amountA = event.params.returnAmount;
-  action.amountB = event.params.withdrawAmount;
+  action.amountA = event.params.senderAmount;
+  action.amountB = event.params.recipientAmount;
   /** --------------- */
 
   stream.canceled = true;
   stream.canceledAction = action.id;
   stream.canceledTime = event.block.timestamp;
   stream.withdrawnAmount = stream.withdrawnAmount.plus(
-    event.params.withdrawAmount,
+    event.params.recipientAmount,
   );
   stream.intactAmount = zero;
 
@@ -134,7 +144,7 @@ export function handleWithdraw(event: EventWithdraw): void {
 
   let action = createAction(event);
   action.category = "Withdraw";
-  action.addressB = event.params.recipient;
+  action.addressB = event.params.to;
   action.amountB = event.params.amount;
 
   /** --------------- */
@@ -145,4 +155,67 @@ export function handleWithdraw(event: EventWithdraw): void {
   stream.save();
   action.stream = stream.id;
   action.save();
+}
+
+export function handleApproval(event: EventApproval): void {
+  let id = event.params.tokenId;
+  let stream = getStreamByIdFromSource(id);
+  if (stream == null) {
+    return;
+  }
+
+  let action = createAction(event);
+  action.category = "Approval";
+
+  action.addressA = event.params.owner;
+  action.addressB = event.params.approved;
+
+  /** --------------- */
+
+  action.stream = stream.id;
+  action.save();
+}
+export function handleApprovalForAll(event: EventApprovalForAll): void {
+  let action = createAction(event);
+  action.category = "ApprovalForAll";
+
+  action.addressA = event.params.owner;
+  action.addressB = event.params.operator;
+  action.amountA = event.params.approved ? one : zero;
+
+  /** --------------- */
+
+  action.save();
+}
+
+export function handleFlashLoan(event: EventFlashLoan): void {
+  let action = createAction(event);
+  action.category = "FlashLoan";
+
+  action.addressA = event.params.initiator;
+  action.addressB = event.params.asset;
+  action.amountA = event.params.amount;
+  action.amountB = event.params.feeAmount;
+
+  /** --------------- */
+
+  action.save();
+}
+
+export function handleComptrollerSet(event: EventSetComptroller): void {
+  let contract = getContractById(dataSource.address().toHexString());
+  if (contract == null) {
+    log.critical(
+      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      [dataSource.address().toHexString()],
+    );
+    return;
+  }
+
+  let comptroller = getOrCreateComptroller(event.params.newComptroller);
+
+  comptroller.save();
+  contract.comptroller = comptroller.id;
+
+  contract.save();
 }

@@ -1,6 +1,6 @@
-import { BigInt, log } from "@graphprotocol/graph-ts";
+import { BigInt } from "@graphprotocol/graph-ts";
 import { Segment, Stream } from "../generated/types/schema";
-import { CreateProStream as EventCreateProStream } from "../generated/types/templates/ContractPro/SablierV2Pro";
+import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
 import { zero } from "../constants";
 
 export class SegmentInput {
@@ -35,26 +35,15 @@ export function createSegment(
   return segment;
 }
 
-export function createSegments(
-  stream: Stream,
-  event: EventCreateProStream,
-): Stream {
-  let a = event.params.segmentAmounts;
-  let e = event.params.segmentExponents;
-  let m = event.params.segmentMilestones;
-
-  if (a.length != e.length || a.length != m.length) {
-    log.error(
-      "[SABLIER] Segment data arrays for stream {} are of different sizes.",
-      [stream.id],
-    );
-  }
+export function createSegments(stream: Stream, event: EventCreatePro): Stream {
+  let segments = event.params.segments;
 
   let streamed = zero;
   let inputs: SegmentInput[] = [new SegmentInput(zero, zero, stream.startTime)];
 
-  for (let i = 0; i < a.length; i++) {
-    inputs.push(new SegmentInput(a[i], e[i], m[i]));
+  for (let i = 0; i < segments.length; i++) {
+    let item = segments[i];
+    inputs.push(new SegmentInput(item.amount, item.exponent, item.milestone));
   }
 
   for (let i = 1; i < inputs.length; i++) {
