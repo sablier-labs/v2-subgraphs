@@ -1,12 +1,15 @@
 import {
+  Approval as EventApproval,
+  ApprovalForAll as EventApprovalForAll,
   CancelLockupStream as EventCancel,
+  FlashLoan as EventFlashLoan,
   RenounceLockupStream as EventRenounce,
   Transfer as EventTransfer,
   WithdrawFromLockupStream as EventWithdraw,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
-import { zero } from "../constants";
+import { one, zero } from "../constants";
 import { createAction, getStreamByIdFromSource } from "../helpers";
 import { createLinearStream, createProStream } from "./stream";
 
@@ -144,5 +147,50 @@ export function handleWithdraw(event: EventWithdraw): void {
   stream.intactAmount = stream.depositAmount.minus(withdrawn);
   stream.save();
   action.stream = stream.id;
+  action.save();
+}
+
+export function handleApproval(event: EventApproval): void {
+  let id = event.params.tokenId;
+  let stream = getStreamByIdFromSource(id);
+  if (stream == null) {
+    return;
+  }
+
+  let action = createAction(event);
+  action.category = "Approval";
+
+  action.addressA = event.params.owner;
+  action.addressB = event.params.approved;
+
+  /** --------------- */
+
+  action.stream = stream.id;
+  action.save();
+}
+export function handleApprovalForAll(event: EventApprovalForAll): void {
+  let action = createAction(event);
+  action.category = "ApprovalForAll";
+
+  action.addressA = event.params.owner;
+  action.addressB = event.params.operator;
+  action.amountA = event.params.approved ? one : zero;
+
+  /** --------------- */
+
+  action.save();
+}
+
+export function handleFlashLoan(event: EventFlashLoan): void {
+  let action = createAction(event);
+  action.category = "FlashLoan";
+
+  action.addressA = event.params.initiator;
+  action.addressB = event.params.asset;
+  action.amountA = event.params.amount;
+  action.amountB = event.params.feeAmount;
+
+  /** --------------- */
+
   action.save();
 }

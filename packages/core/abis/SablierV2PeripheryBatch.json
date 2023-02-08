@@ -1,0 +1,413 @@
+[
+  {
+    "inputs": [],
+    "name": "BatchStream_ParamsCountZero",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint128",
+        "name": "totalDeposit",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "amountsSum",
+        "type": "uint128"
+      }
+    ],
+    "name": "BatchStream_TotalAmountNotEqualToAmountsSum",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BatchStream_TotalAmountZero",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ISablierV2LockupPro",
+        "name": "pro",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "amount",
+            "type": "uint128"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "addr",
+                "type": "address"
+              },
+              {
+                "internalType": "UD60x18",
+                "name": "fee",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Broker",
+            "name": "broker",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelable",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint40[]",
+            "name": "deltas",
+            "type": "uint40[]"
+          },
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint128",
+                "name": "amount",
+                "type": "uint128"
+              },
+              {
+                "internalType": "UD2x18",
+                "name": "exponent",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint40",
+                "name": "milestone",
+                "type": "uint40"
+              }
+            ],
+            "internalType": "struct LockupPro.Segment[]",
+            "name": "segments",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct CreatePro.DeltasParams[]",
+        "name": "params",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "internalType": "uint128",
+        "name": "totalAmount",
+        "type": "uint128"
+      }
+    ],
+    "name": "createWithDeltasMultiple",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "streamIds",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ISablierV2LockupLinear",
+        "name": "linear",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "amount",
+            "type": "uint128"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "addr",
+                "type": "address"
+              },
+              {
+                "internalType": "UD60x18",
+                "name": "fee",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Broker",
+            "name": "broker",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelable",
+            "type": "bool"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint40",
+                "name": "cliff",
+                "type": "uint40"
+              },
+              {
+                "internalType": "uint40",
+                "name": "total",
+                "type": "uint40"
+              }
+            ],
+            "internalType": "struct LockupLinear.Durations",
+            "name": "durations",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct CreateLinear.DurationsParams[]",
+        "name": "params",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "internalType": "uint128",
+        "name": "totalAmount",
+        "type": "uint128"
+      }
+    ],
+    "name": "createWithDurationsMultiple",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "streamIds",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ISablierV2LockupPro",
+        "name": "pro",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "amount",
+            "type": "uint128"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "addr",
+                "type": "address"
+              },
+              {
+                "internalType": "UD60x18",
+                "name": "fee",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Broker",
+            "name": "broker",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelable",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint128",
+                "name": "amount",
+                "type": "uint128"
+              },
+              {
+                "internalType": "UD2x18",
+                "name": "exponent",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint40",
+                "name": "milestone",
+                "type": "uint40"
+              }
+            ],
+            "internalType": "struct LockupPro.Segment[]",
+            "name": "segments",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint40",
+            "name": "startTime",
+            "type": "uint40"
+          }
+        ],
+        "internalType": "struct CreatePro.MilestonesParams[]",
+        "name": "params",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "internalType": "uint128",
+        "name": "totalAmount",
+        "type": "uint128"
+      }
+    ],
+    "name": "createWithMilestonesMultiple",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "streamIds",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ISablierV2LockupLinear",
+        "name": "linear",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "amount",
+            "type": "uint128"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "addr",
+                "type": "address"
+              },
+              {
+                "internalType": "UD60x18",
+                "name": "fee",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Broker",
+            "name": "broker",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelable",
+            "type": "bool"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint40",
+                "name": "start",
+                "type": "uint40"
+              },
+              {
+                "internalType": "uint40",
+                "name": "cliff",
+                "type": "uint40"
+              },
+              {
+                "internalType": "uint40",
+                "name": "end",
+                "type": "uint40"
+              }
+            ],
+            "internalType": "struct LockupLinear.Range",
+            "name": "range",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct CreateLinear.RangeParams[]",
+        "name": "params",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "internalType": "uint128",
+        "name": "totalAmount",
+        "type": "uint128"
+      }
+    ],
+    "name": "createWithRangeMultiple",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "streamIds",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

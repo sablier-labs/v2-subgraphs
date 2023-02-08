@@ -10,11 +10,74 @@ enum StreamCategory {
 }
 
 enum ActionCategory {
-  Transfer
+  Approval
+  ApprovalForAll
   Create
   Cancel
+  FlashLoan
   Renounce
+  Transfer
   Withdraw
+}
+
+type Asset @entity(immutable: true) {
+  "unique identifier resolving to the ERC20 asset/token address"
+  id: ID!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "address of the ERC20 asset/token"
+  address: Bytes!
+  "decimals of the ERC20 asset/token"
+  decimals: BigInt!
+  "symbol of the ERC20 asset/token"
+  symbol: String!
+  "name of the ERC20 asset/token"
+  name: String!
+  "streams that rely on this asset/token"
+  streams: [Stream!]! @derivedFrom(field: "asset")
+
+  "comptroller link tracking fees taken by the protocol for this asset/token"
+  comptrollerProtocolFees: [ComptrollerProtocolFee!]!
+    @derivedFrom(field: "asset")
+  "comptroller link tracking comptrollers that toggled (at least once) the loan-ability of this asset"
+  comptrollerFlashAsset: [ComptrollerFlashAsset!]! @derivedFrom(field: "asset")
+}
+
+type ComptrollerProtocolFee @entity {
+  "unique identifier resolving to the 'protocol' prefix concatenated with the comptroller address and the asset address"
+  id: String!
+  "comptroller managing the fee"
+  comptroller: Comptroller!
+  "asset subject to the fee"
+  asset: Asset!
+  "amount of the fee"
+  amount: BigInt!
+}
+
+type ComptrollerFlashAsset @entity {
+  "unique identifier resolving to the 'flash' prefix concatenated with the comptroller address and the asset address "
+  id: String!
+  "comptroller managing the fee"
+  comptroller: Comptroller!
+  "asset subject to the fee"
+  asset: Asset!
+  "flag to enable of disable the loan-ability of a token"
+  isEnabled: Boolean!
+}
+
+type Comptroller @entity {
+  "unique identifier resolving to contract address"
+  id: String!
+  "address of the contract"
+  address: Bytes!
+  "address of the comptroller admin"
+  admin: Bytes!
+  "amount resolving to the fee taken by the protocol for a flash loan"
+  flashFee: BigInt!
+  "comptroller link tracking assets that had their loan-ability toggled (at least once) by this comptroller"
+  flashAssets: [ComptrollerFlashAsset!]! @derivedFrom(field: "comptroller")
+  "comptroller link tracking assets that had their protocol fees set (at least once) by this comptroller"
+  protocolFees: [ComptrollerProtocolFee!]! @derivedFrom(field: "comptroller")
 }
 
 type Contract @entity {
@@ -37,8 +100,8 @@ type Action @entity {
   id: String!
   "contract through which the stream actions has been triggered"
   contract: Contract!
-  "stream linked to this action"
-  stream: Stream!
+  "stream linked to this action (or null if this is a contract level action)"
+  stream: Stream
   "category of action e.g. Deposit or Withdraw"
   category: ActionCategory!
 
@@ -60,23 +123,6 @@ type Action @entity {
   amountA: BigInt
   "amount, differs based on action type e.g. for Withdraw it resolves to the remainingAmount"
   amountB: BigInt
-}
-
-type Asset @entity(immutable: true) {
-  "unique identifier resolving to the ERC20 asset/token address"
-  id: ID!
-  "hardcoded chain id"
-  chainId: BigInt!
-  "address of the ERC20 asset/token"
-  address: Bytes!
-  "decimals of the ERC20 asset/token"
-  decimals: BigInt!
-  "symbol of the ERC20 asset/token"
-  symbol: String!
-  "name of the ERC20 asset/token"
-  name: String!
-  "streams that rely on this asset/token"
-  streams: [Stream!]! @derivedFrom(field: "asset")
 }
 
 type Stream @entity {
