@@ -1,6 +1,8 @@
 import { dataSource, ethereum, log } from "@graphprotocol/graph-ts";
 import { Action } from "../generated/types/schema";
+import { one } from "../constants";
 import { getContractById } from "./contract";
+import { getOrCreateWatcher } from "./watcher";
 
 export function generateActionId(event: ethereum.Event): string {
   return event.transaction.hash
@@ -10,6 +12,7 @@ export function generateActionId(event: ethereum.Event): string {
 }
 
 export function createAction(event: ethereum.Event): Action {
+  let watcher = getOrCreateWatcher();
   let id = generateActionId(event);
   let entity = new Action(id);
 
@@ -17,6 +20,7 @@ export function createAction(event: ethereum.Event): Action {
   entity.from = event.transaction.from;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
+  entity.subgraphId = watcher.actionIndex;
 
   /** --------------- */
   let contract = getContractById(dataSource.address().toHexString());
@@ -28,6 +32,10 @@ export function createAction(event: ethereum.Event): Action {
   } else {
     entity.contract = contract.id;
   }
+
+  /** --------------- */
+  watcher.actionIndex = watcher.actionIndex.plus(one);
+  watcher.save();
 
   return entity;
 }

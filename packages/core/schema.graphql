@@ -108,6 +108,8 @@ type Action @entity {
   stream: Stream
   "category of action e.g. Deposit or Withdraw"
   category: ActionCategory!
+  "unique global id tracked by the subgraph watcher"
+  subgraphId: BigInt!
 
   "transaction details: hash"
   hash: Bytes!
@@ -258,6 +260,8 @@ type Watcher @entity {
   chainId: BigInt!
   "global index for streams"
   streamIndex: BigInt!
+  "global index for streams"
+  actionIndex: BigInt!
   "flag that defines the initialization status of the subgraph"
   isInitialized: Boolean!
 }
