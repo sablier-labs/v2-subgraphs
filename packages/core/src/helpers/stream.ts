@@ -93,6 +93,7 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   /** --------------- */
   let batch = getOrCreateBatch(event, event.params.sender);
   entity.batch = batch.id;
+  entity.position = batch.size.minus(one);
 
   entity.save();
   return entity;
@@ -129,6 +130,7 @@ export function createProStream(event: EventCreatePro): Stream | null {
   /** --------------- */
   let batch = getOrCreateBatch(event, event.params.sender);
   entity.batch = batch.id;
+  entity.position = batch.size.minus(one);
 
   /** --------------- */
   entity.save();

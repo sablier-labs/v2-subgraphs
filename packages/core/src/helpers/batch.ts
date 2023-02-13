@@ -28,10 +28,10 @@ export function getOrCreateBatch(
     entity.hash = event.transaction.hash;
     entity.timestamp = event.block.timestamp;
     entity.batcher = batcher.id;
-    entity.count = one;
+    entity.size = one;
   } else {
-    entity.count = entity.count.plus(one);
-    if (BigInt.compare(entity.count, one) == 1 && entity.label == null) {
+    entity.size = entity.size.plus(one);
+    if (BigInt.compare(entity.size, one) == 1 && entity.label == null) {
       let label = batcher.batchIndex.plus(one).toString();
       entity.label = label;
       batcher.batchIndex = batcher.batchIndex.plus(one);
