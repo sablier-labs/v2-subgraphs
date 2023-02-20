@@ -110,7 +110,8 @@ type Action @entity {
   category: ActionCategory!
   "unique global id tracked by the subgraph watcher"
   subgraphId: BigInt!
-
+  "hardcoded chain id"
+  chainId: BigInt!
   "transaction details: hash"
   hash: Bytes!
   "transaction details: block number"
