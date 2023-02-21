@@ -144,6 +144,7 @@ export function handleWithdraw(event: EventWithdraw): void {
 
   let action = createAction(event);
   action.category = "Withdraw";
+  action.addressA = event.transaction.from;
   action.addressB = event.params.to;
   action.amountB = event.params.amount;
 
