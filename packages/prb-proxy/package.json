@@ -1,6 +1,6 @@
 {
-  "name": "@sablier/subgraphs-core",
-  "description": "Sablier V2 core subgraph",
+  "name": "@sablier/subgraphs-prb-proxy",
+  "description": "Sablier V2 prb-proxy subgraph",
   "version": "1.0.0",
   "author": {
     "name": "Sablier Labs Ltd",
@@ -48,9 +48,9 @@
     "clean-generated": "rimraf $npm_package_config_dir_generated",
     "codegen": "graph codegen --output-dir $npm_package_config_dir_generated/types/",
     "deploy": "graph deploy $npm_package_config_flags_deploy sablierhq/$NAME",
-    "deploy:goerli": "CHAIN=goerli yarn setup && NAME=sablier-v2-goerli yarn deploy",
-    "deploy:mainnet": "CHAIN=mainnet yarn setup && NAME=sablier-v2 yarn deploy",
-    "deploy:polygon": "CHAIN=polygon yarn setup && NAME=sablier-v2-polygon yarn deploy",
+    "deploy:goerli": "CHAIN=goerli yarn setup && NAME=prb-proxy-goerli yarn deploy",
+    "deploy:mainnet": "CHAIN=mainnet yarn setup && NAME=prb-proxy yarn deploy",
+    "deploy:polygon": "CHAIN=polygon yarn setup && NAME=prb-proxy-polygon yarn deploy",
     "lint-check": "eslint --ignore-path ../../.eslintignore .",
     "lint-fix": "eslint --fix --ignore-path ../../.eslintignore .",
     "prettier-check": "yarn prettier $npm_package_config_flags_prettier --check .",

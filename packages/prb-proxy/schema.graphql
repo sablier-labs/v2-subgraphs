@@ -1,0 +1,100 @@
+enum ActionCategory {
+  Execute
+  RunPlugin
+}
+
+type Action @entity {
+  "unique identifier resolving to transaction hash concatenated with the log index"
+  id: ID!
+
+  "category of action e.g. Execute or RunPlugin"
+  category: ActionCategory!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "proxy that triggered the action"
+  proxy: Proxy!
+
+  "data emitted by the action"
+  data: Bytes!
+  "response emitted by the action"
+  response: Bytes!
+  "target used and emitted by the action"
+  target: Bytes!
+
+  "block of the transaction"
+  block: BigInt!
+  "hash of the transaction"
+  hash: Bytes!
+  "timestamp of the transaction"
+  timestamp: BigInt!
+  "address of the transaction initiator"
+  from: Bytes!
+}
+
+type Owner @entity {
+  "unique identifier resolving to the address of the owner"
+  id: ID!
+
+  "address of the owner"
+  address: Bytes!
+  "address of the owned proxy"
+  proxy: Proxy @derivedFrom(field: "owner")
+  "current ownership mapping"
+  ownership: Ownership! @derivedFrom(field: "owner")
+  "list of past ownerships"
+  ownerships: [Ownership!]! @derivedFrom(field: "owner")
+}
+
+type Ownership @entity {
+  "unique identifier resolving to the address of the proxy concatenated with the address of the owner and the timestamp"
+  id: ID!
+
+  "hash of the transaction that configured the ownership"
+  hash: Bytes!
+  "timestamp of the transaction that configured the ownership"
+  timestamp: BigInt!
+
+  proxy: Proxy! @derivedFrom(field: "ownership")
+  owner: Owner! @derivedFrom(field: "ownership")
+}
+
+type Proxy @entity {
+  "unique identifier resolving to the address of the proxy"
+  id: ID!
+
+  "address of the proxy"
+  address: Bytes!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "block of the create transaction"
+  block: BigInt!
+  "hash of the create transaction"
+  hash: Bytes!
+  "timestamp of the create transaction"
+  timestamp: BigInt!
+  "address of the create transaction initiator"
+  from: Bytes!
+
+  "salt emitted by the create event"
+  salt: Bytes!
+  "seed emitted by the create event"
+  seed: Bytes!
+
+  "current proxy owner"
+  owner: Owner! @derivedFrom(field: "proxy")
+  "current ownership mapping"
+  ownership: Ownership! @derivedFrom(field: "proxy")
+  "list of past ownerships"
+  ownerships: [Ownership!]! @derivedFrom(field: "proxy")
+
+  "list of proxy actions"
+  actions: [Action!]! @derivedFrom(field: "proxy")
+}
+
+type Registry @entity(immutable: true) {
+  "unique identifier resolving to the address of the registry"
+  id: ID!
+
+  "address of the registry"
+  address: Bytes!
+}

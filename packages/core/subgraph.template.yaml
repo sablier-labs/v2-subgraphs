@@ -1,4 +1,4 @@
-specVersion: 0.0.4
+specVersion: 0.0.5
 description: Sablier V2 Subgraph
 repository: https://github.com/sablierhq/v2-subgraphs
 schema:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Stream
@@ -40,7 +40,7 @@ templates:
       abi: SablierV2LockupLinear
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Action
@@ -90,7 +90,7 @@ templates:
       abi: SablierV2LockupDynamic
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Action
@@ -140,7 +140,7 @@ templates:
       abi: SablierV2Comptroller
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Action

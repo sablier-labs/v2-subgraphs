@@ -126,6 +126,7 @@ export function createDynamicStream(event: EventCreateDynamic): Stream | null {
   entity.startTime = event.params.range.start;
   entity.endTime = event.params.range.end;
   entity.cancelable = event.params.cancelable;
+  entity.cliff = false;
 
   /** --------------- */
   let asset = getOrCreateAsset(event.params.asset);
