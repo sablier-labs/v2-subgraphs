@@ -12,9 +12,9 @@
         "type": "address"
       },
       {
-        "internalType": "UD60x18",
-        "name": "maxFee",
-        "type": "uint256"
+        "internalType": "contract ISablierV2NFTDescriptor",
+        "name": "initialNFTDescriptor",
+        "type": "address"
       },
       {
         "internalType": "uint256",
@@ -24,6 +24,27 @@
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "CallerNotAdmin",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DelegateCall",
+    "type": "error"
   },
   {
     "inputs": [
@@ -140,76 +161,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "admin",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "SablierV2Adminable_CallerNotAdmin",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "SablierV2FlashLoan_AmountTooHigh",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "contract IERC20",
         "name": "asset",
         "type": "address"
       }
     ],
-    "name": "SablierV2FlashLoan_AssetNotFlashLoanable",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "SablierV2FlashLoan_CalculatedFeeTooHigh",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "SablierV2FlashLoan_FlashBorrowFail",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amountAvailable",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amountRequested",
-        "type": "uint256"
-      }
-    ],
-    "name": "SablierV2FlashLoan_InsufficientAssetLiquidity",
+    "name": "SablierV2Base_NoProtocolRevenues",
     "type": "error"
   },
   {
@@ -225,23 +182,7 @@
         "type": "uint128"
       }
     ],
-    "name": "SablierV2LockupPro_DepositAmountNotEqualToSegmentAmountsSum",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "segmentCount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "deltaCount",
-        "type": "uint256"
-      }
-    ],
-    "name": "SablierV2LockupPro_SegmentArrayCountsNotEqual",
+    "name": "SablierV2LockupDynamic_DepositAmountNotEqualToSegmentAmountsSum",
     "type": "error"
   },
   {
@@ -252,12 +193,12 @@
         "type": "uint256"
       }
     ],
-    "name": "SablierV2LockupPro_SegmentCountTooHigh",
+    "name": "SablierV2LockupDynamic_SegmentCountTooHigh",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "SablierV2LockupPro_SegmentCountZero",
+    "name": "SablierV2LockupDynamic_SegmentCountZero",
     "type": "error"
   },
   {
@@ -278,7 +219,7 @@
         "type": "uint40"
       }
     ],
-    "name": "SablierV2LockupPro_SegmentMilestonesNotOrdered",
+    "name": "SablierV2LockupDynamic_SegmentMilestonesNotOrdered",
     "type": "error"
   },
   {
@@ -294,7 +235,7 @@
         "type": "uint40"
       }
     ],
-    "name": "SablierV2LockupPro_StartTimeNotLessThanFirstSegmentMilestone",
+    "name": "SablierV2LockupDynamic_StartTimeNotLessThanFirstSegmentMilestone",
     "type": "error"
   },
   {
@@ -321,12 +262,70 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "asset",
+        "internalType": "uint40",
+        "name": "currentTime",
+        "type": "uint40"
+      },
+      {
+        "internalType": "uint40",
+        "name": "endTime",
+        "type": "uint40"
+      }
+    ],
+    "name": "SablierV2Lockup_EndTimeInThePast",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
         "type": "address"
       }
     ],
-    "name": "SablierV2Lockup_NoProtocolRevenues",
+    "name": "SablierV2Lockup_InvalidSenderWithdrawal",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "SablierV2Lockup_Null",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint128",
+        "name": "amount",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "withdrawableAmount",
+        "type": "uint128"
+      }
+    ],
+    "name": "SablierV2Lockup_Overdraw",
     "type": "error"
   },
   {
@@ -353,7 +352,7 @@
         "type": "uint256"
       }
     ],
-    "name": "SablierV2Lockup_RenounceNonCancelableStream",
+    "name": "SablierV2Lockup_StreamCanceled",
     "type": "error"
   },
   {
@@ -364,7 +363,7 @@
         "type": "uint256"
       }
     ],
-    "name": "SablierV2Lockup_StreamNonCancelable",
+    "name": "SablierV2Lockup_StreamDepleted",
     "type": "error"
   },
   {
@@ -375,7 +374,7 @@
         "type": "uint256"
       }
     ],
-    "name": "SablierV2Lockup_StreamNotActive",
+    "name": "SablierV2Lockup_StreamNotCancelable",
     "type": "error"
   },
   {
@@ -386,7 +385,18 @@
         "type": "uint256"
       }
     ],
-    "name": "SablierV2Lockup_StreamNotCanceledOrDepleted",
+    "name": "SablierV2Lockup_StreamNotDepleted",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "SablierV2Lockup_StreamSettled",
     "type": "error"
   },
   {
@@ -403,27 +413,6 @@
       }
     ],
     "name": "SablierV2Lockup_Unauthorized",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint128",
-        "name": "amount",
-        "type": "uint128"
-      },
-      {
-        "internalType": "uint128",
-        "name": "withdrawableAmount",
-        "type": "uint128"
-      }
-    ],
-    "name": "SablierV2Lockup_WithdrawAmountGreaterThanWithdrawableAmount",
     "type": "error"
   },
   {
@@ -451,27 +440,6 @@
       }
     ],
     "name": "SablierV2Lockup_WithdrawArrayCountsNotEqual",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      }
-    ],
-    "name": "SablierV2Lockup_WithdrawSenderUnauthorized",
     "type": "error"
   },
   {
@@ -534,6 +502,244 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "senderAmount",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "recipientAmount",
+        "type": "uint128"
+      }
+    ],
+    "name": "CancelLockupStream",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "protocolRevenues",
+        "type": "uint128"
+      }
+    ],
+    "name": "ClaimProtocolRevenues",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "funder",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "deposit",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint128",
+            "name": "protocolFee",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint128",
+            "name": "brokerFee",
+            "type": "uint128"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Lockup.CreateAmounts",
+        "name": "amounts",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "cancelable",
+        "type": "bool"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "amount",
+            "type": "uint128"
+          },
+          {
+            "internalType": "UD2x18",
+            "name": "exponent",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint40",
+            "name": "milestone",
+            "type": "uint40"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct LockupDynamic.Segment[]",
+        "name": "segments",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint40",
+            "name": "start",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "end",
+            "type": "uint40"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct LockupDynamic.Range",
+        "name": "range",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "broker",
+        "type": "address"
+      }
+    ],
+    "name": "CreateLockupDynamicStream",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "RenounceLockupStream",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract ISablierV2Comptroller",
+        "name": "oldComptroller",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract ISablierV2Comptroller",
+        "name": "newComptroller",
+        "type": "address"
+      }
+    ],
+    "name": "SetComptroller",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract ISablierV2NFTDescriptor",
+        "name": "oldNFTDescriptor",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract ISablierV2NFTDescriptor",
+        "name": "newNFTDescriptor",
+        "type": "address"
+      }
+    ],
+    "name": "SetNFTDescriptor",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -552,6 +758,50 @@
       }
     ],
     "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "oldAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "TransferAdmin",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "amount",
+        "type": "uint128"
+      }
+    ],
+    "name": "WithdrawFromLockupStream",
     "type": "event"
   },
   {
@@ -698,72 +948,74 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "internalType": "uint128",
-        "name": "totalAmount",
-        "type": "uint128"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint128",
-            "name": "amount",
-            "type": "uint128"
-          },
-          {
-            "internalType": "UD2x18",
-            "name": "exponent",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint40",
-            "name": "milestone",
-            "type": "uint40"
-          }
-        ],
-        "internalType": "struct LockupPro.Segment[]",
-        "name": "segments",
-        "type": "tuple[]"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "cancelable",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint40[]",
-        "name": "deltas",
-        "type": "uint40[]"
-      },
-      {
         "components": [
           {
             "internalType": "address",
-            "name": "addr",
+            "name": "sender",
             "type": "address"
           },
           {
-            "internalType": "UD60x18",
-            "name": "fee",
-            "type": "uint256"
+            "internalType": "bool",
+            "name": "cancelable",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint128",
+            "name": "totalAmount",
+            "type": "uint128"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "asset",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              },
+              {
+                "internalType": "UD60x18",
+                "name": "fee",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Broker",
+            "name": "broker",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint128",
+                "name": "amount",
+                "type": "uint128"
+              },
+              {
+                "internalType": "UD2x18",
+                "name": "exponent",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint40",
+                "name": "delta",
+                "type": "uint40"
+              }
+            ],
+            "internalType": "struct LockupDynamic.SegmentWithDelta[]",
+            "name": "segments",
+            "type": "tuple[]"
           }
         ],
-        "internalType": "struct Broker",
-        "name": "broker",
+        "internalType": "struct LockupDynamic.CreateWithDeltas",
+        "name": "params",
         "type": "tuple"
       }
     ],
@@ -781,72 +1033,79 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "internalType": "uint128",
-        "name": "totalAmount",
-        "type": "uint128"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint128",
-            "name": "amount",
-            "type": "uint128"
-          },
-          {
-            "internalType": "UD2x18",
-            "name": "exponent",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint40",
-            "name": "milestone",
-            "type": "uint40"
-          }
-        ],
-        "internalType": "struct LockupPro.Segment[]",
-        "name": "segments",
-        "type": "tuple[]"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "cancelable",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint40",
-        "name": "startTime",
-        "type": "uint40"
-      },
-      {
         "components": [
           {
             "internalType": "address",
-            "name": "addr",
+            "name": "sender",
             "type": "address"
           },
           {
-            "internalType": "UD60x18",
-            "name": "fee",
-            "type": "uint256"
+            "internalType": "uint40",
+            "name": "startTime",
+            "type": "uint40"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelable",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint128",
+            "name": "totalAmount",
+            "type": "uint128"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "asset",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              },
+              {
+                "internalType": "UD60x18",
+                "name": "fee",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Broker",
+            "name": "broker",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint128",
+                "name": "amount",
+                "type": "uint128"
+              },
+              {
+                "internalType": "UD2x18",
+                "name": "exponent",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint40",
+                "name": "milestone",
+                "type": "uint40"
+              }
+            ],
+            "internalType": "struct LockupDynamic.Segment[]",
+            "name": "segments",
+            "type": "tuple[]"
           }
         ],
-        "internalType": "struct Broker",
-        "name": "broker",
+        "internalType": "struct LockupDynamic.CreateWithMilestones",
+        "name": "params",
         "type": "tuple"
       }
     ],
@@ -856,64 +1115,6 @@
         "internalType": "uint256",
         "name": "streamId",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "flashFee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "fee",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC3156FlashBorrower",
-        "name": "receiver",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
-      }
-    ],
-    "name": "flashLoan",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "success",
-        "type": "bool"
       }
     ],
     "stateMutability": "nonpayable",
@@ -965,11 +1166,11 @@
         "type": "uint256"
       }
     ],
-    "name": "getDepositAmount",
+    "name": "getDepositedAmount",
     "outputs": [
       {
         "internalType": "uint128",
-        "name": "depositAmount",
+        "name": "depositedAmount",
         "type": "uint128"
       }
     ],
@@ -998,25 +1199,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      }
-    ],
-    "name": "getProtocolRevenues",
-    "outputs": [
-      {
-        "internalType": "uint128",
-        "name": "protocolRevenues",
-        "type": "uint128"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "streamId",
         "type": "uint256"
@@ -1037,7 +1219,7 @@
             "type": "uint40"
           }
         ],
-        "internalType": "struct LockupPro.Range",
+        "internalType": "struct LockupDynamic.Range",
         "name": "range",
         "type": "tuple"
       }
@@ -1072,6 +1254,25 @@
         "type": "uint256"
       }
     ],
+    "name": "getRefundedAmount",
+    "outputs": [
+      {
+        "internalType": "uint128",
+        "name": "refundedAmount",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
     "name": "getSegments",
     "outputs": [
       {
@@ -1092,7 +1293,7 @@
             "type": "uint40"
           }
         ],
-        "internalType": "struct LockupPro.Segment[]",
+        "internalType": "struct LockupDynamic.Segment[]",
         "name": "segments",
         "type": "tuple[]"
       }
@@ -1146,61 +1347,70 @@
         "type": "uint256"
       }
     ],
-    "name": "getStatus",
-    "outputs": [
-      {
-        "internalType": "enum Lockup.Status",
-        "name": "status",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      }
-    ],
     "name": "getStream",
     "outputs": [
       {
         "components": [
           {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint40",
+            "name": "startTime",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "endTime",
+            "type": "uint40"
+          },
+          {
+            "internalType": "bool",
+            "name": "isCancelable",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "wasCanceled",
+            "type": "bool"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "asset",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isDepleted",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isStream",
+            "type": "bool"
+          },
+          {
             "components": [
               {
                 "internalType": "uint128",
-                "name": "deposit",
+                "name": "deposited",
                 "type": "uint128"
               },
               {
                 "internalType": "uint128",
                 "name": "withdrawn",
                 "type": "uint128"
+              },
+              {
+                "internalType": "uint128",
+                "name": "refunded",
+                "type": "uint128"
               }
             ],
             "internalType": "struct Lockup.Amounts",
             "name": "amounts",
-            "type": "tuple"
-          },
-          {
-            "components": [
-              {
-                "internalType": "uint40",
-                "name": "start",
-                "type": "uint40"
-              },
-              {
-                "internalType": "uint40",
-                "name": "end",
-                "type": "uint40"
-              }
-            ],
-            "internalType": "struct LockupPro.Range",
-            "name": "range",
             "type": "tuple"
           },
           {
@@ -1221,32 +1431,12 @@
                 "type": "uint40"
               }
             ],
-            "internalType": "struct LockupPro.Segment[]",
+            "internalType": "struct LockupDynamic.Segment[]",
             "name": "segments",
             "type": "tuple[]"
-          },
-          {
-            "internalType": "address",
-            "name": "sender",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isCancelable",
-            "type": "bool"
-          },
-          {
-            "internalType": "enum Lockup.Status",
-            "name": "status",
-            "type": "uint8"
-          },
-          {
-            "internalType": "contract IERC20",
-            "name": "asset",
-            "type": "address"
           }
         ],
-        "internalType": "struct LockupPro.Stream",
+        "internalType": "struct LockupDynamic.Stream",
         "name": "stream",
         "type": "tuple"
       }
@@ -1319,17 +1509,74 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "asset",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "name": "maxFlashLoan",
+    "name": "isCold",
     "outputs": [
       {
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "streamId",
         "type": "uint256"
+      }
+    ],
+    "name": "isDepleted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "isStream",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "isWarm",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -1383,14 +1630,20 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
       }
     ],
-    "name": "renounce",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "protocolRevenues",
+    "outputs": [
+      {
+        "internalType": "uint128",
+        "name": "revenues",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1401,15 +1654,28 @@
         "type": "uint256"
       }
     ],
-    "name": "returnableAmountOf",
+    "name": "refundableAmountOf",
     "outputs": [
       {
         "internalType": "uint128",
-        "name": "returnableAmount",
+        "name": "refundableAmount",
         "type": "uint128"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "renounce",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1497,6 +1763,38 @@
   {
     "inputs": [
       {
+        "internalType": "contract ISablierV2NFTDescriptor",
+        "name": "newNFTDescriptor",
+        "type": "address"
+      }
+    ],
+    "name": "setNFTDescriptor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "statusOf",
+    "outputs": [
+      {
+        "internalType": "enum Lockup.Status",
+        "name": "status",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "streamId",
         "type": "uint256"
@@ -1561,7 +1859,7 @@
         "type": "string"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1598,6 +1896,25 @@
     "name": "transferFrom",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "wasCanceled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1682,401 +1999,5 @@
     ],
     "stateMutability": "view",
     "type": "function"
-  },
-
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint128",
-        "name": "senderAmount",
-        "type": "uint128"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint128",
-        "name": "recipientAmount",
-        "type": "uint128"
-      }
-    ],
-    "name": "CancelLockupStream",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "admin",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint128",
-        "name": "protocolRevenues",
-        "type": "uint128"
-      }
-    ],
-    "name": "ClaimProtocolRevenues",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "funder",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint128",
-            "name": "deposit",
-            "type": "uint128"
-          },
-          {
-            "internalType": "uint128",
-            "name": "protocolFee",
-            "type": "uint128"
-          },
-          {
-            "internalType": "uint128",
-            "name": "brokerFee",
-            "type": "uint128"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct Lockup.CreateAmounts",
-        "name": "amounts",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "cancelable",
-        "type": "bool"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint40",
-            "name": "start",
-            "type": "uint40"
-          },
-          {
-            "internalType": "uint40",
-            "name": "cliff",
-            "type": "uint40"
-          },
-          {
-            "internalType": "uint40",
-            "name": "end",
-            "type": "uint40"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct LockupLinear.Range",
-        "name": "range",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "broker",
-        "type": "address"
-      }
-    ],
-    "name": "CreateLockupLinearStream",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "funder",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint128",
-            "name": "deposit",
-            "type": "uint128"
-          },
-          {
-            "internalType": "uint128",
-            "name": "protocolFee",
-            "type": "uint128"
-          },
-          {
-            "internalType": "uint128",
-            "name": "brokerFee",
-            "type": "uint128"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct Lockup.CreateAmounts",
-        "name": "amounts",
-        "type": "tuple"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint128",
-            "name": "amount",
-            "type": "uint128"
-          },
-          {
-            "internalType": "UD2x18",
-            "name": "exponent",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint40",
-            "name": "milestone",
-            "type": "uint40"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct LockupPro.Segment[]",
-        "name": "segments",
-        "type": "tuple[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "cancelable",
-        "type": "bool"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint40",
-            "name": "start",
-            "type": "uint40"
-          },
-          {
-            "internalType": "uint40",
-            "name": "end",
-            "type": "uint40"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct LockupPro.Range",
-        "name": "range",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "broker",
-        "type": "address"
-      }
-    ],
-    "name": "CreateLockupProStream",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "initiator",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IERC3156FlashBorrower",
-        "name": "receiver",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "feeAmount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
-      }
-    ],
-    "name": "FlashLoan",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      }
-    ],
-    "name": "RenounceLockupStream",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "admin",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract ISablierV2Comptroller",
-        "name": "oldComptroller",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract ISablierV2Comptroller",
-        "name": "newComptroller",
-        "type": "address"
-      }
-    ],
-    "name": "SetComptroller",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "oldAdmin",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "TransferAdmin",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint128",
-        "name": "amount",
-        "type": "uint128"
-      }
-    ],
-    "name": "WithdrawFromLockupStream",
-    "type": "event"
   }
 ]
