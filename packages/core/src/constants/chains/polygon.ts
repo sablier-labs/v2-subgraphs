@@ -1,6 +1,6 @@
 export let chainId = 5;
 export let chain = "goerli";
-export let startBlock = 8415100;
+export let startBlock = 8856900;
 
 /**
  * Keep aliases unique and always in sync with the frontend
