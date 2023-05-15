@@ -20,7 +20,7 @@ overrides:
         - "^[./]"
       importOrderSeparation: false
       importOrderSortSpecifiers: true
-  - files: ["*.yml", "*.yaml"]
+  - files: ["*.yml", "*.yaml", "*.graphql"]
     options:
       bracketSpacing: false
       printWidth: 120

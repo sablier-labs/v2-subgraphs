@@ -3,7 +3,6 @@ import {
   Approval as EventApproval,
   ApprovalForAll as EventApprovalForAll,
   CancelLockupStream as EventCancel,
-  FlashLoan as EventFlashLoan,
   RenounceLockupStream as EventRenounce,
   SetComptroller as EventSetComptroller,
   Transfer as EventTransfer,
@@ -183,20 +182,6 @@ export function handleApprovalForAll(event: EventApprovalForAll): void {
   action.addressA = event.params.owner;
   action.addressB = event.params.operator;
   action.amountA = event.params.approved ? one : zero;
-
-  /** --------------- */
-
-  action.save();
-}
-
-export function handleFlashLoan(event: EventFlashLoan): void {
-  let action = createAction(event);
-  action.category = "FlashLoan";
-
-  action.addressA = event.params.initiator;
-  action.addressB = event.params.asset;
-  action.amountA = event.params.amount;
-  action.amountB = event.params.feeAmount;
 
   /** --------------- */
 

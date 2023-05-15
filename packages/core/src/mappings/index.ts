@@ -5,7 +5,6 @@ export {
   handleComptrollerSet,
   handleCreateLinear,
   handleCreatePro,
-  handleFlashLoan,
   handleRenounce,
   handleTransfer,
   handleWithdraw,
