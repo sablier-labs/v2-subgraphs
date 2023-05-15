@@ -1,4 +1,5 @@
 import { dataSource, log } from "@graphprotocol/graph-ts";
+import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import {
   Approval as EventApproval,
   ApprovalForAll as EventApprovalForAll,
@@ -9,7 +10,6 @@ import {
   WithdrawFromLockupStream as EventWithdraw,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
 import { one, zero } from "../constants";
 import {
   createAction,
@@ -17,7 +17,7 @@ import {
   getOrCreateComptroller,
   getStreamByIdFromSource,
 } from "../helpers";
-import { createLinearStream, createProStream } from "../helpers/stream";
+import { createDynamicStream, createLinearStream } from "../helpers/stream";
 
 export function handleCreateLinear(event: EventCreateLinear): void {
   let stream = createLinearStream(event);
@@ -40,8 +40,8 @@ export function handleCreateLinear(event: EventCreateLinear): void {
   action.save();
 }
 
-export function handleCreatePro(event: EventCreatePro): void {
-  let stream = createProStream(event);
+export function handleCreateDynamic(event: EventCreateDynamic): void {
+  let stream = createDynamicStream(event);
   if (stream == null) {
     return;
   }

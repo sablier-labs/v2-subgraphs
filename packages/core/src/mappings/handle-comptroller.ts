@@ -20,7 +20,7 @@ export function handleComptrollerFlashAsset(event: EventSetFlashAsset): void {
     assetAddress,
   );
 
-  entity.isEnabled = event.params.newFlag;
+  entity.enabled = event.params.newFlag;
   entity.save();
 }
 

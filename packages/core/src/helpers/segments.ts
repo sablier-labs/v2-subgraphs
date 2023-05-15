@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import { Segment, Stream } from "../generated/types/schema";
-import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
+import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import { zero } from "../constants";
 
 export class SegmentInput {
@@ -35,7 +35,10 @@ export function createSegment(
   return segment;
 }
 
-export function createSegments(stream: Stream, event: EventCreatePro): Stream {
+export function createSegments(
+  stream: Stream,
+  event: EventCreateDynamic,
+): Stream {
   let segments = event.params.segments;
 
   let streamed = zero;

@@ -278,5 +278,5 @@ type Watcher @entity {
   "global index for streams"
   actionIndex: BigInt!
   "flag that defines the initialization status of the subgraph"
-  isInitialized: Boolean!
+  initialized: Boolean!
 }

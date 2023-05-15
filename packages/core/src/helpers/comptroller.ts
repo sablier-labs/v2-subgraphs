@@ -56,7 +56,7 @@ export function getOrCreateComptrollerFlashAsset(
     entity = new ComptrollerFlashAsset(id);
     entity.comptroller = comptroller.id;
     entity.asset = getOrCreateAsset(assetAddress).id;
-    entity.isEnabled = false;
+    entity.enabled = false;
     entity.save();
   }
 

@@ -1,7 +1,7 @@
 import { BigInt, dataSource, ethereum, log } from "@graphprotocol/graph-ts";
 import { Stream } from "../generated/types/schema";
+import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
 import { getChainId, one, zero } from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch } from "./batch";
@@ -63,6 +63,7 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   }
 
   /** --------------- */
+  entity.category = "Linear";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
@@ -78,13 +79,16 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   entity.cancelable = event.params.cancelable;
 
   /** --------------- */
-  entity.cliffTime = event.params.range.cliff;
+
   let duration = event.params.range.end.minus(event.params.range.start);
   let cliff = event.params.range.cliff.minus(event.params.range.start);
   if (!cliff.isZero()) {
+    entity.cliff = true;
     entity.cliffAmount = entity.depositAmount.times(cliff.div(duration));
+    entity.cliffTime = event.params.range.cliff;
+  } else {
+    entity.cliff = false;
   }
-  entity.category = cliff.isZero() ? "Linear" : "Cliff";
 
   /** --------------- */
   let asset = getOrCreateAsset(event.params.asset);
@@ -99,7 +103,7 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   return entity;
 }
 
-export function createProStream(event: EventCreatePro): Stream | null {
+export function createDynamicStream(event: EventCreateDynamic): Stream | null {
   let tokenId = event.params.streamId;
   let entity = createStream(tokenId, event);
 
@@ -108,7 +112,7 @@ export function createProStream(event: EventCreatePro): Stream | null {
   }
 
   /** --------------- */
-  entity.category = "Pro";
+  entity.category = "Dynamic";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;

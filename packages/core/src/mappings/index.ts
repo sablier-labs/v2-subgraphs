@@ -4,7 +4,7 @@ export {
   handleCancel,
   handleComptrollerSet,
   handleCreateLinear,
-  handleCreatePro,
+  handleCreateDynamic,
   handleRenounce,
   handleTransfer,
   handleWithdraw,

@@ -1,13 +1,13 @@
 import { Address } from "@graphprotocol/graph-ts";
 import {
+  ContractLockupDynamic as ContractDynamic,
   ContractLockupLinear as ContractLinear,
-  ContractLockupPro as ContractPro,
 } from "../generated/types/templates";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import {
   getContractsComptroller,
+  getContractsDynamic,
   getContractsLinear,
-  getContractsPro,
 } from "../constants";
 import {
   createContract,
@@ -20,9 +20,9 @@ function createContractLinear(address: Address, alias: string): void {
   createContract(address, alias, "LockupLinear");
 }
 
-function createContractPro(address: Address, alias: string): void {
-  ContractPro.create(address);
-  createContract(address, alias, "LockupPro");
+function createContractDynamic(address: Address, alias: string): void {
+  ContractDynamic.create(address);
+  createContract(address, alias, "LockupDynamic");
 }
 
 function createContractComptroller(address: Address): void {
@@ -38,10 +38,10 @@ function createContractComptroller(address: Address): void {
 
 export function handleInitializer(_event: EventCreateLinear): void {
   let watcher = getOrCreateWatcher();
-  if (watcher.isInitialized) {
+  if (watcher.initialized) {
     return;
   } else {
-    watcher.isInitialized = true;
+    watcher.initialized = true;
     watcher.save();
   }
 
@@ -61,10 +61,10 @@ export function handleInitializer(_event: EventCreateLinear): void {
     }
   }
 
-  let pros = getContractsPro();
-  if (pros.length > 0) {
-    for (let i = 0; i < pros.length; i++) {
-      createContractPro(Address.fromString(pros[i][0]), pros[i][1]);
+  let dynamics = getContractsDynamic();
+  if (dynamics.length > 0) {
+    for (let i = 0; i < dynamics.length; i++) {
+      createContractDynamic(Address.fromString(dynamics[i][0]), dynamics[i][1]);
     }
   }
 }

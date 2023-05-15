@@ -2,9 +2,9 @@ import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import {
   chainId,
   comptroller,
+  dynamic,
   initializer,
   linear,
-  pro,
 } from "../generated/env";
 
 export let zero = BigInt.fromI32(0);
@@ -40,8 +40,8 @@ export function getContractsLinear(): string[][] {
   ]);
 }
 
-export function getContractsPro(): string[][] {
-  return pro.map<string[]>((item) => [
+export function getContractsDynamic(): string[][] {
+  return dynamic.map<string[]>((item) => [
     item[0].toString().toLowerCase(),
     item[1].toString().toLowerCase(),
   ]);

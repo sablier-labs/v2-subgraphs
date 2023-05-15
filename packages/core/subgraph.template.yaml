@@ -123,7 +123,7 @@ templates:
         - event:
             CreateLockupDynamicStream(uint256,indexed address,indexed address,indexed
             address,(uint128,uint128,uint128),address,bool,(uint128,uint64,uint40)[],(uint40,uint40),address)
-          handler: handleCreatePro
+          handler: handleCreateDynamic
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
         - event: SetComptroller(indexed address,address,address)
