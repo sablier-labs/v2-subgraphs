@@ -1,7 +1,6 @@
-import { dataSource, ethereum, log } from "@graphprotocol/graph-ts";
-import { Action } from "../generated/types/schema";
+import { ethereum } from "@graphprotocol/graph-ts";
+import { Action, Proxy } from "../generated/types/schema";
 import { getChainId } from "../constants";
-import { getProxyById } from "./proxy";
 
 export function generateActionId(event: ethereum.Event): string {
   return ""
@@ -10,7 +9,7 @@ export function generateActionId(event: ethereum.Event): string {
     .concat(event.logIndex.toString());
 }
 
-export function createAction(event: ethereum.Event): Action {
+export function createAction(proxy: Proxy, event: ethereum.Event): Action {
   let id = generateActionId(event);
   let entity = new Action(id);
 
@@ -21,15 +20,7 @@ export function createAction(event: ethereum.Event): Action {
   entity.chainId = getChainId();
 
   /** --------------- */
-  let proxy = getProxyById(dataSource.address().toHexString());
-  if (proxy == null) {
-    log.critical(
-      "[PRBPROXY] Proxy hasn't been registered before this create event: {}",
-      [dataSource.address().toHexString()],
-    );
-  } else {
-    entity.proxy = proxy.id;
-  }
+  entity.proxy = proxy.id;
 
   return entity;
 }

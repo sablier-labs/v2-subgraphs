@@ -16,7 +16,7 @@ export function handleActionExecute(event: EventExecute): void {
       [dataSource.address().toHexString()],
     );
   } else {
-    let action = createAction(event);
+    let action = createAction(proxy, event);
     let owner = getOrCreateOwner(proxy.owner);
     action.category = "Execute";
     action.proxy = proxy.id;
@@ -39,7 +39,7 @@ export function handleActionRunPlugin(event: EventRunPlugin): void {
       [dataSource.address().toHexString()],
     );
   } else {
-    let action = createAction(event);
+    let action = createAction(proxy, event);
     let owner = getOrCreateOwner(proxy.owner);
     action.category = "Execute";
     action.proxy = proxy.id;
@@ -53,7 +53,7 @@ export function handleActionRunPlugin(event: EventRunPlugin): void {
 }
 
 export function handleActionDeploy(proxy: Proxy, event: ethereum.Event): void {
-  let action = createAction(event);
+  let action = createAction(proxy, event);
 
   action.category = "Deploy";
   action.proxy = proxy.id;
@@ -65,7 +65,7 @@ export function handleActionTransfer(
   proxy: Proxy,
   event: ethereum.Event,
 ): void {
-  let action = createAction(event);
+  let action = createAction(proxy, event);
 
   action.category = "Transfer";
   action.proxy = proxy.id;

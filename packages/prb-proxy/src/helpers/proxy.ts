@@ -13,7 +13,6 @@ export function createProxy(id: string, event: ethereum.Event): Proxy {
   }
 
   entity.address = Address.fromHexString(id);
-
   entity.block = event.block.number;
   entity.from = event.transaction.from;
   entity.hash = event.transaction.hash;

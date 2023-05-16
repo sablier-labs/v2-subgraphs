@@ -1,4 +1,5 @@
 import { dataSource, log } from "@graphprotocol/graph-ts";
+import { ContractPRBProxy as ProxyTemplate } from "../generated/types/templates";
 import {
   DeployProxy as EventDeployProxy,
   TransferOwnership as EventTransferOwnership,
@@ -19,15 +20,15 @@ export function handleDeploy(event: EventDeployProxy): void {
   proxy.seed = event.params.seed;
 
   let owner = getOrCreateOwner(event.params.owner.toHexString());
-  proxy.owner = owner.id;
-
   let ownership = getOrCreateOwnership(owner.id, id, event);
 
+  proxy.owner = owner.id;
   ownership.save();
   proxy.ownership = ownership.id;
   proxy.save();
 
   handleActionDeploy(proxy, event);
+  ProxyTemplate.create(event.params.proxy);
 }
 
 export function handleTransferOwnership(event: EventTransferOwnership): void {
