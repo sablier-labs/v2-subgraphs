@@ -1,3 +1,3 @@
-# Sablier V2 Core Subgraphs
+# Sablier V2 Subgraphs - Core
 
 TODO: Swap implementations for goerli and mainnet

@@ -1,12 +1,11 @@
 enum ContractCategory {
+  LockupDynamic
   LockupLinear
-  LockupPro
 }
 
 enum StreamCategory {
-  Cliff
   Linear
-  Pro
+  Dynamic
 }
 
 enum ActionCategory {
@@ -14,7 +13,6 @@ enum ActionCategory {
   ApprovalForAll
   Create
   Cancel
-  FlashLoan
   Renounce
   Transfer
   Withdraw
@@ -23,22 +21,22 @@ enum ActionCategory {
 type Asset @entity(immutable: true) {
   "unique identifier resolving to the ERC20 asset/token address"
   id: ID!
-  "hardcoded chain id"
-  chainId: BigInt!
+
   "address of the ERC20 asset/token"
   address: Bytes!
+  "hardcoded chain id"
+  chainId: BigInt!
   "decimals of the ERC20 asset/token"
   decimals: BigInt!
-  "symbol of the ERC20 asset/token"
-  symbol: String!
   "name of the ERC20 asset/token"
   name: String!
+  "symbol of the ERC20 asset/token"
+  symbol: String!
+
   "streams that rely on this asset/token"
   streams: [Stream!]! @derivedFrom(field: "asset")
-
   "comptroller link tracking fees taken by the protocol for this asset/token"
-  comptrollerProtocolFees: [ComptrollerProtocolFee!]!
-    @derivedFrom(field: "asset")
+  comptrollerProtocolFees: [ComptrollerProtocolFee!]! @derivedFrom(field: "asset")
   "comptroller link tracking comptrollers that toggled (at least once) the loan-ability of this asset"
   comptrollerFlashAsset: [ComptrollerFlashAsset!]! @derivedFrom(field: "asset")
 }
@@ -46,28 +44,31 @@ type Asset @entity(immutable: true) {
 type ComptrollerProtocolFee @entity {
   "unique identifier resolving to the 'fee' prefix concatenated with the comptroller address and the asset address"
   id: String!
-  "comptroller managing the fee"
-  comptroller: Comptroller!
-  "asset subject to the fee"
-  asset: Asset!
+
   "amount of the fee"
   amount: BigInt!
+  "asset subject to the fee"
+  asset: Asset!
+  "comptroller managing the fee"
+  comptroller: Comptroller!
 }
 
 type ComptrollerFlashAsset @entity {
   "unique identifier resolving to the 'flash' prefix concatenated with the comptroller address and the asset address "
   id: String!
-  "comptroller managing the fee"
-  comptroller: Comptroller!
+
   "asset subject to the fee"
   asset: Asset!
+  "comptroller managing the fee"
+  comptroller: Comptroller!
   "flag to enable of disable the loan-ability of a token"
-  isEnabled: Boolean!
+  enabled: Boolean!
 }
 
 type Comptroller @entity {
   "unique identifier resolving to contract address"
   id: String!
+
   "address of the contract"
   address: Bytes!
   "address of the comptroller admin"
@@ -85,11 +86,12 @@ type Comptroller @entity {
 type Contract @entity {
   "unique identifier resolving to contract address"
   id: String!
+
   "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
   alias: String!
   "address of the contract"
   address: Bytes!
-  "category of contract e.g. LockupLinear or LockupPro"
+  "category of contract e.g. LockupLinear or LockupDynamic"
   category: ContractCategory!
   "comptroller governing the fees and configuration of this contract"
   comptroller: Comptroller
@@ -101,31 +103,32 @@ type Contract @entity {
 
 type Action @entity {
   "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx)"
-  id: String!
-  "contract through which the stream actions has been triggered"
-  contract: Contract!
-  "stream linked to this action (or null if this is a contract level action)"
-  stream: Stream
-  "category of action e.g. Deposit or Withdraw"
-  category: ActionCategory!
-  "unique global id tracked by the subgraph watcher"
-  subgraphId: BigInt!
-  "hardcoded chain id"
-  chainId: BigInt!
-  "transaction details: hash"
-  hash: Bytes!
+  id: ID!
+
   "transaction details: block number"
   block: BigInt!
-  "transaction details: timestamp"
-  timestamp: BigInt!
+  "category of action e.g. Deposit or Withdraw"
+  category: ActionCategory!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "contract through which the stream actions has been triggered"
+  contract: Contract!
+  "transaction details: hash"
+  hash: Bytes!
   "address that triggered the transaction"
   from: Bytes!
+
+  "stream linked to this action (or null if this is a contract level action)"
+  stream: Stream
+  "unique global id tracked by the subgraph watcher"
+  subgraphId: BigInt!
+  "transaction details: timestamp"
+  timestamp: BigInt!
 
   "address of an actor, differs based on action type e.g. for Create it resolves to the sender"
   addressA: Bytes
   "address of an actor, differs based on action type e.g. for Transfer it resolves to the new recipient"
   addressB: Bytes
-
   "amount, differs based on action type e.g. for Deposit it resolves to the depositAmount"
   amountA: BigInt
   "amount, differs based on action type e.g. for Withdraw it resolves to the remainingAmount"
@@ -135,18 +138,25 @@ type Action @entity {
 type Stream @entity {
   "unique identifier for the stream, resolving to the origin contract address concatenated with the chainId and the tokenId"
   id: String!
+
   "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
   alias: String!
-  "unique identifier for the stream released by the origin contract - same as the tokenId or streamId values given by the contract"
-  tokenId: BigInt!
   "unique global id tracked by the subgraph watcher - 🚨 these may change if new contracts are added and the chronological order of streams changes"
   subgraphId: BigInt!
-  "contract through which this stream has been created"
-  contract: Contract!
-  "hardcoded chain id"
-  chainId: BigInt!
+  "unique identifier for the stream released by the origin contract - same as the tokenId or streamId values given by the contract"
+  tokenId: BigInt!
+
   "type of stream (for sorting reasons)"
   category: StreamCategory!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "contract through which this stream has been created"
+  contract: Contract!
+  "transaction hash for the stream creation"
+  hash: Bytes!
+  "timestamp of the stream creation (for sorting reasons)"
+  timestamp: BigInt!
+
   "source of funds for the stream (anyone can create and fund a stream on any sender's behalf)"
   funder: Bytes!
   "manager of the stream, defined at creation by the funder (usually the same as the funder)"
@@ -155,26 +165,12 @@ type Stream @entity {
   recipient: Bytes!
   "list of relevant stream parties (for filtering) - usually sender and recipient"
   parties: [Bytes!]!
-  "transaction hash for the stream creation"
-  hash: Bytes!
-  "timestamp of the stream creation (for sorting reasons)"
-  timestamp: BigInt!
-  "amount deposit in the stream (without fees)"
-  depositAmount: BigInt!
-  "amount of fees paid to the broker"
-  brokerFeeAmount: BigInt!
-  "amount of fees paid to the protocol"
-  protocolFeeAmount: BigInt!
+
+  "flag for linear streams with a cliff"
+  cliff: Boolean!
+
   "asset (ERC20 token) supported by this stream"
   asset: Asset!
-  "timestamp for the start of the stream"
-  startTime: BigInt!
-  "timestamp for the end of the stream"
-  endTime: BigInt!
-  "timestamp for the start of the cliff, only available on linear streams"
-  cliffTime: BigInt
-  "derived amount of the cliff, only available on linear streams"
-  cliffAmount: BigInt
   "flag showing the cancelability of the stream (making it false is a one-way trip)"
   cancelable: Boolean!
   "action in which the stream has been made non-cancelable (can be the deposit transaction or a different one)"
@@ -187,23 +183,43 @@ type Stream @entity {
   canceledAction: Action
   "timestamp for the when the stream was canceled"
   canceledTime: BigInt
-  "amount resolving to the sum of all withdrawals"
-  withdrawnAmount: BigInt!
+
+  "timestamp for the start of the cliff, only available on linear streams"
+  cliffTime: BigInt
+  "derived amount of the cliff, only available on linear streams"
+  cliffAmount: BigInt
+
+  "timestamp for the end of the stream"
+  endTime: BigInt!
+  "timestamp for the start of the stream"
+  startTime: BigInt!
+
+  "amount deposit in the stream (without fees)"
+  depositAmount: BigInt!
   "amount resolving to the sum still inside the stream (regardless of it being locked or not) (difference between deposit and withdrawn)"
   intactAmount: BigInt!
+  "amount resolving to the sum of all withdrawals"
+  withdrawnAmount: BigInt!
+
   "actions triggered in the context of this stream"
   actions: [Action!]! @derivedFrom(field: "stream")
-  "segments of the stream curve, only available on pro streams"
-  segments: [Segment!]! @derivedFrom(field: "stream")
   "batch the stream is part of, only available when created within a batch create transaction"
   batch: Batch!
   "position in the batch, only available when created within a batch create transaction"
   position: BigInt!
+  "segments of the stream curve, only available on dynamic streams"
+  segments: [Segment!]! @derivedFrom(field: "stream")
+
+  "amount of fees paid to the broker"
+  brokerFeeAmount: BigInt!
+  "amount of fees paid to the protocol"
+  protocolFeeAmount: BigInt!
 }
 
 type Segment @entity {
   "unique id resolving to stream id concatenated with the position of the segment"
   id: String!
+
   "position of the segment inside the array"
   position: BigInt!
   "stream upon which the segment is used"
@@ -214,12 +230,10 @@ type Segment @entity {
   exponent: BigInt!
   "timestamp resolving to the end moment of the segment"
   milestone: BigInt!
-
   "timestamp resolving to the *milestone* parameter"
   endTime: BigInt!
   "timestamp resolving to the start moment of the segment (the end time of previous segment or the startTime of the stream)"
   startTime: BigInt!
-
   "derived amount resoling to the total amount streamed until the start of the segment"
   startAmount: BigInt!
   "derived amount resoling to the total amount streamed until the end of the segment"
@@ -264,5 +278,5 @@ type Watcher @entity {
   "global index for streams"
   actionIndex: BigInt!
   "flag that defines the initialization status of the subgraph"
-  isInitialized: Boolean!
+  initialized: Boolean!
 }

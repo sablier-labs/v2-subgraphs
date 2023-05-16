@@ -1,0 +1,65 @@
+specVersion: 0.0.5
+description: PRB-Proxy Subgraph
+repository: https://github.com/sablierhq/v2-subgraphs
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ContractPRBProxyRegistry
+    network: goerli
+    source:
+      address: "0x8afe5fe3bafa1fbc941a50b630aa966f3a7815a0"
+      abi: PRBProxyRegistry
+      startBlock: 8621100
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Action
+        - Owner
+        - Ownership
+        - Proxy
+        - Registry
+      abis:
+        - name: PRBProxy
+          file: ./abis/PRBProxy.json
+        - name: PRBProxyHelpers
+          file: ./abis/PRBProxyHelpers.json
+        - name: PRBProxyRegistry
+          file: ./abis/PRBProxyRegistry.json
+      eventHandlers:
+        - event: DeployProxy(indexed address,indexed address,indexed address,bytes32,bytes32,address)
+          handler: handleDeploy
+        - event: TransferOwnership(address,indexed address,indexed address)
+          handler: handleTransferOwnership
+      file: ./src/mappings/index.ts
+templates:
+  - kind: ethereum/contract
+    name: ContractPRBProxy
+    network: goerli
+    source:
+      abi: PRBProxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Action
+        - Owner
+        - Ownership
+        - Proxy
+        - Registry
+      abis:
+        - name: PRBProxy
+          file: ./abis/PRBProxy.json
+        - name: PRBProxyHelpers
+          file: ./abis/PRBProxyHelpers.json
+        - name: PRBProxyRegistry
+          file: ./abis/PRBProxyRegistry.json
+      eventHandlers:
+        - event: Execute(indexed address,bytes,bytes)
+          handler: handleExecute
+        - event: RunPlugin(indexed address,bytes,bytes)
+          handler: handleRunPlugin
+      file: ./src/mappings/index.ts

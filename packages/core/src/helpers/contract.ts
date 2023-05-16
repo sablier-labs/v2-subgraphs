@@ -1,7 +1,7 @@
 import { Address } from "@graphprotocol/graph-ts";
 import { Contract } from "../generated/types/schema";
+import { SablierV2LockupDynamic as LockupDynamicContract } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import { SablierV2LockupLinear as LockupLinearContract } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { SablierV2LockupPro as LockupProContract } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
 import { getOrCreateComptroller } from "./comptroller";
 
 export function getContractById(id: string): Contract | null {
@@ -30,7 +30,7 @@ export function createContract(
 
     entity.comptroller = comptroller.id;
   } else if (category === "LockupPro") {
-    let instance = LockupProContract.bind(address);
+    let instance = LockupDynamicContract.bind(address);
     let comptrollerId = instance.comptroller();
     let comptroller = getOrCreateComptroller(comptrollerId);
 

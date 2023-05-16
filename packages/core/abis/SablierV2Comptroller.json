@@ -23,173 +23,8 @@
         "type": "address"
       }
     ],
-    "name": "SablierV2Adminable_CallerNotAdmin",
+    "name": "CallerNotAdmin",
     "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "admin",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "flashFee",
-    "outputs": [
-      {
-        "internalType": "UD60x18",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      }
-    ],
-    "name": "getProtocolFee",
-    "outputs": [
-      {
-        "internalType": "UD60x18",
-        "name": "protocolFee",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      }
-    ],
-    "name": "isFlashLoanable",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "result",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "UD60x18",
-        "name": "newFlashFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setFlashFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "internalType": "UD60x18",
-        "name": "newProtocolFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setProtocolFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      }
-    ],
-    "name": "toggleFlashAsset",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "transferAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "initiator",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IERC3156FlashBorrower",
-        "name": "receiver",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "feeAmount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
-      }
-    ],
-    "name": "FlashLoan",
-    "type": "event"
   },
   {
     "anonymous": false,
@@ -290,5 +125,126 @@
     ],
     "name": "TransferAdmin",
     "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "admin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "flashFee",
+    "outputs": [
+      {
+        "internalType": "UD60x18",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      }
+    ],
+    "name": "isFlashAsset",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "supported",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      }
+    ],
+    "name": "protocolFees",
+    "outputs": [
+      {
+        "internalType": "UD60x18",
+        "name": "fee",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "UD60x18",
+        "name": "newFlashFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "setFlashFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "internalType": "UD60x18",
+        "name": "newProtocolFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "setProtocolFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      }
+    ],
+    "name": "toggleFlashAsset",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "transferAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]

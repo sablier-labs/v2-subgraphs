@@ -1,16 +1,15 @@
 import { dataSource, log } from "@graphprotocol/graph-ts";
+import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import {
   Approval as EventApproval,
   ApprovalForAll as EventApprovalForAll,
   CancelLockupStream as EventCancel,
-  FlashLoan as EventFlashLoan,
   RenounceLockupStream as EventRenounce,
   SetComptroller as EventSetComptroller,
   Transfer as EventTransfer,
   WithdrawFromLockupStream as EventWithdraw,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { CreateLockupProStream as EventCreatePro } from "../generated/types/templates/ContractLockupPro/SablierV2LockupPro";
 import { one, zero } from "../constants";
 import {
   createAction,
@@ -18,7 +17,7 @@ import {
   getOrCreateComptroller,
   getStreamByIdFromSource,
 } from "../helpers";
-import { createLinearStream, createProStream } from "../helpers/stream";
+import { createDynamicStream, createLinearStream } from "../helpers/stream";
 
 export function handleCreateLinear(event: EventCreateLinear): void {
   let stream = createLinearStream(event);
@@ -41,8 +40,8 @@ export function handleCreateLinear(event: EventCreateLinear): void {
   action.save();
 }
 
-export function handleCreatePro(event: EventCreatePro): void {
-  let stream = createProStream(event);
+export function handleCreateDynamic(event: EventCreateDynamic): void {
+  let stream = createDynamicStream(event);
   if (stream == null) {
     return;
   }
@@ -183,20 +182,6 @@ export function handleApprovalForAll(event: EventApprovalForAll): void {
   action.addressA = event.params.owner;
   action.addressB = event.params.operator;
   action.amountA = event.params.approved ? one : zero;
-
-  /** --------------- */
-
-  action.save();
-}
-
-export function handleFlashLoan(event: EventFlashLoan): void {
-  let action = createAction(event);
-  action.category = "FlashLoan";
-
-  action.addressA = event.params.initiator;
-  action.addressB = event.params.asset;
-  action.amountA = event.params.amount;
-  action.amountB = event.params.feeAmount;
 
   /** --------------- */
 

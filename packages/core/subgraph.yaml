@@ -1,4 +1,4 @@
-specVersion: 0.0.4
+specVersion: 0.0.5
 description: Sablier V2 Subgraph
 repository: https://github.com/sablierhq/v2-subgraphs
 schema:
@@ -8,24 +8,24 @@ dataSources:
     name: ContractInitializer
     network: goerli
     source:
-      address: "0x0784fB3ff8F3d0386c1FFa3a0984A0c600D8F2Ab"
+      address: "0x93369c09b52449b4f888292b09cc8e9ceb7643df"
       abi: SablierV2LockupLinear
-      startBlock: 8415100
+      startBlock: 8856900
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Stream
       abis:
-        - name: SablierV2LockupLinear
-          file: ./abis/SablierV2LockupLinear.json
-        - name: SablierV2LockupPro
-          file: ./abis/SablierV2LockupPro.json
-        - name: SablierV2Comptroller
-          file: ./abis/SablierV2Comptroller.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
+        - name: SablierV2LockupDynamic
+          file: ./abis/SablierV2LockupDynamic.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
       eventHandlers:
         - event:
             CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
@@ -40,7 +40,7 @@ templates:
       abi: SablierV2LockupLinear
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Action
@@ -55,14 +55,14 @@ templates:
         - Token
         - Watcher
       abis:
-        - name: SablierV2LockupLinear
-          file: ./abis/SablierV2LockupLinear.json
-        - name: SablierV2LockupPro
-          file: ./abis/SablierV2LockupPro.json
-        - name: SablierV2Comptroller
-          file: ./abis/SablierV2Comptroller.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
+        - name: SablierV2LockupDynamic
+          file: ./abis/SablierV2LockupDynamic.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -74,8 +74,6 @@ templates:
             CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
             address,(uint128,uint128,uint128),address,bool,(uint40,uint40,uint40),address)
           handler: handleCreateLinear
-        - event: FlashLoan(indexed address,indexed address,indexed address,uint256,uint256,bytes)
-          handler: handleFlashLoan
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
         - event: SetComptroller(indexed address,address,address)
@@ -86,13 +84,13 @@ templates:
           handler: handleWithdraw
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
-    name: ContractLockupPro
+    name: ContractLockupDynamic
     network: goerli
     source:
-      abi: SablierV2LockupPro
+      abi: SablierV2LockupDynamic
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Action
@@ -107,14 +105,14 @@ templates:
         - Token
         - Watcher
       abis:
-        - name: SablierV2LockupPro
-          file: ./abis/SablierV2LockupPro.json
-        - name: SablierV2LockupLinear
-          file: ./abis/SablierV2LockupLinear.json
-        - name: SablierV2Comptroller
-          file: ./abis/SablierV2Comptroller.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
+        - name: SablierV2LockupDynamic
+          file: ./abis/SablierV2LockupDynamic.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -123,11 +121,9 @@ templates:
         - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel
         - event:
-            CreateLockupProStream(uint256,indexed address,indexed address,indexed
-            address,(uint128,uint128,uint128),(uint128,uint64,uint40)[],address,bool,(uint40,uint40),address)
-          handler: handleCreatePro
-        - event: FlashLoan(indexed address,indexed address,indexed address,uint256,uint256,bytes)
-          handler: handleFlashLoan
+            CreateLockupDynamicStream(uint256,indexed address,indexed address,indexed
+            address,(uint128,uint128,uint128),address,bool,(uint128,uint64,uint40)[],(uint40,uint40),address)
+          handler: handleCreateDynamic
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
         - event: SetComptroller(indexed address,address,address)
@@ -144,7 +140,7 @@ templates:
       abi: SablierV2Comptroller
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Action
@@ -159,10 +155,10 @@ templates:
         - Token
         - Watcher
       abis:
-        - name: SablierV2Comptroller
-          file: ./abis/SablierV2Comptroller.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: SablierV2Comptroller
+          file: ./abis/SablierV2Comptroller.json
       eventHandlers:
         - event: SetProtocolFee(indexed address,indexed address,uint256,uint256)
           handler: handleComptrollerProtocolFee

@@ -10,7 +10,7 @@ export function getOrCreateWatcher(): Watcher {
     entity.chainId = getChainId();
     entity.streamIndex = one;
     entity.actionIndex = one;
-    entity.isInitialized = false;
+    entity.initialized = false;
   }
 
   return entity;
