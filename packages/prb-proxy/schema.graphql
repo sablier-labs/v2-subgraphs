@@ -1,9 +1,11 @@
 enum ActionCategory {
+  Deploy
   Execute
   RunPlugin
+  Transfer
 }
 
-type Action @entity {
+type Action @entity(immutable: true) {
   "unique identifier resolving to transaction hash concatenated with the log index"
   id: ID!
 
@@ -13,13 +15,17 @@ type Action @entity {
   chainId: BigInt!
   "proxy that triggered the action"
   proxy: Proxy!
+  "address of the current proxy owner"
+  ownerSnapshot: Bytes!
 
   "data emitted by the action"
-  data: Bytes!
+  data: Bytes
+  "plugin installed and emitted by the action"
+  plugin: Bytes
   "response emitted by the action"
-  response: Bytes!
+  response: Bytes
   "target used and emitted by the action"
-  target: Bytes!
+  target: Bytes
 
   "block of the transaction"
   block: BigInt!
@@ -39,13 +45,14 @@ type Owner @entity {
   address: Bytes!
   "address of the owned proxy"
   proxy: Proxy @derivedFrom(field: "owner")
+
   "current ownership mapping"
   ownership: Ownership! @derivedFrom(field: "owner")
   "list of past ownerships"
   ownerships: [Ownership!]! @derivedFrom(field: "owner")
 }
 
-type Ownership @entity {
+type Ownership @entity(immutable: true) {
   "unique identifier resolving to the address of the proxy concatenated with the address of the owner and the timestamp"
   id: ID!
 
@@ -54,8 +61,8 @@ type Ownership @entity {
   "timestamp of the transaction that configured the ownership"
   timestamp: BigInt!
 
-  proxy: Proxy! @derivedFrom(field: "ownership")
-  owner: Owner! @derivedFrom(field: "ownership")
+  proxy: Proxy!
+  owner: Owner!
 }
 
 type Proxy @entity {
@@ -81,9 +88,10 @@ type Proxy @entity {
   seed: Bytes!
 
   "current proxy owner"
-  owner: Owner! @derivedFrom(field: "proxy")
+  owner: Owner!
+
   "current ownership mapping"
-  ownership: Ownership! @derivedFrom(field: "proxy")
+  ownership: Ownership!
   "list of past ownerships"
   ownerships: [Ownership!]! @derivedFrom(field: "proxy")
 

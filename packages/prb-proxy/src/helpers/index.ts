@@ -1,11 +1,4 @@
-import { createAction, generateActionId } from "./action";
-import { getOrCreateOwner } from "./owner";
-import { createProxy, getProxyById } from "./proxy";
-
-export {
-  createAction,
-  createProxy,
-  generateActionId,
-  getOrCreateOwner,
-  getProxyById,
-};
+export { getOrCreateOwner } from "./owner";
+export { createProxy, getProxyById } from "./proxy";
+export { createAction, generateActionId } from "./action";
+export { generateOwnershipId, getOrCreateOwnership } from "./ownership";
