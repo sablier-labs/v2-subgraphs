@@ -161,8 +161,8 @@ export function generateStreamId(tokenId: BigInt): string {
     return "";
   }
 
-  let id = contract.address
-    .toHexString()
+  let id = ""
+    .concat(contract.address.toHexString())
     .concat("-")
     .concat(getChainId().toString())
     .concat("-")

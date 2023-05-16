@@ -5,8 +5,8 @@ import { getContractById } from "./contract";
 import { getOrCreateWatcher } from "./watcher";
 
 export function generateActionId(event: ethereum.Event): string {
-  return event.transaction.hash
-    .toHexString()
+  return ""
+    .concat(event.transaction.hash.toHexString())
     .concat("-")
     .concat(event.logIndex.toString());
 }
