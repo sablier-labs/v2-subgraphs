@@ -7,7 +7,7 @@
     "url": "https://sablier.finance"
   },
   "bugs": {
-    "url": "https://github.com/sablierhq/v2-subgraphs/issues"
+    "url": "https://github.com/sablier-labs/v2-subgraphs/issues"
   },
   "config": {
     "commitizen": {
@@ -26,13 +26,13 @@
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2"
   },
-  "homepage": "https://github.com/sablierhq/v2-subgraphs#readme",
+  "homepage": "https://github.com/sablier-labs/v2-subgraphs#readme",
   "license": "LGPL-3.0",
   "packageManager": "yarn@3.3.1",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/sablierhq/v2-subgraphs"
+    "url": "https://github.com/sablier-labs/v2-subgraphs"
   },
   "scripts": {
     "g:all-check": "yarn g:prettier-check && yarn g:lint-check",

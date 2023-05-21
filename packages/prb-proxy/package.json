@@ -7,7 +7,7 @@
     "url": "https://sablier.finance"
   },
   "bugs": {
-    "url": "https://github.com/sablierhq/v2-subgraphs/issues"
+    "url": "https://github.com/sablier-labs/v2-subgraphs/issues"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -26,13 +26,13 @@
     "rimraf": "^3.0.2",
     "typescript": "^5.0.4"
   },
-  "homepage": "https://github.com/sablierhq/v2-subgraphs#readme",
+  "homepage": "https://github.com/sablier-labs/v2-subgraphs#readme",
   "license": "LGPL-3.0",
   "packageManager": "yarn@3.2.2",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/sablierhq/v2-subgraphs"
+    "url": "https://github.com/sablier-labs/v2-subgraphs"
   },
   "config": {
     "dir_chains": "src/constants/chains",
@@ -47,7 +47,7 @@
     "clean-modules": "rimraf node_modules",
     "clean-generated": "rimraf $npm_package_config_dir_generated",
     "codegen": "graph codegen --output-dir $npm_package_config_dir_generated/types/",
-    "deploy": "graph deploy $npm_package_config_flags_deploy sablierhq/$NAME",
+    "deploy": "graph deploy $npm_package_config_flags_deploy sablier-labs/$NAME",
     "deploy:goerli": "CHAIN=goerli yarn setup && NAME=prb-proxy-goerli yarn deploy",
     "deploy:mainnet": "CHAIN=mainnet yarn setup && NAME=prb-proxy yarn deploy",
     "deploy:polygon": "CHAIN=polygon yarn setup && NAME=prb-proxy-polygon yarn deploy",
