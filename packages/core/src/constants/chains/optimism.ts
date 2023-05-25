@@ -8,18 +8,18 @@ export let startBlock = 8856900;
  */
 
 export let linear: string[][] = [
-  ["0x93369c09b52449b4f888292b09cc8e9ceb7643df", "linear"],
+  ["0xd78d4fe35779342d5fe2e8206d886d57139d6abb", "linear"],
 ];
 
 export let dynamic: string[][] = [
-  ["0xD65332c5D63e93Ef6a9F4c0b5cda894E5809F9f6", "dynamic"],
+  ["0x4a57c183333a0a81300259d1795836fa0f4863bb", "dynamic"],
 ];
 /**
  * Pre-register some comptrollers to make sure fees and flash assets are indexed from the start,
  * not at the first queried interaction.
  */
 export let comptroller: string[][] = [
-  ["0x186C36EC33a15402a1c0826B3E57A553de62193B", "comptroller-1-1"],
+  ["0x70de563466beecc3b1c0738360262d899a4cd656", "comptroller-1-1"],
 ];
 
 /**

@@ -1,6 +1,6 @@
 specVersion: 0.0.5
 description: Sablier V2 Subgraph
-repository: https://github.com/sablierhq/v2-subgraphs
+repository: https://github.com/sablier-labs/v2-subgraphs
 schema:
   file: ./schema.graphql
 dataSources:
@@ -8,7 +8,7 @@ dataSources:
     name: ContractInitializer
     network: goerli
     source:
-      address: "0x93369c09b52449b4f888292b09cc8e9ceb7643df"
+      address: "0xd78d4fe35779342d5fe2e8206d886d57139d6abb"
       abi: SablierV2LockupLinear
       startBlock: 8856900
     mapping:
