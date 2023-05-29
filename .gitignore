@@ -4,7 +4,7 @@
 **/static
 **/generated
 
-**/subgraph.yaml
+packages/*/subgraph.yaml
 
 # Node.js
 **/node_modules

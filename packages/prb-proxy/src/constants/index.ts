@@ -1,5 +1,5 @@
 import { BigInt, Bytes } from "@graphprotocol/graph-ts";
-import { chainId, helpers, registry } from "../generated/env";
+import { chainId, registry } from "../generated/env";
 
 export let zero = BigInt.fromI32(0);
 export let one = BigInt.fromI32(1);
@@ -15,10 +15,6 @@ export let ADDRESS_ZERO = Bytes.fromHexString(
 
 export function getRegistryContract(): string {
   return registry.toLowerCase();
-}
-
-export function getHelpersContract(): string {
-  return helpers.toLowerCase();
 }
 
 export function getChainId(): BigInt {
