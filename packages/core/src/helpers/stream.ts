@@ -41,7 +41,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
 
   /** --------------- */
   entity.canceled = false;
-  entity.cancelableAction = null;
+  entity.renounceAction = null;
   entity.canceledAction = null;
   entity.cliffAmount = null;
   entity.cliffTime = null;

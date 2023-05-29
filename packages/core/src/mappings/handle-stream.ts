@@ -32,8 +32,8 @@ export function handleCreateLinear(event: EventCreateLinear): void {
   action.amountA = event.params.amounts.deposit;
 
   if (stream.cancelable == false) {
-    stream.cancelableAction = action.id;
-    stream.cancelableTime = event.block.timestamp;
+    stream.renounceAction = action.id;
+    stream.renounceTime = event.block.timestamp;
   }
   stream.save();
   action.stream = stream.id;
@@ -53,8 +53,8 @@ export function handleCreateDynamic(event: EventCreateDynamic): void {
   action.amountA = event.params.amounts.deposit;
 
   if (stream.cancelable == false) {
-    stream.cancelableAction = action.id;
-    stream.cancelableTime = event.block.timestamp;
+    stream.renounceAction = action.id;
+    stream.renounceTime = event.block.timestamp;
   }
 
   stream.save();
@@ -105,8 +105,8 @@ export function handleRenounce(event: EventRenounce): void {
   /** --------------- */
 
   stream.cancelable = false;
-  stream.cancelableAction = action.id;
-  stream.cancelableTime = event.block.timestamp;
+  stream.renounceAction = action.id;
+  stream.renounceTime = event.block.timestamp;
 
   stream.save();
   action.stream = stream.id;
