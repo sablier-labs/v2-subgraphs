@@ -4,6 +4,8 @@
 **/static
 **/generated
 
+**/subgraph.yaml
+
 # Node.js
 **/node_modules
 .node_repl_history
