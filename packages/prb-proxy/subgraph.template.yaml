@@ -24,8 +24,6 @@ dataSources:
       abis:
         - name: PRBProxy
           file: ./abis/PRBProxy.json
-        - name: PRBProxyHelpers
-          file: ./abis/PRBProxyHelpers.json
         - name: PRBProxyRegistry
           file: ./abis/PRBProxyRegistry.json
       eventHandlers:
@@ -53,8 +51,6 @@ templates:
       abis:
         - name: PRBProxy
           file: ./abis/PRBProxy.json
-        - name: PRBProxyHelpers
-          file: ./abis/PRBProxyHelpers.json
         - name: PRBProxyRegistry
           file: ./abis/PRBProxyRegistry.json
       eventHandlers:

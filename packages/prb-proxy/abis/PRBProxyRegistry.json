@@ -206,7 +206,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "eoa",
+        "name": "origin",
         "type": "address"
       }
     ],
