@@ -7,7 +7,7 @@ import {
 import { createAction, getOrCreateOwner, getProxyById } from "../helpers";
 
 export function handleActionExecute(event: EventExecute): void {
-  let id = dataSource.address.toString();
+  let id = dataSource.address().toString();
   let proxy = getProxyById(id);
 
   if (proxy == null) {
@@ -30,7 +30,7 @@ export function handleActionExecute(event: EventExecute): void {
 }
 
 export function handleActionRunPlugin(event: EventRunPlugin): void {
-  let id = dataSource.address.toString();
+  let id = dataSource.address().toString();
   let proxy = getProxyById(id);
 
   if (proxy == null) {
