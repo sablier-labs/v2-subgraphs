@@ -7,14 +7,15 @@ import {
 import { createAction, getOrCreateOwner, getProxyById } from "../helpers";
 
 export function handleActionExecute(event: EventExecute): void {
-  let id = dataSource.address().toString();
+  let id = dataSource.address().toHexString();
   let proxy = getProxyById(id);
 
   if (proxy == null) {
-    log.critical(
+    log.info(
       "[PRBPROXY] Proxy hasn't been registered before this execute event: {}",
       [dataSource.address().toHexString()],
     );
+    log.critical("[PRBPROXY]", []);
   } else {
     let action = createAction(proxy, event);
     let owner = getOrCreateOwner(proxy.owner);
@@ -30,14 +31,15 @@ export function handleActionExecute(event: EventExecute): void {
 }
 
 export function handleActionRunPlugin(event: EventRunPlugin): void {
-  let id = dataSource.address().toString();
+  let id = dataSource.address().toHexString();
   let proxy = getProxyById(id);
 
   if (proxy == null) {
-    log.critical(
+    log.info(
       "[PRBPROXY] Proxy hasn't been registered before this plugin run event: {}",
       [dataSource.address().toHexString()],
     );
+    log.critical("[PRBPROXY]", []);
   } else {
     let action = createAction(proxy, event);
     let owner = getOrCreateOwner(proxy.owner);

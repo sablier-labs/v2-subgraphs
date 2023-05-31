@@ -13,10 +13,11 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   let watcher = getOrCreateWatcher();
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
-    log.critical(
+    log.info(
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
+    log.critical("[SABLIER]", []);
     return null;
   }
 
@@ -154,10 +155,11 @@ export function createDynamicStream(event: EventCreateDynamic): Stream | null {
 export function generateStreamId(tokenId: BigInt): string {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
-    log.critical(
+    log.info(
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
+    log.critical("[SABLIER]", []);
     return "";
   }
 
@@ -174,10 +176,11 @@ export function generateStreamId(tokenId: BigInt): string {
 export function generateStreamAlias(tokenId: BigInt): string {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
-    log.critical(
+    log.info(
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
+    log.critical("[SABLIER]", []);
     return "";
   }
 

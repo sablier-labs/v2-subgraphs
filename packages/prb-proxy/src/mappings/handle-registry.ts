@@ -36,10 +36,11 @@ export function handleTransferOwnership(event: EventTransferOwnership): void {
   let proxy = getProxyById(id);
 
   if (proxy == null) {
-    log.critical(
+    log.info(
       "[PRBPROXY] Proxy hasn't been registered before this transfer event: {}",
       [dataSource.address().toHexString()],
     );
+    log.critical("[PRBPROXY]", []);
   } else {
     let owner = getOrCreateOwner(event.params.newOwner.toHexString());
     let ownership = getOrCreateOwnership(owner.id, id, event);

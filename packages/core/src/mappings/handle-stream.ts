@@ -192,10 +192,11 @@ export function handleApprovalForAll(event: EventApprovalForAll): void {
 export function handleComptrollerSet(event: EventSetComptroller): void {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
-    log.critical(
+    log.info(
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
+    log.critical("[SABLIER]", []);
     return;
   }
 
