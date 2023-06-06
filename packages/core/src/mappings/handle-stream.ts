@@ -81,10 +81,6 @@ export function handleCancel(event: EventCancel): void {
   stream.canceled = true;
   stream.canceledAction = action.id;
   stream.canceledTime = event.block.timestamp;
-  stream.withdrawnAmount = stream.withdrawnAmount.plus(
-    event.params.recipientAmount,
-  );
-  stream.intactAmount = zero;
 
   stream.save();
   action.stream = stream.id;
