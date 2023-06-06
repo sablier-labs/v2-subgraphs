@@ -1,5 +1,5 @@
-import { one, zero } from "../constants";
 import { BigInt } from "@graphprotocol/graph-ts";
+import { one, zero } from "../constants";
 
 export function convertExponentToBigInt(decimals: BigInt): BigInt {
   let base = BigInt.fromI32(1);
