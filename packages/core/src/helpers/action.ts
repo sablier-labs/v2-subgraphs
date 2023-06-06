@@ -11,6 +11,10 @@ export function generateActionId(event: ethereum.Event): string {
     .concat(event.logIndex.toString());
 }
 
+export function getActionById(id: string): Action | null {
+  return Action.load(id);
+}
+
 export function createAction(event: ethereum.Event): Action {
   let watcher = getOrCreateWatcher();
   let id = generateActionId(event);
@@ -30,7 +34,7 @@ export function createAction(event: ethereum.Event): Action {
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
-    log.critical("[SABLIER]", []);
+    log.error("[SABLIER]", []);
   } else {
     entity.contract = contract.id;
   }

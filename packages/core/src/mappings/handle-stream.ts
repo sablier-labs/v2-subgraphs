@@ -66,6 +66,11 @@ export function handleCancel(event: EventCancel): void {
   let id = event.params.streamId;
   let stream = getStreamByIdFromSource(id);
   if (stream == null) {
+    log.info(
+      "[SABLIER] Stream hasn't been registered before this withdraw event: {}",
+      [id.toHexString()],
+    );
+    log.error("[SABLIER]", []);
     return;
   }
 
@@ -81,6 +86,7 @@ export function handleCancel(event: EventCancel): void {
   stream.canceled = true;
   stream.canceledAction = action.id;
   stream.canceledTime = event.block.timestamp;
+  stream.intactAmount = event.params.recipientAmount; // The only amount remaining in the stream is the non-withdrawn recipient amount
 
   stream.save();
   action.stream = stream.id;
@@ -113,6 +119,11 @@ export function handleTransfer(event: EventTransfer): void {
   let id = event.params.tokenId;
   let stream = getStreamByIdFromSource(id);
   if (stream == null) {
+    log.info(
+      "[SABLIER] Stream hasn't been registered before this withdraw event: {}",
+      [id.toHexString()],
+    );
+    log.error("[SABLIER]", []);
     return;
   }
 
@@ -135,6 +146,11 @@ export function handleWithdraw(event: EventWithdraw): void {
   let id = event.params.streamId;
   let stream = getStreamByIdFromSource(id);
   if (stream == null) {
+    log.info(
+      "[SABLIER] Stream hasn't been registered before this withdraw event: {}",
+      [id.toHexString()],
+    );
+    log.error("[SABLIER]", []);
     return;
   }
 
@@ -148,7 +164,13 @@ export function handleWithdraw(event: EventWithdraw): void {
 
   let withdrawn = stream.withdrawnAmount.plus(event.params.amount);
   stream.withdrawnAmount = withdrawn;
-  stream.intactAmount = stream.depositAmount.minus(withdrawn);
+
+  if (stream.canceledAction) {
+    stream.intactAmount = stream.intactAmount.minus(withdrawn); // The intact amount (recipient) has been set in the cancel action, now subtract
+  } else {
+    stream.intactAmount = stream.depositAmount.minus(withdrawn);
+  }
+
   stream.save();
   action.stream = stream.id;
   action.save();
@@ -157,7 +179,12 @@ export function handleWithdraw(event: EventWithdraw): void {
 export function handleApproval(event: EventApproval): void {
   let id = event.params.tokenId;
   let stream = getStreamByIdFromSource(id);
+
   if (stream == null) {
+    log.info(
+      "[SABLIER] Stream hasn't been registered before this approval event: {}",
+      [id.toHexString()],
+    );
     return;
   }
 
@@ -192,7 +219,7 @@ export function handleComptrollerSet(event: EventSetComptroller): void {
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
-    log.critical("[SABLIER]", []);
+    log.error("[SABLIER]", []);
     return;
   }
 

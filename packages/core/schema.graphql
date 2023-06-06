@@ -196,7 +196,7 @@ type Stream @entity {
 
   "amount deposit in the stream (without fees)"
   depositAmount: BigInt!
-  "amount resolving to the sum still inside the stream (regardless of it being locked or not) (difference between deposit and withdrawn)"
+  "amount resolving to the sum still inside the stream (regardless of it being locked or not) (difference between deposit and withdrawn pre-cancel)"
   intactAmount: BigInt!
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!

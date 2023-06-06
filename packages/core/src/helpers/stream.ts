@@ -17,7 +17,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
-    log.critical("[SABLIER]", []);
+    log.error("[SABLIER]", []);
     return null;
   }
 
@@ -159,7 +159,7 @@ export function generateStreamId(tokenId: BigInt): string {
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
-    log.critical("[SABLIER]", []);
+    log.error("[SABLIER]", []);
     return "";
   }
 
@@ -180,7 +180,7 @@ export function generateStreamAlias(tokenId: BigInt): string {
       "[SABLIER] Contract hasn't been registered before this create event: {}",
       [dataSource.address().toHexString()],
     );
-    log.critical("[SABLIER]", []);
+    log.error("[SABLIER]", []);
     return "";
   }
 
