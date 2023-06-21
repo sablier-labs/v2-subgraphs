@@ -1,6 +1,6 @@
-export let chainId = 5;
-export let chain = "goerli";
-export let startBlock = 9098200;
+export let chainId = 137;
+export let chain = "matic";
+export let startBlock = 44085750;
 
 /**
  * Keep aliases unique and always in sync with the frontend
@@ -8,18 +8,18 @@ export let startBlock = 9098200;
  */
 
 export let linear: string[][] = [
-  ["0xa2215702f518d425cc9f593be8a54efc3e4a08e9", "linear"],
+  ["0xd6af8a924cc4aab901f7dcaebd018257925931e7", "linear"],
 ];
 
 export let dynamic: string[][] = [
-  ["0xb6e272431f555951844e0d071fb18e48e315132f", "dynamic"],
+  ["0x19b40b1ecb0e729ffed882437a8052739830b311", "dynamic"],
 ];
 /**
  * Pre-register some comptrollers to make sure fees and flash assets are indexed from the start,
  * not at the first queried interaction.
  */
 export let comptroller: string[][] = [
-  ["0xada5d13db8b414804357d2fc0b072373385cf308", "comptroller"],
+  ["0x23f330958ae057e3896a02f658aed61387ae8406", "comptroller"],
 ];
 
 /**
