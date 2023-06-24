@@ -1,6 +1,5 @@
 import { Address } from "@graphprotocol/graph-ts";
 import { Contract } from "../generated/types/schema";
-import { getOrCreateComptrollerFromContract } from "./comptroller";
 
 export function getContractById(id: string): Contract | null {
   return Contract.load(id);
@@ -22,10 +21,12 @@ export function createContract(
   entity.address = address;
   entity.category = category;
 
-  let comptroller = getOrCreateComptrollerFromContract(address, category);
-  if (comptroller != null) {
-    entity.comptroller = comptroller.id;
-  }
+  /**
+   * The TransferAdmin event is for some reason omitted,
+   * so don't rely on it for the comptroller.
+   *
+   * Instead, finish the setup at the first create event.
+   */
 
   entity.save();
   return entity;

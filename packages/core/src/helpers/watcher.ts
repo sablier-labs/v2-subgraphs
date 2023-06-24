@@ -11,6 +11,7 @@ export function getOrCreateWatcher(): Watcher {
     entity.streamIndex = one;
     entity.actionIndex = one;
     entity.initialized = false;
+    entity.logs = [];
   }
 
   return entity;

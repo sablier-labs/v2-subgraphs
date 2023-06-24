@@ -16,6 +16,7 @@ import {
   createAction,
   getContractById,
   getOrCreateComptroller,
+  getOrCreateWatcher,
   getStreamByIdFromSource,
 } from "../helpers";
 import { getOrCreateComptrollerFromContract } from "../helpers/comptroller";
@@ -247,6 +248,12 @@ export function handleTransferAdmin(event: EventTransferAdmin): void {
     log.error("[SABLIER]", []);
     return;
   }
+
+  let watcher = getOrCreateWatcher();
+  watcher.logs.push(
+    "Transfer for: ".concat(dataSource.address().toHexString()),
+  );
+  watcher.save();
 
   let comptroller = getOrCreateComptrollerFromContract(
     dataSource.address(),

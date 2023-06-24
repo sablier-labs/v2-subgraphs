@@ -4,8 +4,8 @@ enum ContractCategory {
 }
 
 enum StreamCategory {
-  Linear
-  Dynamic
+  LockupLinear
+  LockupDynamic
 }
 
 enum ActionCategory {
@@ -74,7 +74,7 @@ type Comptroller @entity {
   "address of the comptroller admin"
   admin: Bytes
   "contracts governed by the comptroller"
-  contracts: [Contract!]
+  contracts: [Contract!] @derivedFrom(field: "comptroller")
   "amount resolving to the fee taken by the protocol for a flash loan"
   flashFee: BigInt
   "comptroller link tracking assets that had their loan-ability toggled (at least once) by this comptroller"
@@ -281,4 +281,6 @@ type Watcher @entity {
   actionIndex: BigInt!
   "flag that defines the initialization status of the subgraph"
   initialized: Boolean!
+  "list of logs, for debugging purposes"
+  logs: [String!]!
 }

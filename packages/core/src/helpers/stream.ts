@@ -5,6 +5,7 @@ import { CreateLockupLinearStream as EventCreateLinear } from "../generated/type
 import { getChainId, one, zero } from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch } from "./batch";
+import { getOrCreateComptrollerFromContract } from "./comptroller";
 import { getContractById } from "./contract";
 import { createSegments } from "./segments";
 import { getOrCreateWatcher } from "./watcher";
@@ -55,6 +56,29 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   return entity;
 }
 
+function resolveComptroller(category: string): void {
+  let contract = getContractById(dataSource.address().toHexString());
+  if (contract == null) {
+    log.info(
+      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      [dataSource.address().toHexString()],
+    );
+    log.error("[SABLIER]", []);
+    return;
+  }
+
+  if (contract.comptroller == null) {
+    let comptroller = getOrCreateComptrollerFromContract(
+      dataSource.address(),
+      category,
+    );
+    if (comptroller != null) {
+      contract.comptroller = comptroller.id;
+      contract.save();
+    }
+  }
+}
+
 export function createLinearStream(event: EventCreateLinear): Stream | null {
   let tokenId = event.params.streamId;
   let entity = createStream(tokenId, event);
@@ -64,7 +88,7 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   }
 
   /** --------------- */
-  entity.category = "Linear";
+  entity.category = "LockupLinear";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
@@ -100,6 +124,9 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   entity.batch = batch.id;
   entity.position = batch.size.minus(one);
 
+  /** --------------- */
+  resolveComptroller(entity.category);
+
   entity.save();
   return entity;
 }
@@ -113,7 +140,7 @@ export function createDynamicStream(event: EventCreateDynamic): Stream | null {
   }
 
   /** --------------- */
-  entity.category = "Dynamic";
+  entity.category = "LockupDynamic";
   entity.funder = event.params.funder;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
@@ -143,6 +170,9 @@ export function createDynamicStream(event: EventCreateDynamic): Stream | null {
 
   /** --------------- */
   entity = createSegments(entity, event);
+
+  /** --------------- */
+  resolveComptroller(entity.category);
 
   /** --------------- */
   return entity;

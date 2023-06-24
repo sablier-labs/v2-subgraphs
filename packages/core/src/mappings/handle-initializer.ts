@@ -4,7 +4,7 @@ import {
   ContractLockupDynamic as DynamicTemplate,
   ContractLockupLinear as LinearTemplate,
 } from "../generated/types/templates";
-import { TransferAdmin as EventTransferAdmin } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import {
   getContractsComptroller,
   getContractsDynamic,
@@ -35,7 +35,7 @@ function createContractComptroller(address: Address): void {
  * Use the oldest linear contract as a trigger to start indexing all the other contracts.
  */
 
-export function handleInitializer(_event: EventTransferAdmin): void {
+export function handleInitializer(_event: EventCreateLinear): void {
   let watcher = getOrCreateWatcher();
   if (watcher.initialized) {
     return;
