@@ -17,13 +17,14 @@
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
-    "@trivago/prettier-plugin-sort-imports": "^3.4.0",
-    "@typescript-eslint/parser": "^5.40.1",
+    "@trivago/prettier-plugin-sort-imports": "4.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
     "commitizen": "^4.2.5",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.25.0",
     "husky": "^8.0.1",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.8",
     "rimraf": "^3.0.2"
   },
   "homepage": "https://github.com/sablier-labs/v2-subgraphs#readme",
