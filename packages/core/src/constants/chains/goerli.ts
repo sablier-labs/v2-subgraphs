@@ -22,6 +22,7 @@ export let dynamic: string[][] = [
  */
 export let comptroller: string[][] = [
   ["0xada5d13db8b414804357d2fc0b072373385cf308", "comptroller"],
+  ["0x18e78f3b6b835b09d5d20d70ac7afb1c8da6a034", "comptroller-flash"],
 ];
 
 /**

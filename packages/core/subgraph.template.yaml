@@ -27,9 +27,7 @@ dataSources:
         - name: SablierV2LockupLinear
           file: ./abis/SablierV2LockupLinear.json
       eventHandlers:
-        - event:
-            CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
-            address,(uint128,uint128,uint128),address,bool,(uint40,uint40,uint40),address)
+        - event: TransferAdmin(indexed address,indexed address)
           handler: handleInitializer
       file: ./src/mappings/index.ts
 templates:
@@ -80,6 +78,8 @@ templates:
           handler: handleComptrollerSet
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+        - event: TransferAdmin(indexed address,indexed address)
+          handler: handleTransferAdmin
         - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw
       file: ./src/mappings/index.ts
@@ -130,6 +130,8 @@ templates:
           handler: handleComptrollerSet
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+        - event: TransferAdmin(indexed address,indexed address)
+          handler: handleTransferAdmin
         - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw
       file: ./src/mappings/index.ts

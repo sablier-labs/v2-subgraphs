@@ -156,7 +156,7 @@ export function generateStreamId(tokenId: BigInt): string {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.info(
-      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      "[SABLIER] Contract hasn't been registered before this event: {}",
       [dataSource.address().toHexString()],
     );
     log.error("[SABLIER]", []);
@@ -177,7 +177,7 @@ export function generateStreamAlias(tokenId: BigInt): string {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.info(
-      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      "[SABLIER] Contract hasn't been registered before this event: {}",
       [dataSource.address().toHexString()],
     );
     log.error("[SABLIER]", []);

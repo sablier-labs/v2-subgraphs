@@ -4,8 +4,9 @@ import {
   ComptrollerFlashAsset,
   ComptrollerProtocolFee,
 } from "../generated/types/schema";
-import { ContractComptroller as ComptrollerTemplate } from "../generated/types/templates";
+import { SablierV2LockupDynamic as LockupDynamicContract } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import { SablierV2Comptroller as ComptrollerContract } from "../generated/types/templates/ContractLockupLinear/SablierV2Comptroller";
+import { SablierV2LockupLinear as LockupLinearContract } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { zero } from "../constants";
 import { getOrCreateAsset } from "../helpers";
 
@@ -22,16 +23,20 @@ export function getOrCreateComptroller(address: Address): Comptroller {
 
     if (admin.reverted || flashFee.reverted) {
       log.error(
-        "[SABLIER] Compotroller hasn't been properly registered or isn't compliant: {}",
+        "[SABLIER] Comptroller hasn't been properly registered or isn't compliant: {}",
         [id],
       );
-    } else {
-      ComptrollerTemplate.create(address);
+    }
+
+    if (!flashFee.reverted) {
+      entity.flashFee = flashFee.value;
+    }
+
+    if (!admin.reverted) {
+      entity.admin = admin.value;
     }
 
     entity.address = address;
-    entity.admin = admin.value;
-    entity.flashFee = flashFee.value;
     entity.save();
   }
 
@@ -86,4 +91,37 @@ export function getOrCreateComptrollerProtocolFee(
   }
 
   return entity;
+}
+
+export function getOrCreateComptrollerFromContract(
+  address: Address,
+  category: string,
+): Comptroller | null {
+  if (category === "LockupLinear") {
+    let instance = LockupLinearContract.bind(address);
+    let comptrollerId = instance.try_comptroller();
+    if (comptrollerId.reverted) {
+      log.error(
+        "[SABLIER] Comptroller hasn't been properly assigned the following lockup contract: {}",
+        [address.toHexString()],
+      );
+    } else {
+      let comptroller = getOrCreateComptroller(comptrollerId.value);
+      return comptroller;
+    }
+  } else if (category === "LockupDynamic") {
+    let instance = LockupDynamicContract.bind(address);
+    let comptrollerId = instance.try_comptroller();
+    if (comptrollerId.reverted) {
+      log.error(
+        "[SABLIER] Comptroller hasn't been properly assigned to the following lockup contract: {}",
+        [address.toHexString()],
+      );
+    } else {
+      let comptroller = getOrCreateComptroller(comptrollerId.value);
+      return comptroller;
+    }
+  }
+
+  return null;
 }

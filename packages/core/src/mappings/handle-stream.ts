@@ -7,6 +7,7 @@ import {
   RenounceLockupStream as EventRenounce,
   SetComptroller as EventSetComptroller,
   Transfer as EventTransfer,
+  TransferAdmin as EventTransferAdmin,
   WithdrawFromLockupStream as EventWithdraw,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
@@ -17,6 +18,7 @@ import {
   getOrCreateComptroller,
   getStreamByIdFromSource,
 } from "../helpers";
+import { getOrCreateComptrollerFromContract } from "../helpers/comptroller";
 import { createDynamicStream, createLinearStream } from "../helpers/stream";
 
 export function handleCreateLinear(event: EventCreateLinear): void {
@@ -67,7 +69,7 @@ export function handleCancel(event: EventCancel): void {
   let stream = getStreamByIdFromSource(id);
   if (stream == null) {
     log.info(
-      "[SABLIER] Stream hasn't been registered before this withdraw event: {}",
+      "[SABLIER] Stream hasn't been registered before this cancel event: {}",
       [id.toHexString()],
     );
     log.error("[SABLIER]", []);
@@ -120,7 +122,7 @@ export function handleTransfer(event: EventTransfer): void {
   let stream = getStreamByIdFromSource(id);
   if (stream == null) {
     log.info(
-      "[SABLIER] Stream hasn't been registered before this withdraw event: {}",
+      "[SABLIER] Stream hasn't been registered before this transfer event: {}",
       [id.toHexString()],
     );
     log.error("[SABLIER]", []);
@@ -216,7 +218,7 @@ export function handleComptrollerSet(event: EventSetComptroller): void {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.info(
-      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      "[SABLIER] Contract hasn't been registered before this set comptroller event: {}",
       [dataSource.address().toHexString()],
     );
     log.error("[SABLIER]", []);
@@ -228,5 +230,32 @@ export function handleComptrollerSet(event: EventSetComptroller): void {
   comptroller.save();
   contract.comptroller = comptroller.id;
 
+  contract.save();
+}
+
+/**
+ * Use the TransferAdmin event as an `onCreate` lifecycle step
+ * as it's the first one to be logged after the contract's creation
+ */
+export function handleTransferAdmin(event: EventTransferAdmin): void {
+  let contract = getContractById(dataSource.address().toHexString());
+  if (contract == null) {
+    log.info(
+      "[SABLIER] Contract hasn't been registered before this transfer admin event: {}",
+      [dataSource.address().toHexString()],
+    );
+    log.error("[SABLIER]", []);
+    return;
+  }
+
+  let comptroller = getOrCreateComptrollerFromContract(
+    dataSource.address(),
+    contract.category,
+  );
+  if (comptroller != null) {
+    contract.comptroller = comptroller.id;
+  }
+
+  contract.admin = event.params.newAdmin;
   contract.save();
 }

@@ -31,7 +31,7 @@ export function createAction(event: ethereum.Event): Action {
   let contract = getContractById(dataSource.address().toHexString());
   if (contract == null) {
     log.debug(
-      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      "[SABLIER] Contract hasn't been registered before this action event: {}",
       [dataSource.address().toHexString()],
     );
     log.error("[SABLIER]", []);

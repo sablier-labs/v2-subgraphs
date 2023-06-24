@@ -1,9 +1,10 @@
 import { Address } from "@graphprotocol/graph-ts";
 import {
-  ContractLockupDynamic as ContractDynamic,
-  ContractLockupLinear as ContractLinear,
+  ContractComptroller as ComptrollerTemplate,
+  ContractLockupDynamic as DynamicTemplate,
+  ContractLockupLinear as LinearTemplate,
 } from "../generated/types/templates";
-import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import { TransferAdmin as EventTransferAdmin } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import {
   getContractsComptroller,
   getContractsDynamic,
@@ -16,27 +17,25 @@ import {
 } from "../helpers";
 
 function createContractLinear(address: Address, alias: string): void {
-  ContractLinear.create(address);
+  LinearTemplate.create(address);
   createContract(address, alias, "LockupLinear");
 }
 
 function createContractDynamic(address: Address, alias: string): void {
-  ContractDynamic.create(address);
+  DynamicTemplate.create(address);
   createContract(address, alias, "LockupDynamic");
 }
 
 function createContractComptroller(address: Address): void {
+  ComptrollerTemplate.create(address);
   getOrCreateComptroller(address);
 }
 
 /**
  * Use the oldest linear contract as a trigger to start indexing all the other contracts.
- *
- * @param {EventCreateLinear} _event
- * @returns
  */
 
-export function handleInitializer(_event: EventCreateLinear): void {
+export function handleInitializer(_event: EventTransferAdmin): void {
   let watcher = getOrCreateWatcher();
   if (watcher.initialized) {
     return;
@@ -54,17 +53,23 @@ export function handleInitializer(_event: EventCreateLinear): void {
     }
   }
 
-  let linears = getContractsLinear();
-  if (linears.length > 0) {
-    for (let i = 0; i < linears.length; i++) {
-      createContractLinear(Address.fromString(linears[i][0]), linears[i][1]);
+  let linearList = getContractsLinear();
+  if (linearList.length > 0) {
+    for (let i = 0; i < linearList.length; i++) {
+      createContractLinear(
+        Address.fromString(linearList[i][0]),
+        linearList[i][1],
+      );
     }
   }
 
-  let dynamics = getContractsDynamic();
-  if (dynamics.length > 0) {
-    for (let i = 0; i < dynamics.length; i++) {
-      createContractDynamic(Address.fromString(dynamics[i][0]), dynamics[i][1]);
+  let dynamicList = getContractsDynamic();
+  if (dynamicList.length > 0) {
+    for (let i = 0; i < dynamicList.length; i++) {
+      createContractDynamic(
+        Address.fromString(dynamicList[i][0]),
+        dynamicList[i][1],
+      );
     }
   }
 }

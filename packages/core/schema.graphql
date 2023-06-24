@@ -72,11 +72,11 @@ type Comptroller @entity {
   "address of the contract"
   address: Bytes!
   "address of the comptroller admin"
-  admin: Bytes!
+  admin: Bytes
   "contracts governed by the comptroller"
-  contracts: [Contract!]! @derivedFrom(field: "comptroller")
+  contracts: [Contract!]
   "amount resolving to the fee taken by the protocol for a flash loan"
-  flashFee: BigInt!
+  flashFee: BigInt
   "comptroller link tracking assets that had their loan-ability toggled (at least once) by this comptroller"
   flashAssets: [ComptrollerFlashAsset!]! @derivedFrom(field: "comptroller")
   "comptroller link tracking assets that had their protocol fees set (at least once) by this comptroller"
@@ -91,6 +91,8 @@ type Contract @entity {
   alias: String!
   "address of the contract"
   address: Bytes!
+  "address of the contract admin"
+  admin: Bytes
   "category of contract e.g. LockupLinear or LockupDynamic"
   category: ContractCategory!
   "comptroller governing the fees and configuration of this contract"

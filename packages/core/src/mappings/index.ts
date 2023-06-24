@@ -7,6 +7,7 @@ export {
   handleCreateDynamic,
   handleRenounce,
   handleTransfer,
+  handleTransferAdmin,
   handleWithdraw,
 } from "./handle-stream";
 
