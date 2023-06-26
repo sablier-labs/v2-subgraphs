@@ -179,9 +179,9 @@ type Stream @entity {
   renounceAction: Action
   "timestamp for the when the stream was made non-cancelable"
   renounceTime: BigInt
-  "flag showing if the stream has been canceled (making it true is a one-way trip)"
+  "flag showing if the stream  was (making it true is a one-way trip)"
   canceled: Boolean!
-  "action in which the stream has been canceled"
+  "action in which the stream was"
   canceledAction: Action
   "timestamp for the when the stream was canceled"
   canceledTime: BigInt
