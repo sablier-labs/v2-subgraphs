@@ -9,12 +9,10 @@ export let startBlock = 9098200;
 
 export let linear: string[][] = [
   ["0xa2215702f518d425cc9f593be8a54efc3e4a08e9", "LL"],
-  ["0xae85837072cb833b46a0997daf1ff134341c340b", "LLF"],
 ];
 
 export let dynamic: string[][] = [
   ["0xb6e272431f555951844e0d071fb18e48e315132f", "LD"],
-  ["0xf63f3cf5b8523efd5950ecca9ef3f62cb0ee3476", "LDF"],
 ];
 
 /** PRBProxy registry */
