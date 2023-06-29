@@ -35,52 +35,6 @@ type Asset @entity(immutable: true) {
 
   "streams that rely on this asset/token"
   streams: [Stream!]! @derivedFrom(field: "asset")
-  "comptroller link tracking fees taken by the protocol for this asset/token"
-  comptrollerProtocolFees: [ComptrollerProtocolFee!]! @derivedFrom(field: "asset")
-  "comptroller link tracking comptrollers that toggled (at least once) the loan-ability of this asset"
-  comptrollerFlashAsset: [ComptrollerFlashAsset!]! @derivedFrom(field: "asset")
-}
-
-type ComptrollerProtocolFee @entity {
-  "unique identifier resolving to the 'fee' prefix concatenated with the comptroller address and the asset address"
-  id: String!
-
-  "amount of the fee"
-  amount: BigInt!
-  "asset subject to the fee"
-  asset: Asset!
-  "comptroller managing the fee"
-  comptroller: Comptroller!
-}
-
-type ComptrollerFlashAsset @entity {
-  "unique identifier resolving to the 'flash' prefix concatenated with the comptroller address and the asset address "
-  id: String!
-
-  "asset subject to the fee"
-  asset: Asset!
-  "comptroller managing the fee"
-  comptroller: Comptroller!
-  "flag to enable of disable the loan-ability of a token"
-  enabled: Boolean!
-}
-
-type Comptroller @entity {
-  "unique identifier resolving to contract address"
-  id: String!
-
-  "address of the contract"
-  address: Bytes!
-  "address of the comptroller admin"
-  admin: Bytes
-  "contracts governed by the comptroller"
-  contracts: [Contract!] @derivedFrom(field: "comptroller")
-  "amount resolving to the fee taken by the protocol for a flash loan"
-  flashFee: BigInt
-  "comptroller link tracking assets that had their loan-ability toggled (at least once) by this comptroller"
-  flashAssets: [ComptrollerFlashAsset!]! @derivedFrom(field: "comptroller")
-  "comptroller link tracking assets that had their protocol fees set (at least once) by this comptroller"
-  protocolFees: [ComptrollerProtocolFee!]! @derivedFrom(field: "comptroller")
 }
 
 type Contract @entity {
@@ -95,8 +49,6 @@ type Contract @entity {
   admin: Bytes
   "category of contract e.g. LockupLinear or LockupDynamic"
   category: ContractCategory!
-  "comptroller governing the fees and configuration of this contract"
-  comptroller: Comptroller
   "streams created through this contract"
   streams: [Stream!]! @derivedFrom(field: "contract")
   "actions on streams, triggered through this contract"
@@ -165,8 +117,13 @@ type Stream @entity {
   sender: Bytes!
   "current recipient of the stream, can withdraw the funds (the recipient can change on stream/nft transfer)"
   recipient: Bytes!
-  "list of relevant stream parties (for filtering) - usually sender and recipient"
+  "list of relevant stream parties (for filtering) - sender, recipient, possibly sender's"
   parties: [Bytes!]!
+
+  "owner of the proxy when the stream is created through a PRBProxy (sender = proxy, proxender = owner(proxy))"
+  proxender: Bytes
+  "flag for streams created through a proxy"
+  proxied: Boolean!
 
   "flag for linear streams with a cliff"
   cliff: Boolean!

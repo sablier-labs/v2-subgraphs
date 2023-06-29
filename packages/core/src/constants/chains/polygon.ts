@@ -14,13 +14,9 @@ export let linear: string[][] = [
 export let dynamic: string[][] = [
   ["0x19b40b1ecb0e729ffed882437a8052739830b311", "dynamic"],
 ];
-/**
- * Pre-register some comptrollers to make sure fees and flash assets are indexed from the start,
- * not at the first queried interaction.
- */
-export let comptroller: string[][] = [
-  ["0x23f330958ae057e3896a02f658aed61387ae8406", "comptroller"],
-];
+
+/** PRBProxy registry */
+export let registry = "0xa87bc4c1bc54e1c1b28d2dd942a094a6b665b8c9";
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.

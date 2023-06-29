@@ -1,10 +1,10 @@
 import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import {
   chainId,
-  comptroller,
   dynamic,
   initializer,
   linear,
+  registry,
 } from "../generated/env";
 
 export let zero = BigInt.fromI32(0);
@@ -19,15 +19,8 @@ export let ADDRESS_ZERO = Bytes.fromHexString(
   "0x0000000000000000000000000000000000000000",
 );
 
-export function getInitializerContract(): string {
+export function getContractInitializer(): string {
   return initializer.toLowerCase();
-}
-
-export function getContractsComptroller(): string[][] {
-  return comptroller.map<string[]>((item) => [
-    item[0].toString().toLowerCase(),
-    item[1].toString().toLowerCase(),
-  ]);
 }
 
 export function getContractsLinear(): string[][] {
@@ -45,6 +38,10 @@ export function getContractsDynamic(): string[][] {
     item[0].toString().toLowerCase(),
     item[1].toString().toLowerCase(),
   ]);
+}
+
+export function getContractRegistry(): string {
+  return registry.toLowerCase();
 }
 
 export function getChainId(): BigInt {
