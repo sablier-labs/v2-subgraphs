@@ -20,8 +20,10 @@ dataSources:
       abis:
         - name: ERC20
           file: ./abis/ERC20.json
-        - name: SablierV2Comptroller
-          file: ./abis/SablierV2Comptroller.json
+        - name: PRBProxy
+          file: ./abis/PRBProxy.json
+        - name: PRBProxyRegistry
+          file: ./abis/PRBProxyRegistry.json
         - name: SablierV2LockupDynamic
           file: ./abis/SablierV2LockupDynamic.json
         - name: SablierV2LockupLinear
@@ -47,9 +49,6 @@ templates:
         - Batch
         - Batcher
         - Contract
-        - Comptroller
-        - ComptrollerProtocolFee
-        - ComptrollerFlashAsset
         - Segment
         - Stream
         - Token
@@ -57,8 +56,10 @@ templates:
       abis:
         - name: ERC20
           file: ./abis/ERC20.json
-        - name: SablierV2Comptroller
-          file: ./abis/SablierV2Comptroller.json
+        - name: PRBProxy
+          file: ./abis/PRBProxy.json
+        - name: PRBProxyRegistry
+          file: ./abis/PRBProxyRegistry.json
         - name: SablierV2LockupDynamic
           file: ./abis/SablierV2LockupDynamic.json
         - name: SablierV2LockupLinear
@@ -76,8 +77,6 @@ templates:
           handler: handleCreateLinear
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
-        - event: SetComptroller(indexed address,address,address)
-          handler: handleComptrollerSet
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
         - event: TransferAdmin(indexed address,indexed address)
@@ -99,9 +98,6 @@ templates:
         - Contract
         - Batch
         - Batcher
-        - Comptroller
-        - ComptrollerProtocolFee
-        - ComptrollerFlashAsset
         - Segment
         - Stream
         - Token
@@ -109,8 +105,10 @@ templates:
       abis:
         - name: ERC20
           file: ./abis/ERC20.json
-        - name: SablierV2Comptroller
-          file: ./abis/SablierV2Comptroller.json
+        - name: PRBProxy
+          file: ./abis/PRBProxy.json
+        - name: PRBProxyRegistry
+          file: ./abis/PRBProxyRegistry.json
         - name: SablierV2LockupDynamic
           file: ./abis/SablierV2LockupDynamic.json
         - name: SablierV2LockupLinear
@@ -128,48 +126,10 @@ templates:
           handler: handleCreateDynamic
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
-        - event: SetComptroller(indexed address,address,address)
-          handler: handleComptrollerSet
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
         - event: TransferAdmin(indexed address,indexed address)
           handler: handleTransferAdmin
         - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw
-      file: ./src/mappings/index.ts
-  - kind: ethereum/contract
-    name: ContractComptroller
-    network: {{chain}}
-    source:
-      abi: SablierV2Comptroller
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - Action
-        - Contract
-        - Batch
-        - Batcher
-        - Comptroller
-        - ComptrollerProtocolFee
-        - ComptrollerFlashAsset
-        - Segment
-        - Stream
-        - Token
-        - Watcher
-      abis:
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: SablierV2Comptroller
-          file: ./abis/SablierV2Comptroller.json
-      eventHandlers:
-        - event: SetProtocolFee(indexed address,indexed address,uint256,uint256)
-          handler: handleComptrollerProtocolFee
-        - event: SetFlashFee(indexed address,uint256,uint256)
-          handler: handleComptrollerFlashFee
-        - event: ToggleFlashAsset(indexed address,indexed address,bool)
-          handler: handleComptrollerFlashAsset
-        - event: TransferAdmin(indexed address,indexed address)
-          handler: handleComptrollerTransferAdmin
       file: ./src/mappings/index.ts

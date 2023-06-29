@@ -5,8 +5,8 @@ import { CreateLockupLinearStream as EventCreateLinear } from "../generated/type
 import { getChainId, one, zero } from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch } from "./batch";
-import { getOrCreateComptrollerFromContract } from "./comptroller";
 import { getContractById } from "./contract";
+import { bindProxyOwner } from "./proxy";
 import { createSegments } from "./segments";
 import { getOrCreateWatcher } from "./watcher";
 
@@ -42,6 +42,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   entity.chainId = getChainId();
 
   /** --------------- */
+  entity.proxied = false;
   entity.canceled = false;
   entity.renounceAction = null;
   entity.canceledAction = null;
@@ -53,30 +54,9 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   watcher.streamIndex = watcher.streamIndex.plus(one);
   watcher.save();
 
+  /** --------------- */
+
   return entity;
-}
-
-function resolveComptroller(category: string): void {
-  let contract = getContractById(dataSource.address().toHexString());
-  if (contract == null) {
-    log.info(
-      "[SABLIER] Contract hasn't been registered before this create event: {}",
-      [dataSource.address().toHexString()],
-    );
-    log.error("[SABLIER]", []);
-    return;
-  }
-
-  if (contract.comptroller == null) {
-    let comptroller = getOrCreateComptrollerFromContract(
-      dataSource.address(),
-      category,
-    );
-    if (comptroller != null) {
-      contract.comptroller = comptroller.id;
-      contract.save();
-    }
-  }
 }
 
 export function createLinearStream(event: EventCreateLinear): Stream | null {
@@ -125,10 +105,10 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   entity.position = batch.size.minus(one);
 
   /** --------------- */
-  resolveComptroller(entity.category);
+  let resolved = bindProxyOwner(entity);
 
-  entity.save();
-  return entity;
+  resolved.save();
+  return resolved;
 }
 
 export function createDynamicStream(event: EventCreateDynamic): Stream | null {
@@ -172,10 +152,10 @@ export function createDynamicStream(event: EventCreateDynamic): Stream | null {
   entity = createSegments(entity, event);
 
   /** --------------- */
-  resolveComptroller(entity.category);
+  let resolved = bindProxyOwner(entity);
 
-  /** --------------- */
-  return entity;
+  resolved.save();
+  return resolved;
 }
 
 /** --------------------------------------------------------------------------------------------------------- */

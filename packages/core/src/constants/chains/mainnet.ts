@@ -8,19 +8,15 @@ export let startBlock = 9098200;
  */
 
 export let linear: string[][] = [
-  ["0xa2215702f518d425cc9f593be8a54efc3e4a08e9", "linear"],
+  ["0xa2215702f518d425cc9f593be8a54efc3e4a08e9", "LL"],
 ];
 
 export let dynamic: string[][] = [
-  ["0xb6e272431f555951844e0d071fb18e48e315132f", "dynamic"],
+  ["0xb6e272431f555951844e0d071fb18e48e315132f", "LD"],
 ];
-/**
- * Pre-register some comptrollers to make sure fees and flash assets are indexed from the start,
- * not at the first queried interaction.
- */
-export let comptroller: string[][] = [
-  ["0xada5d13db8b414804357d2fc0b072373385cf308", "comptroller"],
-];
+
+/** PRBProxy registry */
+export let registry = "0xa87bc4c1bc54e1c1b28d2dd942a094a6b665b8c9";
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.

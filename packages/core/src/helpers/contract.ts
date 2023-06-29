@@ -16,17 +16,9 @@ export function createContract(
     entity = new Contract(id);
   }
 
-  entity.admin = Address.zero();
   entity.alias = alias;
   entity.address = address;
   entity.category = category;
-
-  /**
-   * The TransferAdmin event is for some reason omitted,
-   * so don't rely on it for the comptroller.
-   *
-   * Instead, finish the setup at the first create event.
-   */
 
   entity.save();
   return entity;

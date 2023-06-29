@@ -5,7 +5,6 @@ import {
   ApprovalForAll as EventApprovalForAll,
   CancelLockupStream as EventCancel,
   RenounceLockupStream as EventRenounce,
-  SetComptroller as EventSetComptroller,
   Transfer as EventTransfer,
   TransferAdmin as EventTransferAdmin,
   WithdrawFromLockupStream as EventWithdraw,
@@ -15,11 +14,9 @@ import { one, zero } from "../constants";
 import {
   createAction,
   getContractById,
-  getOrCreateComptroller,
   getOrCreateWatcher,
   getStreamByIdFromSource,
 } from "../helpers";
-import { getOrCreateComptrollerFromContract } from "../helpers/comptroller";
 import { createDynamicStream, createLinearStream } from "../helpers/stream";
 
 export function handleCreateLinear(event: EventCreateLinear): void {
@@ -140,6 +137,11 @@ export function handleTransfer(event: EventTransfer): void {
 
   stream.recipient = event.params.to;
   stream.parties = [stream.sender, event.params.to];
+
+  if (stream.proxied && stream.proxender != null) {
+    stream.parties.push(stream.proxender);
+  }
+
   stream.save();
   action.stream = stream.id;
   action.save();
@@ -215,25 +217,6 @@ export function handleApprovalForAll(event: EventApprovalForAll): void {
   action.save();
 }
 
-export function handleComptrollerSet(event: EventSetComptroller): void {
-  let contract = getContractById(dataSource.address().toHexString());
-  if (contract == null) {
-    log.info(
-      "[SABLIER] Contract hasn't been registered before this set comptroller event: {}",
-      [dataSource.address().toHexString()],
-    );
-    log.error("[SABLIER]", []);
-    return;
-  }
-
-  let comptroller = getOrCreateComptroller(event.params.newComptroller);
-
-  comptroller.save();
-  contract.comptroller = comptroller.id;
-
-  contract.save();
-}
-
 /**
  * Use the TransferAdmin event as an `onCreate` lifecycle step
  * as it's the first one to be logged after the contract's creation
@@ -254,14 +237,6 @@ export function handleTransferAdmin(event: EventTransferAdmin): void {
     "Transfer for: ".concat(dataSource.address().toHexString()),
   );
   watcher.save();
-
-  let comptroller = getOrCreateComptrollerFromContract(
-    dataSource.address(),
-    contract.category,
-  );
-  if (comptroller != null) {
-    contract.comptroller = comptroller.id;
-  }
 
   contract.admin = event.params.newAdmin;
   contract.save();
