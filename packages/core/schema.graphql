@@ -152,6 +152,8 @@ type Stream @entity {
   endTime: BigInt!
   "timestamp for the start of the stream"
   startTime: BigInt!
+  "snapshot of the duration (difference between end and start time)"
+  duration: BigInt!
 
   "amount deposit in the stream (without fees)"
   depositAmount: BigInt!

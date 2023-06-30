@@ -84,16 +84,18 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   entity.cancelable = event.params.cancelable;
 
   /** --------------- */
-
+  let deposit = event.params.amounts.deposit;
   let duration = event.params.range.end.minus(event.params.range.start);
   let cliff = event.params.range.cliff.minus(event.params.range.start);
   if (!cliff.isZero()) {
     entity.cliff = true;
-    entity.cliffAmount = entity.depositAmount.times(cliff.div(duration));
+    entity.cliffAmount = deposit.times(cliff).div(duration);
     entity.cliffTime = event.params.range.cliff;
   } else {
     entity.cliff = false;
   }
+
+  entity.duration = duration;
 
   /** --------------- */
   let asset = getOrCreateAsset(event.params.asset);
@@ -135,6 +137,8 @@ export function createDynamicStream(event: EventCreateDynamic): Stream | null {
   entity.endTime = event.params.range.end;
   entity.cancelable = event.params.cancelable;
   entity.cliff = false;
+
+  entity.duration = event.params.range.end.minus(event.params.range.start);
 
   /** --------------- */
   let asset = getOrCreateAsset(event.params.asset);

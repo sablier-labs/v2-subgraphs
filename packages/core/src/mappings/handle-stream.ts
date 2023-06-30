@@ -172,12 +172,12 @@ export function handleWithdraw(event: EventWithdraw): void {
   action.amountB = event.params.amount;
 
   /** --------------- */
-
-  let withdrawn = stream.withdrawnAmount.plus(event.params.amount);
+  let amount = event.params.amount;
+  let withdrawn = stream.withdrawnAmount.plus(amount);
   stream.withdrawnAmount = withdrawn;
 
   if (stream.canceledAction) {
-    stream.intactAmount = stream.intactAmount.minus(event.params.amount); // The intact amount (recipient) has been set in the cancel action, now subtract
+    stream.intactAmount = stream.intactAmount.minus(amount); // The intact amount (recipient) has been set in the cancel action, now subtract
   } else {
     stream.intactAmount = stream.depositAmount.minus(withdrawn);
   }
