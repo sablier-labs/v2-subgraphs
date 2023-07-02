@@ -1,10 +1,10 @@
 {
-  "name": "@sablier/subgraphs-core",
+  "name": "@sablier/v2-subgraphs-core",
   "description": "Sablier V2 core subgraph",
   "version": "1.0.0",
   "author": {
     "name": "Sablier Labs Ltd",
-    "url": "https://sablier.finance"
+    "url": "https://sablier.com"
   },
   "bugs": {
     "url": "https://github.com/sablier-labs/v2-subgraphs/issues"
@@ -32,7 +32,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/sablier-labs/v2-subgraphs"
+    "url": "https://github.com/sablier-labs/v2-subgraphs.git"
   },
   "config": {
     "dir_chains": "src/constants/chains",
