@@ -1,10 +1,10 @@
-import { Address, dataSource, ethereum, log } from "@graphprotocol/graph-ts";
+import { dataSource, ethereum, log } from "@graphprotocol/graph-ts";
 import { Proxy } from "../generated/types/schema";
 import {
   Execute as EventExecute,
   RunPlugin as EventRunPlugin,
 } from "../generated/types/templates/ContractPRBProxy/PRBProxy";
-import { createAction, getOrCreateOwner, getProxyById } from "../helpers";
+import { createAction, getProxyById } from "../helpers";
 
 export function handleActionExecute(event: EventExecute): void {
   let id = dataSource.address().toHexString();
@@ -18,10 +18,8 @@ export function handleActionExecute(event: EventExecute): void {
     log.critical("[PRBPROXY]", []);
   } else {
     let action = createAction(proxy, event);
-    let owner = getOrCreateOwner(proxy.owner);
     action.category = "Execute";
     action.proxy = proxy.id;
-    action.ownerSnapshot = Address.fromHexString(owner.id);
     action.data = event.params.data;
     action.response = event.params.response;
     action.target = event.params.target;
@@ -42,10 +40,8 @@ export function handleActionRunPlugin(event: EventRunPlugin): void {
     log.critical("[PRBPROXY]", []);
   } else {
     let action = createAction(proxy, event);
-    let owner = getOrCreateOwner(proxy.owner);
     action.category = "Execute";
     action.proxy = proxy.id;
-    action.ownerSnapshot = Address.fromHexString(owner.id);
     action.data = event.params.data;
     action.response = event.params.response;
     action.plugin = event.params.plugin;
@@ -59,18 +55,27 @@ export function handleActionDeploy(proxy: Proxy, event: ethereum.Event): void {
 
   action.category = "Deploy";
   action.proxy = proxy.id;
-  action.ownerSnapshot = Address.fromHexString(proxy.owner);
   action.save();
 }
 
-export function handleActionTransfer(
+export function handleActionInstallPlugin(
   proxy: Proxy,
   event: ethereum.Event,
 ): void {
   let action = createAction(proxy, event);
 
-  action.category = "Transfer";
+  action.category = "InstallPlugin";
   action.proxy = proxy.id;
-  action.ownerSnapshot = Address.fromHexString(proxy.owner);
+  action.save();
+}
+
+export function handleActionUninstallPlugin(
+  proxy: Proxy,
+  event: ethereum.Event,
+): void {
+  let action = createAction(proxy, event);
+
+  action.category = "UninstallPlugin";
+  action.proxy = proxy.id;
   action.save();
 }

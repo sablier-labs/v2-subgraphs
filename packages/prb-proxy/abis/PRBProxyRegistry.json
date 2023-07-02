@@ -3,11 +3,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner",
+        "name": "caller",
         "type": "address"
       }
     ],
-    "name": "PRBProxyRegistry_OwnerDoesNotHaveProxy",
+    "name": "PRBProxyRegistry_CallerDoesNotHaveProxy",
     "type": "error"
   },
   {
@@ -27,14 +27,51 @@
     "type": "error"
   },
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "origin",
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "currentPlugin",
         "type": "address"
       },
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "newPlugin",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes4",
+        "name": "method",
+        "type": "bytes4"
+      }
+    ],
+    "name": "PRBProxyRegistry_PluginMethodCollision",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
+      }
+    ],
+    "name": "PRBProxyRegistry_PluginUnknown",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
+      }
+    ],
+    "name": "PRBProxyRegistry_PluginWithZeroMethods",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       {
         "indexed": true,
         "internalType": "address",
@@ -46,18 +83,6 @@
         "internalType": "address",
         "name": "owner",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bytes32",
-        "name": "seed",
-        "type": "bytes32"
-      },
-      {
-        "indexed": false,
-        "internalType": "bytes32",
-        "name": "salt",
-        "type": "bytes32"
       },
       {
         "indexed": false,
@@ -73,7 +98,44 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IPRBProxy",
+        "name": "proxy",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
+      },
+      {
         "indexed": false,
+        "internalType": "bytes4[]",
+        "name": "methods",
+        "type": "bytes4[]"
+      }
+    ],
+    "name": "InstallPlugin",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
         "internalType": "contract IPRBProxy",
         "name": "proxy",
         "type": "address"
@@ -81,17 +143,54 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "oldOwner",
+        "name": "envoy",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "permission",
+        "type": "bool"
+      }
+    ],
+    "name": "SetPermission",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
         "type": "address"
       },
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
+        "internalType": "contract IPRBProxy",
+        "name": "proxy",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes4[]",
+        "name": "methods",
+        "type": "bytes4[]"
       }
     ],
-    "name": "TransferOwnership",
+    "name": "UninstallPlugin",
     "type": "event"
   },
   {
@@ -102,6 +201,29 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "constructorParams",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
       }
     ],
     "stateMutability": "view",
@@ -139,11 +261,6 @@
         "internalType": "contract IPRBProxy",
         "name": "proxy",
         "type": "address"
-      },
-      {
-        "internalType": "bytes",
-        "name": "response",
-        "type": "bytes"
       }
     ],
     "stateMutability": "nonpayable",
@@ -153,11 +270,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "target",
         "type": "address"
       },
@@ -165,19 +277,38 @@
         "internalType": "bytes",
         "name": "data",
         "type": "bytes"
+      },
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
       }
     ],
-    "name": "deployAndExecuteFor",
+    "name": "deployAndExecuteAndInstallPlugin",
     "outputs": [
       {
         "internalType": "contract IPRBProxy",
         "name": "proxy",
         "type": "address"
-      },
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
-        "internalType": "bytes",
-        "name": "response",
-        "type": "bytes"
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
+      }
+    ],
+    "name": "deployAndInstallPlugin",
+    "outputs": [
+      {
+        "internalType": "contract IPRBProxy",
+        "name": "proxy",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -206,16 +337,151 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "origin",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
         "type": "address"
       }
     ],
-    "name": "nextSeeds",
+    "name": "getMethodsByOwner",
     "outputs": [
       {
-        "internalType": "bytes32",
-        "name": "seed",
-        "type": "bytes32"
+        "internalType": "bytes4[]",
+        "name": "methods",
+        "type": "bytes4[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPRBProxy",
+        "name": "proxy",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
+      }
+    ],
+    "name": "getMethodsByProxy",
+    "outputs": [
+      {
+        "internalType": "bytes4[]",
+        "name": "methods",
+        "type": "bytes4[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "envoy",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "getPermissionByOwner",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "permission",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPRBProxy",
+        "name": "proxy",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "envoy",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "getPermissionByProxy",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "permission",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes4",
+        "name": "method",
+        "type": "bytes4"
+      }
+    ],
+    "name": "getPluginByOwner",
+    "outputs": [
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPRBProxy",
+        "name": "proxy",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes4",
+        "name": "method",
+        "type": "bytes4"
+      }
+    ],
+    "name": "getPluginByProxy",
+    "outputs": [
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -229,7 +495,7 @@
         "type": "address"
       }
     ],
-    "name": "proxies",
+    "name": "getProxy",
     "outputs": [
       {
         "internalType": "contract IPRBProxy",
@@ -243,27 +509,50 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "newOwner",
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
         "type": "address"
       }
     ],
-    "name": "transferOwnership",
+    "name": "installPlugin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "transientProxyOwner",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "envoy",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "permission",
+        "type": "bool"
+      }
+    ],
+    "name": "setPermission",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPRBProxyPlugin",
+        "name": "plugin",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
+    "name": "uninstallPlugin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

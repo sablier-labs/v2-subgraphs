@@ -17,6 +17,7 @@ export function createProxy(id: string, event: ethereum.Event): Proxy {
   entity.from = event.transaction.from;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
+  entity.plugins = [];
   entity.chainId = getChainId();
 
   return entity;

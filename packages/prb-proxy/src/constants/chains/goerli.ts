@@ -1,5 +1,5 @@
 export let chainId = 5;
 export let chain = "goerli";
-export let startBlock = 9098300;
+export let startBlock = 9261260;
 
-export let registry = "0xa87bc4c1bc54e1c1b28d2dd942a094a6b665b8c9";
+export let registry = "0x33e200b5fb5e0c57d370d5202c26a35d07a46b98";

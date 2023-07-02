@@ -8,9 +8,9 @@ dataSources:
     name: ContractPRBProxyRegistry
     network: goerli
     source:
-      address: "0xa87bc4c1bc54e1c1b28d2dd942a094a6b665b8c9"
+      address: "0x33e200b5fb5e0c57d370d5202c26a35d07a46b98"
       abi: PRBProxyRegistry
-      startBlock: 9098300
+      startBlock: 9261260
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -27,10 +27,12 @@ dataSources:
         - name: PRBProxyRegistry
           file: ./abis/PRBProxyRegistry.json
       eventHandlers:
-        - event: DeployProxy(indexed address,indexed address,indexed address,bytes32,bytes32,address)
+        - event: DeployProxy(indexed address,indexed address,address)
           handler: handleDeploy
-        - event: TransferOwnership(address,indexed address,indexed address)
-          handler: handleTransferOwnership
+        - event: InstallPlugin(indexed address,indexed address,indexed address,bytes4[])
+          handler: handleInstallPlugin
+        - event: InstallPlugin(indexed address,indexed address,indexed address,bytes4[])
+          handler: handleUninstallPlugin
       file: ./src/mappings/index.ts
 templates:
   - kind: ethereum/contract
