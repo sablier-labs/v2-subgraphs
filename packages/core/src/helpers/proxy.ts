@@ -16,7 +16,7 @@ export function bindProxyOwner(stream: Stream): Stream {
   let registry = PRBProxyRegistryContract.bind(
     Address.fromString(getContractRegistry()),
   );
-  let reverse = registry.try_proxies(owner.value);
+  let reverse = registry.try_getProxy(owner.value);
 
   if (
     reverse.reverted ||

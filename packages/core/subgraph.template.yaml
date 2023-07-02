@@ -30,8 +30,8 @@ dataSources:
           file: ./abis/SablierV2LockupLinear.json
       eventHandlers:
         - event:
-            CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
-            address,(uint128,uint128,uint128),address,bool,(uint40,uint40,uint40),address)
+            CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
+            address,bool,(uint40,uint40,uint40),address)
           handler: handleInitializer
       file: ./src/mappings/index.ts
 templates:
@@ -72,8 +72,8 @@ templates:
         - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel
         - event:
-            CreateLockupLinearStream(uint256,indexed address,indexed address,indexed
-            address,(uint128,uint128,uint128),address,bool,(uint40,uint40,uint40),address)
+            CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
+            address,bool,(uint40,uint40,uint40),address)
           handler: handleCreateLinear
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
@@ -121,8 +121,8 @@ templates:
         - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel
         - event:
-            CreateLockupDynamicStream(uint256,indexed address,indexed address,indexed
-            address,(uint128,uint128,uint128),address,bool,(uint128,uint64,uint40)[],(uint40,uint40),address)
+            CreateLockupDynamicStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
+            address,bool,(uint128,uint64,uint40)[],(uint40,uint40),address)
           handler: handleCreateDynamic
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce

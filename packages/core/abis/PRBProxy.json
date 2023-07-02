@@ -50,28 +50,17 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "originalOwner",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "PRBProxy_OwnerChanged",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "caller",
         "type": "address"
       },
       {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
         "internalType": "bytes4",
-        "name": "selector",
+        "name": "method",
         "type": "bytes4"
       }
     ],
@@ -98,6 +87,11 @@
       }
     ],
     "name": "PRBProxy_TargetNotContract",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PRBProxy_TargetRegistry",
     "type": "error"
   },
   {
@@ -180,67 +174,11 @@
   },
   {
     "inputs": [],
-    "name": "minGasReserve",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "owner",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "envoy",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "target",
-        "type": "address"
-      }
-    ],
-    "name": "permissions",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "permission",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes4",
-        "name": "method",
-        "type": "bytes4"
-      }
-    ],
-    "name": "plugins",
-    "outputs": [
-      {
-        "internalType": "contract IPRBProxyPlugin",
-        "name": "plugin",
         "type": "address"
       }
     ],
@@ -258,19 +196,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

@@ -155,7 +155,7 @@
         "type": "uint40"
       }
     ],
-    "name": "SablierV2Lockup_EndTimeInThePast",
+    "name": "SablierV2Lockup_EndTimeNotInTheFuture",
     "type": "error"
   },
   {
@@ -384,6 +384,25 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_fromTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_toTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "BatchMetadataUpdate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "uint256",
         "name": "streamId",
@@ -452,7 +471,7 @@
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "address",
         "name": "funder",
         "type": "address"
@@ -493,7 +512,7 @@
         "type": "tuple"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "contract IERC20",
         "name": "asset",
         "type": "address"
@@ -535,6 +554,19 @@
       }
     ],
     "name": "CreateLockupLinearStream",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "MetadataUpdate",
     "type": "event"
   },
   {
@@ -1767,6 +1799,24 @@
       }
     ],
     "name": "withdrawMax",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "newRecipient",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawMaxAndTransfer",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
