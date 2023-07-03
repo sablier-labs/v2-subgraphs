@@ -44,6 +44,8 @@ export function handleInstallPlugin(event: EvertInstallPlugin): void {
     let pluginId = event.params.plugin.toHexString();
     let plugin = getOrCreatePlugin(pluginId, event);
 
+    plugin.save();
+
     let plugins = proxy.plugins;
     plugins.push(plugin.id);
 

@@ -31,7 +31,7 @@ dataSources:
           handler: handleDeploy
         - event: InstallPlugin(indexed address,indexed address,indexed address,bytes4[])
           handler: handleInstallPlugin
-        - event: InstallPlugin(indexed address,indexed address,indexed address,bytes4[])
+        - event: UninstallPlugin(indexed address,indexed address,indexed address,bytes4[])
           handler: handleUninstallPlugin
       file: ./src/mappings/index.ts
 templates:
