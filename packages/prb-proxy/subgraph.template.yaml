@@ -17,9 +17,8 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Action
-        - Owner
-        - Ownership
         - Proxy
+        - Plugin
         - Registry
       abis:
         - name: PRBProxy
@@ -46,9 +45,8 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Action
-        - Owner
-        - Ownership
         - Proxy
+        - Plugin
         - Registry
       abis:
         - name: PRBProxy
