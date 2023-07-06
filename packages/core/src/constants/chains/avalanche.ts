@@ -2,21 +2,23 @@ export let chainId = 43114;
 export let chain = "avalanche";
 export let startBlock = 32164210;
 
+/** Rule: keep addresses lowercased" */
+
 /**
  * Keep aliases unique and always in sync with the frontend
  * @example export let linear = [[address1, alias2], [address2, alias2]]
  */
 
 export let linear: string[][] = [
-  ["0x610346E9088AFA70D6B03e96A800B3267E75cA19", "LL"],
+  ["0x610346e9088afa70d6b03e96a800b3267e75ca19", "LL"],
 ];
 
 export let dynamic: string[][] = [
-  ["0x665d1C8337F1035cfBe13DD94bB669110b975f5F", "LD"],
+  ["0x665d1c8337f1035cfbe13dd94bb669110b975f5f", "LD"],
 ];
 
 /** PRBProxy registry */
-export let registry = "0xD42a2bB59775694c9Df4c7822BfFAb150e6c699D";
+export let registry = "0xd42a2bb59775694c9df4c7822bffab150e6c699d";
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.

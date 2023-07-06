@@ -2,21 +2,23 @@ export let chainId = 42161;
 export let chain = "arbitrum-one";
 export let startBlock = 107509950;
 
+/** Rule: keep addresses lowercased" */
+
 /**
  * Keep aliases unique and always in sync with the frontend
  * @example export let linear = [[address1, alias2], [address2, alias2]]
  */
 
 export let linear: string[][] = [
-  ["0x197D655F3be03903fD25e7828c3534504bfe525e", "LL"],
+  ["0x197d655f3be03903fd25e7828c3534504bfe525e", "LL"],
 ];
 
 export let dynamic: string[][] = [
-  ["0xA9EfBEf1A35fF80041F567391bdc9813b2D50197", "LD"],
+  ["0xa9efbef1a35ff80041f567391bdc9813b2d50197", "LD"],
 ];
 
 /** PRBProxy registry */
-export let registry = "0xD42a2bB59775694c9Df4c7822BfFAb150e6c699D";
+export let registry = "0xd42a2bb59775694c9df4c7822bffab150e6c699d";
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.

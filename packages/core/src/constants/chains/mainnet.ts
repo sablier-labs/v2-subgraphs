@@ -2,17 +2,19 @@ export let chainId = 1;
 export let chain = "mainnet";
 export let startBlock = 17613130;
 
+/** Rule: keep addresses lowercased" */
+
 /**
  * Keep aliases unique and always in sync with the frontend
  * @example export let linear = [[address1, alias2], [address2, alias2]]
  */
 
 export let linear: string[][] = [
-  ["0xB10daee1FCF62243aE27776D7a92D39dC8740f95", "LL"],
+  ["0xb10daee1fcf62243ae27776d7a92d39dc8740f95", "LL"],
 ];
 
 export let dynamic: string[][] = [
-  ["0x39EFdC3dbB57B2388CcC4bb40aC4CB1226Bc9E44", "LD"],
+  ["0x39efdc3dbb57b2388ccc4bb40ac4cb1226bc9e44", "LD"],
 ];
 
 /** PRBProxy registry */
