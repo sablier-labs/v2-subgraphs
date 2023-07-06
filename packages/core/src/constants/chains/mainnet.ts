@@ -18,7 +18,7 @@ export let dynamic: string[][] = [
 ];
 
 /** PRBProxy registry */
-export let registry = "0x3362ff15a64c6450d1a87c4f0167e0a489362314ce7be6bf34af341c3e1f63e3";
+export let registry = "0xd42a2bb59775694c9df4c7822bffab150e6c699d";
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.
