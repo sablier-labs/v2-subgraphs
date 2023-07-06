@@ -1,6 +1,8 @@
-export let chainId = 5;
-export let chain = "goerli";
-export let startBlock = 9265910;
+export let chainId = 137;
+export let chain = "matic";
+export let startBlock = 44637120;
+
+/** Rule: keep addresses lowercased" */
 
 /**
  * Keep aliases unique and always in sync with the frontend
@@ -8,15 +10,15 @@ export let startBlock = 9265910;
  */
 
 export let linear: string[][] = [
-  ["0x689c2ed70ce531231511c799eef43246cc6b9dab", "LL"],
+  ["0x67422c3e36a908d5c3237e9cffeb40bde7060f6e", "LL"],
 ];
 
 export let dynamic: string[][] = [
-  ["0xff9d109c6c3fdd326422e5aea41a418163590a80", "LD"],
+  ["0x7313addb53f96a4f710d3b91645c62b434190725", "LD"],
 ];
 
 /** PRBProxy registry */
-export let registry = "0x33e200b5fb5e0c57d370d5202c26a35d07a46b98";
+export let registry = "0xd42a2bb59775694c9df4c7822bffab150e6c699d";
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.

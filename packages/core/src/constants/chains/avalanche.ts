@@ -1,6 +1,6 @@
-export let chainId = 10;
-export let chain = "optimism";
-export let startBlock = 106405050;
+export let chainId = 43114;
+export let chain = "avalanche";
+export let startBlock = 32164210;
 
 /** Rule: keep addresses lowercased" */
 
@@ -10,11 +10,11 @@ export let startBlock = 106405050;
  */
 
 export let linear: string[][] = [
-  ["0xb923abdca17aed90eb5ec5e407bd37164f632bfd", "LL"],
+  ["0x610346e9088afa70d6b03e96a800b3267e75ca19", "LL"],
 ];
 
 export let dynamic: string[][] = [
-  ["0x6f68516c21e248cddfaf4898e66b2b0adee0e0d6", "LD"],
+  ["0x665d1c8337f1035cfbe13dd94bb669110b975f5f", "LD"],
 ];
 
 /** PRBProxy registry */
