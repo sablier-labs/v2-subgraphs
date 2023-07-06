@@ -1,6 +1,6 @@
-export let chainId = 10;
-export let chain = "optimism";
-export let startBlock = 106405050;
+export let chainId = 56;
+export let chain = "bsc";
+export let startBlock = 29646270;
 
 /**
  * Keep aliases unique and always in sync with the frontend
@@ -8,11 +8,11 @@ export let startBlock = 106405050;
  */
 
 export let linear: string[][] = [
-  ["0xB923aBdCA17Aed90EB5EC5E407bd37164f632bFD", "LL"],
+  ["0x3FE4333f62A75c2a85C8211c6AeFd1b9Bfde6e51", "LL"],
 ];
 
 export let dynamic: string[][] = [
-  ["0x6f68516c21E248cdDfaf4898e66b2b0Adee0e0d6", "LD"],
+  ["0xF2f3feF2454DcA59ECA929D2D8cD2a8669Cc6214", "LD"],
 ];
 
 /** PRBProxy registry */
