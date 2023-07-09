@@ -6,7 +6,7 @@
    profile)
 
    ```
-   graph init --product hosted-service
+   graph auth --product hosted-service <ACCESS_TOKEN>
    ```
 
 2. Generate configuration

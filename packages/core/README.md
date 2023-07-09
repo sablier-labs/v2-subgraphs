@@ -1,3 +1,3 @@
 # Sablier V2 Subgraphs - Core
 
-TODO: Swap implementations for goerli and mainnet
+See the Sablier V2 Subgraphs documentation [here](https://docs.sablier.com/api/subgraphs/overview).
