@@ -1,4 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-echo "[Suggestion 🧠] Run g:all-fix before important commits or PRs."
