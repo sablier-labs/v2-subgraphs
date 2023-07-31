@@ -4,15 +4,15 @@ enum ContractCategory {
 }
 
 enum StreamCategory {
-  LockupLinear
   LockupDynamic
+  LockupLinear
 }
 
 enum ActionCategory {
   Approval
   ApprovalForAll
-  Create
   Cancel
+  Create
   Renounce
   Transfer
   Withdraw
@@ -85,7 +85,7 @@ type Action @entity {
   addressB: Bytes
   "amount, differs based on action type e.g. for Deposit it resolves to the depositAmount"
   amountA: BigInt
-  "amount, differs based on action type e.g. for Withdraw it resolves to the remainingAmount"
+  "amount, differs based on action type e.g. for Withdraw it resolves to the refundedAmount"
   amountB: BigInt
 }
 
