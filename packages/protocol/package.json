@@ -1,6 +1,6 @@
 {
-  "name": "@sablier/v2-subgraphs-core",
-  "description": "Sablier V2 core subgraph",
+  "name": "@sablier/v2-subgraphs-protocol",
+  "description": "Sablier V2 protocol subgraph",
   "version": "1.0.0",
   "author": {
     "name": "Sablier Labs Ltd",
@@ -51,6 +51,7 @@
     "deploy:studio": "graph deploy --studio $NAME",
     "deploy:arbitrum": "CHAIN=arbitrum yarn setup && NAME=sablier-v2-arbitrum yarn deploy",
     "deploy:avalanche": "CHAIN=avalanche yarn setup && NAME=sablier-v2-avalanche yarn deploy",
+    "deploy:base": "CHAIN=base yarn setup && NAME=sablier-v2-base yarn deploy",
     "deploy:bsc": "CHAIN=bsc yarn setup && NAME=sablier-v2-bsc yarn deploy",
     "deploy:gnosis": "CHAIN=gnosis yarn setup && NAME=sablier-v2-gnosis yarn deploy",
     "deploy:goerli": "CHAIN=goerli yarn setup && NAME=sablier-v2-goerli yarn deploy",
@@ -65,6 +66,7 @@
     "setup": "yarn clean && yarn template && yarn codegen",
     "setup:arbitrum": "yarn clean-generated && CHAIN=arbitrum yarn setup",
     "setup:avalanche": "yarn clean-generated && CHAIN=avalanche yarn setup",
+    "setup:base": "yarn clean-generated && CHAIN=base yarn setup",
     "setup:bsc": "yarn clean-generated && CHAIN=bsc yarn setup",
     "setup:gnosis": "yarn clean-generated && CHAIN=gnosis yarn setup",
     "setup:goerli": "yarn clean-generated && CHAIN=goerli yarn setup",

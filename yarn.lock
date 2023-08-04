@@ -790,9 +790,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sablier/v2-subgraphs-core@workspace:packages/core":
+"@sablier/v2-subgraphs-prb-proxy@workspace:packages/prb-proxy":
   version: 0.0.0-use.local
-  resolution: "@sablier/v2-subgraphs-core@workspace:packages/core"
+  resolution: "@sablier/v2-subgraphs-prb-proxy@workspace:packages/prb-proxy"
   dependencies:
     "@graphprotocol/graph-cli": ^0.49.0
     "@graphprotocol/graph-ts": ^0.30.0
@@ -810,9 +810,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sablier/v2-subgraphs-prb-proxy@workspace:packages/prb-proxy":
+"@sablier/v2-subgraphs-protocol@workspace:packages/protocol":
   version: 0.0.0-use.local
-  resolution: "@sablier/v2-subgraphs-prb-proxy@workspace:packages/prb-proxy"
+  resolution: "@sablier/v2-subgraphs-protocol@workspace:packages/protocol"
   dependencies:
     "@graphprotocol/graph-cli": ^0.49.0
     "@graphprotocol/graph-ts": ^0.30.0

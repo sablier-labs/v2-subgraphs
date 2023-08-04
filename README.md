@@ -13,3 +13,11 @@
 
    Make sure to run `yarn setup:goerli` or `yarn setup:<chain_name>` to generate imports before `codegen` and
    `deploy:<chain_name>`.
+
+### Subgraph: Protocol
+
+See the Sablier V2 Subgraphs documentation [here](https://docs.sablier.com/api/subgraphs/overview).
+
+### Subgraph: PRB Proxy
+
+See the PRB Proxy documentation [here](https://github.com/PaulRBerg/prb-proxy).
