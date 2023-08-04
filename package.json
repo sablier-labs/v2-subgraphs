@@ -34,8 +34,7 @@
     "g:lint-check": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run lint-check",
     "g:lint-fix": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run lint-fix",
     "g:prettier-check": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run prettier-check",
-    "g:prettier-fix": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run prettier-fix",
-    "postinstall": "husky install"
+    "g:prettier-fix": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run prettier-fix"
   },
   "workspaces": [
     "packages/*"
