@@ -1,6 +1,7 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { Asset } from "../generated/types/schema";
 import { ERC20 as ERC20Contract } from "../generated/types/templates/ContractLockupLinear/ERC20";
+import { ERC20Bytes as ERC20BytesContract } from "../generated/types/templates/ContractLockupLinear/ERC20Bytes";
 import { getChainId } from "../constants";
 
 export function getOrCreateAsset(address: Address): Asset {
@@ -12,8 +13,8 @@ export function getOrCreateAsset(address: Address): Asset {
 
     let contract = ERC20Contract.bind(address);
     let decimals = contract.decimals();
-    let symbol = contract.symbol();
-    let name = contract.name();
+    let name = getAssetName(address);
+    let symbol = getAssetSymbol(address);
 
     entity.chainId = getChainId();
     entity.address = address;
@@ -25,4 +26,40 @@ export function getOrCreateAsset(address: Address): Asset {
   }
 
   return entity;
+}
+
+function getAssetSymbol(address: Address): string {
+  let contract = ERC20Contract.bind(address);
+  let symbol = contract.try_symbol();
+
+  if (symbol.reverted) {
+    let contractBytes = ERC20BytesContract.bind(address);
+    let symbolBytes = contractBytes.try_symbol();
+
+    if (symbolBytes.reverted) {
+      return "Unknown";
+    } else {
+      return symbolBytes.value.toString();
+    }
+  } else {
+    return symbol.value;
+  }
+}
+
+function getAssetName(address: Address): string {
+  let contract = ERC20Contract.bind(address);
+  let name = contract.try_name();
+
+  if (name.reverted) {
+    let contractBytes = ERC20BytesContract.bind(address);
+    let nameBytes = contractBytes.try_name();
+
+    if (nameBytes.reverted) {
+      return "Unknown";
+    } else {
+      return nameBytes.value.toString();
+    }
+  } else {
+    return name.value;
+  }
 }

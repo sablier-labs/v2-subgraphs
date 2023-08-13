@@ -20,6 +20,8 @@ dataSources:
       abis:
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: ERC20Bytes
+          file: ./abis/ERC20Bytes.json
         - name: PRBProxy
           file: ./abis/PRBProxy.json
         - name: PRBProxyRegistry
@@ -56,6 +58,8 @@ templates:
       abis:
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: ERC20Bytes
+          file: ./abis/ERC20Bytes.json
         - name: PRBProxy
           file: ./abis/PRBProxy.json
         - name: PRBProxyRegistry
@@ -105,6 +109,8 @@ templates:
       abis:
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: ERC20Bytes
+          file: ./abis/ERC20Bytes.json
         - name: PRBProxy
           file: ./abis/PRBProxy.json
         - name: PRBProxyRegistry
