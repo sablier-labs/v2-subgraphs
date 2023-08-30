@@ -2,6 +2,14 @@ export let chainId = 11155111;
 export let chain = "sepolia";
 export let startBlock = 4067889;
 
+/**
+ * 💡💡💡 ------------------------------- 💡💡💡
+ *
+ * Sepolia doesn't support the Hosted Service
+ *
+ * 💡💡💡 ------------------------------- 💡💡💡
+ */
+
 /** Rule: keep addresses lowercased" */
 
 /**
@@ -10,11 +18,11 @@ export let startBlock = 4067889;
  */
 
 export let linear: string[][] = [
-  ["0xd4300c5bC0B9e27c73eBAbDc747ba990B1B570Db", "LL"],
+  ["0xd4300c5bc0b9e27c73ebabdc747ba990b1b570db", "LL"],
 ];
 
 export let dynamic: string[][] = [
-  ["0x421e1E7a53FF360f70A2D02037Ee394FA474e035", "LD"],
+  ["0x421e1e7a53ff360f70a2d02037ee394fa474e035", "LD"],
 ];
 
 /** PRBProxy registry */

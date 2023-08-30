@@ -16,7 +16,8 @@
 
 ### Subgraph: Protocol
 
-See the Sablier V2 Subgraphs documentation [here](https://docs.sablier.com/api/subgraphs/overview).
+See the Sablier V2 Subgraphs documentation [here](https://docs.sablier.com/api/subgraphs/overview). Endpoints are
+available [here](https://docs.sablier.com/api/subgraphs/endpoints).
 
 ### Subgraph: PRB Proxy
 
