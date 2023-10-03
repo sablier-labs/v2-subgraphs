@@ -1,0 +1,65 @@
+enum CampaignCategory {
+  LockupDynamic
+  LockupLinear
+}
+
+type Asset @entity(immutable: true) {
+  "unique identifier resolving to the ERC20 asset/token address"
+  id: ID!
+
+  "address of the ERC20 asset/token"
+  address: Bytes!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "decimals of the ERC20 asset/token"
+  decimals: BigInt!
+  "name of the ERC20 asset/token"
+  name: String!
+  "symbol of the ERC20 asset/token"
+  symbol: String!
+
+  "campaigns that rely on this asset/token"
+  campaigns: [Campaign!]! @derivedFrom(field: "asset")
+}
+
+type Campaign @entity {
+  "unique identifier resolving to contract address"
+  id: String!
+
+  "address of the campaign"
+  address: Bytes!
+  "underlying asset"
+  asset: Asset!
+  "category of campaign e.g. LockupLinear or LockupDynamic"
+  category: CampaignCategory!
+  "factory producing the campaign"
+  factory: Factory!
+}
+
+type Factory @entity {
+  "unique identifier resolving to contract address"
+  id: String!
+
+  "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
+  alias: String!
+  "address of the contract"
+  address: Bytes!
+  "address of the contract admin"
+  admin: Bytes
+
+  "list of campaigns"
+  campaigns: [Campaign!]! @derivedFrom(field: "factory")
+}
+
+type Watcher @entity {
+  "unique identifier for the watcher - there is only one watcher for the entire subgraph"
+  id: String!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "global index for campaigns"
+  campaignIndex: BigInt!
+  "flag that defines the initialization status of the subgraph"
+  initialized: Boolean!
+  "list of logs, for debugging purposes"
+  logs: [String!]!
+}

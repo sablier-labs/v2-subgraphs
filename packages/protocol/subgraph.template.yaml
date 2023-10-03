@@ -1,5 +1,5 @@
 specVersion: 0.0.5
-description: Sablier V2 Subgraph
+description: Sablier V2 Protocol Subgraph
 repository: https://github.com/sablier-labs/v2-subgraphs
 schema:
   file: ./schema.graphql
@@ -48,12 +48,12 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Action
+        - Asset
         - Batch
         - Batcher
         - Contract
         - Segment
         - Stream
-        - Token
         - Watcher
       abis:
         - name: ERC20
@@ -99,12 +99,12 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Action
+        - Asset
         - Contract
         - Batch
         - Batcher
         - Segment
         - Stream
-        - Token
         - Watcher
       abis:
         - name: ERC20

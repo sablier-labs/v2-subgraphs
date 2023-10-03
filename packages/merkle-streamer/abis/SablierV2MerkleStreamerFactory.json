@@ -1,0 +1,187 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "contract ISablierV2MerkleStreamerLL",
+        "name": "merkleStreamer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract ISablierV2LockupLinear",
+        "name": "lockupLinear",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint40",
+        "name": "expiration",
+        "type": "uint40"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint40",
+            "name": "cliff",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "total",
+            "type": "uint40"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct LockupLinear.Durations",
+        "name": "streamDurations",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "cancelable",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "transferable",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ipfsCID",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "aggregateAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "recipientsCount",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreateMerkleStreamerLL",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "initialAdmin",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ISablierV2LockupLinear",
+        "name": "lockupLinear",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "merkleRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint40",
+        "name": "expiration",
+        "type": "uint40"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint40",
+            "name": "cliff",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "total",
+            "type": "uint40"
+          }
+        ],
+        "internalType": "struct LockupLinear.Durations",
+        "name": "streamDurations",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bool",
+        "name": "cancelable",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "transferable",
+        "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "ipfsCID",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "aggregateAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "recipientsCount",
+        "type": "uint256"
+      }
+    ],
+    "name": "createMerkleStreamerLL",
+    "outputs": [
+      {
+        "internalType": "contract ISablierV2MerkleStreamerLL",
+        "name": "merkleStreamerLL",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      }
+    ],
+    "name": "getMerkleStreamers",
+    "outputs": [
+      {
+        "internalType": "contract ISablierV2MerkleStreamer[]",
+        "name": "merkleStreamers",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
