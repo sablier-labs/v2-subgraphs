@@ -47,11 +47,6 @@
         "internalType": "bool",
         "name": "cancelable_",
         "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "transferable_",
-        "type": "bool"
       }
     ],
     "stateMutability": "nonpayable",
@@ -387,19 +382,6 @@
     "name": "transferAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "transferable",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   }
 ]

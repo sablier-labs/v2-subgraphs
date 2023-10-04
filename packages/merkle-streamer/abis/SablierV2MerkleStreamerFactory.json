@@ -58,12 +58,6 @@
       },
       {
         "indexed": false,
-        "internalType": "bool",
-        "name": "transferable",
-        "type": "bool"
-      },
-      {
-        "indexed": false,
         "internalType": "string",
         "name": "ipfsCID",
         "type": "string"
@@ -131,11 +125,6 @@
       {
         "internalType": "bool",
         "name": "cancelable",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "transferable",
         "type": "bool"
       },
       {
