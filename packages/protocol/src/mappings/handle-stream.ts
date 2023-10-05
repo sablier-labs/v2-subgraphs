@@ -14,7 +14,6 @@ import { one, zero } from "../constants";
 import {
   createAction,
   getContractById,
-  getOrCreateWatcher,
   getStreamByIdFromSource,
 } from "../helpers";
 import { createDynamicStream, createLinearStream } from "../helpers/stream";
@@ -237,12 +236,6 @@ export function handleTransferAdmin(event: EventTransferAdmin): void {
     log.error("[SABLIER]", []);
     return;
   }
-
-  let watcher = getOrCreateWatcher();
-  watcher.logs.push(
-    "Transfer for: ".concat(dataSource.address().toHexString()),
-  );
-  watcher.save();
 
   contract.admin = event.params.newAdmin;
   contract.save();

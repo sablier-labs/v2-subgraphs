@@ -1,7 +1,18 @@
-import { Address, log } from "@graphprotocol/graph-ts";
+import {
+  Address,
+  ByteArray,
+  Bytes,
+  ethereum,
+  log,
+} from "@graphprotocol/graph-ts";
 import { Campaign } from "../generated/types/schema";
 import { CreateMerkleStreamerLL as EventCreateCampaignLL } from "../generated/types/templates/ContractMerkleStreamerFactory/SablierV2MerkleStreamerFactory";
-import { getChainId, one, zero } from "../constants";
+import {
+  ABI_CREATE_MERKLE_STREAMER_LL,
+  getChainId,
+  one,
+  zero,
+} from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getFactoryById } from "./factory";
 import { getOrCreateWatcher } from "./watcher";
@@ -56,6 +67,13 @@ export function createCampaignLinear(
   entity.claimedCount = zero;
 
   /** --------------- */
+
+  let inputs = _decodeInputs(event);
+  if (inputs && inputs[3].kind === ethereum.ValueKind.FIXED_BYTES) {
+    entity.root = inputs[3].toBytes();
+  }
+
+  /** --------------- */
   let factory = getFactoryById(event.address.toHexString());
   if (factory == null) {
     log.critical("[SABLIER] Factory not yet registered at this address", []);
@@ -68,16 +86,13 @@ export function createCampaignLinear(
   entity.asset = asset.id;
 
   /** --------------- */
+
   watcher.campaignIndex = watcher.campaignIndex.plus(one);
   watcher.save();
 
   /** --------------- */
   return entity;
 }
-
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
 
 export function generateCampaignId(address: Address): string {
   let id = ""
@@ -86,4 +101,33 @@ export function generateCampaignId(address: Address): string {
     .concat(getChainId().toString());
 
   return id;
+}
+
+/**
+ * https://medium.com/@r2d2_68242/indexing-transaction-input-data-in-a-subgraph-6ff5c55abf20
+ * https://github.com/rust-ethereum/ethabi
+ * https://ethereum.stackexchange.com/questions/114582/the-graph-nodes-cant-decode-abi-encoded-data-containing-arrays
+ */
+
+function _decodeInputs(event: EventCreateCampaignLL): ethereum.Tuple | null {
+  let encoded = event.transaction.input;
+  let sliced = encoded.subarray(4); // Remove the 0x prefix and the function signature bytes
+
+  let prefix = ByteArray.fromHexString(
+    "0x0000000000000000000000000000000000000000000000000000000000000020",
+  );
+
+  let input = new Uint8Array(prefix.length + sliced.length);
+  input.set(prefix, 0);
+  input.set(sliced, prefix.length);
+
+  let decoded = ethereum.decode(
+    ABI_CREATE_MERKLE_STREAMER_LL,
+    Bytes.fromUint8Array(input),
+  );
+
+  if (decoded == null) {
+    return null;
+  }
+  return decoded.toTuple();
 }
