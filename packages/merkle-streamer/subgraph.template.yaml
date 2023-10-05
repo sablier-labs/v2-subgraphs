@@ -43,6 +43,8 @@ templates:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
+        - Action
+        - Activity
         - Asset
         - Campaign
         - Factory
@@ -60,7 +62,7 @@ templates:
         - event:
             CreateMerkleStreamerLL(address,indexed address,indexed address,indexed
             address,uint40,(uint40,uint40),bool,string,uint256,uint256)
-          handler: handleCreateLL
+          handler: handleCreateCampaignLL
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
     name: ContractMerkleStreamerLL
@@ -72,6 +74,8 @@ templates:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
+        - Action
+        - Activity
         - Asset
         - Campaign
         - Factory

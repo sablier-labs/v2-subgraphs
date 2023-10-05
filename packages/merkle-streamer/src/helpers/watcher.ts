@@ -8,6 +8,7 @@ export function getOrCreateWatcher(): Watcher {
   if (entity == null) {
     entity = new Watcher(id);
     entity.chainId = getChainId();
+    entity.actionIndex = one;
     entity.campaignIndex = one;
     entity.initialized = false;
     entity.logs = [];
