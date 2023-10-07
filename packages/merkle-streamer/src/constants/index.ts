@@ -1,4 +1,4 @@
-import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes, log } from "@graphprotocol/graph-ts";
 import { chainId, factory, initializer } from "../generated/env";
 
 export let zero = BigInt.fromI32(0);
@@ -33,3 +33,9 @@ export function getChainId(): BigInt {
 
 export const ABI_CREATE_MERKLE_STREAMER_LL =
   "(address,address,address,bytes32,uint40,(uint40,uint40),bool,string,uint256,uint256)";
+
+export function log_exit(message: string, dependencies: string[] = []): void {
+  log.debug(`[SABLIER] ${message}`, dependencies);
+  log.error(`[SABLIER] ${message}`, dependencies);
+  // log.critical("[SABLIER] Critical exit.", []);
+}

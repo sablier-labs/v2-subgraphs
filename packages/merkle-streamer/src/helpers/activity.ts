@@ -1,6 +1,6 @@
-import { BigInt, ethereum, log } from "@graphprotocol/graph-ts";
+import { BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { Activity } from "../generated/types/schema";
-import { zero } from "../constants";
+import { log_exit, zero } from "../constants";
 import { getCampaignById } from "./campaign";
 
 export function generateActivityId(campaignId: string, day: string): string {
@@ -26,11 +26,10 @@ export function getOrCreateActivity(
   /** --------------- */
   let campaign = getCampaignById(campaignId);
   if (campaign == null) {
-    log.info(
-      "[SABLIER] Campaign hasn't been registered before this activity update: {}",
+    log_exit(
+      "Campaign hasn't been registered before this activity update: {}",
       [campaignId],
     );
-    log.error("[SABLIER]", []);
     return null;
   }
 
@@ -46,6 +45,7 @@ export function getOrCreateActivity(
   entity = new Activity(id);
   entity.day = BigInt.fromI32(day);
   entity.campaign = campaign.id;
+  entity.timestamp = event.block.timestamp;
 
   entity.amount = zero;
   entity.claims = zero;

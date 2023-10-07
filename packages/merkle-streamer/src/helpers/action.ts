@@ -1,7 +1,7 @@
-import { dataSource, ethereum, log } from "@graphprotocol/graph-ts";
+import { dataSource, ethereum } from "@graphprotocol/graph-ts";
 import { Action } from "../generated/types/schema";
-import { getChainId, one } from "../constants";
-import { getCampaignById } from "./campaign";
+import { getChainId, log_exit, one } from "../constants";
+import { generateCampaignId, getCampaignById } from "./campaign";
 import { getOrCreateWatcher } from "./watcher";
 
 export function generateActionId(event: ethereum.Event): string {
@@ -15,11 +15,15 @@ export function getActionById(id: string): Action | null {
   return Action.load(id);
 }
 
-export function createAction(event: ethereum.Event): Action | null {
+export function createAction(
+  event: ethereum.Event,
+  category: string,
+): Action | null {
   let watcher = getOrCreateWatcher();
   let id = generateActionId(event);
   let entity = new Action(id);
 
+  entity.category = category;
   entity.block = event.block.number;
   entity.from = event.transaction.from;
   entity.hash = event.transaction.hash;
@@ -28,13 +32,13 @@ export function createAction(event: ethereum.Event): Action | null {
   entity.chainId = getChainId();
 
   /** --------------- */
-  let campaign = getCampaignById(dataSource.address().toHexString());
+  let campaignId = generateCampaignId(dataSource.address());
+  let campaign = getCampaignById(campaignId);
   if (campaign == null) {
-    log.info(
-      "[SABLIER] Campaign hasn't been registered before this clawback event: {}",
-      [id],
+    log_exit(
+      "Campaign hasn't been registered before this action event: action={}, campaign=",
+      [id, campaignId],
     );
-    log.error("[SABLIER]", []);
     return null;
   }
 

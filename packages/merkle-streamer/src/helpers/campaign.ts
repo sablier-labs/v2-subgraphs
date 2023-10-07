@@ -1,15 +1,10 @@
-import {
-  Address,
-  ByteArray,
-  Bytes,
-  ethereum,
-  log,
-} from "@graphprotocol/graph-ts";
+import { Address, ByteArray, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { Campaign } from "../generated/types/schema";
 import { CreateMerkleStreamerLL as EventCreateCampaignLL } from "../generated/types/templates/ContractMerkleStreamerFactory/SablierV2MerkleStreamerFactory";
 import {
   ABI_CREATE_MERKLE_STREAMER_LL,
   getChainId,
+  log_exit,
   one,
   zero,
 } from "../constants";
@@ -27,7 +22,7 @@ export function createCampaignLinear(
   let id = generateCampaignId(event.params.merkleStreamer);
   let entity = getCampaignById(id);
   if (entity != null) {
-    log.critical("[SABLIER] Campaign already registered at this address", []);
+    log_exit("Campaign already registered at this address");
     return null;
   }
 
@@ -76,7 +71,7 @@ export function createCampaignLinear(
   /** --------------- */
   let factory = getFactoryById(event.address.toHexString());
   if (factory == null) {
-    log.critical("[SABLIER] Factory not yet registered at this address", []);
+    log_exit("Factory not yet registered at this address");
     return null;
   }
   entity.factory = factory.id;
