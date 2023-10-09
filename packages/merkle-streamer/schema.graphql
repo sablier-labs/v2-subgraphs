@@ -87,6 +87,8 @@ type Campaign @entity {
   hash: Bytes!
   "timestamp of the campaign creation (for sorting reasons)"
   timestamp: BigInt!
+  "category of the produced streams e.g. LockupLinear or LockupDynamic"
+  category: CampaignCategory!
 
   "address of the campaign admin, entitled to clawback"
   admin: Bytes!
@@ -111,8 +113,6 @@ type Campaign @entity {
   "timestamp for the when the campaign underwent a clawback"
   clawbackTime: BigInt
 
-  "category of the produced streams e.g. LockupLinear or LockupDynamic"
-  streamCategory: CampaignCategory!
   "flag showing if the produced stream has a cliff, only available on linear streams"
   streamCliff: Boolean!
   "timestamp for the start of the cliff, if there's a streamCliff, only available on linear streams"
