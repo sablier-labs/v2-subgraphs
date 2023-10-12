@@ -32,17 +32,19 @@ export function createAction(
   entity.chainId = getChainId();
 
   /** --------------- */
-  let campaignId = generateCampaignId(dataSource.address());
-  let campaign = getCampaignById(campaignId);
-  if (campaign == null) {
-    log_exit(
-      "Campaign hasn't been registered before this action event: action={}, campaign=",
-      [id, campaignId],
-    );
-    return null;
-  }
+  if (category !== "Create") {
+    let campaignId = generateCampaignId(dataSource.address());
+    let campaign = getCampaignById(campaignId);
+    if (campaign == null) {
+      log_exit(
+        "Campaign hasn't been registered before this action event: action={}, campaign=",
+        [id, campaignId],
+      );
+      return null;
+    }
 
-  entity.campaign = campaign.id;
+    entity.campaign = campaign.id;
+  }
 
   /** --------------- */
   watcher.actionIndex = watcher.actionIndex.plus(one);
