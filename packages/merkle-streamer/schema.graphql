@@ -95,18 +95,18 @@ type Campaign @entity {
   "address of the lockup contract through which streams will be created"
   lockup: Bytes!
   "merkle root"
-  root: Bytes # TO DO extract this from input parameters
+  root: Bytes!
   "flag showing if the campaign expires or is forever claimable"
   expires: Boolean!
   "time at which the campaign expires and clawback is enabled, if the expires flag is true"
   expiration: BigInt
 
   "ipfs content identifier for the list of recipients and other static details"
-  ipfsCID: String
+  ipfsCID: String!
   "funds required for the entire campaign to conclude"
-  expectedAmount: BigInt
+  expectedAmount: BigInt!
   "number of recipients"
-  expectedRecipients: BigInt
+  expectedRecipients: BigInt!
 
   "action in which the campaign underwent a clawback, if it was supposed to expire"
   clawbackAction: Action
