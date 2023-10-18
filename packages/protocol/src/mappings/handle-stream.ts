@@ -81,6 +81,7 @@ export function handleCancel(event: EventCancel): void {
   action.amountB = event.params.recipientAmount;
   /** --------------- */
 
+  stream.cancelable = false;
   stream.canceled = true;
   stream.canceledAction = action.id;
   stream.canceledTime = event.block.timestamp;
