@@ -17,8 +17,6 @@ export function handleInitializer(_event: EventCreateLinear): void {
     watcher.save();
   }
 
-  watcher.logs.push("Initialized");
-
   let factories = getContractsFactory();
   if (factories.length > 0) {
     for (let i = 0; i < factories.length; i++) {
@@ -26,9 +24,7 @@ export function handleInitializer(_event: EventCreateLinear): void {
       const alias = factories[i][1];
 
       FactoryTemplate.create(address);
-      let factory = createFactory(address, alias);
-
-      watcher.logs.push(`New factory ${factory.id}`);
+      createFactory(address, alias);
     }
   }
 }

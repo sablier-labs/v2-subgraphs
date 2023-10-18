@@ -35,7 +35,7 @@ type Action @entity {
   "claim action data: stream identifier as constructed in the protocol subgraph - origin contract address concatenated with the chainId and the tokenId"
   claimStreamId: String
   "claim action data: native stream id"
-  claimTokenId: String
+  claimTokenId: BigInt
   "claim action data: amount"
   claimAmount: BigInt
   "claim action data: recipient index"
@@ -68,12 +68,10 @@ type Asset @entity(immutable: true) {
 
   "campaigns that rely on this asset/token"
   campaigns: [Campaign!]! @derivedFrom(field: "asset")
-  "list of daily activity snapshots for days with 1+ events"
-  activities: [Activity!] @derivedFrom(field: "campaign")
 }
 
 type Campaign @entity {
-  "unique identifier resolving to contract address"
+  "unique identifier resolving to the contract address concatenated with the chain id"
   id: String!
   "unique global id tracked by the subgraph watcher"
   subgraphId: BigInt!
@@ -83,6 +81,14 @@ type Campaign @entity {
   asset: Asset!
   "factory producing the campaign"
   factory: Factory!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "transaction hash for the campaign creation"
+  hash: Bytes!
+  "timestamp of the campaign creation (for sorting reasons)"
+  timestamp: BigInt!
+  "category of the produced streams e.g. LockupLinear or LockupDynamic"
+  category: CampaignCategory!
 
   "address of the campaign admin, entitled to clawback"
   admin: Bytes!
@@ -96,19 +102,17 @@ type Campaign @entity {
   expiration: BigInt
 
   "ipfs content identifier for the list of recipients and other static details"
-  ipfsCID: String
+  ipfsCID: String!
   "funds required for the entire campaign to conclude"
-  expectedAmount: BigInt
+  expectedAmount: BigInt!
   "number of recipients"
-  expectedRecipients: BigInt
+  expectedRecipients: BigInt!
 
   "action in which the campaign underwent a clawback, if it was supposed to expire"
   clawbackAction: Action
   "timestamp for the when the campaign underwent a clawback"
   clawbackTime: BigInt
 
-  "category of the produced streams e.g. LockupLinear or LockupDynamic"
-  streamCategory: CampaignCategory!
   "flag showing if the produced stream has a cliff, only available on linear streams"
   streamCliff: Boolean!
   "timestamp for the start of the cliff, if there's a streamCliff, only available on linear streams"
@@ -118,8 +122,15 @@ type Campaign @entity {
   "flag showing the cancelability of the produced streams (making it false is a one-way trip)"
   streamCancelable: Boolean!
 
+  "total claimed amount up to this point"
+  claimedAmount: BigInt!
+  "number of claims requested up to this point"
+  claimedCount: BigInt!
+
   "actions triggered in the context of this campaign"
   actions: [Action!]! @derivedFrom(field: "campaign")
+  "list of daily activity snapshots for days with 1+ events"
+  activities: [Activity!]! @derivedFrom(field: "campaign")
 }
 
 type Factory @entity {
@@ -130,15 +141,13 @@ type Factory @entity {
   alias: String!
   "address of the contract"
   address: Bytes!
-  "address of the contract admin"
-  admin: Bytes
 
   "list of campaigns"
   campaigns: [Campaign!]! @derivedFrom(field: "factory")
 }
 
 type Activity @entity {
-  "unique identifier resolving to the string 'activity' concatenated with the day of the snapshot"
+  "unique identifier resolving to the string 'activity' concatenated with the campaign address and the day of the snapshot"
   id: ID!
   "campaign the activity (day) is linked to"
   campaign: Campaign!

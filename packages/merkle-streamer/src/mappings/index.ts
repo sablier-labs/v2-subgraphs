@@ -1,5 +1,5 @@
 export { handleInitializer } from "./handle-initializer";
-export { handleCreateLL } from "./handle-factory";
+export { handleCreateCampaignLL } from "./handle-factory";
 export {
   handleClaim,
   handleClawback,
