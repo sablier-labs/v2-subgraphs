@@ -12,7 +12,7 @@ enum CampaignCategory {
 
 type Action @entity {
   "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx)"
-  id: ID!
+  id: String!
 
   "transaction details: block number"
   block: BigInt!
@@ -53,7 +53,7 @@ type Action @entity {
 
 type Asset @entity(immutable: true) {
   "unique identifier resolving to the ERC20 asset/token address"
-  id: ID!
+  id: String!
 
   "address of the ERC20 asset/token"
   address: Bytes!
@@ -148,7 +148,7 @@ type Factory @entity {
 
 type Activity @entity {
   "unique identifier resolving to the string 'activity' concatenated with the campaign address and the day of the snapshot"
-  id: ID!
+  id: String!
   "campaign the activity (day) is linked to"
   campaign: Campaign!
 
