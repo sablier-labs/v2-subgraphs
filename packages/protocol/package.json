@@ -58,7 +58,6 @@
     "deploy:mainnet": "CHAIN=mainnet yarn setup && NAME=sablier-v2 yarn deploy",
     "deploy:optimism": "CHAIN=optimism yarn setup && NAME=sablier-v2-optimism yarn deploy",
     "deploy:polygon": "CHAIN=polygon yarn setup && NAME=sablier-v2-polygon yarn deploy",
-    "deploy:scroll": "CHAIN=scroll yarn setup && NAME=sablier-v2-scroll yarn deploy",
     "deploy-studio": "graph deploy --studio $NAME",
     "deploy-studio:arbitrum": "CHAIN=arbitrum yarn setup && NAME=sablier-v2-arbitrum yarn deploy-studio",
     "deploy-studio:arbitrum-goerli": "CHAIN=arbitrum-goerli yarn setup && NAME=sablier-v2-arbitrum-goerli yarn deploy-studio",
