@@ -34,7 +34,9 @@ dataSources:
         - event:
             CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
             address,bool,(uint40,uint40,uint40),address)
-          handler: handleInitializer
+          handler: handleInitializer_Create
+        - event: TransferAdmin(indexed address,indexed address)
+          handler: handleInitializer_Admin
       file: ./src/mappings/index.ts
 templates:
   - kind: ethereum/contract

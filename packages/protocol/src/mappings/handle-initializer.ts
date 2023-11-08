@@ -3,7 +3,10 @@ import {
   ContractLockupDynamic as DynamicTemplate,
   ContractLockupLinear as LinearTemplate,
 } from "../generated/types/templates";
-import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import {
+  CreateLockupLinearStream as EventCreateLinear,
+  TransferAdmin as EventTransferAdmin,
+} from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { getContractsDynamic, getContractsLinear } from "../constants";
 import { createContract, getOrCreateWatcher } from "../helpers";
 
@@ -21,7 +24,7 @@ function createContractDynamic(address: Address, alias: string): void {
  * Use the oldest linear contract as a trigger to start indexing all the other contracts.
  */
 
-export function handleInitializer(_event: EventCreateLinear): void {
+export function handleInitializer(): void {
   let watcher = getOrCreateWatcher();
   if (watcher.initialized) {
     return;
@@ -49,4 +52,13 @@ export function handleInitializer(_event: EventCreateLinear): void {
       );
     }
   }
+}
+
+/** Genesis event from the Lockup Linear contract */
+export function handleInitializer_Admin(_event: EventTransferAdmin): void {
+  handleInitializer();
+}
+/** Backup genesis event from the Lockup Linear contract */
+export function handleInitializer_Create(_event: EventCreateLinear): void {
+  handleInitializer();
 }
