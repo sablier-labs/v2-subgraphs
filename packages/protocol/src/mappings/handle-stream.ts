@@ -1,4 +1,5 @@
 import { dataSource, log } from "@graphprotocol/graph-ts";
+import { Stream } from "../generated/types/schema";
 import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import {
   Approval as EventApproval,
@@ -18,10 +19,10 @@ import {
 } from "../helpers";
 import { createDynamicStream, createLinearStream } from "../helpers/stream";
 
-export function handleCreateLinear(event: EventCreateLinear): void {
+export function handleCreateLinear(event: EventCreateLinear): Stream | null {
   let stream = createLinearStream(event);
   if (stream == null) {
-    return;
+    return null;
   }
 
   let action = createAction(event);
@@ -37,12 +38,14 @@ export function handleCreateLinear(event: EventCreateLinear): void {
   stream.save();
   action.stream = stream.id;
   action.save();
+
+  return stream;
 }
 
-export function handleCreateDynamic(event: EventCreateDynamic): void {
+export function handleCreateDynamic(event: EventCreateDynamic): Stream | null {
   let stream = createDynamicStream(event);
   if (stream == null) {
-    return;
+    return null;
   }
 
   let action = createAction(event);
@@ -59,6 +62,8 @@ export function handleCreateDynamic(event: EventCreateDynamic): void {
   stream.save();
   action.stream = stream.id;
   action.save();
+
+  return stream;
 }
 
 export function handleCancel(event: EventCancel): void {

@@ -155,6 +155,9 @@ type Stream @entity {
   "snapshot of the duration (difference between end and start time)"
   duration: BigInt!
 
+  "flag showing the transferability of the stream (decided when the stream is created)"
+  transferable: Boolean!
+
   "amount deposit in the stream (without fees)"
   depositAmount: BigInt!
   "amount resolving to the sum still inside the stream (regardless of it being locked or not) (difference between deposit and withdrawn pre-cancel)"

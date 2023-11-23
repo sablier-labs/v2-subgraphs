@@ -440,6 +440,49 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "senderAmount",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "recipientAmount",
+        "type": "uint128"
+      }
+    ],
+    "name": "CancelLockupStream",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "admin",
@@ -521,6 +564,107 @@
         "indexed": false,
         "internalType": "bool",
         "name": "cancelable",
+        "type": "bool"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint40",
+            "name": "start",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "cliff",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "end",
+            "type": "uint40"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct LockupLinear.Range",
+        "name": "range",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "broker",
+        "type": "address"
+      }
+    ],
+    "name": "CreateLockupLinearStream",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "funder",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "deposit",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint128",
+            "name": "protocolFee",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint128",
+            "name": "brokerFee",
+            "type": "uint128"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Lockup.CreateAmounts",
+        "name": "amounts",
+        "type": "tuple"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "cancelable",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "transferable",
         "type": "bool"
       },
       {
@@ -689,6 +833,37 @@
         "indexed": true,
         "internalType": "address",
         "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "amount",
+        "type": "uint128"
+      }
+    ],
+    "name": "WithdrawFromLockupStream",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "streamId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "asset",
         "type": "address"
       },
       {

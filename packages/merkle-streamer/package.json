@@ -43,7 +43,7 @@
   },
   "scripts": {
     "build": "graph build",
-    "clean": "rimraf tsconfig.tsbuildinfo subgraph.yaml",
+    "clean": "rimraf tsconfig.tsbuildinfo subgraph.yaml build",
     "clean-modules": "rimraf node_modules",
     "clean-generated": "rimraf $npm_package_config_dir_generated",
     "codegen": "graph codegen --output-dir $npm_package_config_dir_generated/types/",

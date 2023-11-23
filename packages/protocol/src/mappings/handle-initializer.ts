@@ -4,7 +4,8 @@ import {
   ContractLockupLinear as LinearTemplate,
 } from "../generated/types/templates";
 import {
-  CreateLockupLinearStream as EventCreateLinear,
+  CreateLockupLinearStream as EventCreateLinear_V20,
+  CreateLockupLinearStream1 as EventCreateLinear_V21,
   TransferAdmin as EventTransferAdmin,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { getContractsDynamic, getContractsLinear } from "../constants";
@@ -59,6 +60,13 @@ export function handleInitializer_Admin(_event: EventTransferAdmin): void {
   handleInitializer();
 }
 /** Backup genesis event from the Lockup Linear contract */
-export function handleInitializer_Create(_event: EventCreateLinear): void {
+export function handleInitializer_Create_V20(
+  _event: EventCreateLinear_V20,
+): void {
+  handleInitializer();
+}
+export function handleInitializer_Create_V21(
+  _event: EventCreateLinear_V21,
+): void {
   handleInitializer();
 }
