@@ -54,6 +54,7 @@ export function createCampaignLinear(
   entity.streamCliffDuration = event.params.streamDurations.cliff;
   entity.streamTotalDuration = event.params.streamDurations.total;
   entity.streamCancelable = event.params.cancelable;
+  entity.streamTransferable = event.params.transferable;
 
   entity.clawbackAction = null;
   entity.clawbackTime = null;

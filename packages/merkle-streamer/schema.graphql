@@ -119,8 +119,10 @@ type Campaign @entity {
   streamCliffDuration: BigInt
   "total duration for produced streams"
   streamTotalDuration: BigInt!
-  "flag showing the cancelability of the produced streams (making it false is a one-way trip)"
+  "flag showing the *initial* cancelability of the produced streams (making it false is a one-way trip, tracked in the protocol subgraph)"
   streamCancelable: Boolean!
+  "flag showing the transferability of the produced streams"
+  streamTransferable: Boolean!
 
   "total claimed amount up to this point"
   claimedAmount: BigInt!

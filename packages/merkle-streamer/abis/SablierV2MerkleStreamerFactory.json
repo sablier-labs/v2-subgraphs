@@ -28,6 +28,12 @@
       },
       {
         "indexed": false,
+        "internalType": "bytes32",
+        "name": "merkleRoot",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
         "internalType": "uint40",
         "name": "expiration",
         "type": "uint40"
@@ -54,6 +60,12 @@
         "indexed": false,
         "internalType": "bool",
         "name": "cancelable",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "transferable",
         "type": "bool"
       },
       {
@@ -128,6 +140,11 @@
         "type": "bool"
       },
       {
+        "internalType": "bool",
+        "name": "transferable",
+        "type": "bool"
+      },
+      {
         "internalType": "string",
         "name": "ipfsCID",
         "type": "string"
@@ -152,25 +169,6 @@
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "admin",
-        "type": "address"
-      }
-    ],
-    "name": "getMerkleStreamers",
-    "outputs": [
-      {
-        "internalType": "contract ISablierV2MerkleStreamer[]",
-        "name": "merkleStreamers",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   }
 ]

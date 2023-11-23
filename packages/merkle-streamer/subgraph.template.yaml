@@ -29,7 +29,7 @@ dataSources:
       eventHandlers:
         - event:
             CreateMerkleStreamerLL(address,indexed address,indexed address,indexed
-            address,uint40,(uint40,uint40),bool,string,uint256,uint256)
+            address,bytes32,uint40,(uint40,uint40),bool,bool,string,uint256,uint256)
           handler: handleInitializer
       file: ./src/mappings/index.ts
 templates:
@@ -61,7 +61,7 @@ templates:
       eventHandlers:
         - event:
             CreateMerkleStreamerLL(address,indexed address,indexed address,indexed
-            address,uint40,(uint40,uint40),bool,string,uint256,uint256)
+            address,bytes32,uint40,(uint40,uint40),bool,bool,string,uint256,uint256)
           handler: handleCreateCampaignLL
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
