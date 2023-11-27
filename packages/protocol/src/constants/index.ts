@@ -30,6 +30,7 @@ export function getContractsLinear(): string[][] {
   return linear.map<string[]>((item) => [
     item[0].toString().toLowerCase(),
     item[1].toString().toLowerCase(),
+    item.length >= 3 ? item[2].toString().toLowerCase() : "2.0",
   ]);
 }
 
@@ -37,6 +38,7 @@ export function getContractsDynamic(): string[][] {
   return dynamic.map<string[]>((item) => [
     item[0].toString().toLowerCase(),
     item[1].toString().toLowerCase(),
+    item.length >= 3 ? item[2].toString().toLowerCase() : "2.0",
   ]);
 }
 

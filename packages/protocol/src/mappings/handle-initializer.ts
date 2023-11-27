@@ -11,14 +11,22 @@ import {
 import { getContractsDynamic, getContractsLinear } from "../constants";
 import { createContract, getOrCreateWatcher } from "../helpers";
 
-function createContractLinear(address: Address, alias: string): void {
+function createContractLinear(
+  address: Address,
+  alias: string,
+  version: string,
+): void {
   LinearTemplate.create(address);
-  createContract(address, alias, "LockupLinear");
+  createContract(address, alias, version, "LockupLinear");
 }
 
-function createContractDynamic(address: Address, alias: string): void {
+function createContractDynamic(
+  address: Address,
+  alias: string,
+  version: string,
+): void {
   DynamicTemplate.create(address);
-  createContract(address, alias, "LockupDynamic");
+  createContract(address, alias, version, "LockupDynamic");
 }
 
 /**
@@ -40,6 +48,7 @@ export function handleInitializer(): void {
       createContractLinear(
         Address.fromString(linearList[i][0]),
         linearList[i][1],
+        linearList[i][2],
       );
     }
   }
@@ -50,6 +59,7 @@ export function handleInitializer(): void {
       createContractDynamic(
         Address.fromString(dynamicList[i][0]),
         dynamicList[i][1],
+        dynamicList[i][2],
       );
     }
   }

@@ -10,6 +10,7 @@ export function getContractById(id: string): Contract | null {
 export function createContract(
   address: Address,
   alias: string,
+  version: string,
   category: string,
 ): Contract {
   let id = address.toHexString();
@@ -21,6 +22,7 @@ export function createContract(
   entity.alias = alias;
   entity.address = address;
   entity.category = category;
+  entity.version = version;
 
   /**
    * For contracts that aren't on-chain at this time, the admin will be picked up by the TransferAdmin event.
