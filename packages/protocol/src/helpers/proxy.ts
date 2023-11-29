@@ -2,9 +2,14 @@ import { Address } from "@graphprotocol/graph-ts";
 import { PRBProxy as PRBProxyContract } from "../generated/types/ContractInitializer/PRBProxy";
 import { PRBProxyRegistry as PRBProxyRegistryContract } from "../generated/types/ContractInitializer/PRBProxyRegistry";
 import { Stream } from "../generated/types/schema";
-import { getContractRegistry } from "../constants";
+import { StreamVersion_V21, getContractRegistry } from "../constants";
 
 export function bindProxyOwner(stream: Stream): Stream {
+  if (stream.version === StreamVersion_V21) {
+    stream.proxied = false;
+    return stream;
+  }
+
   let proxy = PRBProxyContract.bind(Address.fromBytes(stream.sender));
 
   let owner = proxy.try_owner();
