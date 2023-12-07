@@ -10,7 +10,7 @@ import {
   WithdrawFromLockupStream as EventWithdraw,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { one, zero } from "../constants";
+import { ADDRESS_ZERO, one, zero } from "../constants";
 import {
   createAction,
   getContractById,
@@ -114,6 +114,17 @@ export function handleRenounce(event: EventRenounce): void {
 }
 
 export function handleTransfer(event: EventTransfer): void {
+  /**
+   * As described in issue #18, we will first filter out
+   * any `Transfer` events emitted by the initial mint transaction
+   */
+
+  if (event.params.from.equals(ADDRESS_ZERO)) {
+    return;
+  }
+
+  /** --------------- */
+
   let id = event.params.tokenId;
   let stream = getStreamByIdFromSource(id);
   if (stream == null) {
