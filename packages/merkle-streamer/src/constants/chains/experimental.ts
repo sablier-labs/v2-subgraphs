@@ -1,6 +1,6 @@
-export let chainId = 5;
-export let chain = "goerli";
-export let startBlock = 10094180;
+export let chainId = 11155111;
+export let chain = "sepolia";
+export let startBlock = 4751580;
 
 /** Rule: keep addresses lowercased" */
 
@@ -10,7 +10,7 @@ export let startBlock = 10094180;
  */
 
 export let factory: string[][] = [
-  ["0xa2a48b83b6c96e1536336df9ead024d557a97a23", "MSF2"],
+  ["0x29a8d9f67608d77d0b4544a70fc2ab80ba5525f5", "MSF2"],
 ];
 
 /**

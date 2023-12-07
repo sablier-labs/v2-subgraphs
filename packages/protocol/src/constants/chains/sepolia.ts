@@ -2,14 +2,6 @@ export let chainId = 11155111;
 export let chain = "sepolia";
 export let startBlock = 4067889;
 
-/**
- * 💡💡💡 ------------------------------- 💡💡💡
- *
- * Sepolia doesn't support the Hosted Service
- *
- * 💡💡💡 ------------------------------- 💡💡💡
- */
-
 /** Rule: keep addresses lowercased" */
 
 /**
