@@ -46,8 +46,8 @@ export function createCampaignLinear(
   entity.expiration = event.params.expiration;
 
   entity.ipfsCID = event.params.ipfsCID;
-  entity.expectedAmount = event.params.aggregateAmount;
-  entity.expectedRecipients = event.params.recipientsCount;
+  entity.aggregateAmount = event.params.aggregateAmount;
+  entity.totalRecipients = event.params.recipientsCount;
 
   entity.category = "LockupLinear";
   entity.streamCliff = !event.params.streamDurations.cliff.isZero();
