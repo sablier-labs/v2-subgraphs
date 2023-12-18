@@ -104,9 +104,9 @@ type Campaign @entity {
   "ipfs content identifier for the list of recipients and other static details"
   ipfsCID: String!
   "funds required for the entire campaign to conclude"
-  expectedAmount: BigInt!
-  "number of recipients"
-  expectedRecipients: BigInt!
+  aggregateAmount: BigInt!
+  "total number of recipients"
+  totalRecipients: BigInt!
 
   "action in which the campaign underwent a clawback, if it was supposed to expire"
   clawbackAction: Action
