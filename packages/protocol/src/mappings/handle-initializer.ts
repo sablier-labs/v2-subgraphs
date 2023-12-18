@@ -4,20 +4,29 @@ import {
   ContractLockupLinear as LinearTemplate,
 } from "../generated/types/templates";
 import {
-  CreateLockupLinearStream as EventCreateLinear,
+  CreateLockupLinearStream as EventCreateLinear_V20,
+  CreateLockupLinearStream1 as EventCreateLinear_V21,
   TransferAdmin as EventTransferAdmin,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { getContractsDynamic, getContractsLinear } from "../constants";
 import { createContract, getOrCreateWatcher } from "../helpers";
 
-function createContractLinear(address: Address, alias: string): void {
+function createContractLinear(
+  address: Address,
+  alias: string,
+  version: string,
+): void {
   LinearTemplate.create(address);
-  createContract(address, alias, "LockupLinear");
+  createContract(address, alias, version, "LockupLinear");
 }
 
-function createContractDynamic(address: Address, alias: string): void {
+function createContractDynamic(
+  address: Address,
+  alias: string,
+  version: string,
+): void {
   DynamicTemplate.create(address);
-  createContract(address, alias, "LockupDynamic");
+  createContract(address, alias, version, "LockupDynamic");
 }
 
 /**
@@ -39,6 +48,7 @@ export function handleInitializer(): void {
       createContractLinear(
         Address.fromString(linearList[i][0]),
         linearList[i][1],
+        linearList[i][2],
       );
     }
   }
@@ -49,6 +59,7 @@ export function handleInitializer(): void {
       createContractDynamic(
         Address.fromString(dynamicList[i][0]),
         dynamicList[i][1],
+        dynamicList[i][2],
       );
     }
   }
@@ -59,6 +70,13 @@ export function handleInitializer_Admin(_event: EventTransferAdmin): void {
   handleInitializer();
 }
 /** Backup genesis event from the Lockup Linear contract */
-export function handleInitializer_Create(_event: EventCreateLinear): void {
+export function handleInitializer_Create_V20(
+  _event: EventCreateLinear_V20,
+): void {
+  handleInitializer();
+}
+export function handleInitializer_Create_V21(
+  _event: EventCreateLinear_V21,
+): void {
   handleInitializer();
 }

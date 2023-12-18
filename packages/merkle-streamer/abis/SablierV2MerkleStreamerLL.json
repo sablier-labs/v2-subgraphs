@@ -8,22 +8,22 @@
       },
       {
         "internalType": "contract ISablierV2LockupLinear",
-        "name": "lockupLinear_",
+        "name": "lockupLinear",
         "type": "address"
       },
       {
         "internalType": "contract IERC20",
-        "name": "asset_",
+        "name": "asset",
         "type": "address"
       },
       {
         "internalType": "bytes32",
-        "name": "merkleRoot_",
+        "name": "merkleRoot",
         "type": "bytes32"
       },
       {
         "internalType": "uint40",
-        "name": "expiration_",
+        "name": "expiration",
         "type": "uint40"
       },
       {
@@ -45,7 +45,12 @@
       },
       {
         "internalType": "bool",
-        "name": "cancelable_",
+        "name": "cancelable",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "transferable",
         "type": "bool"
       }
     ],
@@ -103,6 +108,11 @@
   {
     "inputs": [],
     "name": "SablierV2MerkleStreamer_InvalidProof",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SablierV2MerkleStreamer_ProtocolFeeNotZero",
     "type": "error"
   },
   {
@@ -193,20 +203,7 @@
   },
   {
     "inputs": [],
-    "name": "admin",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "asset",
+    "name": "ASSET",
     "outputs": [
       {
         "internalType": "contract IERC20",
@@ -219,12 +216,90 @@
   },
   {
     "inputs": [],
-    "name": "cancelable",
+    "name": "CANCELABLE",
     "outputs": [
       {
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EXPIRATION",
+    "outputs": [
+      {
+        "internalType": "uint40",
+        "name": "",
+        "type": "uint40"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "LOCKUP",
+    "outputs": [
+      {
+        "internalType": "contract ISablierV2Lockup",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "LOCKUP_LINEAR",
+    "outputs": [
+      {
+        "internalType": "contract ISablierV2LockupLinear",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MERKLE_ROOT",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TRANSFERABLE",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "admin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -283,19 +358,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "expiration",
-    "outputs": [
-      {
-        "internalType": "uint40",
-        "name": "",
-        "type": "uint40"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -322,32 +384,6 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lockupLinear",
-    "outputs": [
-      {
-        "internalType": "contract ISablierV2LockupLinear",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "merkleRoot",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
       }
     ],
     "stateMutability": "view",

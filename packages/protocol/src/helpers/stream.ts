@@ -36,6 +36,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   entity.tokenId = tokenId;
   entity.alias = alias;
   entity.contract = contract.id;
+  entity.version = contract.version;
   entity.subgraphId = watcher.streamIndex;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
@@ -48,6 +49,7 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   entity.canceledAction = null;
   entity.cliffAmount = null;
   entity.cliffTime = null;
+  entity.transferable = true;
   entity.withdrawnAmount = zero;
 
   /** --------------- */

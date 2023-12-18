@@ -104,9 +104,9 @@ type Campaign @entity {
   "ipfs content identifier for the list of recipients and other static details"
   ipfsCID: String!
   "funds required for the entire campaign to conclude"
-  expectedAmount: BigInt!
-  "number of recipients"
-  expectedRecipients: BigInt!
+  aggregateAmount: BigInt!
+  "total number of recipients"
+  totalRecipients: BigInt!
 
   "action in which the campaign underwent a clawback, if it was supposed to expire"
   clawbackAction: Action
@@ -119,8 +119,10 @@ type Campaign @entity {
   streamCliffDuration: BigInt
   "total duration for produced streams"
   streamTotalDuration: BigInt!
-  "flag showing the cancelability of the produced streams (making it false is a one-way trip)"
+  "flag showing the *initial* cancelability of the produced streams (making it false is a one-way trip, tracked in the protocol subgraph)"
   streamCancelable: Boolean!
+  "flag showing the transferability of the produced streams"
+  streamTransferable: Boolean!
 
   "total claimed amount up to this point"
   claimedAmount: BigInt!

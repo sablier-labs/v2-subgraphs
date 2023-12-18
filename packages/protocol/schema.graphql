@@ -41,6 +41,8 @@ type Contract @entity {
   "unique identifier resolving to contract address"
   id: String!
 
+  "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
+  version: String!
   "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
   alias: String!
   "address of the contract"
@@ -99,6 +101,8 @@ type Stream @entity {
   subgraphId: BigInt!
   "unique identifier for the stream released by the origin contract - same as the tokenId or streamId values given by the contract"
   tokenId: BigInt!
+  "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
+  version: String!
 
   "type of stream (for sorting reasons)"
   category: StreamCategory!
@@ -154,6 +158,9 @@ type Stream @entity {
   startTime: BigInt!
   "snapshot of the duration (difference between end and start time)"
   duration: BigInt!
+
+  "flag showing the transferability of the stream (decided when the stream is created)"
+  transferable: Boolean!
 
   "amount deposit in the stream (without fees)"
   depositAmount: BigInt!

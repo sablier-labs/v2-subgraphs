@@ -1,8 +1,8 @@
-export let chainId = 5;
-export let chain = "goerli";
-export let startBlock = 9819750;
+export let chainId = 8453;
+export let chain = "base";
+export let startBlock = 8026890;
 
-/** Rule: keep addresses lowercased" */
+/** Rule: keep addresses lowercased */
 
 /**
  * Keep aliases unique and always in sync with the frontend
@@ -10,7 +10,7 @@ export let startBlock = 9819750;
  */
 
 export let factory: string[][] = [
-  ["0xeaaa45A64012F8d002D839DED9f045d44D9E7E85", "MSF"],
+  ["0x5545c8e7c3e1f74adc98e518f2e8d23a002c4412", "MSF2"],
 ];
 
 /**
