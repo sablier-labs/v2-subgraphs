@@ -57,7 +57,7 @@
     "deploy:mainnet": "CHAIN=mainnet yarn setup && NAME=sablier-v2-ms yarn deploy",
     "deploy:optimism": "CHAIN=optimism yarn setup && NAME=sablier-v2-ms-optimism yarn deploy",
     "deploy:polygon": "CHAIN=polygon yarn setup && NAME=sablier-v2-ms-polygon yarn deploy",
-    "deploy:sepolia": "CHAIN=polygon yarn setup && NAME=sablier-v2-ms-sepolia yarn deploy",
+    "deploy:sepolia": "CHAIN=sepolia yarn setup && NAME=sablier-v2-ms-sepolia yarn deploy",
     "deploy-studio": "graph deploy --studio $NAME",
     "deploy-studio:base": "CHAIN=base yarn setup && NAME=sablier-v2-ms-base yarn deploy-studio",
     "deploy-studio:scroll": "CHAIN=scroll yarn setup && NAME=sablier-v2-ms-scroll yarn deploy-studio",
