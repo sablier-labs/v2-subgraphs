@@ -2,11 +2,11 @@ export let chainId = 43114;
 export let chain = "avalanche";
 export let startBlock = 32164210;
 
-/** Rule: keep addresses lowercased" */
+/** Rule: keep addresses lowercased */
 
 /**
  * Keep aliases unique and always in sync with the frontend
- * @example export let linear = [[address1, alias2], [address2, alias2]]
+ * @example export let linear = [[address1, alias1, version1], [address2, alias2, version2]]
  */
 
 export let linear: string[][] = [
