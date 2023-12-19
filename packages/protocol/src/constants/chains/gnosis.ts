@@ -11,12 +11,12 @@ export let startBlock = 28766600;
 
 export let linear: string[][] = [
   ["0x685e92c9ca2bb23f1b596d0a7d749c0603e88585", "LL", "V20"],
-  ["0x009c856209c45fb8c21388b220add9405a78c957", "LL2", "V21"],
+  ["0xce49854a647a1723e8fb7cc3d190cab29a44ab48", "LL2", "V21"],
 ];
 
 export let dynamic: string[][] = [
   ["0xeb148e4ec13aaa65328c0ba089a278138e9e53f9", "LD", "V20"],
-  ["0x85533763f9ed8e7eeea943f5afaeb3410ae1d16f", "LD2", "V21"],
+  ["0x1df83c7682080b0f0c26a20c6c9cb8623e0df24e", "LD2", "V21"],
 ];
 
 /** PRBProxy registry */
