@@ -13,13 +13,15 @@ import * as arbitrum from "./arbitrum";
 import * as sepolia from "./sepolia";
 
 const filter = (list: string[][], version: string) => {
-  return list
-    .filter((entry) => entry[2] === version)
-    .map((entry) => ({
-      address: entry[0],
-      alias: entry[1],
-      version: entry[2],
-    }));
+  return (
+    list
+      .filter((entry) => entry[2] === version)
+      .map((entry) => ({
+        address: entry[0]?.toLowerCase() || "",
+        alias: entry[1],
+        version: entry[2],
+      })) || []
+  );
 };
 
 export const chains = () => {
@@ -43,13 +45,12 @@ export const chains = () => {
   return list.map((item) => ({
     id: item.chainId,
     start_block: item.startBlock,
-    [macros.StreamVersion_V20]: {
-      name: "ContractLockupLinearV20",
+    registry: item.registry?.toLowerCase() || "",
+    V20: {
       dynamic: filter(item.dynamic, macros.StreamVersion_V20),
       linear: filter(item.linear, macros.StreamVersion_V20),
     },
-    [macros.StreamVersion_V21]: {
-      name: "ContractLockupLinearV21",
+    V21: {
       dynamic: filter(item.dynamic, macros.StreamVersion_V21),
       linear: filter(item.linear, macros.StreamVersion_V21),
     },

@@ -1,54 +1,50 @@
-import { BigInt, Bytes } from "@graphprotocol/graph-ts";
-import {
-  chainId,
-  dynamic,
-  initializer,
-  linear,
-  registry,
-} from "../generated/env";
+import { chains as generator } from "./chains";
 
-export let zero = BigInt.fromI32(0);
-export let one = BigInt.fromI32(1);
-export let two = BigInt.fromI32(2);
-export let d18 = BigInt.fromI32(18);
+export const zero = BigInt(0);
+export const one = BigInt(1);
+export const two = BigInt(2);
+export const d18 = BigInt(18);
 
-export let put = 0;
-export let call = 1;
-
-export let ADDRESS_ZERO = Bytes.fromHexString(
+export const ADDRESS_ZERO = String(
   "0x0000000000000000000000000000000000000000",
 );
 
-export let StreamVersion_V20 = "V20";
-export let StreamVersion_V21 = "V21";
+export const StreamVersion_V20 = "V20" as const;
+export const StreamVersion_V21 = "V21" as const;
 
-export function getContractInitializer(): string {
-  return initializer.toLowerCase();
-}
+export type StreamVersion = typeof StreamVersion_V20 | typeof StreamVersion_V21;
 
-export function getContractsLinear(): string[][] {
-  if (linear.length === 0) {
+export let chains = generator();
+
+export function getContractsLinear(
+  chainId: number | string,
+  version: StreamVersion,
+) {
+  const chain = chains.find((c) => String(c.id) === String(chainId));
+  if (!chain) {
     return [];
   }
-  return linear.map<string[]>((item) => [
-    item[0].toString().toLowerCase(),
-    item[1].toString().toLowerCase(),
-    item.length >= 3 ? item[2].toString() : StreamVersion_V20,
-  ]);
+
+  return chain[version].linear;
 }
 
-export function getContractsDynamic(): string[][] {
-  return dynamic.map<string[]>((item) => [
-    item[0].toString().toLowerCase(),
-    item[1].toString().toLowerCase(),
-    item.length >= 3 ? item[2].toString() : StreamVersion_V20,
-  ]);
+export function getContractsDynamic(
+  chainId: number | string,
+  version: StreamVersion,
+) {
+  const chain = chains.find((c) => String(c.id) === String(chainId));
+  if (!chain) {
+    return [];
+  }
+
+  return chain[version].dynamic;
 }
 
-export function getContractRegistry(): string {
-  return registry.toLowerCase();
-}
+export function getContractRegistry(chainId: number | string): string {
+  const chain = chains.find((c) => String(c.id) === String(chainId));
+  if (!chain) {
+    return "";
+  }
 
-export function getChainId(): BigInt {
-  return BigInt.fromI32(chainId);
+  return chain.registry;
 }
