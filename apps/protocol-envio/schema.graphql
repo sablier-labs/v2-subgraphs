@@ -1,0 +1,23 @@
+type EventsSummary {
+  id: ID!
+  eRC20_Approval: [ERC20_Approval!]! @derivedFrom(field: "eventsSummary")
+  eRC20_ApprovalCount: BigInt!
+  eRC20_Transfer: [ERC20_Transfer!]! @derivedFrom(field: "eventsSummary")
+  eRC20_TransferCount: BigInt!
+}
+
+type ERC20_Approval {
+  id: ID!
+  owner: String!
+  spender: String!
+  amount: BigInt!
+  eventsSummary: String!
+}
+
+type ERC20_Transfer {
+  id: ID!
+  from: String!
+  to: String!
+  amount: BigInt!
+  eventsSummary: String!
+}

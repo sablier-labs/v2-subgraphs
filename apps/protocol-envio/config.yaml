@@ -1,0 +1,12 @@
+name: protocol
+networks:
+- id: 11155111
+  start_block: 0
+  contracts:
+  - name: ERC20
+    address:
+    - 0x776b6fC2eD15D6Bb5Fc32e0c89DE68683118c62A
+    handler: src/EventHandlers.ts
+    events:
+    - event: Approval(address indexed owner, address indexed spender, uint256 amount)
+    - event: Transfer(address indexed from, address indexed to, uint256 amount)

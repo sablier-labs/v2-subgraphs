@@ -1,6 +1,6 @@
 {
-  "name": "@sablier/v2-subgraphs-merkle-streamer",
-  "description": "Sablier V2 merkle streamer subgraph",
+  "name": "@sablier/v2-subgraphs-merkle",
+  "description": "Sablier V2 merkle streamer (lockup) subgraph",
   "version": "1.0.0",
   "author": {
     "name": "Sablier Labs Ltd",

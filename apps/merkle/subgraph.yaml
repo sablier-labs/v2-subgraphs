@@ -1,0 +1,99 @@
+specVersion: 0.0.5
+description: Sablier V2 Subgraph
+repository: https://github.com/sablier-labs/v2-subgraphs
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ContractInitializer
+    network: sepolia
+    source:
+      address: "0xbacc1d151a78eed71d504f701c25e8739dc0262d"
+      abi: SablierV2MerkleStreamerFactory
+      startBlock: 4904890
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Factory
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20Bytes
+          file: ./abis/ERC20Bytes.json
+        - name: SablierV2MerkleStreamerFactory
+          file: ./abis/SablierV2MerkleStreamerFactory.json
+        - name: SablierV2MerkleStreamerLL
+          file: ./abis/SablierV2MerkleStreamerLL.json
+      eventHandlers:
+        - event:
+            CreateMerkleStreamerLL(address,indexed address,indexed address,indexed
+            address,bytes32,uint40,(uint40,uint40),bool,bool,string,uint256,uint256)
+          handler: handleInitializer
+      file: ./src/mappings/index.ts
+templates:
+  - kind: ethereum/contract
+    name: ContractMerkleStreamerFactory
+    network: sepolia
+    source:
+      abi: SablierV2MerkleStreamerFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Action
+        - Activity
+        - Asset
+        - Campaign
+        - Factory
+        - Watcher
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20Bytes
+          file: ./abis/ERC20Bytes.json
+        - name: SablierV2MerkleStreamerFactory
+          file: ./abis/SablierV2MerkleStreamerFactory.json
+        - name: SablierV2MerkleStreamerLL
+          file: ./abis/SablierV2MerkleStreamerLL.json
+      eventHandlers:
+        - event:
+            CreateMerkleStreamerLL(address,indexed address,indexed address,indexed
+            address,bytes32,uint40,(uint40,uint40),bool,bool,string,uint256,uint256)
+          handler: handleCreateCampaignLL
+      file: ./src/mappings/index.ts
+  - kind: ethereum/contract
+    name: ContractMerkleStreamerLL
+    network: sepolia
+    source:
+      abi: SablierV2MerkleStreamerLL
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Action
+        - Activity
+        - Asset
+        - Campaign
+        - Factory
+        - Watcher
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20Bytes
+          file: ./abis/ERC20Bytes.json
+        - name: SablierV2MerkleStreamerFactory
+          file: ./abis/SablierV2MerkleStreamerFactory.json
+        - name: SablierV2MerkleStreamerLL
+          file: ./abis/SablierV2MerkleStreamerLL.json
+      eventHandlers:
+        - event: Claim(uint256,indexed address,uint128,indexed uint256)
+          handler: handleClaim
+        - event: Clawback(indexed address,indexed address,uint128)
+          handler: handleClawback
+        - event: TransferAdmin(indexed address,indexed address)
+          handler: handleTransferAdmin
+      file: ./src/mappings/index.ts
