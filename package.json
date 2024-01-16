@@ -37,7 +37,8 @@
     "g:prettier-fix": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run prettier-fix"
   },
   "workspaces": [
-    "apps/*",
+    "apps/protocol",
+    "apps/merkle",
     "packages/*"
   ]
 }

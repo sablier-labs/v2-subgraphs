@@ -850,9 +850,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sablier/v2-subgraphs-merkle-streamer@workspace:packages/merkle-streamer":
+"@sablier/v2-subgraphs-merkle@workspace:apps/merkle":
   version: 0.0.0-use.local
-  resolution: "@sablier/v2-subgraphs-merkle-streamer@workspace:packages/merkle-streamer"
+  resolution: "@sablier/v2-subgraphs-merkle@workspace:apps/merkle"
   dependencies:
     "@graphprotocol/graph-cli": ^0.60.0
     "@graphprotocol/graph-ts": ^0.31.0
@@ -870,9 +870,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sablier/v2-subgraphs-protocol@workspace:packages/protocol":
+"@sablier/v2-subgraphs-protocol@workspace:apps/protocol":
   version: 0.0.0-use.local
-  resolution: "@sablier/v2-subgraphs-protocol@workspace:packages/protocol"
+  resolution: "@sablier/v2-subgraphs-protocol@workspace:apps/protocol"
   dependencies:
     "@graphprotocol/graph-cli": ^0.60.0
     "@graphprotocol/graph-ts": ^0.31.0

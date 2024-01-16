@@ -24,7 +24,7 @@
     "mustache": "^4.2.0",
     "prettier": "^2.8.8",
     "rimraf": "^3.0.2",
-    "typescript": "5.1.3"
+    "typescript": "5.2.2"
   },
   "homepage": "https://github.com/sablier-labs/v2-subgraphs#readme",
   "license": "LGPL-3.0",
@@ -81,9 +81,9 @@
     "setup:polygon": "yarn clean-generated && CHAIN=polygon yarn setup",
     "setup:scroll": "yarn clean-generated && CHAIN=scroll yarn setup",
     "setup:sepolia": "yarn clean-generated && CHAIN=sepolia yarn setup",
-    "template": "yarn template-chain && yarn template-subgraph && yarn template-env",
+    "template": "yarn template-chain && yarn template-config && yarn template-env",
     "template-chain": "tsc $npm_package_config_dir_chains/$CHAIN.ts --outDir $npm_package_config_dir_generated",
-    "template-subgraph": "mustache $npm_package_config_dir_generated/$CHAIN.js subgraph.template.yaml > subgraph.yaml",
+    "template-config": "mustache $npm_package_config_dir_generated/$CHAIN.js subgraph.template.yaml > subgraph.yaml",
     "template-env": "cp $npm_package_config_dir_chains/$CHAIN.ts $npm_package_config_dir_generated/env.ts"
   }
 }
