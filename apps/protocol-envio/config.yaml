@@ -1,8 +1,8 @@
 name: sablier-v2-protocol
 contracts:
   - name: ContractLockupLinearV20
-  - handler: src/mappings/index.ts
-  - events:
+    handler: src/mappings/index.ts
+    events:
       - event:
           CreateLockupLinearStream(uint256 streamId, address funder, address indexed sender, address indexed recipient,
           (uint128,uint128,uint128) amounts, address indexed asset, bool cancelable, (uint40,uint40,uint40) range,
