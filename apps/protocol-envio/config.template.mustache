@@ -13,17 +13,16 @@ contracts:
           - name: Contract
           - name: Watcher
 networks:
-  - id: 42161
-    start_block: 107509950
+  {{#chains}}
+  - id: {{id}}
+    start_block: {{start_block}}
     contracts:
-      - name: ContractLockupLinearV20
+      - name: {{V20.name}}
         address:
-          - 0x197d655f3be03903fd25e7828c3534504bfe525e
-          - 0xa9efbef1a35ff80041f567391bdc9813b2d50197
-  - id: 11155111
-    start_block: 4067889
-    contracts:
-      - name: ContractLockupLinearV20
-        address:
-          - 0xd4300c5bc0b9e27c73ebabdc747ba990b1b570db
-          - 0x421e1e7a53ff360f70a2d02037ee394fa474e035
+          {{#V20.linear}}
+          - {{address}}
+          {{/V20.linear}}
+          {{#V20.dynamic}}
+          - {{address}}
+          {{/V20.dynamic}}
+   {{/chains}}
