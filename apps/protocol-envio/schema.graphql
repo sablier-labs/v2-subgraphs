@@ -119,8 +119,6 @@ type Stream {
   cancelable: Boolean!
   "flag showing if the stream was (making it true is a one-way trip)"
   canceled: Boolean!
-  "snapshot of the duration (difference between end and start time)"
-  duration: BigInt!
   "flag showing the transferability of the stream (decided when the stream is created)"
   transferable: Boolean!
 
@@ -139,6 +137,8 @@ type Stream {
   endTime: BigInt!
   "timestamp for the start of the stream"
   startTime: BigInt!
+  "snapshot of the duration (difference between end and start time)"
+  duration: BigInt!
 
   "amount of fees paid to the broker"
   brokerFeeAmount: BigInt!
@@ -153,8 +153,15 @@ type Stream {
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
 
+  "batch the stream is part of, only available when created within a batch create transaction"
+  batch: Batch!
+  "position in the batch, only available when created within a batch create transaction"
+  position: BigInt!
+
   "actions triggered in the context of this stream"
   actions: [Action!]! @derivedFrom(field: "stream")
+  "segments of the stream curve, only available on dynamic streams"
+  segments: [Segment!]! @derivedFrom(field: "stream")
 }
 
 type Segment {
@@ -181,7 +188,8 @@ type Segment {
 }
 
 type Batch @entity {
-  "unique identifier of the batch, resolving to the hash of the parent transaction"
+  #### 🚨 🚨 🚨 🚨 #### BREAKING CHANGE #### 🚨 🚨 🚨 🚨 ####
+  "unique identifier of the batch, resolving to the hash of the parent transaction, concatenated to the chainId"
   id: String!
   "number of streams that are part of this batch"
   size: BigInt!
@@ -199,7 +207,7 @@ type Batch @entity {
 
 type Batcher @entity {
   #### 🚨 🚨 🚨 🚨 #### BREAKING CHANGE #### 🚨 🚨 🚨 🚨 ####
-  "unique identifier of the sender, resolving to their address concatenated to the chainId"
+  "unique identifier of the batcher (sender), resolving to their address concatenated to the chainId"
   id: String!
   "address of the sender"
   address: Bytes!

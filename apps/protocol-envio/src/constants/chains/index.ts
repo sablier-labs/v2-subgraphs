@@ -1,4 +1,3 @@
-import * as macros from "../macros";
 import * as arbitrum from "./arbitrum";
 // import * as arbitrum_sepolia from "./arbitrum-sepolia";
 // import * as avalanche from "./avalanche";
@@ -47,12 +46,12 @@ export const chains = () => {
     start_block: item.startBlock,
     registry: item.registry?.toLowerCase() || "",
     V20: {
-      dynamic: filter(item.dynamic, macros.StreamVersion_V20),
-      linear: filter(item.linear, macros.StreamVersion_V20),
+      dynamic: filter(item.dynamic, "V20"),
+      linear: filter(item.linear, "V20"),
     },
     V21: {
-      dynamic: filter(item.dynamic, macros.StreamVersion_V21),
-      linear: filter(item.linear, macros.StreamVersion_V21),
+      dynamic: filter(item.dynamic, "V21"),
+      linear: filter(item.linear, "V21"),
     },
   }));
 };

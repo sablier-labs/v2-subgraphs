@@ -1,12 +1,38 @@
 import { AssetEntity as Asset } from "../../generated/src/Types.gen";
 
-import type { Event } from "../constants";
+import type { Address, Event } from "../utils";
 
-export function generateAssetId(event: Event, address: string): string {
-  return "".concat(address).concat("-").concat(event.chainId.toString());
+export function getAsset(
+  event: Event,
+  address: Address,
+  loader: (id: string) => Asset | undefined,
+) {
+  const id = generateAssetId(event, address);
+  const loaded = loader(id);
+
+  if (!loaded) {
+    throw new Error("Missing asset instance");
+  }
+
+  return loaded;
 }
 
-async function createAsset(event: Event, address: string) {
+export async function getOrCreateAsset_async(
+  event: Event,
+  address: Address,
+  loader: (id: string) => Promise<Asset | undefined>,
+) {
+  const id = generateAssetId(event, address);
+  const loaded = await loader(id);
+
+  if (!loaded) {
+    return createAsset(event, address);
+  }
+
+  return loaded;
+}
+
+async function createAsset(event: Event, address: Address) {
   const { decimals, name, symbol } = await fetchAssetDetails(
     address,
     event.chainId,
@@ -24,41 +50,19 @@ async function createAsset(event: Event, address: string) {
   return entity;
 }
 
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export function generateAssetId(event: Event, address: Address) {
+  return "".concat(address).concat("-").concat(event.chainId.toString());
+}
+
 // TODO
-async function fetchAssetDetails(_address: string, _chainId: number) {
+async function fetchAssetDetails(_address: Address, _chainId: number) {
   return {
     decimals: 18,
     name: "TODO Token",
     symbol: "TODO",
   };
-}
-
-export function getOrCreateAsset(
-  event: Event,
-  address: string,
-  loader: (id: string) => Asset | undefined,
-) {
-  const id = generateAssetId(event, address);
-  const loaded = loader(id);
-
-  if (!loaded) {
-    return createAsset(event, address);
-  }
-
-  return loaded;
-}
-
-export async function getOrCreateAsset_async(
-  event: Event,
-  address: string,
-  loader: (id: string) => Asset | undefined,
-) {
-  const id = generateAssetId(event, address);
-  const loaded = await loader(id);
-
-  if (!loaded) {
-    return createAsset(event, address);
-  }
-
-  return loaded;
 }

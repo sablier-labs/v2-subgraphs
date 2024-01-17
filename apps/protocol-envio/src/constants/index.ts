@@ -1,10 +1,4 @@
 import { chains as generator } from "./chains";
-import * as macros from "./macros";
-
-export const zero = BigInt(0);
-export const one = BigInt(1);
-export const two = BigInt(2);
-export const d18 = BigInt(18);
 
 export const ADDRESS_ZERO = String(
   "0x0000000000000000000000000000000000000000",
@@ -28,7 +22,16 @@ export function configuration(chainId: number | string) {
   if (!configuration) {
     throw new Error("Missing chain configuration");
   }
-  return configuration;
+
+  return {
+    ...configuration,
+    contracts: [
+      ...configuration.V20.linear,
+      ...configuration.V20.dynamic,
+      ...configuration.V21.linear,
+      ...configuration.V21.dynamic,
+    ],
+  };
 }
 
 export function getContractsLinear(
@@ -48,6 +51,3 @@ export function getContractsDynamic(
 export function getContractRegistry(chainId: number | string): string {
   return configuration(chainId).registry;
 }
-
-export * from "./macros";
-export { macros };
