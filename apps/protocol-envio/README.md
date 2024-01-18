@@ -35,3 +35,5 @@ handlers.
 
 - The `Action` entity won't have a `from` value (the Envio event does not expose it).
 - The `Withdraw` action won't have an `addressA` because `event.transaction.from` is not provided
+- The `arbitrum-sepolia` network isn't supported
+- Experimental setups will have to be reconsidered (probably through separate indexers, with single network configs)

@@ -1,9 +1,7 @@
 import * as arbitrum from "./arbitrum";
-import * as arbitrum_sepolia from "./arbitrum-sepolia";
 import * as avalanche from "./avalanche";
 import * as base from "./base";
 import * as bsc from "./bsc";
-import * as experimental from "./experimental";
 import * as gnosis from "./gnosis";
 import * as mainnet from "./mainnet";
 import * as optimism from "./optimism";
@@ -27,10 +25,8 @@ export const chains = () => {
   const list = [
     arbitrum,
     avalanche,
-    arbitrum_sepolia,
     base,
     bsc,
-    experimental,
     gnosis,
     mainnet,
     optimism,
