@@ -1,13 +1,9 @@
+import type { Contract, Event, Watcher } from "../types";
 import {
-  ContractEntity as Contract,
-  WatcherEntity as Watcher,
-} from "../src/Types.gen";
-import type { Event } from "../utils";
-import {
+  _initialize,
   generateContractId,
   getContract,
   getContract_async,
-  initializeContracts,
 } from "./contract";
 
 export async function initialize_async(
@@ -17,63 +13,82 @@ export async function initialize_async(
 ) {
   const watcher = await getOrCreateWatcher_async(event, loaderWatcher);
 
-  try {
-    const contract = await getContract_async(
-      event,
-      event.srcAddress,
-      loaderContract,
-    );
+  if (watcher.initialized) {
+    try {
+      const contract = await getContract_async(
+        event,
+        event.srcAddress,
+        loaderContract,
+      );
 
-    return {
-      contract,
-      contracts: [],
-      watcher,
-    };
-  } catch (error) {
-    /** If the contract isn't already configured, we've just started indexing. Prepare the contracts. */
-    const contracts = initializeContracts(event);
-    console.log;
-    const contract = contracts.find(
-      (c) => c.id === generateContractId(event, event.srcAddress),
-    );
-
-    if (!contract) {
-      throw new Error("Missing contract instance at initialization");
+      return {
+        contract,
+        contracts: [],
+        watcher,
+      };
+    } catch (_error) {
+      console.log("Initializing");
     }
-
-    return {
-      contract,
-      contracts,
-      watcher,
-    };
   }
+
+  /** If the contract isn't already configured, we've just started indexing. Prepare the contracts. */
+  const contracts = _initialize(event);
+  const contract = contracts.find(
+    (c) => c.id === generateContractId(event, event.srcAddress),
+  );
+
+  if (!contract) {
+    throw new Error("Missing contract instance at initialization");
+  }
+
+  return {
+    contract,
+    contracts,
+    watcher: {
+      ...watcher,
+      initialized: true,
+    },
+  };
 }
 
-export async function initialize(
+export function initialize(
   event: Event,
   loaderWatcher: (id: string) => Watcher | undefined,
   loaderContract: (id: string) => Contract | undefined,
 ) {
   const watcher = getOrCreateWatcher(event, loaderWatcher);
-  const contract = getContract(event, event.srcAddress, loaderContract);
+
+  if (watcher.initialized) {
+    try {
+      const contract = getContract(event, event.srcAddress, loaderContract);
+
+      return {
+        contract,
+        contracts: [],
+        watcher,
+      };
+    } catch (_error) {
+      console.log("Initializing");
+    }
+  }
+
+  /** If the contract isn't already configured, we've just started indexing. Prepare the contracts. */
+  const contracts = _initialize(event);
+  const contract = contracts.find(
+    (c) => c.id === generateContractId(event, event.srcAddress),
+  );
 
   if (!contract) {
-    const contracts = initializeContracts(event);
-    const contract = contracts.find(
-      (c) => c.id === generateContractId(event, event.srcAddress),
-    );
-
-    return {
-      contract,
-      contracts,
-      watcher,
-    };
+    throw new Error("Missing contract instance at initialization");
   }
 
   return {
     contract,
-    contracts: [],
-    watcher,
+    contracts,
+    watcher: {
+      ...watcher,
+      initialized: true,
+    },
   };
 }
 
@@ -83,7 +98,7 @@ function createWatcher(event: Event): Watcher {
     chainId: BigInt(event.chainId),
     actionIndex: 1n,
     streamIndex: 1n,
-    initialized: true,
+    initialized: false,
     logs: [],
   };
 

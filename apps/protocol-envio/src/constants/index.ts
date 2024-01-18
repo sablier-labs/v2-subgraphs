@@ -4,15 +4,33 @@ export const ADDRESS_ZERO = String(
   "0x0000000000000000000000000000000000000000",
 );
 
-export const StreamVersion_V20 = "V20" as const;
-export const StreamVersion_V21 = "V21" as const;
-export type StreamCategory =
-  | typeof StreamCategory_LockupLinear
-  | typeof StreamCategory_LockupDynamic;
+export const StreamVersion = {
+  V20: "V20",
+  V21: "V21",
+} as const;
 
-export const StreamCategory_LockupLinear = "LockupLinear" as const;
-export const StreamCategory_LockupDynamic = "LockupDynamic" as const;
-export type StreamVersion = typeof StreamVersion_V20 | typeof StreamVersion_V21;
+export type StreamVersion = (typeof StreamVersion)[keyof typeof StreamVersion];
+
+export const StreamCategory = {
+  LockupLinear: "LockupLinear",
+  LockupDynamic: "LockupDynamic",
+} as const;
+
+export type StreamCategory =
+  (typeof StreamCategory)[keyof typeof StreamCategory];
+
+export const ActionCategory = {
+  Approval: "Approval",
+  ApprovalForAll: "ApprovalForAll",
+  Cancel: "Cancel",
+  Create: "Create",
+  Renounce: "Renounce",
+  Transfer: "Transfer",
+  Withdraw: "Withdraw",
+} as const;
+
+export type ActionCategory =
+  (typeof ActionCategory)[keyof typeof ActionCategory];
 
 export const chains = generator();
 

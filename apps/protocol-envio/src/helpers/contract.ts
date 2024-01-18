@@ -1,13 +1,5 @@
-import { ContractEntity as Contract } from "../../generated/src/Types.gen";
-
-import type { StreamCategory, StreamVersion } from "../constants";
-import type { Address, Event } from "../utils";
-import {
-  chains,
-  StreamCategory_LockupLinear,
-  StreamVersion_V20,
-  StreamVersion_V21,
-} from "../constants";
+import type { Address, Contract, Event } from "../types";
+import { chains, StreamCategory, StreamVersion } from "../constants";
 
 export function getContract(
   event: Event,
@@ -69,8 +61,15 @@ export function generateContractId(event: Event, address: Address) {
     .concat(event.chainId.toString());
 }
 
-export function initializeContracts(event: Event): Contract[] {
-  const versions = [StreamVersion_V20, StreamVersion_V21];
+export function generateContractIdFromEvent(event: Event) {
+  return ""
+    .concat(event.srcAddress.toLowerCase())
+    .concat("-")
+    .concat(event.chainId.toString());
+}
+
+export function _initialize(event: Event): Contract[] {
+  const versions = [StreamVersion.V20, StreamVersion.V21];
 
   return chains
     .map((chain) => {
@@ -82,7 +81,7 @@ export function initializeContracts(event: Event): Contract[] {
               linear.address,
               linear.alias,
               version,
-              StreamCategory_LockupLinear,
+              StreamCategory.LockupLinear,
             ),
           );
 
@@ -92,7 +91,7 @@ export function initializeContracts(event: Event): Contract[] {
               dynamic.address,
               dynamic.alias,
               version,
-              StreamCategory_LockupLinear,
+              StreamCategory.LockupDynamic,
             ),
           );
 

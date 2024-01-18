@@ -1,28 +1,36 @@
-import {
-  AssetEntity as Asset,
-  BatchEntity as Batch,
-  BatcherEntity as Batcher,
-  ContractEntity as Contract,
-  StreamEntity as Stream,
-  WatcherEntity as Watcher,
-  ContractLockupLinearV20Contract_CreateLockupLinearStreamEvent_eventArgs as EventLinearArgs_V20,
-} from "../../generated/src/Types.gen";
+import type {
+  Address,
+  Asset,
+  Batch,
+  Batcher,
+  Contract,
+  Event,
+  Mutable,
+  Stream,
+  Watcher,
+  EventCreateDynamicArgs_V20 as DynamicArgs_V20,
+  EventCreateLinearArgs_V20 as LinearArgs_V20,
+} from "../types";
 
-import type { Address, Event, Mutable } from "../utils";
-import { StreamCategory_LockupLinear, configuration } from "../constants";
+import { StreamCategory, configuration } from "../constants";
+import { createSegments } from "./segments";
 
 type Entity = Partial<Mutable<Stream>>;
 
 function createStream(
   event: Event,
-  batch_: Batch,
-  batcher_: Batcher,
-  contract: Contract,
   tokenId: bigint,
-  watcher_: Watcher,
+  entities: {
+    batch: Batch;
+    batcher: Batcher;
+    contract: Contract;
+    watcher: Watcher;
+  },
 ) {
-  let id = generateStreamId(event, contract.address, tokenId);
-  let alias = generateStreamAlias(event, contract.address, tokenId);
+  let { batch, batcher, contract, watcher } = entities;
+
+  const id = generateStreamId(event, contract.address, tokenId);
+  const alias = generateStreamAlias(event, contract.address, tokenId);
 
   /** --------------- */
 
@@ -32,7 +40,7 @@ function createStream(
     alias,
     contract: contract.id,
     version: contract.version,
-    subgraphId: watcher_.streamIndex,
+    subgraphId: watcher.streamIndex,
     hash: event.transactionHash,
     timestamp: BigInt(event.blockTimestamp),
     chainId: BigInt(event.chainId),
@@ -53,27 +61,27 @@ function createStream(
     renounceTime: 0n,
 
     /** --------------- */
-    batch: batch_.id,
-    position: batch_.size - 1n,
+    batch: batch.id,
+    position: batch.size,
   } satisfies Entity;
 
   /** --------------- */
 
-  const watcher: Watcher = {
-    ...watcher_,
-    streamIndex: watcher_.streamIndex + 1n,
+  watcher = {
+    ...watcher,
+    streamIndex: watcher.streamIndex + 1n,
   };
 
   /** --------------- */
 
-  const { batch, batcher } = ((): { batch: Batch; batcher: Batcher } => {
-    if (batch_.size === 0n) {
+  const post_batch = (() => {
+    if (batch.size === 0n) {
       return {
         batch: {
-          ...batch_,
-          size: batch_.size + 1n,
+          ...batch,
+          size: batch.size + 1n,
         },
-        batcher: batcher_,
+        batcher: batcher,
       };
     }
     /**
@@ -81,20 +89,23 @@ function createStream(
      * assign it a label and bump the batcher's index
      */
 
-    const label = (batcher_.batchIndex + 1n).toString();
+    const label = (batcher.batchIndex + 1n).toString();
 
     return {
       batch: {
-        ...batch_,
+        ...batch,
         label,
-        size: batch_.size + 1n,
+        size: batch.size + 1n,
       },
       batcher: {
-        ...batcher_,
-        batchIndex: batcher_.batchIndex + 1n,
+        ...batcher,
+        batchIndex: batcher.batchIndex + 1n,
       },
     };
   })();
+
+  batch = post_batch.batch;
+  batcher = post_batch.batcher;
 
   return {
     entity,
@@ -104,33 +115,127 @@ function createStream(
   };
 }
 
-export function createLinearStream(
-  event: Event<EventLinearArgs_V20>,
-  asset: Asset,
-  batch_: Batch,
-  batcher_: Batcher,
-  contract: Contract,
-  watcher_: Watcher,
+export function createDynamicStream(
+  event: Event<DynamicArgs_V20>,
+  entities: {
+    asset: Asset;
+    batch: Batch;
+    batcher: Batcher;
+    contract: Contract;
+    watcher: Watcher;
+  },
 ) {
-  const {
-    entity: partial,
-    batch,
-    batcher,
-    watcher,
-  } = createStream(
+  let { asset, batch, batcher, contract, watcher } = entities;
+
+  const { entity: partial, ...post_create } = createStream(
     event,
-    batch_,
-    batcher_,
-    contract,
     event.params.streamId,
-    watcher_,
+    {
+      batch,
+      batcher,
+      contract,
+      watcher,
+    },
   );
+
+  batch = post_create.batch;
+  batcher = post_create.batcher;
+  watcher = post_create.watcher;
 
   /** --------------- */
 
   let entity = {
     ...partial,
-    category: StreamCategory_LockupLinear,
+    category: StreamCategory.LockupDynamic,
+    funder: event.params.funder.toLowerCase(),
+    sender: event.params.sender.toLowerCase(),
+    recipient: event.params.recipient.toLowerCase(),
+    parties: [
+      event.params.sender.toLowerCase(),
+      event.params.recipient.toLowerCase(),
+    ],
+
+    cliff: false,
+    cliffAmount: 0n,
+    cliffTime: 0n,
+
+    depositAmount: BigInt(event.params.amounts[0]),
+    intactAmount: BigInt(event.params.amounts[0]),
+    protocolFeeAmount: BigInt(event.params.amounts[1]),
+    brokerFeeAmount: BigInt(event.params.amounts[2]),
+
+    startTime: BigInt(event.params.range[0]),
+    endTime: BigInt(event.params.range[1]),
+    cancelable: event.params.cancelable,
+    duration: BigInt(event.params.range[1] - event.params.range[1]),
+  } satisfies Entity;
+
+  /** --------------- */
+  /** Asset: managed by the event handler (upstream) */
+  const partAsset = { asset: asset.id } satisfies Entity;
+
+  /** --------------- */
+  /** Batch: managed by the base creator method (downstream) */
+
+  /** --------------- */
+  /** Segments: created, have to be saved */
+  const segments = createSegments(event, entity);
+
+  /** --------------- */
+  const partProxy = {
+    proxender: "", // TODO
+    proxied: false,
+  } satisfies Entity;
+
+  /** --------------- */
+
+  const stream: Stream = {
+    ...entity,
+    ...partAsset,
+    ...partProxy,
+  };
+
+  return {
+    batch,
+    batcher,
+    stream,
+    segments,
+    watcher,
+  };
+}
+
+export function createLinearStream(
+  event: Event<LinearArgs_V20>,
+  entities: {
+    asset: Asset;
+    batch: Batch;
+    batcher: Batcher;
+    contract: Contract;
+    watcher: Watcher;
+  },
+) {
+  let { asset, batch, batcher, contract, watcher } = entities;
+
+  const { entity: partial, ...post_create } = createStream(
+    event,
+    event.params.streamId,
+    {
+      batch,
+      batcher,
+      contract,
+      watcher,
+    },
+  );
+
+  batch = post_create.batch;
+  batcher = post_create.batcher;
+  watcher = post_create.watcher;
+
+  /** --------------- */
+
+  let entity = {
+    ...partial,
+    category: StreamCategory.LockupLinear,
     funder: event.params.funder.toLowerCase(),
     sender: event.params.sender.toLowerCase(),
     recipient: event.params.recipient.toLowerCase(),
@@ -151,7 +256,6 @@ export function createLinearStream(
   } satisfies Entity;
 
   /** --------------- */
-
   const partCliff = (() => {
     const deposit = BigInt(entity.depositAmount);
     const cliff = BigInt(BigInt(event.params.range[1]) - entity.startTime);
@@ -173,7 +277,6 @@ export function createLinearStream(
 
   /** --------------- */
   /** Asset: managed by the event handler (upstream) */
-
   const partAsset = { asset: asset.id } satisfies Entity;
 
   /** --------------- */
@@ -184,8 +287,6 @@ export function createLinearStream(
     proxender: "", // TODO
     proxied: false,
   } satisfies Entity;
-
-  /** --------------- */
 
   const stream: Stream = {
     ...entity,
@@ -202,6 +303,36 @@ export function createLinearStream(
   };
 }
 
+export async function getStream_async(
+  event: Event,
+  tokenId: bigint | string,
+  loader: (id: string) => Stream | undefined,
+) {
+  const id = generateStreamId(event, event.srcAddress, tokenId);
+  const stream = await loader(id);
+
+  if (stream === undefined) {
+    throw new Error("Missing stream instance");
+  }
+
+  return stream;
+}
+
+export function getStream(
+  event: Event,
+  tokenId: bigint | string,
+  loader: (id: string) => Stream | undefined,
+) {
+  const id = generateStreamId(event, event.srcAddress, tokenId);
+  const stream = loader(id);
+
+  if (stream === undefined) {
+    throw new Error("Missing stream instance");
+  }
+
+  return stream;
+}
+
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
@@ -209,7 +340,7 @@ export function createLinearStream(
 export function generateStreamId(
   event: Event,
   address: Address,
-  tokenId: bigint,
+  tokenId: bigint | string,
 ) {
   let id = ""
     .concat(address.toLowerCase())

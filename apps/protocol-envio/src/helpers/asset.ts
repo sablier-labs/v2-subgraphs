@@ -1,6 +1,4 @@
-import { AssetEntity as Asset } from "../../generated/src/Types.gen";
-
-import type { Address, Event } from "../utils";
+import type { Address, Event, Asset } from "../types";
 
 export function getAsset(
   event: Event,
@@ -9,6 +7,21 @@ export function getAsset(
 ) {
   const id = generateAssetId(event, address);
   const loaded = loader(id);
+
+  if (!loaded) {
+    throw new Error("Missing asset instance");
+  }
+
+  return loaded;
+}
+
+export async function getAsset_async(
+  event: Event,
+  address: Address,
+  loader: (id: string) => Promise<Asset | undefined>,
+) {
+  const id = generateAssetId(event, address);
+  const loaded = await loader(id);
 
   if (!loaded) {
     throw new Error("Missing asset instance");

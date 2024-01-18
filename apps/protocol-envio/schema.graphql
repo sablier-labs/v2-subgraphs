@@ -43,7 +43,8 @@ type Contract {
 }
 
 type Action {
-  "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx)"
+  #### 🚨 🚨 🚨 🚨 #### BREAKING CHANGE #### 🚨 🚨 🚨 🚨 ####
+  "unique identifier resolving to transaction hash concatenated with the chain id and the log index (there may be multiple actions per tx)"
   id: ID!
 
   "address of an actor, differs based on action type e.g. for Create it resolves to the sender"

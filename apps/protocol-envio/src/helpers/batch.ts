@@ -1,9 +1,4 @@
-import {
-  BatchEntity as Batch,
-  BatcherEntity as Batcher,
-} from "../../generated/src/Types.gen";
-
-import type { Address, Event } from "../utils";
+import type { Address, Batch, Batcher, Event } from "../types";
 
 export function getOrCreateBatch(
   event: Event,
