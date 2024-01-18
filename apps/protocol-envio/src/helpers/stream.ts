@@ -8,8 +8,8 @@ import type {
   Mutable,
   Stream,
   Watcher,
-  EventCreateDynamicArgs_V20 as DynamicArgs_V20,
-  EventCreateLinearArgs_V20 as LinearArgs_V20,
+  CreateDynamicArgs,
+  CreateLinearArgs,
 } from "../types";
 
 import { StreamCategory, configuration } from "../constants";
@@ -116,7 +116,7 @@ function createStream(
 }
 
 export function createDynamicStream(
-  event: Event<DynamicArgs_V20>,
+  event: Event<CreateDynamicArgs>,
   entities: {
     asset: Asset;
     batch: Batch;
@@ -188,11 +188,19 @@ export function createDynamicStream(
   } satisfies Entity;
 
   /** --------------- */
+  const partTransferable = {
+    transferable:
+      "transferable" in event.params
+        ? event.params.transferable
+        : entity.transferable,
+  };
 
+  /** --------------- */
   const stream: Stream = {
     ...entity,
     ...partAsset,
     ...partProxy,
+    ...partTransferable,
   };
 
   return {
@@ -205,7 +213,7 @@ export function createDynamicStream(
 }
 
 export function createLinearStream(
-  event: Event<LinearArgs_V20>,
+  event: Event<CreateLinearArgs>,
   entities: {
     asset: Asset;
     batch: Batch;
@@ -288,11 +296,21 @@ export function createLinearStream(
     proxied: false,
   } satisfies Entity;
 
+  /** --------------- */
+  const partTransferable = {
+    transferable:
+      "transferable" in event.params
+        ? event.params.transferable
+        : entity.transferable,
+  };
+
+  /** --------------- */
   const stream: Stream = {
     ...entity,
     ...partAsset,
     ...partCliff,
     ...partProxy,
+    ...partTransferable,
   };
 
   return {

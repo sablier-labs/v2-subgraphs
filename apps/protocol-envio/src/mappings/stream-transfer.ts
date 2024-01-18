@@ -1,9 +1,11 @@
 import {
   LockupV20Contract_Transfer_handler as HandlerLinear_V20,
   LockupV20Contract_Transfer_loader as LoaderLinear_V20,
+  LockupV21Contract_Transfer_handler as HandlerLinear_V21,
+  LockupV21Contract_Transfer_loader as LoaderLinear_V21,
 } from "../src/Handlers.gen";
 
-import type { Action, TransferHandler_V20, TransferLoader_V20 } from "../types";
+import type { Action, TransferHandler, TransferLoader } from "../types";
 
 import {
   createAction,
@@ -13,7 +15,7 @@ import {
 } from "../helpers";
 import { ADDRESS_ZERO, ActionCategory } from "../constants";
 
-function loader(input: TransferLoader_V20) {
+function loader(input: TransferLoader) {
   const { context, event } = input;
 
   const streamId = generateStreamId(
@@ -27,7 +29,7 @@ function loader(input: TransferLoader_V20) {
   context.Watcher.load(watcherId);
 }
 
-async function handler(input: TransferHandler_V20) {
+async function handler(input: TransferHandler) {
   const { context, event } = input;
 
   /**
@@ -80,3 +82,6 @@ async function handler(input: TransferHandler_V20) {
 
 LoaderLinear_V20(loader);
 HandlerLinear_V20(handler);
+
+LoaderLinear_V21(loader);
+HandlerLinear_V21(handler);

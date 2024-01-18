@@ -1,11 +1,11 @@
 import {
-  LockupV20Contract_CancelLockupStream_handler as HandlerLinear_V20,
-  LockupV20Contract_CancelLockupStream_loader as LoaderLinear_V20,
-  LockupV21Contract_CancelLockupStream_handler as HandlerLinear_V21,
-  LockupV21Contract_CancelLockupStream_loader as LoaderLinear_V21,
+  LockupV20Contract_WithdrawFromLockupStream_handler as HandlerLinear_V20,
+  LockupV20Contract_WithdrawFromLockupStream_loader as LoaderLinear_V20,
+  LockupV21Contract_WithdrawFromLockupStream_handler as HandlerLinear_V21,
+  LockupV21Contract_WithdrawFromLockupStream_loader as LoaderLinear_V21,
 } from "../src/Handlers.gen";
 
-import type { Action, CancelHandler, CancelLoader } from "../types";
+import type { Action, WithdrawHandler, WithdrawLoader } from "../types";
 
 import {
   createAction,
@@ -15,7 +15,7 @@ import {
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: CancelLoader) {
+function loader(input: WithdrawLoader) {
   const { context, event } = input;
 
   const streamId = generateStreamId(
@@ -29,7 +29,7 @@ function loader(input: CancelLoader) {
   context.Watcher.load(watcherId);
 }
 
-async function handler(input: CancelHandler) {
+async function handler(input: WithdrawHandler) {
   const { context, event } = input;
 
   /** ------- Fetch -------- */
@@ -41,25 +41,38 @@ async function handler(input: CancelHandler) {
 
   const action: Action = {
     ...post_action.entity,
-    category: ActionCategory.Cancel,
+    category: ActionCategory.Withdraw,
     stream: stream.id,
+
     /** --------------- */
-    addressA: event.params.sender.toLowerCase(),
-    addressB: event.params.recipient.toLowerCase(),
-    amountA: event.params.senderAmount,
-    amountB: event.params.recipientAmount,
+    addressA: null, // TODO missing event.transaction.from
+    addressB: event.params.to.toLowerCase(),
+    amountB: event.params.amount,
   };
 
   watcher = post_action.watcher;
 
+  /** --------------- */
+
+  const amount = event.params.amount;
+  const withdrawn = stream.withdrawnAmount + amount;
+
   stream = {
     ...stream,
-    cancelable: false,
-    canceled: true,
-    canceledAction: action.id,
-    canceledTime: BigInt(event.blockTimestamp),
-    intactAmount: event.params.recipientAmount, // The only amount remaining in the stream is the non-withdrawn recipient amount
+    withdrawnAmount: withdrawn,
   };
+
+  if (stream.canceledAction) {
+    stream = {
+      ...stream,
+      intactAmount: stream.intactAmount - amount, // The intact amount (recipient) has been set in the cancel action, now subtract
+    };
+  } else {
+    stream = {
+      ...stream,
+      intactAmount: stream.depositAmount - withdrawn,
+    };
+  }
 
   await context.Action.set(action);
   await context.Stream.set(stream);

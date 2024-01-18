@@ -1,8 +1,8 @@
 import type {
   Event,
+  CreateDynamicArgs,
   Segment,
   Stream,
-  EventCreateDynamicArgs_V20 as DynamicArgs_V20,
   Mutable,
 } from "../types";
 
@@ -43,7 +43,7 @@ function createSegment(
 }
 
 export function createSegments(
-  event: Event<DynamicArgs_V20>,
+  event: Event<CreateDynamicArgs>,
   stream: Pick<Stream, "id" | "startTime">,
 ) {
   let streamed = 0n;

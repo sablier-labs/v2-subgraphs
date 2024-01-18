@@ -34,3 +34,4 @@ handlers.
 ## Differences
 
 - The `Action` entity won't have a `from` value (the Envio event does not expose it).
+- The `Withdraw` action won't have an `addressA` because `event.transaction.from` is not provided

@@ -1,15 +1,19 @@
 import {
   LockupV20Contract_CreateLockupLinearStream_handlerAsync as HandlerLinearAsync_V20,
   LockupV20Contract_CreateLockupLinearStream_loader as LoaderLinear_V20,
+  LockupV21Contract_CreateLockupLinearStream_handlerAsync as HandlerLinearAsync_V21,
+  LockupV21Contract_CreateLockupLinearStream_loader as LoaderLinear_V21,
   LockupV20Contract_CreateLockupDynamicStream_handlerAsync as HandlerDynamicAsync_V20,
   LockupV20Contract_CreateLockupDynamicStream_loader as LoaderDynamic_V20,
+  LockupV21Contract_CreateLockupDynamicStream_handlerAsync as HandlerDynamicAsync_V21,
+  LockupV21Contract_CreateLockupDynamicStream_loader as LoaderDynamic_V21,
 } from "../src/Handlers.gen";
 
 import type {
-  CreateDynamicLoader_V20,
-  CreateDynamicHandler_V20,
-  CreateLinearLoader_V20,
-  CreateLinearHandler_V20,
+  CreateDynamicLoader,
+  CreateDynamicHandler,
+  CreateLinearLoader,
+  CreateLinearHandler,
   Action,
 } from "../types";
 
@@ -28,7 +32,7 @@ import {
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: CreateLinearLoader_V20 | CreateDynamicLoader_V20) {
+function loader(input: CreateLinearLoader | CreateDynamicLoader) {
   const { context, event } = input;
 
   const assetId = generateAssetId(event, event.params.asset);
@@ -44,7 +48,7 @@ function loader(input: CreateLinearLoader_V20 | CreateDynamicLoader_V20) {
   context.Watcher.load(watcherId);
 }
 
-async function handlerDynamic(input: CreateDynamicHandler_V20) {
+async function handlerDynamic(input: CreateDynamicHandler) {
   const { context, event } = input;
 
   /** ------- Initialize -------- */
@@ -122,7 +126,7 @@ async function handlerDynamic(input: CreateDynamicHandler_V20) {
   await context.Watcher.set(watcher);
 }
 
-async function handlerLinear(input: CreateLinearHandler_V20) {
+async function handlerLinear(input: CreateLinearHandler) {
   const { context, event } = input;
 
   /** ------- Initialize -------- */
@@ -197,3 +201,9 @@ HandlerDynamicAsync_V20(handlerDynamic);
 
 LoaderLinear_V20(loader);
 HandlerLinearAsync_V20(handlerLinear);
+
+LoaderDynamic_V21(loader);
+HandlerDynamicAsync_V21(handlerDynamic);
+
+LoaderLinear_V21(loader);
+HandlerLinearAsync_V21(handlerLinear);

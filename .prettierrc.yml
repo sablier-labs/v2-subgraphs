@@ -16,7 +16,10 @@ overrides:
     options:
       importOrder:
         - "^@"
-        - "^../generated"
+        - "<TS_TYPES>"
+        - "<THIRD_PARTY_MODULES>"
+        - "<THIRD_PARTY_TS_TYPES>"
+        - "^../generated|^../../src/generated"
         - "^[./]"
       importOrderSeparation: false
       importOrderSortSpecifiers: true

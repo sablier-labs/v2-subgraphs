@@ -38,7 +38,7 @@ export function createAction(event: Event, watcher_: Watcher) {
   const entity = {
     id,
     block: BigInt(event.blockNumber),
-    from: ADDRESS_ZERO, // TODO
+    from: ADDRESS_ZERO, // TODO missing event.transaction.from
     hash: event.transactionHash,
     timestamp: BigInt(event.blockTimestamp),
     subgraphId: watcher_.actionIndex,

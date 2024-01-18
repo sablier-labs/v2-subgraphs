@@ -53,6 +53,60 @@ contracts:
         requiredEntities:
           - name: Stream
           - name: Watcher
+  - name: LockupV21
+    handler: src/mappings/index.ts
+    events:
+      - event: Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)
+        requiredEntities:
+          - name: Stream
+          - name: Watcher
+      - event: ApprovalForAll(address indexed owner, address indexed operator, bool approved)
+        requiredEntities:
+          - name: Watcher
+      - event:
+          CancelLockupStream(uint256 streamId, address indexed sender, address indexed recipient, address indexed asset,
+          uint128 senderAmount, uint128 recipientAmount)
+        requiredEntities:
+          - name: Stream
+          - name: Watcher
+      - event:
+          CreateLockupLinearStream(uint256 streamId, address funder, address indexed sender, address indexed recipient,
+          (uint128,uint128,uint128) amounts, address indexed asset, bool cancelable, bool transferable,
+          (uint40,uint40,uint40) range, address broker)
+        isAsync: true
+        requiredEntities:
+          - name: Asset
+          - name: Batch
+          - name: Batcher
+          - name: Contract
+          - name: Watcher
+      - event:
+          CreateLockupDynamicStream(uint256 streamId, address funder, address indexed sender, address indexed recipient,
+          (uint128,uint128,uint128) amounts, address indexed asset, bool cancelable, bool transferable,
+          (uint128,uint64,uint40)[] segments, (uint40,uint40) range, address broker)
+        isAsync: true
+        requiredEntities:
+          - name: Asset
+          - name: Batch
+          - name: Batcher
+          - name: Contract
+          - name: Watcher
+      - event: RenounceLockupStream(uint256 indexed streamId)
+        requiredEntities:
+          - name: Stream
+          - name: Watcher
+      - event: Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+        requiredEntities:
+          - name: Stream
+          - name: Watcher
+      - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
+        requiredEntities:
+          - name: Contract
+      - event:
+          WithdrawFromLockupStream(uint256 indexed streamId, address indexed to, address indexed asset, uint128 amount)
+        requiredEntities:
+          - name: Stream
+          - name: Watcher
 networks:
   - id: 42161
     start_block: 107509950
