@@ -49,6 +49,7 @@ contracts:
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
         requiredEntities:
           - name: Contract
+          - name: Watcher
       - event: WithdrawFromLockupStream(uint256 indexed streamId, address indexed to, uint128 amount)
         requiredEntities:
           - name: Stream
@@ -102,6 +103,7 @@ contracts:
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
         requiredEntities:
           - name: Contract
+          - name: Watcher
       - event:
           WithdrawFromLockupStream(uint256 indexed streamId, address indexed to, address indexed asset, uint128 amount)
         requiredEntities:

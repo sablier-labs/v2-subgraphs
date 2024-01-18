@@ -3,7 +3,7 @@ import {
   LockupV20Contract_Transfer_loader as LoaderLinear_V20,
   LockupV21Contract_Transfer_handler as HandlerLinear_V21,
   LockupV21Contract_Transfer_loader as LoaderLinear_V21,
-} from "../src/Handlers.gen";
+} from "../../generated/src/Handlers.gen";
 
 import type { Action, TransferHandler, TransferLoader } from "../types";
 
@@ -29,7 +29,7 @@ function loader(input: TransferLoader) {
   context.Watcher.load(watcherId);
 }
 
-async function handler(input: TransferHandler) {
+function handler(input: TransferHandler) {
   const { context, event } = input;
 
   /**
@@ -75,9 +75,9 @@ async function handler(input: TransferHandler) {
     }
   }
 
-  await context.Action.set(action);
-  await context.Stream.set(stream);
-  await context.Watcher.set(watcher);
+  context.Action.set(action);
+  context.Stream.set(stream);
+  context.Watcher.set(watcher);
 }
 
 LoaderLinear_V20(loader);

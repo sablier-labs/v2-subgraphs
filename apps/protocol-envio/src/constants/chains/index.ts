@@ -1,14 +1,14 @@
 import * as arbitrum from "./arbitrum";
-// import * as arbitrum_sepolia from "./arbitrum-sepolia";
-// import * as avalanche from "./avalanche";
-// import * as base from "./base";
-// import * as bsc from "./bsc";
-// import * as experimental from "./experimental";
-// import * as gnosis from "./gnosis";
-// import * as mainnet from "./mainnet";
-// import * as optimism from "./optimism";
-// import * as polygon from "./polygon";
-// import * as scroll from "./scroll";
+import * as arbitrum_sepolia from "./arbitrum-sepolia";
+import * as avalanche from "./avalanche";
+import * as base from "./base";
+import * as bsc from "./bsc";
+import * as experimental from "./experimental";
+import * as gnosis from "./gnosis";
+import * as mainnet from "./mainnet";
+import * as optimism from "./optimism";
+import * as polygon from "./polygon";
+import * as scroll from "./scroll";
 import * as sepolia from "./sepolia";
 
 const filter = (list: string[][], version: string) => {
@@ -26,16 +26,16 @@ const filter = (list: string[][], version: string) => {
 export const chains = () => {
   const list = [
     arbitrum,
-    //   avalanche,
-    //   arbitrum_sepolia,
-    //   base,
-    //   bsc,
-    //   experimental,
-    //   gnosis,
-    //   mainnet,
-    //   optimism,
-    //   polygon,
-    //   scroll,
+    avalanche,
+    arbitrum_sepolia,
+    base,
+    bsc,
+    experimental,
+    gnosis,
+    mainnet,
+    optimism,
+    polygon,
+    scroll,
     sepolia,
   ];
 

@@ -49,6 +49,7 @@ contracts:
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
         requiredEntities:
           - name: Contract
+          - name: Watcher
       - event: WithdrawFromLockupStream(uint256 indexed streamId, address indexed to, uint128 amount)
         requiredEntities:
           - name: Stream
@@ -102,6 +103,7 @@ contracts:
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
         requiredEntities:
           - name: Contract
+          - name: Watcher
       - event:
           WithdrawFromLockupStream(uint256 indexed streamId, address indexed to, address indexed asset, uint128 amount)
         requiredEntities:
@@ -120,4 +122,12 @@ networks:
           {{#V20.dynamic}}
           - {{address}}
           {{/V20.dynamic}}
+      - name: LockupV21
+        address:
+          {{#V21.linear}}
+          - {{address}}
+          {{/V21.linear}}
+          {{#V21.dynamic}}
+          - {{address}}
+          {{/V21.dynamic}}
    {{/chains}}

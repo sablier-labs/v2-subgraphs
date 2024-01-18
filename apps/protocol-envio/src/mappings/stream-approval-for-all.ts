@@ -3,7 +3,7 @@ import {
   LockupV20Contract_ApprovalForAll_loader as LoaderLinear_V20,
   LockupV21Contract_ApprovalForAll_handler as HandlerLinear_V21,
   LockupV21Contract_ApprovalForAll_loader as LoaderLinear_V21,
-} from "../src/Handlers.gen";
+} from "../../generated/src/Handlers.gen";
 
 import type {
   Action,
@@ -20,7 +20,7 @@ function loader(input: ApprovalForAllLoader) {
   context.Watcher.load(watcherId);
 }
 
-async function handler(input: ApprovalForAllHandler) {
+function handler(input: ApprovalForAllHandler) {
   const { context, event } = input;
 
   /** ------- Fetch -------- */
@@ -42,8 +42,8 @@ async function handler(input: ApprovalForAllHandler) {
 
   watcher = post_action.watcher;
 
-  await context.Action.set(action);
-  await context.Watcher.set(watcher);
+  context.Action.set(action);
+  context.Watcher.set(watcher);
 }
 
 LoaderLinear_V20(loader);

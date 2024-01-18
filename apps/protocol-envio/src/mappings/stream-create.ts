@@ -7,7 +7,7 @@ import {
   LockupV20Contract_CreateLockupDynamicStream_loader as LoaderDynamic_V20,
   LockupV21Contract_CreateLockupDynamicStream_handlerAsync as HandlerDynamicAsync_V21,
   LockupV21Contract_CreateLockupDynamicStream_loader as LoaderDynamic_V21,
-} from "../src/Handlers.gen";
+} from "../../generated/src/Handlers.gen";
 
 import type {
   CreateDynamicLoader,

@@ -3,7 +3,7 @@ import {
   LockupV20Contract_RenounceLockupStream_loader as LoaderLinear_V20,
   LockupV21Contract_RenounceLockupStream_handler as HandlerLinear_V21,
   LockupV21Contract_RenounceLockupStream_loader as LoaderLinear_V21,
-} from "../src/Handlers.gen";
+} from "../../generated/src/Handlers.gen";
 
 import type { Action, RenounceHandler, RenounceLoader } from "../types";
 
@@ -29,7 +29,7 @@ function loader(input: RenounceLoader) {
   context.Watcher.load(watcherId);
 }
 
-async function handler(input: RenounceHandler) {
+function handler(input: RenounceHandler) {
   const { context, event } = input;
 
   /** ------- Fetch -------- */
@@ -54,9 +54,9 @@ async function handler(input: RenounceHandler) {
     renounceTime: BigInt(event.blockTimestamp),
   };
 
-  await context.Action.set(action);
-  await context.Stream.set(stream);
-  await context.Watcher.set(watcher);
+  context.Action.set(action);
+  context.Stream.set(stream);
+  context.Watcher.set(watcher);
 }
 
 LoaderLinear_V20(loader);

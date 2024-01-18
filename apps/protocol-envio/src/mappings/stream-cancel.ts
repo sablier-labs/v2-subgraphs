@@ -3,7 +3,7 @@ import {
   LockupV20Contract_CancelLockupStream_loader as LoaderLinear_V20,
   LockupV21Contract_CancelLockupStream_handler as HandlerLinear_V21,
   LockupV21Contract_CancelLockupStream_loader as LoaderLinear_V21,
-} from "../src/Handlers.gen";
+} from "../../generated/src/Handlers.gen";
 
 import type { Action, CancelHandler, CancelLoader } from "../types";
 
@@ -29,7 +29,7 @@ function loader(input: CancelLoader) {
   context.Watcher.load(watcherId);
 }
 
-async function handler(input: CancelHandler) {
+function handler(input: CancelHandler) {
   const { context, event } = input;
 
   /** ------- Fetch -------- */
@@ -61,9 +61,9 @@ async function handler(input: CancelHandler) {
     intactAmount: event.params.recipientAmount, // The only amount remaining in the stream is the non-withdrawn recipient amount
   };
 
-  await context.Action.set(action);
-  await context.Stream.set(stream);
-  await context.Watcher.set(watcher);
+  context.Action.set(action);
+  context.Stream.set(stream);
+  context.Watcher.set(watcher);
 }
 
 LoaderLinear_V20(loader);
