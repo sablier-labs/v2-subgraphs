@@ -14,6 +14,7 @@ import type {
 
 import { StreamCategory, configuration } from "../constants";
 import { createSegments } from "./segments";
+import { bindProxy } from "./proxy";
 
 type Entity = Partial<Mutable<Stream>>;
 
@@ -115,7 +116,7 @@ function createStream(
   };
 }
 
-export function createDynamicStream(
+export async function createDynamicStream(
   event: Event<CreateDynamicArgs>,
   entities: {
     asset: Asset;
@@ -182,10 +183,7 @@ export function createDynamicStream(
   const segments = createSegments(event, entity);
 
   /** --------------- */
-  const partProxy = {
-    proxender: "", // TODO
-    proxied: false,
-  } satisfies Entity;
+  const partProxy = await bindProxy(entity);
 
   /** --------------- */
   const partTransferable = {
@@ -212,7 +210,7 @@ export function createDynamicStream(
   };
 }
 
-export function createLinearStream(
+export async function createLinearStream(
   event: Event<CreateLinearArgs>,
   entities: {
     asset: Asset;
@@ -291,10 +289,7 @@ export function createLinearStream(
   /** Batch: managed by the base creator method (downstream) */
 
   /** --------------- */
-  const partProxy = {
-    proxender: "", // TODO
-    proxied: false,
-  } satisfies Entity;
+  const partProxy = await bindProxy(entity);
 
   /** --------------- */
   const partTransferable = {

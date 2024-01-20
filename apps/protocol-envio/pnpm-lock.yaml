@@ -11,9 +11,9 @@ importers:
       envio:
         specifier: 0.0.28
         version: 0.0.28
-      ethers:
-        specifier: 6.8.0
-        version: 6.8.0
+      viem:
+        specifier: 1.16.6
+        version: 1.16.6(typescript@5.2.2)
     devDependencies:
       '@trivago/prettier-plugin-sort-imports':
         specifier: 4.1.0

@@ -9,15 +9,10 @@ export const StreamVersion = {
   V21: "V21",
 } as const;
 
-export type StreamVersion = (typeof StreamVersion)[keyof typeof StreamVersion];
-
 export const StreamCategory = {
   LockupLinear: "LockupLinear",
   LockupDynamic: "LockupDynamic",
 } as const;
-
-export type StreamCategory =
-  (typeof StreamCategory)[keyof typeof StreamCategory];
 
 export const ActionCategory = {
   Approval: "Approval",
@@ -29,13 +24,15 @@ export const ActionCategory = {
   Withdraw: "Withdraw",
 } as const;
 
-export type ActionCategory =
-  (typeof ActionCategory)[keyof typeof ActionCategory];
+export const CacheCategory = {
+  Proxy: "proxy",
+  Token: "token",
+} as const;
 
 export const chains = generator();
 
-export function configuration(chainId: number | string) {
-  const configuration = chains.find((c) => String(c.id) === String(chainId));
+export function configuration(chainId: number | string | bigint) {
+  const configuration = chains.find((c) => String(c.id) === chainId.toString());
 
   if (!configuration) {
     throw new Error("Missing chain configuration");
@@ -52,20 +49,12 @@ export function configuration(chainId: number | string) {
   };
 }
 
-export function getContractsLinear(
-  chainId: number | string,
-  version: StreamVersion,
-) {
-  return configuration(chainId)[version].linear;
-}
+export type ActionCategory =
+  (typeof ActionCategory)[keyof typeof ActionCategory];
 
-export function getContractsDynamic(
-  chainId: number | string,
-  version: StreamVersion,
-) {
-  return configuration(chainId)[version].dynamic;
-}
+export type CacheCategory = (typeof CacheCategory)[keyof typeof CacheCategory];
 
-export function getContractRegistry(chainId: number | string): string {
-  return configuration(chainId).registry;
-}
+export type StreamCategory =
+  (typeof StreamCategory)[keyof typeof StreamCategory];
+
+export type StreamVersion = (typeof StreamVersion)[keyof typeof StreamVersion];
