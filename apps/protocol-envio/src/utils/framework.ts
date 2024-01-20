@@ -36,7 +36,7 @@ const clients = supported.map((chain) =>
       multicall: true,
     },
     chain,
-    transport: http(),
+    transport: http(), // TODO bind to Infura/Alchemy and use viem's fallback-transport
   }),
 );
 
