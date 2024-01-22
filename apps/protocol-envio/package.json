@@ -31,10 +31,12 @@
     "start": "ts-node generated/src/Index.bs.js",
     "template": "pnpm template-chain && pnpm template-config",
     "template-chain": "tsc $npm_package_config_dir_chains/index.ts --outDir $npm_package_config_dir_generated",
-    "template-config": "mustache $npm_package_config_dir_generated/index.js config.template.mustache > config.yaml"
+    "template-config": "mustache $npm_package_config_dir_generated/index.js config.template.mustache > config.yaml",
+    "test": "pnpm jest"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.1.0",
+    "@types/jest": "^29.5.11",
     "@types/mocha": "10.0.6",
     "@types/node": "20.8.8",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
@@ -45,6 +47,7 @@
     "mustache": "^4.2.0",
     "prettier": "^2.8.8",
     "rimraf": "^3.0.2",
+    "ts-jest": "^29.1.2",
     "ts-mocha": "^10.0.0",
     "ts-node": "10.9.1",
     "typescript": "5.2.2"
