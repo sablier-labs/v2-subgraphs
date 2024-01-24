@@ -32,7 +32,7 @@ export let initializer = linear[0][0];
  *
  *
  *
- * TO DO V2
+ * TODO V2
  *
  *
  *

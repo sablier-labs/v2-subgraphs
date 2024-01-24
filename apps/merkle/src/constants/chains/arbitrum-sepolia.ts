@@ -6,11 +6,11 @@ export let startBlock = 2972050;
 
 /**
  * Keep aliases unique and always in sync with the frontend
- * @example export let factory = [[address1, alias2], [address2, alias2]]
+ * @example export let factory = [[address1, alias1, version1], [address2, alias2, version2]]
  */
 
 export let factory: string[][] = [
-  ["0xcc87b1a4de285832f226bd585bd54a2184d32105", "MSF2"],
+  ["0xcc87b1a4de285832f226bd585bd54a2184d32105", "MSF2", "V21"],
 ];
 
 /**

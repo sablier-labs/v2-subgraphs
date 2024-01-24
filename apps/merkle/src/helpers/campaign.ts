@@ -3,6 +3,7 @@ import { Campaign } from "../generated/types/schema";
 import { CreateMerkleStreamerLL as EventCreateCampaignLL } from "../generated/types/templates/ContractMerkleStreamerFactory/SablierV2MerkleStreamerFactory";
 import {
   ABI_CREATE_MERKLE_STREAMER_LL,
+  StreamVersion_V21,
   getChainId,
   log_exit,
   one,
@@ -41,7 +42,6 @@ export function createCampaignLinear(
   entity.admin = event.params.admin;
   entity.lockup = event.params.lockupLinear; // Replace when campaigns with LDs will be possible
 
-  // TO DO entity.root
   entity.expires = !event.params.expiration.isZero();
   entity.expiration = event.params.expiration;
 
@@ -61,6 +61,8 @@ export function createCampaignLinear(
 
   entity.claimedAmount = zero;
   entity.claimedCount = zero;
+
+  entity.version = StreamVersion_V21;
 
   /** --------------- */
 

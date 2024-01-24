@@ -129,6 +129,9 @@ type Campaign @entity {
   "number of claims requested up to this point"
   claimedCount: BigInt!
 
+  "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
+  version: String!
+
   "actions triggered in the context of this campaign"
   actions: [Action!]! @derivedFrom(field: "campaign")
   "list of daily activity snapshots for days with 1+ events"
@@ -143,6 +146,11 @@ type Factory @entity {
   alias: String!
   "address of the contract"
   address: Bytes!
+  "hardcoded chain id"
+  chainId: BigInt!
+
+  "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
+  version: String!
 
   "list of campaigns"
   campaigns: [Campaign!]! @derivedFrom(field: "factory")

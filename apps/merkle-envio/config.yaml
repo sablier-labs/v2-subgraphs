@@ -1,0 +1,85 @@
+name: sablier-v2-merkle
+contracts:
+  - name: MerkleLockupFactoryV21
+    handler: src/mappings/index.ts
+    events:
+      - event:
+          CreateMerkleStreamerLL(address merkleStreamer, address indexed admin, address indexed lockupLinear, address
+          indexed asset, bytes32 merkleRoot, uint40 expiration, (uint40, uint40) streamDurations, bool cancelable, bool
+          transferable, string ipfsCID, uint256 aggregateAmount, uint256 recipientsCount)
+        isAsync: true
+        requiredEntities:
+          - name: Asset
+          - name: Factory
+          - name: Watcher
+  - name: MerkleLLV21
+    handler: src/mappings/index.ts
+    events:
+      - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
+        requiredEntities:
+          - name: Activity
+          - name: Campaign
+          - name: Watcher
+      - event: Clawback(address indexed admin, address indexed to, uint128 amount)
+        requiredEntities:
+          - name: Campaign
+          - name: Watcher
+      - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
+        requiredEntities:
+          - name: Campaign
+          - name: Watcher
+networks:
+  - id: 42161
+    start_block: 161026550
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0x237400ef5a41886a75b0e036228221df075b3b80
+  - id: 8453
+    start_block: 8026890
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0x5545c8e7c3e1f74adc98e518f2e8d23a002c4412
+  - id: 56
+    start_block: 34438430
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0x434d73465aac4125d204a6637eb6c579d8d69f48
+  - id: 100
+    start_block: 31491790
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0x777f66477ff83ababadf39a3f22a8cc3aee43765
+  - id: 1
+    start_block: 17615650
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0x9bdebf4f9adeb99387f46e4020fbf3dda885d2b8
+  - id: 10
+    start_block: 113621900
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0x044ec80fbec40f0ee7e7b3856828170971796c19
+  - id: 137
+    start_block: 51245830
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0xf4906225e783fb8977410bdbfb960cabed6c2ef4
+  - id: 534352
+    start_block: 1675330
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0xb3ade5463000e6c0d376e7d7570f372ebf98bdaf
+  - id: 11155111
+    start_block: 4904890
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0xbacc1d151a78eed71d504f701c25e8739dc0262d

@@ -1,5 +1,6 @@
 {
-  "name": "protocol",
+  "name": "@sablier/v2-subgraphs-protocol-envio",
+  "description": "Sablier V2 protocol indexer (Envio)",
   "version": "1.0.0",
   "author": {
     "name": "Sablier Labs Ltd",
@@ -30,7 +31,7 @@
     "setup": "pnpm clean && pnpm template && pnpm codegen",
     "start": "ts-node generated/src/Index.bs.js",
     "template": "pnpm template-chain && pnpm template-config",
-    "template-chain": "tsc $npm_package_config_dir_chains/index.ts --outDir $npm_package_config_dir_generated",
+    "template-chain": "tsc --skipLibCheck $npm_package_config_dir_chains/index.ts --outDir $npm_package_config_dir_generated",
     "template-config": "mustache $npm_package_config_dir_generated/index.js config.template.mustache > config.yaml",
     "test": "pnpm jest"
   },

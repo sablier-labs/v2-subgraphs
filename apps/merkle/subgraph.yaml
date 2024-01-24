@@ -1,5 +1,5 @@
 specVersion: 0.0.5
-description: Sablier V2 Subgraph
+description: sablier-v2-merkle
 repository: https://github.com/sablier-labs/v2-subgraphs
 schema:
   file: ./schema.graphql

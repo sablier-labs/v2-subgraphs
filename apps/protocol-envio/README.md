@@ -54,4 +54,6 @@ To keep entities consistent, the following changes have been applies to both sub
 - `merkle`: The `Activity` entity id swapped the campaign address for a campaign id (includes chainId)
 - `merkle`: The `Asset` entity id received a chainId suffix
 - `merkle`: The `Factory` entity id received a chainId suffix
+- `merkle`: The `Factory` entity received a chainId parameter
 - `merkle`: The `Watcher` entity id is now the chainId
+- `merkle`: The `Campaign` and `Factory` entities now contain a version parameter.
