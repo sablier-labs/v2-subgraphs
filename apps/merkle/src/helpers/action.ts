@@ -4,13 +4,6 @@ import { getChainId, log_exit, one } from "../constants";
 import { generateCampaignId, getCampaignById } from "./campaign";
 import { getOrCreateWatcher } from "./watcher";
 
-export function generateActionId(event: ethereum.Event): string {
-  return ""
-    .concat(event.transaction.hash.toHexString())
-    .concat("-")
-    .concat(event.logIndex.toString());
-}
-
 export function getActionById(id: string): Action | null {
   return Action.load(id);
 }
@@ -51,4 +44,17 @@ export function createAction(
   watcher.save();
 
   return entity;
+}
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export function generateActionId(event: ethereum.Event): string {
+  return ""
+    .concat(event.transaction.hash.toHexString())
+    .concat("-")
+    .concat(getChainId().toString())
+    .concat("-")
+    .concat(event.logIndex.toString());
 }

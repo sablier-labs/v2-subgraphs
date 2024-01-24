@@ -2,7 +2,7 @@ import { Watcher } from "../generated/types/schema";
 import { getChainId, one } from "../constants";
 
 export function getOrCreateWatcher(): Watcher {
-  let id = "1";
+  let id = getChainId().toString();
   let entity = Watcher.load(id);
 
   if (entity == null) {

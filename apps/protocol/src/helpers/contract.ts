@@ -2,9 +2,10 @@ import { Address } from "@graphprotocol/graph-ts";
 import { Contract } from "../generated/types/schema";
 import { SablierV2LockupDynamic as SablierV2LockupDynamicContract } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import { SablierV2LockupLinear as SablierV2LockupLinearContract } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
+import { getChainId } from "../constants";
 
-export function getContractById(id: string): Contract | null {
-  return Contract.load(id);
+export function getContractByAddress(address: Address): Contract | null {
+  return Contract.load(generateContractId(address));
 }
 
 export function createContract(
@@ -13,8 +14,9 @@ export function createContract(
   version: string,
   category: string,
 ): Contract {
-  let id = address.toHexString();
-  let entity = getContractById(id);
+  let id = generateContractId(address);
+  let entity = getContractByAddress(address);
+
   if (entity == null) {
     entity = new Contract(id);
   }
@@ -45,4 +47,15 @@ export function createContract(
 
   entity.save();
   return entity;
+}
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export function generateContractId(address: Address) {
+  return ""
+    .concat(address.toHexString())
+    .concat("-")
+    .concat(getChainId().toString());
 }

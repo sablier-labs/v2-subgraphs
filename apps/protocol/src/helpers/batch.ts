@@ -1,9 +1,9 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { Batch, Batcher } from "../generated/types/schema";
-import { one, zero } from "../constants";
+import { getChainId, one, zero } from "../constants";
 
 export function getOrCreateBatcher(sender: Address): Batcher {
-  let id = sender.toHexString();
+  let id = generateBatcherId(sender);
   let entity = Batcher.load(id);
 
   if (entity == null) {
@@ -19,7 +19,7 @@ export function getOrCreateBatch(
   event: ethereum.Event,
   sender: Address,
 ): Batch {
-  let id = event.transaction.hash.toHexString();
+  let id = generateBatchId(event);
   let entity = Batch.load(id);
   let batcher = getOrCreateBatcher(sender);
 
@@ -42,4 +42,22 @@ export function getOrCreateBatch(
   entity.save();
 
   return entity;
+}
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export function generateBatchId(event: ethereum.Event): string {
+  return ""
+    .concat(event.transaction.hash.toHexString())
+    .concat("-")
+    .concat(getChainId().toString());
+}
+
+export function generateBatcherId(sender: Address): string {
+  return ""
+    .concat(sender.toHexString())
+    .concat("-")
+    .concat(getChainId().toString());
 }

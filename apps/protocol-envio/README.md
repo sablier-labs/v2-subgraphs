@@ -37,3 +37,21 @@ handlers.
 - The `Withdraw` action won't have an `addressA` because `event.transaction.from` is not provided
 - The `arbitrum-sepolia` network isn't supported
 - Experimental setups will have to be reconsidered (probably through separate indexers, with single network configs)
+
+---
+
+## CHANGELOG 2024
+
+To keep entities consistent, the following changes have been applies to both subgraphs and indexers:
+
+- `protocol`: The `Action` entity id received a chainId middle part
+- `protocol`: The `Asset` entity id received a chainId suffix
+- `protocol`: The `Batch` entity id received a chainId suffix
+- `protocol`: The `Batcher` entity id received a chainId suffix
+- `protocol`: The `Contract` entity id received a chainId suffix
+- `protocol`: The `Watcher` entity id is now the chainId
+- `merkle`: The `Action` entity id received a chainId middle part
+- `merkle`: The `Activity` entity id swapped the campaign address for a campaign id (includes chainId)
+- `merkle`: The `Asset` entity id received a chainId suffix
+- `merkle`: The `Factory` entity id received a chainId suffix
+- `merkle`: The `Watcher` entity id is now the chainId

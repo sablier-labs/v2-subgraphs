@@ -1,7 +1,7 @@
 import { createAction, generateActionId } from "./action";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch, getOrCreateBatcher } from "./batch";
-import { createContract, getContractById } from "./contract";
+import { createContract, getContractByAddress } from "./contract";
 import {
   generateStreamAlias,
   generateStreamId,
@@ -15,7 +15,7 @@ export {
   getOrCreateBatcher,
   createAction,
   generateActionId,
-  getContractById,
+  getContractByAddress,
   createContract,
   getOrCreateWatcher,
   generateStreamId,

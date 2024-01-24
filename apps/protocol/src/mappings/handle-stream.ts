@@ -14,7 +14,7 @@ import { CreateLockupLinearStream as EventCreateLinear } from "../generated/type
 import { ADDRESS_ZERO, one, zero } from "../constants";
 import {
   createAction,
-  getContractById,
+  getContractByAddress,
   getStreamByIdFromSource,
 } from "../helpers";
 import { createDynamicStream, createLinearStream } from "../helpers/stream";
@@ -242,7 +242,7 @@ export function handleApprovalForAll(event: EventApprovalForAll): void {
  * as it's the first one to be logged after the contract's creation
  */
 export function handleTransferAdmin(event: EventTransferAdmin): void {
-  let contract = getContractById(dataSource.address().toHexString());
+  let contract = getContractByAddress(dataSource.address());
   if (contract == null) {
     log.info(
       "[SABLIER] Contract hasn't been registered before this transfer admin event: {}",

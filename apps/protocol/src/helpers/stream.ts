@@ -5,14 +5,14 @@ import { CreateLockupLinearStream as EventCreateLinear } from "../generated/type
 import { getChainId, one, zero } from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch } from "./batch";
-import { getContractById } from "./contract";
+import { getContractByAddress } from "./contract";
 import { bindProxyOwner } from "./proxy";
 import { createSegments } from "./segments";
 import { getOrCreateWatcher } from "./watcher";
 
 function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   let watcher = getOrCreateWatcher();
-  let contract = getContractById(dataSource.address().toHexString());
+  let contract = getContractByAddress(dataSource.address());
   if (contract == null) {
     log.info(
       "[SABLIER] Contract hasn't been registered before this create event: {}",
@@ -169,7 +169,7 @@ export function createDynamicStream(event: EventCreateDynamic): Stream | null {
 /** --------------------------------------------------------------------------------------------------------- */
 
 export function generateStreamId(tokenId: BigInt): string {
-  let contract = getContractById(dataSource.address().toHexString());
+  let contract = getContractByAddress(dataSource.address());
   if (contract == null) {
     log.info(
       "[SABLIER] Contract hasn't been registered before this event: {}",
@@ -190,7 +190,7 @@ export function generateStreamId(tokenId: BigInt): string {
 }
 
 export function generateStreamAlias(tokenId: BigInt): string {
-  let contract = getContractById(dataSource.address().toHexString());
+  let contract = getContractByAddress(dataSource.address());
   if (contract == null) {
     log.info(
       "[SABLIER] Contract hasn't been registered before this event: {}",

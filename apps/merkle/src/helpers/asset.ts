@@ -5,7 +5,7 @@ import { ERC20Bytes as ERC20BytesContract } from "../generated/types/templates/C
 import { getChainId } from "../constants";
 
 export function getOrCreateAsset(address: Address): Asset {
-  let id = address.toHexString();
+  let id = generateAssetId(address);
   let entity = Asset.load(id);
 
   if (entity == null) {
@@ -62,4 +62,15 @@ function getAssetName(address: Address): string {
   } else {
     return name.value;
   }
+}
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export function generateAssetId(address: Address) {
+  return ""
+    .concat(address.toHexString())
+    .concat("-")
+    .concat(getChainId().toString());
 }

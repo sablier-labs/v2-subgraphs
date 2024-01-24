@@ -1,5 +1,4 @@
 type Asset {
-  #### 🚨 🚨 🚨 🚨 #### BREAKING CHANGE #### 🚨 🚨 🚨 🚨 ####
   "unique identifier resolving to the ERC20 asset/token address, concatenated with the chainId"
   id: ID!
 
@@ -19,7 +18,6 @@ type Asset {
 }
 
 type Contract {
-  #### 🚨 🚨 🚨 🚨 #### BREAKING CHANGE #### 🚨 🚨 🚨 🚨 ####
   "unique identifier resolving to contract address, concatenated with the chainId"
   id: ID!
 
@@ -43,7 +41,6 @@ type Contract {
 }
 
 type Action {
-  #### 🚨 🚨 🚨 🚨 #### BREAKING CHANGE #### 🚨 🚨 🚨 🚨 ####
   "unique identifier resolving to transaction hash concatenated with the chain id and the log index (there may be multiple actions per tx)"
   id: ID!
 
@@ -189,7 +186,6 @@ type Segment {
 }
 
 type Batch @entity {
-  #### 🚨 🚨 🚨 🚨 #### BREAKING CHANGE #### 🚨 🚨 🚨 🚨 ####
   "unique identifier of the batch, resolving to the hash of the parent transaction, concatenated to the chainId"
   id: String!
   "number of streams that are part of this batch"
@@ -207,7 +203,6 @@ type Batch @entity {
 }
 
 type Batcher @entity {
-  #### 🚨 🚨 🚨 🚨 #### BREAKING CHANGE #### 🚨 🚨 🚨 🚨 ####
   "unique identifier of the batcher (sender), resolving to their address concatenated to the chainId"
   id: String!
   "address of the sender"
@@ -219,7 +214,7 @@ type Batcher @entity {
 }
 
 type Watcher {
-  "unique identifier for the watcher - there is only one watcher for the entire subgraph"
+  "unique identifier for the watcher, resolving to the chainId - there is one watcher for each chain"
   id: ID!
   "hardcoded chainId"
   chainId: BigInt!

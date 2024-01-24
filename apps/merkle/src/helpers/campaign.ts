@@ -9,7 +9,7 @@ import {
   zero,
 } from "../constants";
 import { getOrCreateAsset } from "./asset";
-import { getFactoryById } from "./factory";
+import { getFactoryByAddress } from "./factory";
 import { getOrCreateWatcher } from "./watcher";
 
 export function getCampaignById(id: string): Campaign | null {
@@ -70,7 +70,7 @@ export function createCampaignLinear(
   }
 
   /** --------------- */
-  let factory = getFactoryById(event.address.toHexString());
+  let factory = getFactoryByAddress(event.address);
   if (factory == null) {
     log_exit("Factory not yet registered at this address");
     return null;

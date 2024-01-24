@@ -1,13 +1,15 @@
 import { Address } from "@graphprotocol/graph-ts";
 import { Factory } from "../generated/types/schema";
+import { getChainId } from "../constants";
 
-export function getFactoryById(id: string): Factory | null {
+export function getFactoryByAddress(address: Address): Factory | null {
+  const id = generateFactoryId(address);
   return Factory.load(id);
 }
 
 export function createFactory(address: Address, alias: string): Factory {
-  let id = address.toHexString();
-  let entity = getFactoryById(id);
+  let id = generateFactoryId(address);
+  let entity = getFactoryByAddress(address);
   if (entity == null) {
     entity = new Factory(id);
   }
@@ -17,4 +19,15 @@ export function createFactory(address: Address, alias: string): Factory {
 
   entity.save();
   return entity;
+}
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export function generateFactoryId(address: Address) {
+  return ""
+    .concat(address.toHexString())
+    .concat("-")
+    .concat(getChainId().toString());
 }

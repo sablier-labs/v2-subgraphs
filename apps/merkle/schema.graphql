@@ -11,7 +11,7 @@ enum CampaignCategory {
 }
 
 type Action @entity {
-  "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx)"
+  "unique identifier resolving to transaction hash concatenated  with the chain id and the log index (there may be multiple actions per tx)"
   id: String!
 
   "transaction details: block number"
@@ -52,7 +52,7 @@ type Action @entity {
 }
 
 type Asset @entity(immutable: true) {
-  "unique identifier resolving to the ERC20 asset/token address"
+  "unique identifier resolving to the ERC20 asset/token address, concatenated with the chainId"
   id: String!
 
   "address of the ERC20 asset/token"
@@ -136,7 +136,7 @@ type Campaign @entity {
 }
 
 type Factory @entity {
-  "unique identifier resolving to contract address"
+  "unique identifier resolving to contract address, concatenated to the chainId"
   id: String!
 
   "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
@@ -149,7 +149,7 @@ type Factory @entity {
 }
 
 type Activity @entity {
-  "unique identifier resolving to the string 'activity' concatenated with the campaign address and the day of the snapshot"
+  "unique identifier resolving to the string 'activity' concatenated with the campaign id and the day of the snapshot"
   id: String!
   "campaign the activity (day) is linked to"
   campaign: Campaign!
@@ -166,7 +166,7 @@ type Activity @entity {
 }
 
 type Watcher @entity {
-  "unique identifier for the watcher - there is only one watcher for the entire subgraph"
+  "unique identifier for the watcher, resolving to the chainId - there is only one watcher for the entire subgraph"
   id: String!
   "hardcoded chain id"
   chainId: BigInt!

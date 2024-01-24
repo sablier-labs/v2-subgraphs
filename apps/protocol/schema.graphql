@@ -19,7 +19,7 @@ enum ActionCategory {
 }
 
 type Asset @entity(immutable: true) {
-  "unique identifier resolving to the ERC20 asset/token address"
+  "unique identifier resolving to the ERC20 asset/token address, concatenated with the chainId"
   id: ID!
 
   "address of the ERC20 asset/token"
@@ -38,7 +38,7 @@ type Asset @entity(immutable: true) {
 }
 
 type Contract @entity {
-  "unique identifier resolving to contract address"
+  "unique identifier resolving to contract address, concatenated with the chainId"
   id: String!
 
   "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
@@ -58,7 +58,7 @@ type Contract @entity {
 }
 
 type Action @entity {
-  "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx)"
+  "unique identifier resolving to transaction hash concatenated with the chain id and the log index (there may be multiple actions per tx)"
   id: ID!
 
   "transaction details: block number"
@@ -209,7 +209,7 @@ type Segment @entity {
 }
 
 type Batch @entity {
-  "unique identifier of the batch, resolving to the hash of the parent transaction"
+  "unique identifier of the batch, resolving to the hash of the parent transaction, concatenated to the chainId"
   id: String!
   "number of streams that are part of this batch"
   size: BigInt!
@@ -226,7 +226,7 @@ type Batch @entity {
 }
 
 type Batcher @entity {
-  "unique identifier of the sender, resolving to their address"
+  "unique identifier of the batcher (sender), resolving to their address concatenated to the chainId"
   id: String!
   "address of the sender"
   address: Bytes!
@@ -237,7 +237,7 @@ type Batcher @entity {
 }
 
 type Watcher @entity {
-  "unique identifier for the watcher - there is only one watcher for the entire subgraph"
+  "unique identifier for the watcher, resolving to the chainId - there is one watcher for entire subgraph"
   id: String!
   "hardcoded chain id"
   chainId: BigInt!

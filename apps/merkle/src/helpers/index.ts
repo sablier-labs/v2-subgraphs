@@ -6,7 +6,7 @@ import {
   generateCampaignId,
   getCampaignById,
 } from "./campaign";
-import { createFactory, getFactoryById } from "./factory";
+import { createFactory, getFactoryByAddress } from "./factory";
 import { generateStreamId } from "./stream";
 import { getOrCreateWatcher } from "./watcher";
 
@@ -20,6 +20,6 @@ export {
   getOrCreateActivity,
   getCampaignById,
   getOrCreateAsset,
-  getFactoryById,
+  getFactoryByAddress,
   getOrCreateWatcher,
 };
