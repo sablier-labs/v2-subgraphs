@@ -53,7 +53,7 @@ export function createContract(
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 
-export function generateContractId(address: Address) {
+export function generateContractId(address: Address): string {
   return ""
     .concat(address.toHexString())
     .concat("-")
