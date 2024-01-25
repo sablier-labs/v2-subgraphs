@@ -42,7 +42,7 @@ function createStream(
     contract: contract.id,
     version: contract.version,
     subgraphId: watcher.streamIndex,
-    hash: event.transactionHash,
+    hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
     chainId: BigInt(event.chainId),
 

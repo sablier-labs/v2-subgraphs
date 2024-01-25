@@ -63,7 +63,7 @@ export async function getOrCreateBatcher_async(
 export function createBatcher(event: Event, sender: Address) {
   const entity: Batcher = {
     id: generateBatcherId(event, sender),
-    address: sender,
+    address: sender.toLowerCase(),
     batchIndex: 0n,
   };
 
@@ -74,7 +74,7 @@ export function createBatch(event: Event, batcher: Batcher) {
   const entity: Batch = {
     id: generateBatchId(event),
     batcher: batcher.id,
-    hash: event.transactionHash,
+    hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
     label: null,
     size: 0n,
@@ -89,7 +89,7 @@ export function createBatch(event: Event, batcher: Batcher) {
 
 export function generateBatchId(event: Event): string {
   return ""
-    .concat(event.transactionHash)
+    .concat(event.transactionHash.toLowerCase())
     .concat("-")
     .concat(event.chainId.toString());
 }

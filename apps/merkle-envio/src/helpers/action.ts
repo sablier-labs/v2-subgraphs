@@ -38,7 +38,7 @@ export function createAction(event: Event, watcher_: Watcher) {
     id,
     block: BigInt(event.blockNumber),
     from: ADDRESS_ZERO, // TODO missing event.transaction.from
-    hash: event.transactionHash,
+    hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
     subgraphId: watcher_.actionIndex,
     chainId: BigInt(event.chainId),

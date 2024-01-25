@@ -29,9 +29,9 @@ function createCampaign(
 
   const entity = {
     id,
-    address,
+    address: address.toLowerCase(),
     subgraphId: watcher.campaignIndex,
-    hash: event.transactionHash,
+    hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
     chainId: BigInt(event.chainId),
 
@@ -87,8 +87,8 @@ export async function createLinearCampaign(
     expires: event.params.expiration !== 0n,
     expiration: event.params.expiration,
     /** --------------- */
-    admin: event.params.admin,
-    lockup: event.params.lockupLinear,
+    admin: event.params.admin.toLowerCase(),
+    lockup: event.params.lockupLinear.toLowerCase(),
     /** --------------- */
     ipfsCID: event.params.ipfsCID,
     aggregateAmount: event.params.aggregateAmount,

@@ -48,7 +48,7 @@ function handler(input: ClaimHandler) {
     /** --------------- */
     claimIndex: event.params.index,
     claimAmount: event.params.amount,
-    claimRecipient: event.params.recipient,
+    claimRecipient: event.params.recipient.toLowerCase(),
     claimTokenId: event.params.streamId,
     claimStreamId: generateStreamId(
       event,
