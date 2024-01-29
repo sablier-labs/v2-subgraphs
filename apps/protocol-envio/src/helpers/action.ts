@@ -41,7 +41,7 @@ export function createAction(event: Event, watcher_: Watcher) {
     from: ADDRESS_ZERO, // TODO missing event.transaction.from
     hash: event.transactionHash,
     timestamp: BigInt(event.blockTimestamp),
-    subgraphId: watcher_.actionIndex,
+    subgraphId: BigInt(watcher_.actionIndex),
     chainId: BigInt(event.chainId),
     contract: generateContractIdFromEvent(event),
     /** --------------- */
@@ -53,7 +53,7 @@ export function createAction(event: Event, watcher_: Watcher) {
 
   const watcher: Watcher = {
     ...watcher_,
-    actionIndex: watcher_.actionIndex + 1n,
+    actionIndex: BigInt(watcher_.actionIndex) + 1n,
   };
 
   return {

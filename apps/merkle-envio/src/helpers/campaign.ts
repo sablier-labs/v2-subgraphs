@@ -30,7 +30,7 @@ function createCampaign(
   const entity = {
     id,
     address: address.toLowerCase(),
-    subgraphId: watcher.campaignIndex,
+    subgraphId: BigInt(watcher.campaignIndex),
     hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
     chainId: BigInt(event.chainId),
@@ -50,7 +50,7 @@ function createCampaign(
 
   watcher = {
     ...watcher,
-    campaignIndex: watcher.campaignIndex + 1n,
+    campaignIndex: BigInt(watcher.campaignIndex) + 1n,
   };
 
   return {
@@ -84,20 +84,20 @@ export async function createLinearCampaign(
 
   let entity = {
     ...partial,
-    expires: event.params.expiration !== 0n,
-    expiration: event.params.expiration,
+    expires: BigInt(event.params.expiration) !== 0n,
+    expiration: BigInt(event.params.expiration),
     /** --------------- */
     admin: event.params.admin.toLowerCase(),
     lockup: event.params.lockupLinear.toLowerCase(),
     /** --------------- */
     ipfsCID: event.params.ipfsCID,
-    aggregateAmount: event.params.aggregateAmount,
-    totalRecipients: event.params.recipientsCount,
+    aggregateAmount: BigInt(event.params.aggregateAmount),
+    totalRecipients: BigInt(event.params.recipientsCount),
     /** --------------- */
     category: StreamCategory.LockupLinear,
-    streamCliff: event.params.streamDurations[0] !== 0n,
-    streamCliffDuration: event.params.streamDurations[0],
-    streamTotalDuration: event.params.streamDurations[1],
+    streamCliff: BigInt(event.params.streamDurations[0]) !== 0n,
+    streamCliffDuration: BigInt(event.params.streamDurations[0]),
+    streamTotalDuration: BigInt(event.params.streamDurations[1]),
     streamCancelable: event.params.cancelable,
     streamTransferable: event.params.transferable,
 

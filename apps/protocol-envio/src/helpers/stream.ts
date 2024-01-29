@@ -41,7 +41,7 @@ function createStream(
     alias,
     contract: contract.id,
     version: contract.version,
-    subgraphId: watcher.streamIndex,
+    subgraphId: BigInt(watcher.streamIndex),
     hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
     chainId: BigInt(event.chainId),
@@ -63,14 +63,14 @@ function createStream(
 
     /** --------------- */
     batch: batch.id,
-    position: batch.size,
+    position: BigInt(batch.size),
   } satisfies Entity;
 
   /** --------------- */
 
   watcher = {
     ...watcher,
-    streamIndex: watcher.streamIndex + 1n,
+    streamIndex: BigInt(watcher.streamIndex) + 1n,
   };
 
   /** --------------- */
@@ -80,7 +80,7 @@ function createStream(
       return {
         batch: {
           ...batch,
-          size: batch.size + 1n,
+          size: BigInt(batch.size) + 1n,
         },
         batcher: batcher,
       };
@@ -90,17 +90,17 @@ function createStream(
      * assign it a label and bump the batcher's index
      */
 
-    const label = (batcher.batchIndex + 1n).toString();
+    const label = (BigInt(batcher.batchIndex) + 1n).toString();
 
     return {
       batch: {
         ...batch,
         label,
-        size: batch.size + 1n,
+        size: BigInt(batch.size) + 1n,
       },
       batcher: {
         ...batcher,
-        batchIndex: batcher.batchIndex + 1n,
+        batchIndex: BigInt(batcher.batchIndex) + 1n,
       },
     };
   })();
@@ -168,7 +168,7 @@ export async function createDynamicStream(
     startTime: BigInt(event.params.range[0]),
     endTime: BigInt(event.params.range[1]),
     cancelable: event.params.cancelable,
-    duration: BigInt(event.params.range[1] - event.params.range[1]),
+    duration: BigInt(event.params.range[1]) - BigInt(event.params.range[1]),
   } satisfies Entity;
 
   /** --------------- */

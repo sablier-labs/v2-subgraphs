@@ -56,7 +56,7 @@ export function createAction(event: Event, watcher_: Watcher) {
 
   const watcher: Watcher = {
     ...watcher_,
-    actionIndex: watcher_.actionIndex + 1n,
+    actionIndex: BigInt(watcher_.actionIndex) + 1n,
   };
 
   return {

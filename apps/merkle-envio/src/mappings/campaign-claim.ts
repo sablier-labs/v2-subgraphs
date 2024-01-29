@@ -46,10 +46,10 @@ function handler(input: ClaimHandler) {
     category: ActionCategory.Claim,
     campaign: campaign.id,
     /** --------------- */
-    claimIndex: event.params.index,
-    claimAmount: event.params.amount,
+    claimIndex: BigInt(event.params.index),
+    claimAmount: BigInt(event.params.amount),
     claimRecipient: event.params.recipient.toLowerCase(),
-    claimTokenId: event.params.streamId,
+    claimTokenId: BigInt(event.params.streamId),
     claimStreamId: generateStreamId(
       event,
       campaign.lockup,
@@ -61,16 +61,16 @@ function handler(input: ClaimHandler) {
 
   campaign = {
     ...campaign,
-    claimedAmount: campaign.claimedAmount + event.params.amount,
-    claimedCount: campaign.claimedCount + 1n,
+    claimedAmount: BigInt(campaign.claimedAmount) + BigInt(event.params.amount),
+    claimedCount: BigInt(campaign.claimedCount) + 1n,
   };
 
   /** ------- Process: Activity -------- */
 
   activity = {
     ...activity,
-    claims: activity.claims + 1n,
-    amount: activity.amount + event.params.amount,
+    claims: BigInt(activity.claims) + 1n,
+    amount: BigInt(activity.amount) + BigInt(event.params.amount),
   };
 
   context.Action.set(action);

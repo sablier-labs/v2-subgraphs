@@ -40,9 +40,9 @@ function handler(input: ClawbackHandler) {
     category: ActionCategory.Clawback,
     campaign: campaign.id,
     /** --------------- */
-    clawbackFrom: event.params.admin,
-    clawbackTo: event.params.to,
-    clawbackAmount: event.params.amount,
+    clawbackFrom: event.params.admin.toLowerCase(),
+    clawbackTo: event.params.to.toLowerCase(),
+    clawbackAmount: BigInt(event.params.amount),
   };
 
   watcher = post_action.watcher;

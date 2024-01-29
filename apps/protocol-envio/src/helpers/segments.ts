@@ -50,7 +50,9 @@ export function createSegments(
   const inputs: SegmentInput[] = [new SegmentInput(0n, 0n, stream.startTime)];
 
   event.params.segments.forEach((item) => {
-    inputs.push(new SegmentInput(item[0], item[1], item[2]));
+    inputs.push(
+      new SegmentInput(BigInt(item[0]), BigInt(item[1]), BigInt(item[2])),
+    );
   });
 
   const segments: Segment[] = [];
@@ -66,7 +68,7 @@ export function createSegments(
     };
 
     segments.push(segment);
-    streamed = streamed + inputs[i].amount;
+    streamed = BigInt(streamed) + BigInt(inputs[i].amount);
   }
 
   return segments;

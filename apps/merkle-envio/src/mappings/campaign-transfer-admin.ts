@@ -49,7 +49,7 @@ function handler(input: TransferAdminHandler) {
 
   campaign = {
     ...campaign,
-    admin: event.params.newAdmin,
+    admin: event.params.newAdmin.toLowerCase(),
   };
 
   context.Action.set(action);
