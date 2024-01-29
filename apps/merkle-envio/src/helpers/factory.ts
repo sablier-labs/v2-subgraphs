@@ -40,7 +40,7 @@ export function createFactory(
     id: generateFactoryId(event, address),
     address: address.toLowerCase(),
     chainId: BigInt(event.chainId),
-    alias,
+    alias: alias.toLowerCase(),
     version,
   };
 

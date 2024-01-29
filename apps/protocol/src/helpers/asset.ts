@@ -9,7 +9,7 @@ export function getOrCreateAsset(address: Address): Asset {
   let entity = Asset.load(id);
 
   if (entity == null) {
-    entity = new Asset(address.toHexString());
+    entity = new Asset(id);
 
     let contract = ERC20Contract.bind(address);
     let decimals = contract.decimals();

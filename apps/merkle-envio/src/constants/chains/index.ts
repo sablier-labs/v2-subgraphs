@@ -23,7 +23,7 @@ const filter = (list: string[][], version: string) => {
 };
 
 export const chains = () => {
-  const list = [
+  const _list = [
     arbitrum,
     base,
     bsc,
@@ -34,6 +34,8 @@ export const chains = () => {
     scroll,
     sepolia,
   ] as const;
+
+  const list = [sepolia] as const;
 
   return list.map((item) => ({
     id: item.chainId,

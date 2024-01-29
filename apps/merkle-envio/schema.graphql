@@ -15,7 +15,7 @@ type Action {
   "address that triggered the transaction"
   from: Bytes!
 
-  "unique global id tracked by the subgraph watcher"
+  "unique global id tracked by the indexer watcher (resets for every chain)"
   subgraphId: BigInt!
   "transaction details: timestamp"
   timestamp: BigInt!
@@ -61,7 +61,7 @@ type Asset {
 type Campaign {
   "unique identifier resolving to the contract address concatenated with the chain id"
   id: String!
-  "unique global id tracked by the subgraph watcher"
+  "unique global id tracked by the indexer watcher (resets for every chain)"
   subgraphId: BigInt!
   "address of the campaign"
   address: Bytes!

@@ -14,7 +14,7 @@ export function createFactory(address: Address, alias: string): Factory {
     entity = new Factory(id);
   }
 
-  entity.alias = alias;
+  entity.alias = alias.toLowerCase();
   entity.chainId = getChainId();
   entity.address = address;
 

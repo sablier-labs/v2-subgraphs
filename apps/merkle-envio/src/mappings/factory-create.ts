@@ -25,6 +25,8 @@ function loader(input: CreateLinearLoader) {
   context.Asset.load(assetId);
   context.Factory.load(factoryId);
   context.Watcher.load(watcherId);
+
+  context.contractRegistration.addMerkleLLV21(event.params.merkleStreamer);
 }
 
 async function handlerLinear(input: CreateLinearHandler) {
