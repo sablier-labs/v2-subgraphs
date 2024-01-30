@@ -45,7 +45,7 @@ function handler(input: WithdrawHandler) {
     stream: stream.id,
 
     /** --------------- */
-    addressA: null, // TODO missing event.transaction.from
+    addressA: undefined, // TODO missing event.transaction.from
     addressB: event.params.to.toLowerCase(),
     amountB: event.params.amount,
   };

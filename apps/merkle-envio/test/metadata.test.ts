@@ -4,14 +4,14 @@ import { Envio, TheGraph } from "./utils/networking";
 import { cleanup } from "./utils/cleanup";
 import { SKIP_CLEANUP } from "./utils/constants";
 
-const getMetadata_ByAirstream_Envio = gql/* GraphQL */ `
-  query getMetadata_ByAirstream(
-    $airstreamId: String!
-    $airstreamIdClone: String!
+const getMetadata_ByCampaign_Envio = gql/* GraphQL */ `
+  query getMetadata_ByCampaign(
+    $campaignId: String!
+    $campaignIdClone: String!
     $dayFrom: numeric!
     $dayTo: numeric!
   ) {
-    Campaign(where: { id: { _eq: $airstreamId } }) {
+    Campaign(where: { id: { _eq: $campaignId } }) {
       id
       assetObject {
         ...AssetFragment
@@ -31,7 +31,7 @@ const getMetadata_ByAirstream_Envio = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { campaign: { _eq: $airstreamIdClone } }
+          { campaign: { _eq: $campaignIdClone } }
           { category: { _eq: "Claim" } }
         ]
       }
@@ -46,14 +46,14 @@ const getMetadata_ByAirstream_Envio = gql/* GraphQL */ `
   ${F.FactoryFragment_Envio}
 `;
 
-const getMetadata_ByAirstream_TheGraph = gql/* GraphQL */ `
-  query getMetadata_ByAirstream(
-    $airstreamId: ID!
-    $airstreamIdClone: String!
+const getMetadata_ByCampaign_TheGraph = gql/* GraphQL */ `
+  query getMetadata_ByCampaign(
+    $campaignId: ID!
+    $campaignIdClone: String!
     $dayFrom: BigInt!
     $dayTo: BigInt!
   ) {
-    campaign(id: $airstreamId) {
+    campaign(id: $campaignId) {
       id
       asset {
         ...AssetFragment
@@ -69,7 +69,7 @@ const getMetadata_ByAirstream_TheGraph = gql/* GraphQL */ `
       first: 10
       orderBy: subgraphId
       orderDirection: desc
-      where: { campaign: $airstreamIdClone, category: Claim }
+      where: { campaign: $campaignIdClone, category: Claim }
     ) {
       ...ActionFragment
     }
@@ -82,22 +82,22 @@ const getMetadata_ByAirstream_TheGraph = gql/* GraphQL */ `
   ${F.FactoryFragment_TheGraph}
 `;
 
-describe("Airstream  0x9c...6531 (Sepolia)", () => {
+describe("Campaign  0x9c...6531 (Sepolia)", () => {
   test("Metadata results are the same", async () => {
     const variables = {
-      airstreamId: "0x9cfb590f179acdc6225bb356c36c223dcb5c6531-11155111",
-      airstreamIdClone: "0x9cfb590f179acdc6225bb356c36c223dcb5c6531-11155111",
+      campaignId: "0x9cfb590f179acdc6225bb356c36c223dcb5c6531-11155111",
+      campaignIdClone: "0x9cfb590f179acdc6225bb356c36c223dcb5c6531-11155111",
       dayFrom: 1,
       dayTo: 7,
     } as const;
 
     const received = cleanup.metadata(
-      await Envio(getMetadata_ByAirstream_Envio, variables),
+      await Envio(getMetadata_ByCampaign_Envio, variables),
       SKIP_CLEANUP,
     );
 
     const expected = cleanup.metadata(
-      await TheGraph(getMetadata_ByAirstream_TheGraph, variables),
+      await TheGraph(getMetadata_ByCampaign_TheGraph, variables),
       SKIP_CLEANUP,
     );
 

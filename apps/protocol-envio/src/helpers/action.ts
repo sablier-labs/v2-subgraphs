@@ -45,8 +45,8 @@ export function createAction(event: Event, watcher_: Watcher) {
     chainId: BigInt(event.chainId),
     contract: generateContractIdFromEvent(event),
     /** --------------- */
-    addressA: null,
-    addressB: null,
+    addressA: undefined,
+    addressB: undefined,
     amountA: 0n,
     amountB: 0n,
   } satisfies Entity;

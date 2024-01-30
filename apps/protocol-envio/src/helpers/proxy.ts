@@ -60,7 +60,7 @@ export async function bindProxy({
 
   return {
     parties,
-    proxender: null,
+    proxender: undefined,
     proxied: false,
   } satisfies Entity;
 }

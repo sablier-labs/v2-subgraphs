@@ -76,7 +76,7 @@ export function createBatch(event: Event, batcher: Batcher) {
     batcher: batcher.id,
     hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
-    label: null,
+    label: undefined,
     size: 0n,
   };
 

@@ -52,14 +52,14 @@ function createStream(
     canceled: false,
     transferable: true,
 
-    renounceAction: null,
-    canceledAction: null,
-    cliffAmount: 0n,
+    renounceAction: undefined,
+    canceledAction: undefined,
+    cliffAmount: undefined,
     withdrawnAmount: 0n,
 
-    canceledTime: 0n,
-    cliffTime: 0n,
-    renounceTime: 0n,
+    canceledTime: undefined,
+    cliffTime: undefined,
+    renounceTime: undefined,
 
     /** --------------- */
     batch: batch.id,
@@ -157,8 +157,8 @@ export async function createDynamicStream(
     ],
 
     cliff: false,
-    cliffAmount: 0n,
-    cliffTime: 0n,
+    cliffAmount: undefined,
+    cliffTime: undefined,
 
     depositAmount: BigInt(event.params.amounts[0]),
     intactAmount: BigInt(event.params.amounts[0]),
@@ -258,26 +258,26 @@ export async function createLinearStream(
     startTime: BigInt(event.params.range[0]),
     endTime: BigInt(event.params.range[2]),
     cancelable: event.params.cancelable,
-    duration: BigInt(event.params.range[2] - event.params.range[1]),
+    duration: BigInt(event.params.range[2]) - BigInt(event.params.range[1]),
   } satisfies Entity;
 
   /** --------------- */
   const partCliff = (() => {
     const deposit = BigInt(entity.depositAmount);
-    const cliff = BigInt(BigInt(event.params.range[1]) - entity.startTime);
+    const cliff = BigInt(event.params.range[1]) - BigInt(entity.startTime);
 
     if (cliff !== 0n) {
       return {
         cliff: true,
         cliffAmount: (deposit * cliff) / entity.duration,
-        cliffTime: event.params.range[1],
+        cliffTime: BigInt(event.params.range[1]),
       };
     }
 
     return {
       cliff: false,
-      cliffAmount: 0n,
-      cliffTime: 0n,
+      cliffAmount: undefined,
+      cliffTime: undefined,
     };
   })() satisfies Entity;
 
@@ -324,7 +324,7 @@ export async function getStream_async(
   const id = generateStreamId(event, event.srcAddress, tokenId);
   const stream = await loader(id);
 
-  if (stream === undefined) {
+  if (!stream) {
     throw new Error("Missing stream instance");
   }
 
@@ -339,7 +339,7 @@ export function getStream(
   const id = generateStreamId(event, event.srcAddress, tokenId);
   const stream = loader(id);
 
-  if (stream === undefined) {
+  if (!stream) {
     throw new Error("Missing stream instance");
   }
 

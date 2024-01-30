@@ -44,6 +44,7 @@
     "@typescript-eslint/parser": "^5.59.11",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
+    "graphql-request": "^6.1.0",
     "jest": "^29.7.0",
     "mustache": "^4.2.0",
     "prettier": "^2.8.8",
@@ -53,7 +54,7 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "envio": "0.0.29",
+    "envio": "0.0.0-force-npm-publish-undefined-20240130123255-a8884de5",
     "viem": "1.16.6"
   }
 }

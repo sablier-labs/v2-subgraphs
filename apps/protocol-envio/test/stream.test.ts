@@ -4,53 +4,59 @@ import { Envio, TheGraph } from "./utils/networking";
 import { cleanup } from "./utils/cleanup";
 import { SKIP_CLEANUP } from "./utils/constants";
 
-const getCampaigns_Envio = gql/* GraphQL */ `
-  query getCampaigns(
+const getStreams_Envio = gql/* GraphQL */ `
+  query getStreams(
     $first: Int!
     $skip: Int!
-    $subgraphId: numeric!
     $chainId: numeric!
-    $asset: String # Required for compatibility
+    $subgraphId: numeric!
   ) {
-    Campaign(
+    Stream(
       limit: $first
       offset: $skip
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { subgraphId: { _lt: $subgraphId } }
           { chainId: { _eq: $chainId } }
+          { subgraphId: { _lt: $subgraphId } }
         ]
       }
     ) {
-      ...CampaignFragment
+      ...StreamFragment
     }
   }
-
-  ${F.CampaignFragment_Envio}
   ${F.AssetFragment_Envio}
-  ${F.FactoryFragment_Envio}
+  ${F.BatchFragment_Envio}
+  ${F.ContractFragment_Envio}
+  ${F.SegmentFragment_Envio}
+  ${F.StreamFragment_Envio}
 `;
 
-const getCampaigns_TheGraph = gql/* GraphQL */ `
-  query getCampaigns($first: Int!, $skip: Int!, $subgraphId: BigInt!) {
-    campaigns(
+const getStreams_TheGraph = gql/* GraphQL */ `
+  query getStreams(
+    $first: Int!
+    $skip: Int!
+    $chainId: BigInt!
+    $subgraphId: BigInt!
+  ) {
+    streams(
       first: $first
       skip: $skip
       orderBy: subgraphId
       orderDirection: desc
       where: { subgraphId_lt: $subgraphId }
     ) {
-      ...CampaignFragment
+      ...StreamFragment
     }
   }
-
-  ${F.CampaignFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
-  ${F.FactoryFragment_TheGraph}
+  ${F.BatchFragment_TheGraph}
+  ${F.ContractFragment_TheGraph}
+  ${F.SegmentFragment_TheGraph}
+  ${F.StreamFragment_TheGraph}
 `;
 
-describe("Campaigns (Sepolia)", () => {
+describe("Streams (Sepolia)", () => {
   test("First 10 results before subgraphId are the same", async () => {
     const variables = {
       first: 10,
@@ -59,16 +65,16 @@ describe("Campaigns (Sepolia)", () => {
       chainId: 11155111,
     } as const;
 
-    const received = cleanup.campaigns(
-      await Envio(getCampaigns_Envio, variables),
+    const received = cleanup.streams(
+      await Envio(getStreams_Envio, variables),
       SKIP_CLEANUP,
     );
 
-    const expected = cleanup.campaigns(
-      await TheGraph(getCampaigns_TheGraph, variables),
+    const expected = cleanup.streams(
+      await TheGraph(getStreams_TheGraph, variables),
       SKIP_CLEANUP,
     );
 
-    expect(received.campaigns).toEqual(expected.campaigns);
+    expect(received.streams).toEqual(expected.streams);
   });
 });

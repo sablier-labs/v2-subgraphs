@@ -41,7 +41,7 @@ export function createContract(
     id: generateContractId(event, address),
     address: address.toLowerCase(),
     chainId: BigInt(event.chainId),
-    admin: null,
+    admin: undefined,
     alias,
     category,
     version,

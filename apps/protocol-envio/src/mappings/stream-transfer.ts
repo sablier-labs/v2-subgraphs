@@ -67,7 +67,7 @@ function handler(input: TransferHandler) {
   };
 
   if (stream.proxied) {
-    if (stream.proxender !== null) {
+    if (stream.proxender) {
       stream = {
         ...stream,
         parties: [...stream.parties, stream.proxender],
