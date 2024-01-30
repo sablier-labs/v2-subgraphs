@@ -43,15 +43,15 @@ export function createAction(event: Event, watcher_: Watcher) {
     subgraphId: watcher_.actionIndex,
     chainId: BigInt(event.chainId),
     /** --------------- */
-    claimStreamId: null,
-    claimTokenId: 0n,
-    claimAmount: 0n,
-    claimIndex: 0n,
-    claimRecipient: null,
+    claimStreamId: undefined,
+    claimTokenId: undefined,
+    claimAmount: undefined,
+    claimIndex: undefined,
+    claimRecipient: undefined,
 
-    clawbackAmount: 0n,
-    clawbackFrom: null,
-    clawbackTo: null,
+    clawbackAmount: undefined,
+    clawbackFrom: undefined,
+    clawbackTo: undefined,
   } satisfies Entity;
 
   const watcher: Watcher = {

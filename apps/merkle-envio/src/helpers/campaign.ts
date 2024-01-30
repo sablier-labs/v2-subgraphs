@@ -37,8 +37,8 @@ function createCampaign(
 
     /** --------------- */
 
-    clawbackAction: null,
-    clawbackTime: 0n,
+    clawbackAction: undefined,
+    clawbackTime: undefined,
 
     claimedAmount: 0n,
     claimedCount: 0n,

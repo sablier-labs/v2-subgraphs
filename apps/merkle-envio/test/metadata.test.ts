@@ -1,7 +1,8 @@
 import { gql } from "graphql-request";
 import * as F from "./utils/fragments";
 import { Envio, TheGraph } from "./utils/networking";
-import { restrict } from "./utils/restrict";
+import { cleanup } from "./utils/cleanup";
+import { SKIP_CLEANUP } from "./utils/constants";
 
 const getMetadata_ByAirstream_Envio = gql/* GraphQL */ `
   query getMetadata_ByAirstream(
@@ -90,14 +91,14 @@ describe("Airstream  0x9c...6531 (Sepolia)", () => {
       dayTo: 7,
     } as const;
 
-    const received = restrict.metadata(
+    const received = cleanup.metadata(
       await Envio(getMetadata_ByAirstream_Envio, variables),
-      true,
+      SKIP_CLEANUP,
     );
 
-    const expected = restrict.metadata(
+    const expected = cleanup.metadata(
       await TheGraph(getMetadata_ByAirstream_TheGraph, variables),
-      true,
+      SKIP_CLEANUP,
     );
 
     expect({

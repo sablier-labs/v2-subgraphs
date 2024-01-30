@@ -1,7 +1,8 @@
 import { gql } from "graphql-request";
 import * as F from "./utils/fragments";
 import { Envio, TheGraph } from "./utils/networking";
-import { restrict } from "./utils/restrict";
+import { cleanup } from "./utils/cleanup";
+import { SKIP_CLEANUP } from "./utils/constants";
 
 const getAirstreams_Envio = gql/* GraphQL */ `
   query getAirstreams(
@@ -58,14 +59,14 @@ describe("Airstreams (Sepolia)", () => {
       chainId: 11155111,
     } as const;
 
-    const received = restrict.campaigns(
+    const received = cleanup.campaigns(
       await Envio(getAirstreams_Envio, variables),
-      true,
+      SKIP_CLEANUP,
     );
 
-    const expected = restrict.campaigns(
+    const expected = cleanup.campaigns(
       await TheGraph(getAirstreams_TheGraph, variables),
-      true,
+      SKIP_CLEANUP,
     );
 
     expect(received.campaigns).toEqual(expected.campaigns);

@@ -20,30 +20,26 @@ export type Campaign = object & {
 export type Campaigns = { campaigns: Campaign[] };
 export type Metadata = { campaign: Campaign; actions: Action[] };
 
-export const restrict = {
-  action: restrict_action,
-  campaign: restrict_campaign,
-  campaigns: restrict_campaigns,
-  metadata: restrict_metadata,
+export const cleanup = {
+  action: cleanup_action,
+  campaign: cleanup_campaign,
+  campaigns: cleanup_campaigns,
+  metadata: cleanup_metadata,
 };
 
-export function restrict_action(source: unknown, skip: boolean): Action {
+export function cleanup_action(source: unknown, skip: boolean): Action {
   const value = { ...(source as Action) };
 
   if (skip) {
     return value;
   }
 
-  delete value.claimAmount;
-  delete value.claimIndex;
-  delete value.claimTokenId;
-  delete value.clawbackAmount;
   delete value.from;
 
   return value;
 }
 
-export function restrict_campaign(source: unknown, skip: boolean): Campaign {
+export function cleanup_campaign(source: unknown, skip: boolean): Campaign {
   const value = { ...(source as Campaign) };
 
   if (skip) {
@@ -51,18 +47,15 @@ export function restrict_campaign(source: unknown, skip: boolean): Campaign {
   }
 
   delete value.from;
-  delete value.clawbackTime;
 
   if (value.actions?.length) {
-    value.actions = value.actions.map((action) =>
-      restrict_action(action, skip),
-    );
+    value.actions = value.actions.map((action) => cleanup_action(action, skip));
   }
 
   return value;
 }
 
-export function restrict_campaigns(source: unknown, skip: boolean): Campaigns {
+export function cleanup_campaigns(source: unknown, skip: boolean): Campaigns {
   const value = { ...(source as Campaigns) };
 
   if (skip) {
@@ -70,13 +63,13 @@ export function restrict_campaigns(source: unknown, skip: boolean): Campaigns {
   }
 
   value.campaigns = value.campaigns.map((campaign) =>
-    restrict_campaign(campaign, skip),
+    cleanup_campaign(campaign, skip),
   );
 
   return value;
 }
 
-export function restrict_metadata(source: unknown, skip: boolean): Metadata {
+export function cleanup_metadata(source: unknown, skip: boolean): Metadata {
   const value = { ...(source as Metadata) };
 
   if (skip) {
@@ -84,7 +77,7 @@ export function restrict_metadata(source: unknown, skip: boolean): Metadata {
   }
 
   return {
-    campaign: restrict_campaign(value.campaign, skip),
-    actions: value.actions.map((action) => restrict_action(action, skip)),
+    campaign: cleanup_campaign(value.campaign, skip),
+    actions: value.actions.map((action) => cleanup_action(action, skip)),
   };
 }

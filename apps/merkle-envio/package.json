@@ -54,7 +54,7 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "envio": "0.0.29",
+    "envio": "0.0.0-force-npm-publish-undefined-20240130123255-a8884de5",
     "viem": "1.16.6"
   }
 }

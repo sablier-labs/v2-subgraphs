@@ -3,3 +3,5 @@ export const endpoint = {
   TheGraph:
     "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms-experimental",
 };
+
+export const SKIP_CLEANUP = false;
