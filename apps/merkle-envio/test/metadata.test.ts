@@ -92,12 +92,12 @@ describe("Airstream  0x9c...6531 (Sepolia)", () => {
 
     const received = restrict.metadata(
       await Envio(getMetadata_ByAirstream_Envio, variables),
-      false,
+      true,
     );
 
     const expected = restrict.metadata(
       await TheGraph(getMetadata_ByAirstream_TheGraph, variables),
-      false,
+      true,
     );
 
     expect({

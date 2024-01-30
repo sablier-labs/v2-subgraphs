@@ -60,12 +60,12 @@ describe("Airstreams (Sepolia)", () => {
 
     const received = restrict.campaigns(
       await Envio(getAirstreams_Envio, variables),
-      false,
+      true,
     );
 
     const expected = restrict.campaigns(
       await TheGraph(getAirstreams_TheGraph, variables),
-      false,
+      true,
     );
 
     expect(received.campaigns).toEqual(expected.campaigns);
