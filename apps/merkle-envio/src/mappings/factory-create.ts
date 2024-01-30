@@ -60,6 +60,8 @@ async function handlerLinear(input: CreateLinearHandler) {
 
   const post_action = createAction(event, watcher);
 
+  watcher = post_action.watcher;
+
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Create,

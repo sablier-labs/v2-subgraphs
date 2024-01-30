@@ -109,7 +109,7 @@ function reassign(source: object | undefined) {
   let value = JSON.stringify(source);
 
   Object.values(names).forEach(([single]) => {
-    value = value.replace(`${single}Object`, single);
+    value = value.replace(new RegExp(`${single}Object`, `g`), single);
   });
 
   return JSON.parse(value);

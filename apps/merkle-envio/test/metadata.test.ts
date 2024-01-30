@@ -1,6 +1,7 @@
 import { gql } from "graphql-request";
 import * as F from "./utils/fragments";
 import { Envio, TheGraph } from "./utils/networking";
+import { restrict } from "./utils/restrict";
 
 const getMetadata_ByAirstream_Envio = gql/* GraphQL */ `
   query getMetadata_ByAirstream(
@@ -89,17 +90,15 @@ describe("Airstream  0x9c...6531 (Sepolia)", () => {
       dayTo: 7,
     } as const;
 
-    type Result = { campaign?: object; actions: object[] };
+    const received = restrict.metadata(
+      await Envio(getMetadata_ByAirstream_Envio, variables),
+      false,
+    );
 
-    const received = (await Envio(
-      getMetadata_ByAirstream_Envio,
-      variables,
-    )) as Result;
-
-    const expected = (await TheGraph(
-      getMetadata_ByAirstream_TheGraph,
-      variables,
-    )) as Result;
+    const expected = restrict.metadata(
+      await TheGraph(getMetadata_ByAirstream_TheGraph, variables),
+      false,
+    );
 
     expect({
       actions: received.actions,
