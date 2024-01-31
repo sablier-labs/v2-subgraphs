@@ -9,7 +9,9 @@ export let startBlock = Infinity;
  * @example export let factory = [[address1, alias1, version1], [address2, alias2, version2]]
  */
 
-export let factory: string[][] = [["0x", "MSF2", "V21"]];
+export let factory: string[][] = [
+  ["0x4849e797d7aab20fcc8f807efafdfff98a83412e", "MSF2", "V21"],
+];
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.

@@ -73,7 +73,7 @@ export function cleanup_factory(
   }
 
   if (vendor === "Envio") {
-    /** Asset identifiers in Envio contain a -chainId suffix */
+    /** Factory identifiers in Envio contain a -chainId suffix */
     value.id = value.id.substring(0, value.id.lastIndexOf("-"));
   }
 
@@ -92,8 +92,7 @@ export function cleanup_action(
   }
 
   if (vendor === "Envio") {
-    /** Asset identifiers in Envio contain a -chainId suffix */
-    console.log(value.id);
+    /** Action identifiers in Envio contain a -chainId suffix */
     value.id = value.id.substring(0, value.id.lastIndexOf("-"));
   }
 

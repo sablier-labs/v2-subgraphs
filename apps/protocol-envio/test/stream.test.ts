@@ -68,11 +68,13 @@ describe("Streams (Sepolia)", () => {
     const received = cleanup.streams(
       await Envio(getStreams_Envio, variables),
       SKIP_CLEANUP,
+      "Envio",
     );
 
     const expected = cleanup.streams(
       await TheGraph(getStreams_TheGraph, variables),
       SKIP_CLEANUP,
+      "TheGraph",
     );
 
     expect(received.streams).toEqual(expected.streams);

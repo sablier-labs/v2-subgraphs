@@ -168,7 +168,7 @@ export async function createDynamicStream(
     startTime: BigInt(event.params.range[0]),
     endTime: BigInt(event.params.range[1]),
     cancelable: event.params.cancelable,
-    duration: BigInt(event.params.range[1]) - BigInt(event.params.range[1]),
+    duration: BigInt(event.params.range[1]) - BigInt(event.params.range[0]),
   } satisfies Entity;
 
   /** --------------- */
@@ -258,19 +258,20 @@ export async function createLinearStream(
     startTime: BigInt(event.params.range[0]),
     endTime: BigInt(event.params.range[2]),
     cancelable: event.params.cancelable,
-    duration: BigInt(event.params.range[2]) - BigInt(event.params.range[1]),
+    duration: BigInt(event.params.range[2]) - BigInt(event.params.range[0]),
   } satisfies Entity;
 
   /** --------------- */
   const partCliff = (() => {
     const deposit = BigInt(entity.depositAmount);
-    const cliff = BigInt(event.params.range[1]) - BigInt(entity.startTime);
+    const cliffTime = BigInt(event.params.range[1]);
+    const cliff = BigInt(cliffTime) - BigInt(entity.startTime);
 
     if (cliff !== 0n) {
       return {
         cliff: true,
-        cliffAmount: (deposit * cliff) / entity.duration,
-        cliffTime: BigInt(event.params.range[1]),
+        cliffAmount: BigInt(deposit * cliff) / BigInt(entity.duration),
+        cliffTime,
       };
     }
 

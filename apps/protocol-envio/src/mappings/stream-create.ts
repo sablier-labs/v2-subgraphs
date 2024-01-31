@@ -101,6 +101,16 @@ async function handlerDynamic(input: CreateDynamicHandler) {
 
   watcher = post_action.watcher;
 
+  /** ------- Non-Cancelable -------- */
+
+  if (stream.cancelable == false) {
+    stream = {
+      ...stream,
+      renounceAction: action.id,
+      renounceTime: BigInt(event.blockTimestamp),
+    };
+  }
+
   /** ------- Update -------- */
 
   await context.Asset.set(asset);
@@ -176,6 +186,18 @@ async function handlerLinear(input: CreateLinearHandler) {
     addressB: event.params.recipient.toLowerCase(),
     amountA: event.params.amounts[0],
   };
+
+  watcher = post_action.watcher;
+
+  /** ------- Non-Cancelable -------- */
+
+  if (stream.cancelable == false) {
+    stream = {
+      ...stream,
+      renounceAction: action.id,
+      renounceTime: BigInt(event.blockTimestamp),
+    };
+  }
 
   /** ------- Update -------- */
 
