@@ -77,6 +77,8 @@ describe("Streams (Sepolia)", () => {
       "TheGraph",
     );
 
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
     expect(received.streams).toEqual(expected.streams);
   });
 });
