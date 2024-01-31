@@ -62,11 +62,13 @@ describe("Campaigns (Sepolia)", () => {
     const received = cleanup.campaigns(
       await Envio(getCampaigns_Envio, variables),
       SKIP_CLEANUP,
+      "Envio",
     );
 
     const expected = cleanup.campaigns(
       await TheGraph(getCampaigns_TheGraph, variables),
       SKIP_CLEANUP,
+      "TheGraph",
     );
 
     expect(received.campaigns).toEqual(expected.campaigns);

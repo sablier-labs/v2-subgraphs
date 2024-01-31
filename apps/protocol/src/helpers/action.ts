@@ -47,7 +47,5 @@ export function generateActionId(event: ethereum.Event): string {
   return ""
     .concat(event.transaction.hash.toHexString())
     .concat("-")
-    .concat(getChainId().toString())
-    .concat("-")
     .concat(event.logIndex.toString());
 }

@@ -1,5 +1,5 @@
 import type { Address, Factory, Event } from "../types";
-import { chains, StreamCategory, StreamVersion } from "../constants";
+import { chains, StreamVersion } from "../constants";
 
 export function getFactory(
   event: Event,

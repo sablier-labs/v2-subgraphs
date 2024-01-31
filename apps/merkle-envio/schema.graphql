@@ -1,5 +1,5 @@
 type Action {
-  "unique identifier resolving to transaction hash concatenated  with the chain id and the log index (there may be multiple actions per tx)"
+  "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx) and the chainId"
   id: String!
 
   "transaction details: block number"
@@ -37,6 +37,23 @@ type Action {
   clawbackFrom: Bytes
   "clawback action data: amount"
   clawbackTo: Bytes
+}
+
+type Activity {
+  "unique identifier resolving to the string 'activity' concatenated with the campaign id and the day of the snapshot"
+  id: String!
+  "campaign the activity (day) is linked to"
+  campaign: Campaign!
+
+  "timestamp for the start of the day"
+  timestamp: BigInt!
+  "day index (UNIX time / 24 * 60 * 60)"
+  day: BigInt!
+
+  "amount claimed during the day"
+  amount: BigInt!
+  "number of claims completed during the day"
+  claims: BigInt!
 }
 
 type Asset {
@@ -142,23 +159,6 @@ type Factory {
 
   "list of campaigns"
   campaigns: [Campaign!]! @derivedFrom(field: "factory")
-}
-
-type Activity {
-  "unique identifier resolving to the string 'activity' concatenated with the campaign id and the day of the snapshot"
-  id: String!
-  "campaign the activity (day) is linked to"
-  campaign: Campaign!
-
-  "timestamp for the start of the day"
-  timestamp: BigInt!
-  "day index (UNIX time / 24 * 60 * 60)"
-  day: BigInt!
-
-  "amount claimed during the day"
-  amount: BigInt!
-  "number of claims completed during the day"
-  claims: BigInt!
 }
 
 type Watcher {

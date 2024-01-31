@@ -17,48 +17,8 @@ enum ActionCategory {
   Transfer
   Withdraw
 }
-
-type Asset @entity(immutable: true) {
-  "unique identifier resolving to the ERC20 asset/token address, concatenated with the chainId"
-  id: ID!
-
-  "address of the ERC20 asset/token"
-  address: Bytes!
-  "hardcoded chain id"
-  chainId: BigInt!
-  "decimals of the ERC20 asset/token"
-  decimals: BigInt!
-  "name of the ERC20 asset/token"
-  name: String!
-  "symbol of the ERC20 asset/token"
-  symbol: String!
-
-  "streams that rely on this asset/token"
-  streams: [Stream!]! @derivedFrom(field: "asset")
-}
-
-type Contract @entity {
-  "unique identifier resolving to contract address, concatenated with the chainId"
-  id: String!
-
-  "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
-  version: String!
-  "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
-  alias: String!
-  "address of the contract"
-  address: Bytes!
-  "address of the contract admin"
-  admin: Bytes
-  "category of contract e.g. LockupLinear or LockupDynamic"
-  category: ContractCategory!
-  "streams created through this contract"
-  streams: [Stream!]! @derivedFrom(field: "contract")
-  "actions on streams, triggered through this contract"
-  actions: [Action!]! @derivedFrom(field: "contract")
-}
-
 type Action @entity {
-  "unique identifier resolving to transaction hash concatenated with the chain id and the log index (there may be multiple actions per tx)"
+  "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx)"
   id: ID!
 
   "transaction details: block number"
@@ -89,6 +49,97 @@ type Action @entity {
   amountA: BigInt
   "amount, differs based on action type e.g. for Withdraw it resolves to the refundedAmount"
   amountB: BigInt
+}
+
+type Asset @entity(immutable: true) {
+  "unique identifier resolving to the ERC20 asset/token address"
+  id: ID!
+
+  "address of the ERC20 asset/token"
+  address: Bytes!
+  "hardcoded chain id"
+  chainId: BigInt!
+  "decimals of the ERC20 asset/token"
+  decimals: BigInt!
+  "name of the ERC20 asset/token"
+  name: String!
+  "symbol of the ERC20 asset/token"
+  symbol: String!
+
+  "streams that rely on this asset/token"
+  streams: [Stream!]! @derivedFrom(field: "asset")
+}
+
+type Batch @entity {
+  "unique identifier of the batch, resolving to the hash of the parent transaction"
+  id: String!
+  "number of streams that are part of this batch"
+  size: BigInt!
+  "index of the batch resolving to a conditional counter of 2+ stream batches, filtered by sender (label is null for batches containing a single stream, for filtering)"
+  label: String
+  "batcher (sender) that started this batch"
+  batcher: Batcher
+  "streams that are part of this batch"
+  streams: [Stream!]! @derivedFrom(field: "batch")
+  "hash of the transaction that created this batch"
+  hash: Bytes!
+  "timestamp of the transaction that created this batch"
+  timestamp: BigInt!
+}
+
+type Batcher @entity {
+  "unique identifier of the batcher (sender), resolving to their address"
+  id: String!
+  "address of the sender"
+  address: Bytes!
+  "numeric index, will be used to construct the batch label"
+  batchIndex: BigInt!
+  "batches started by this batcher (sender)"
+  batches: [Batch!]! @derivedFrom(field: "batcher")
+}
+
+type Contract @entity {
+  "unique identifier resolving to contract address"
+  id: String!
+
+  "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
+  version: String!
+  "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
+  alias: String!
+  "address of the contract"
+  address: Bytes!
+  "address of the contract admin"
+  admin: Bytes
+  "category of contract e.g. LockupLinear or LockupDynamic"
+  category: ContractCategory!
+  "streams created through this contract"
+  streams: [Stream!]! @derivedFrom(field: "contract")
+  "actions on streams, triggered through this contract"
+  actions: [Action!]! @derivedFrom(field: "contract")
+}
+
+type Segment @entity {
+  "unique id resolving to stream id concatenated with the position of the segment"
+  id: String!
+
+  "position of the segment inside the array"
+  position: BigInt!
+  "stream upon which the segment is used"
+  stream: Stream!
+  "amount resolving to the value streamed during this segment"
+  amount: BigInt!
+  "exponent for the time passed percentage of the main amount compute function"
+  exponent: BigInt!
+  "timestamp resolving to the end moment of the segment"
+  milestone: BigInt!
+  "timestamp resolving to the *milestone* parameter"
+  endTime: BigInt!
+  "timestamp resolving to the start moment of the segment (the end time of previous segment or the startTime of the stream)"
+  startTime: BigInt!
+  "derived amount resoling to the total amount streamed until the start of the segment"
+  startAmount: BigInt!
+  "derived amount resoling to the total amount streamed until the end of the segment"
+  endAmount: BigInt!
 }
 
 type Stream @entity {
@@ -182,58 +233,6 @@ type Stream @entity {
   brokerFeeAmount: BigInt!
   "amount of fees paid to the protocol"
   protocolFeeAmount: BigInt!
-}
-
-type Segment @entity {
-  "unique id resolving to stream id concatenated with the position of the segment"
-  id: String!
-
-  "position of the segment inside the array"
-  position: BigInt!
-  "stream upon which the segment is used"
-  stream: Stream!
-  "amount resolving to the value streamed during this segment"
-  amount: BigInt!
-  "exponent for the time passed percentage of the main amount compute function"
-  exponent: BigInt!
-  "timestamp resolving to the end moment of the segment"
-  milestone: BigInt!
-  "timestamp resolving to the *milestone* parameter"
-  endTime: BigInt!
-  "timestamp resolving to the start moment of the segment (the end time of previous segment or the startTime of the stream)"
-  startTime: BigInt!
-  "derived amount resoling to the total amount streamed until the start of the segment"
-  startAmount: BigInt!
-  "derived amount resoling to the total amount streamed until the end of the segment"
-  endAmount: BigInt!
-}
-
-type Batch @entity {
-  "unique identifier of the batch, resolving to the hash of the parent transaction, concatenated to the chainId"
-  id: String!
-  "number of streams that are part of this batch"
-  size: BigInt!
-  "index of the batch resolving to a conditional counter of 2+ stream batches, filtered by sender (label is null for batches containing a single stream, for filtering)"
-  label: String
-  "batcher (sender) that started this batch"
-  batcher: Batcher
-  "streams that are part of this batch"
-  streams: [Stream!]! @derivedFrom(field: "batch")
-  "hash of the transaction that created this batch"
-  hash: Bytes!
-  "timestamp of the transaction that created this batch"
-  timestamp: BigInt!
-}
-
-type Batcher @entity {
-  "unique identifier of the batcher (sender), resolving to their address concatenated to the chainId"
-  id: String!
-  "address of the sender"
-  address: Bytes!
-  "numeric index, will be used to construct the batch label"
-  batchIndex: BigInt!
-  "batches started by this batcher (sender)"
-  batches: [Batch!]! @derivedFrom(field: "batcher")
 }
 
 type Watcher @entity {

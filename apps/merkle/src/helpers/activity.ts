@@ -3,15 +3,6 @@ import { Activity } from "../generated/types/schema";
 import { log_exit, zero } from "../constants";
 import { getCampaignById } from "./campaign";
 
-export function generateActivityId(campaignId: string, day: string): string {
-  return ""
-    .concat("activity")
-    .concat("-")
-    .concat(campaignId)
-    .concat("-")
-    .concat(day);
-}
-
 export function getActivityById(id: string): Activity | null {
   return Activity.load(id);
 }
@@ -51,4 +42,17 @@ export function getOrCreateActivity(
   entity.claims = zero;
 
   return entity;
+}
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export function generateActivityId(campaignId: string, day: string): string {
+  return ""
+    .concat("activity")
+    .concat("-")
+    .concat(campaignId)
+    .concat("-")
+    .concat(day);
 }

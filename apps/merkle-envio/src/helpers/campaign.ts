@@ -126,7 +126,7 @@ export async function createLinearCampaign(
 
 export async function getCampaign_async(
   event: Event,
-  loader: (id: string) => Campaign | undefined,
+  loader: (id: string) => Promise<Campaign | undefined>,
 ) {
   const id = generateCampaignId(event, event.srcAddress);
   const loaded = await loader(id);

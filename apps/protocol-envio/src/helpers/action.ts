@@ -70,7 +70,7 @@ export function generateActionId(event: Event) {
   return ""
     .concat(event.transactionHash)
     .concat("-")
-    .concat(event.chainId.toString())
+    .concat(event.logIndex.toString())
     .concat("-")
-    .concat(event.logIndex.toString());
+    .concat(event.chainId.toString());
 }

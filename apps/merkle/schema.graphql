@@ -11,14 +11,14 @@ enum CampaignCategory {
 }
 
 type Action @entity {
-  "unique identifier resolving to transaction hash concatenated  with the chain id and the log index (there may be multiple actions per tx)"
+  "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx)"
   id: String!
 
   "transaction details: block number"
   block: BigInt!
   "category of action e.g. Create or Clawback"
   category: ActionCategory!
-  "hardcoded chain id"
+  "hardcoded chainId"
   chainId: BigInt!
   "contract through which the stream actions has been triggered"
   campaign: Campaign!
@@ -51,13 +51,30 @@ type Action @entity {
   clawbackTo: Bytes
 }
 
+type Activity @entity {
+  "unique identifier resolving to the string 'activity' concatenated with the campaign id and the day of the snapshot"
+  id: String!
+  "campaign the activity (day) is linked to"
+  campaign: Campaign!
+
+  "timestamp for the start of the day"
+  timestamp: BigInt!
+  "day index (UNIX time / 24 * 60 * 60)"
+  day: BigInt!
+
+  "amount claimed during the day"
+  amount: BigInt!
+  "number of claims completed during the day"
+  claims: BigInt!
+}
+
 type Asset @entity(immutable: true) {
-  "unique identifier resolving to the ERC20 asset/token address, concatenated with the chainId"
+  "unique identifier resolving to the ERC20 asset/token address"
   id: String!
 
   "address of the ERC20 asset/token"
   address: Bytes!
-  "hardcoded chain id"
+  "hardcoded chainId"
   chainId: BigInt!
   "decimals of the ERC20 asset/token"
   decimals: BigInt!
@@ -71,7 +88,7 @@ type Asset @entity(immutable: true) {
 }
 
 type Campaign @entity {
-  "unique identifier resolving to the contract address concatenated with the chain id"
+  "unique identifier resolving to the contract address concatenated with the chainId"
   id: String!
   "unique global id tracked by the subgraph watcher"
   subgraphId: BigInt!
@@ -81,7 +98,7 @@ type Campaign @entity {
   asset: Asset!
   "factory producing the campaign"
   factory: Factory!
-  "hardcoded chain id"
+  "hardcoded chainId"
   chainId: BigInt!
   "transaction hash for the campaign creation"
   hash: Bytes!
@@ -139,14 +156,14 @@ type Campaign @entity {
 }
 
 type Factory @entity {
-  "unique identifier resolving to contract address, concatenated to the chainId"
+  "unique identifier resolving to contract address"
   id: String!
 
   "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
   alias: String!
   "address of the contract"
   address: Bytes!
-  "hardcoded chain id"
+  "hardcoded chainId"
   chainId: BigInt!
 
   "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
@@ -156,27 +173,10 @@ type Factory @entity {
   campaigns: [Campaign!]! @derivedFrom(field: "factory")
 }
 
-type Activity @entity {
-  "unique identifier resolving to the string 'activity' concatenated with the campaign id and the day of the snapshot"
-  id: String!
-  "campaign the activity (day) is linked to"
-  campaign: Campaign!
-
-  "timestamp for the start of the day"
-  timestamp: BigInt!
-  "day index (UNIX time / 24 * 60 * 60)"
-  day: BigInt!
-
-  "amount claimed during the day"
-  amount: BigInt!
-  "number of claims completed during the day"
-  claims: BigInt!
-}
-
 type Watcher @entity {
   "unique identifier for the watcher, resolving to the chainId - there is only one watcher for the entire subgraph"
   id: String!
-  "hardcoded chain id"
+  "hardcoded chainId"
   chainId: BigInt!
   "global index for actions"
   actionIndex: BigInt!

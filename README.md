@@ -68,29 +68,29 @@ We'll ensure contracts have been [initialized](./src/helpers/watcher.ts) by maki
 start of each method. It should only come into play within the [create](./src/mappings/handle-stream-create.ts)
 handlers.
 
-## Differences
+## Differences with ENVIO
 
-- The `Action` entity won't have a `from` value (the Envio event does not expose it).
+Due to the cross-chain indexing aspect, entities in Envio will need to have a chainId suffix attached to them to ensure
+they're unique across the board. At the same time, there are some minor features missing, which will cause some
+differences listed below.
+
+- For Envio indexers, some entities will have different identifiers (from what The Graph's subgraph have):
+  1.  `protocol-envio`: the `Action`, `Asset`, `Batch`, `Batcher`, `Contract` have a `-chainId` appended to the ID
+  2.  `merkle-envio`: the `Action`, `Asset` and `Factory` have a `-chainId` appended to the ID
+- The `Action` entity won't have a proper `from` value (the Envio event does not expose it, so we temporarily bind it to
+  the admin).
 - The `Withdraw` action won't have an `addressA` because `event.transaction.from` is not provided
 - The `arbitrum-sepolia` network isn't supported
 - Experimental setups will have to be reconsidered (probably through separate indexers, with single network configs)
 
 ---
 
-## CHANGELOG 01/2024 (Informal)
+## Changelog 01/2024 (Informal)
 
-To keep entities consistent, the following changes have been applies to subgraphs:
+To keep entities consistent, the following changes have been applies to The Graph subgraphs:
 
-- `protocol`: The `Action` entity id received a chainId middle part
-- `protocol`: The `Asset` entity id received a chainId suffix
-- `protocol`: The `Batch` entity id received a chainId suffix
-- `protocol`: The `Batcher` entity id received a chainId suffix
-- `protocol`: The `Contract` entity id received a chainId suffix
 - `protocol`: The `Watcher` entity id is now the chainId
-- `merkle`: The `Action` entity id received a chainId middle part
-- `merkle`: The `Activity` entity id swapped the campaign address for a campaign id (includes chainId)
-- `merkle`: The `Asset` entity id received a chainId suffix
-- `merkle`: The `Factory` entity id received a chainId suffix
+- `merkle`: The `Activity` entity id the campaign id (includes chainId) for its own id structure
 - `merkle`: The `Factory` entity received a chainId parameter
 - `merkle`: The `Watcher` entity id is now the chainId
 - `merkle`: The `Campaign` and `Factory` entities now contain a version parameter.

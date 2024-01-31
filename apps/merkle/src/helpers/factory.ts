@@ -29,8 +29,5 @@ export function createFactory(address: Address, alias: string): Factory {
 /** --------------------------------------------------------------------------------------------------------- */
 
 export function generateFactoryId(address: Address): string {
-  return ""
-    .concat(address.toHexString())
-    .concat("-")
-    .concat(getChainId().toString());
+  return "".concat(address.toHexString());
 }

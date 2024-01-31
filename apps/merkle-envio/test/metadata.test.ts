@@ -94,11 +94,13 @@ describe("Campaign  0x9c...6531 (Sepolia)", () => {
     const received = cleanup.metadata(
       await Envio(getMetadata_ByCampaign_Envio, variables),
       SKIP_CLEANUP,
+      "Envio",
     );
 
     const expected = cleanup.metadata(
       await TheGraph(getMetadata_ByCampaign_TheGraph, variables),
       SKIP_CLEANUP,
+      "TheGraph",
     );
 
     expect({

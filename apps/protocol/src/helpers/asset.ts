@@ -69,8 +69,5 @@ function getAssetName(address: Address): string {
 /** --------------------------------------------------------------------------------------------------------- */
 
 export function generateAssetId(address: Address): string {
-  return ""
-    .concat(address.toHexString())
-    .concat("-")
-    .concat(getChainId().toString());
+  return "".concat(address.toHexString());
 }

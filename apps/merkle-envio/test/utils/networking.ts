@@ -1,6 +1,12 @@
 import { endpoint } from "./constants";
 import { GraphQLClient } from "graphql-request";
 
+function _replacer(_k: string, v: unknown) {
+  return typeof v === "number"
+    ? v.toLocaleString("en-US", { useGrouping: false })
+    : v;
+}
+
 export async function request(
   endpoint: string,
   document: string,
@@ -23,7 +29,7 @@ export async function request(
 function toEnvio<T>(response: T) {
   if (!(response instanceof Error)) {
     if (response && typeof response === "object") {
-      return reformat(response) as T;
+      return reformat(JSON.parse(JSON.stringify(response, _replacer))) as T;
     }
   }
 
@@ -31,7 +37,7 @@ function toEnvio<T>(response: T) {
 }
 
 function toTheGraph<T>(response: T) {
-  return response;
+  return JSON.parse(JSON.stringify(response, _replacer)) as T;
 }
 
 export async function Envio(
