@@ -51,11 +51,11 @@ const getCampaigns_TheGraph = gql/* GraphQL */ `
 `;
 
 describe("Campaigns (Sepolia)", () => {
-  test("First 10 results before subgraphId are the same", async () => {
+  test("First 100 results before subgraphId are the same", async () => {
     const variables = {
-      first: 10,
+      first: 100,
       skip: 0,
-      subgraphId: 30,
+      subgraphId: 99999,
       chainId: 11155111,
     } as const;
 

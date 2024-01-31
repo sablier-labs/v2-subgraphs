@@ -34,6 +34,7 @@ export type Stream = object & {
   contract?: Contract;
   from: string | undefined;
   actions?: Action[];
+  segments?: (object & { id: string; position: string | number })[];
 };
 
 export type Streams = { streams: Stream[] };
@@ -170,6 +171,12 @@ export function cleanup_stream(
 
   if (value.contract) {
     value.contract = cleanup_contract(value.contract, skip, vendor);
+  }
+
+  if (value.segments) {
+    value.segments = value.segments.sort((a, b) =>
+      String(a.position).localeCompare(String(b.position)),
+    );
   }
 
   if (value.actions?.length) {

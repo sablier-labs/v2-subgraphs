@@ -59,9 +59,9 @@ const getStreams_TheGraph = gql/* GraphQL */ `
 describe("Streams (Sepolia)", () => {
   test("First 10 results before subgraphId are the same", async () => {
     const variables = {
-      first: 10,
-      skip: 0,
-      subgraphId: 30,
+      first: 100,
+      skip: 20,
+      subgraphId: 999999,
       chainId: 11155111,
     } as const;
 

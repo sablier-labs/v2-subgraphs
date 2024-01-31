@@ -76,32 +76,35 @@ function createStream(
   /** --------------- */
 
   const post_batch = (() => {
-    if (batch.size === 0n) {
+    const size = BigInt(batch.size) + 1n;
+
+    if (batch.size === 1n && !batch.label) {
+      /**
+       * If the batch already has its first element (now adding the second),
+       * assign it a label and bump the batcher's index
+       */
+      const index = BigInt(batcher.batchIndex) + 1n;
+      const label = index.toString();
+
       return {
         batch: {
           ...batch,
-          size: BigInt(batch.size) + 1n,
+          label,
+          size,
         },
-        batcher: batcher,
+        batcher: {
+          ...batcher,
+          batchIndex: index,
+        },
       };
     }
-    /**
-     * If the batch already has content,
-     * assign it a label and bump the batcher's index
-     */
-
-    const label = (BigInt(batcher.batchIndex) + 1n).toString();
 
     return {
       batch: {
         ...batch,
-        label,
-        size: BigInt(batch.size) + 1n,
+        size,
       },
-      batcher: {
-        ...batcher,
-        batchIndex: BigInt(batcher.batchIndex) + 1n,
-      },
+      batcher,
     };
   })();
 
