@@ -110,6 +110,17 @@ contracts:
           - name: Stream
           - name: Watcher
 networks:
+  - id: 1
+    start_block: 17613130
+    contracts:
+      - name: LockupV20
+        address:
+          - 0xb10daee1fcf62243ae27776d7a92d39dc8740f95
+          - 0x39efdc3dbb57b2388ccc4bb40ac4cb1226bc9e44
+      - name: LockupV21
+        address:
+          - 0xafb979d9afad1ad27c5eff4e27226e3ab9e5dcc9
+          - 0x7cc7e125d83a581ff438608490cc0f7bdff79127
   - id: 11155111
     start_block: 4067889
     contracts:

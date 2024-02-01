@@ -14,6 +14,7 @@ const getStreams_Envio = gql/* GraphQL */ `
     Stream(
       limit: $first
       offset: $skip
+      distinct_on: [subgraphId]
       order_by: { subgraphId: desc }
       where: {
         _and: [
@@ -75,6 +76,10 @@ describe("Streams (Sepolia)", () => {
       await TheGraph(getStreams_TheGraph, variables),
       SKIP_CLEANUP,
       "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
     );
 
     expect(received.streams.length).toBeGreaterThan(0);

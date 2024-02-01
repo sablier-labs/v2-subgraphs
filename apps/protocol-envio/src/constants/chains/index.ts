@@ -22,7 +22,7 @@ const filter = (list: string[][], version: string) => {
 };
 
 export const chains = () => {
-  const list = [
+  const _list = [
     arbitrum,
     avalanche,
     base,
@@ -35,7 +35,9 @@ export const chains = () => {
     sepolia,
   ] as const;
 
-  /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine #1 */
+  const list = [mainnet, sepolia] as const;
+
+  /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
 
   return list.map((item) => ({
     id: item.chainId,

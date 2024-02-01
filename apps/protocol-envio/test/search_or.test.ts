@@ -17,6 +17,7 @@ const getStreams_BySender_Or_ByRecipient_Or_ByToken_Envio = gql/* GraphQL */ `
     Stream(
       limit: $first
       offset: $skip
+      distinct_on: [subgraphId]
       order_by: { subgraphId: desc }
       where: {
         _or: [
@@ -123,6 +124,10 @@ describe("Streams Search (Sepolia)", () => {
       ),
       SKIP_CLEANUP,
       "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
     );
 
     expect(received.streams.length).toBeGreaterThan(0);

@@ -15,6 +15,7 @@ const getCampaigns_Envio = gql/* GraphQL */ `
     Campaign(
       limit: $first
       offset: $skip
+      distinct_on: [subgraphId]
       order_by: { subgraphId: desc }
       where: {
         _and: [
@@ -71,6 +72,12 @@ describe("Campaigns (Sepolia)", () => {
       "TheGraph",
     );
 
+    console.info(
+      `Comparing ${received.campaigns.length}, ${expected.campaigns.length} results.`,
+    );
+
+    expect(received.campaigns.length).toBeGreaterThan(0);
+    expect(received.campaigns.length).toEqual(expected.campaigns.length);
     expect(received.campaigns).toEqual(expected.campaigns);
   });
 });
