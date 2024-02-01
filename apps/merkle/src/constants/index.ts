@@ -34,9 +34,6 @@ export function getChainId(): BigInt {
   return BigInt.fromI32(chainId);
 }
 
-export const ABI_CREATE_MERKLE_STREAMER_LL =
-  "(address,address,address,bytes32,uint40,(uint40,uint40),bool,bool,string,uint256,uint256)";
-
 export function log_exit(message: string, dependencies: string[] = []): void {
   log.debug(`[SABLIER] ${message}`, dependencies);
   log.error(`[SABLIER] ${message}`, dependencies);

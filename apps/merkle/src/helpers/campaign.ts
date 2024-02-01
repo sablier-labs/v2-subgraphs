@@ -1,8 +1,7 @@
-import { Address, ByteArray, Bytes, ethereum } from "@graphprotocol/graph-ts";
+import { Address } from "@graphprotocol/graph-ts";
 import { Campaign } from "../generated/types/schema";
 import { CreateMerkleStreamerLL as EventCreateCampaignLL } from "../generated/types/templates/ContractMerkleStreamerFactory/SablierV2MerkleStreamerFactory";
 import {
-  ABI_CREATE_MERKLE_STREAMER_LL,
   StreamVersion_V21,
   getChainId,
   log_exit,
@@ -45,6 +44,7 @@ export function createCampaignLinear(
   entity.expires = !event.params.expiration.isZero();
   entity.expiration = event.params.expiration;
 
+  entity.root = event.params.merkleRoot;
   entity.ipfsCID = event.params.ipfsCID;
   entity.aggregateAmount = event.params.aggregateAmount;
   entity.totalRecipients = event.params.recipientsCount;
@@ -65,11 +65,6 @@ export function createCampaignLinear(
   entity.version = StreamVersion_V21;
 
   /** --------------- */
-
-  let inputs = _decodeInputs(event);
-  if (inputs && inputs[3].kind === ethereum.ValueKind.FIXED_BYTES) {
-    entity.root = inputs[3].toBytes();
-  }
 
   /** --------------- */
   let factory = getFactoryByAddress(event.address);
@@ -99,33 +94,4 @@ export function generateCampaignId(address: Address): string {
     .concat(getChainId().toString());
 
   return id;
-}
-
-/**
- * https://medium.com/@r2d2_68242/indexing-transaction-input-data-in-a-subgraph-6ff5c55abf20
- * https://github.com/rust-ethereum/ethabi
- * https://ethereum.stackexchange.com/questions/114582/the-graph-nodes-cant-decode-abi-encoded-data-containing-arrays
- */
-
-function _decodeInputs(event: EventCreateCampaignLL): ethereum.Tuple | null {
-  let encoded = event.transaction.input;
-  let sliced = encoded.subarray(4); // Remove the 0x prefix and the function signature bytes
-
-  let prefix = ByteArray.fromHexString(
-    "0x0000000000000000000000000000000000000000000000000000000000000020",
-  );
-
-  let input = new Uint8Array(prefix.length + sliced.length);
-  input.set(prefix, 0);
-  input.set(sliced, prefix.length);
-
-  let decoded = ethereum.decode(
-    ABI_CREATE_MERKLE_STREAMER_LL,
-    Bytes.fromUint8Array(input),
-  );
-
-  if (decoded == null) {
-    return null;
-  }
-  return decoded.toTuple();
 }
