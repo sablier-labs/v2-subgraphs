@@ -22,7 +22,6 @@ export const ActionCategory = {
 } as const;
 
 export const CacheCategory = {
-  Root: "root",
   Token: "token",
 } as const;
 

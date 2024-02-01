@@ -10,7 +10,6 @@ import type {
 } from "../types";
 
 import { StreamCategory, StreamVersion } from "../constants";
-import { bindRoot } from "./root";
 
 type Entity = Partial<Mutable<Campaign>>;
 
@@ -90,6 +89,7 @@ export async function createLinearCampaign(
     admin: event.params.admin.toLowerCase(),
     lockup: event.params.lockupLinear.toLowerCase(),
     /** --------------- */
+    root: event.params.merkleRoot,
     ipfsCID: event.params.ipfsCID,
     aggregateAmount: BigInt(event.params.aggregateAmount),
     totalRecipients: BigInt(event.params.recipientsCount),
@@ -109,13 +109,9 @@ export async function createLinearCampaign(
   const partAsset = { asset: asset.id } satisfies Entity;
 
   /** --------------- */
-  const partRoot = await bindRoot(entity);
-
-  /** --------------- */
   const campaign: Campaign = {
     ...entity,
     ...partAsset,
-    ...partRoot,
   };
 
   return {

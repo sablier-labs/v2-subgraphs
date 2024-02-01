@@ -5,7 +5,6 @@ import { CacheCategory } from "../constants";
 import { Address } from "../types";
 
 type Shape = Record<string, Record<string, string>>;
-type ShapeRoot = Shape & Record<Address, { hash: string }>;
 
 type ShapeToken = Shape &
   Record<Address, { decimals: string; name: string; symbol: string }>;
@@ -19,7 +18,7 @@ export class Cache {
       throw new Error("Unsupported cache category");
     }
 
-    type S = C extends "token" ? ShapeToken : ShapeRoot;
+    type S = ShapeToken;
     const entry = new Entry<S>(`${category}-${chainId.toString()}`);
     return entry;
   }

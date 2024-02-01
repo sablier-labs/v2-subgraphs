@@ -62,7 +62,7 @@ networks:
     contracts:
       - name: MerkleLockupFactoryV21
         address:
-          - 0x9bdebf4f9adeb99387f46e4020fbf3dda885d2b8
+          - 0x1a272b596b10f02931480bc7a3617db4a8d154e3
       - name: MerkleLLV21
   - id: 10
     start_block: 113621900
