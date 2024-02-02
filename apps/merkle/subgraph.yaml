@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ContractInitializer
-    network: sepolia
+    network: optimism-sepolia
     source:
-      address: "0xbacc1d151a78eed71d504f701c25e8739dc0262d"
+      address: "0x9b6cC73522f22Ad3f2F8187e892A51b95f1A0E8a"
       abi: SablierV2MerkleStreamerFactory
-      startBlock: 4904890
+      startBlock: 7452580
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -35,7 +35,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: ContractMerkleStreamerFactory
-    network: sepolia
+    network: optimism-sepolia
     source:
       abi: SablierV2MerkleStreamerFactory
     mapping:
@@ -66,7 +66,7 @@ templates:
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
     name: ContractMerkleStreamerLL
-    network: sepolia
+    network: optimism-sepolia
     source:
       abi: SablierV2MerkleStreamerLL
     mapping:

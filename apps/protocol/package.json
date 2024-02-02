@@ -14,8 +14,8 @@
     "babel-register": "^6.26.0"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.60.0",
-    "@graphprotocol/graph-ts": "^0.31.0",
+    "@graphprotocol/graph-cli": "^0.67.2",
+    "@graphprotocol/graph-ts": "^0.32.0",
     "@trivago/prettier-plugin-sort-imports": "4.1.0",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
@@ -64,6 +64,7 @@
     "deploy-studio:mainnet": "CHAIN=mainnet yarn setup && NAME=sablier-v2-mainnet yarn deploy-studio",
     "deploy-studio:polygon": "CHAIN=polygon yarn setup && NAME=sablier-v2-polygon yarn deploy-studio",
     "deploy-studio:scroll": "CHAIN=scroll yarn setup && NAME=sablier-v2-scroll yarn deploy-studio",
+    "deploy-studio:optimism-sepolia": "CHAIN=scroll yarn setup && NAME=sablier-v2-optimism-sepolia yarn deploy-studio",
     "lint-check": "eslint --ignore-path ../../.eslintignore .",
     "lint-fix": "eslint --fix --ignore-path ../../.eslintignore .",
     "prettier-check": "yarn prettier $npm_package_config_flags_prettier --check .",
@@ -78,6 +79,7 @@
     "setup:gnosis": "yarn clean-generated && CHAIN=gnosis yarn setup",
     "setup:mainnet": "yarn clean-generated && CHAIN=mainnet yarn setup",
     "setup:optimism": "yarn clean-generated && CHAIN=optimism yarn setup",
+    "setup:optimism-sepolia": "yarn clean-generated && CHAIN=optimism-sepolia yarn setup",
     "setup:polygon": "yarn clean-generated && CHAIN=polygon yarn setup",
     "setup:scroll": "yarn clean-generated && CHAIN=scroll yarn setup",
     "setup:sepolia": "yarn clean-generated && CHAIN=sepolia yarn setup",
