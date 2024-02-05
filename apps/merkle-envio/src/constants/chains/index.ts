@@ -41,6 +41,7 @@ export const chains = () => {
     start_block: item.startBlock,
     V21: {
       factory: filter(item.factory, "V21"),
+      merkleLLV21: filter(item.merkleLLV21, "V21"),
     },
   }));
 };

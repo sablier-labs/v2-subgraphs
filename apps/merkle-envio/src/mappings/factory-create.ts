@@ -26,7 +26,8 @@ function loader(input: CreateLinearLoader) {
   context.Factory.load(factoryId);
   context.Watcher.load(watcherId);
 
-  context.contractRegistration.addMerkleLLV21(event.params.merkleStreamer);
+  // TODO: uncomment when next version is stable. In version 0.0.29 of envio - dynamic contracts sometimes mis-behave (especially when there are multiple in the same batch).
+  // context.contractRegistration.addMerkleLLV21(event.params.merkleStreamer);
 }
 
 async function handlerLinear(input: CreateLinearHandler) {

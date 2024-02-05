@@ -13,6 +13,8 @@ export let factory: string[][] = [
   ["0x434d73465aac4125d204a6637eb6c579d8d69f48", "MSF2", "V21"],
 ];
 
+export const merkleLLV21: string[][] = [];
+
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.
  * It should be a linear contract, the oldest/first one deployed on this chain.

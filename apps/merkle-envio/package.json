@@ -33,7 +33,8 @@
     "template": "pnpm template-chain && pnpm template-config",
     "template-chain": "tsc --skipLibCheck $npm_package_config_dir_chains/index.ts --outDir $npm_package_config_dir_generated",
     "template-config": "mustache $npm_package_config_dir_generated/index.js config.template.mustache > config.yaml",
-    "test": "pnpm jest"
+    "test": "pnpm jest",
+    "loggg": "cd $npm_package_config_dir_generated/ ; pwd ; ls -la ; cd -"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.1.0",

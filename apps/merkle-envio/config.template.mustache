@@ -39,4 +39,7 @@ networks:
           - {{address}}
           {{/V21.factory}}
       - name: MerkleLLV21
+        address: {{#V21.merkleLLV21}}
+          - {{address}}
+          {{/V21.merkleLLV21}}{{^V21.merkleLLV21}} []{{/V21.merkleLLV21}}
    {{/chains}}
