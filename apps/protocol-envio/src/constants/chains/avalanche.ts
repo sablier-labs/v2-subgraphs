@@ -29,14 +29,3 @@ export let registry = "0x584009e9ede26e212182c9745f5c000191296a78";
  */
 
 export let initializer = linear[0][0];
-
-/**
- *
- *
- *
- * TODO V2
- *
- *
- *
- *
- */

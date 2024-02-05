@@ -36,7 +36,7 @@ function createSegment(
     endTime: current.milestone,
 
     startAmount: streamed,
-    endAmount: streamed + current.amount,
+    endAmount: BigInt(streamed) + BigInt(current.amount),
   } satisfies Entity;
 
   return entity;

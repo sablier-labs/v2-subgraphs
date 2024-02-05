@@ -1,61 +1,10 @@
 import { gql } from "graphql-request";
-import * as F from "./utils/fragments";
-import { Envio, TheGraph } from "./utils/networking";
-import { cleanup } from "./utils/cleanup";
-import { SKIP_CLEANUP } from "./utils/constants";
-
-const getStreams_Envio = gql/* GraphQL */ `
-  query getStreams(
-    $first: Int!
-    $skip: Int!
-    $chainId: numeric!
-    $subgraphId: numeric!
-  ) {
-    Stream(
-      limit: $first
-      offset: $skip
-      distinct_on: [subgraphId]
-      order_by: { subgraphId: desc }
-      where: {
-        _and: [
-          { chainId: { _eq: $chainId } }
-          { subgraphId: { _lt: $subgraphId } }
-        ]
-      }
-    ) {
-      ...StreamFragment
-    }
-  }
-  ${F.AssetFragment_Envio}
-  ${F.BatchFragment_Envio}
-  ${F.ContractFragment_Envio}
-  ${F.SegmentFragment_Envio}
-  ${F.StreamFragment_Envio}
-`;
-
-const getStreams_TheGraph = gql/* GraphQL */ `
-  query getStreams(
-    $first: Int!
-    $skip: Int!
-    $chainId: BigInt!
-    $subgraphId: BigInt!
-  ) {
-    streams(
-      first: $first
-      skip: $skip
-      orderBy: subgraphId
-      orderDirection: desc
-      where: { subgraphId_lt: $subgraphId }
-    ) {
-      ...StreamFragment
-    }
-  }
-  ${F.AssetFragment_TheGraph}
-  ${F.BatchFragment_TheGraph}
-  ${F.ContractFragment_TheGraph}
-  ${F.SegmentFragment_TheGraph}
-  ${F.StreamFragment_TheGraph}
-`;
+import * as F from "./setup/fragments";
+import { Envio, TheGraph } from "./setup/networking";
+import { cleanup } from "./setup/cleanup";
+import { SKIP_CLEANUP } from "./setup/constants";
+import * as envioQueries from "./setup/queries-envio";
+import * as theGraphQueries from "./setup/queries-the-graph";
 
 describe("Streams (Sepolia)", () => {
   test("First 10 results before subgraphId are the same", async () => {
@@ -67,13 +16,645 @@ describe("Streams (Sepolia)", () => {
     } as const;
 
     const received = cleanup.streams(
-      await Envio(getStreams_Envio, variables),
+      await Envio(envioQueries.getStreams, variables),
       SKIP_CLEANUP,
       "Envio",
     );
 
     const expected = cleanup.streams(
-      await TheGraph(getStreams_TheGraph, variables),
+      await TheGraph(theGraphQueries.getStreams, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender and recipient and ids and token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+      streamIds: [
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-610",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-611",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-612",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-613",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-614",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-70",
+      ],
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(
+        envioQueries.getStreams_BySenderByRecipientByIdsByToken,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(
+        theGraphQueries.getStreams_BySenderByRecipientByIdsByToken,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender or recipient or token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(
+        envioQueries.getStreams_BySender_Or_ByRecipient_Or_ByToken,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(
+        theGraphQueries.getStreams_BySender_Or_ByRecipient_Or_ByToken,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender and recipient and ids yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+      streamIds: [
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-610",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-611",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-612",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-613",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-614",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-70",
+      ],
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_BySenderByRecipientByIds, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(
+        theGraphQueries.getStreams_BySenderByRecipientByIds,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender and ids and token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+      streamIds: [
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-610",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-611",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-612",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-613",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-614",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-70",
+      ],
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_BySenderByIdsByToken, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(
+        theGraphQueries.getStreams_BySenderByIdsByToken,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by recipient and ids and token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+      streamIds: [
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-610",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-611",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-612",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-613",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-614",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-70",
+      ],
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_ByRecipientByIdsByToken, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(
+        theGraphQueries.getStreams_ByRecipientByIdsByToken,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender and recipient and token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(
+        envioQueries.getStreams_BySenderByRecipientByToken,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(
+        theGraphQueries.getStreams_BySenderByRecipientByToken,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter recipient and ids yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      streamIds: [
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-610",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-611",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-612",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-613",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-614",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-70",
+      ],
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_ByRecipientByIds, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_ByRecipientByIds, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender and ids yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+      streamIds: [
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-610",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-611",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-612",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-613",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-614",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-70",
+      ],
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_BySenderByIds, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_BySenderByIds, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender and recipient yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_BySenderByRecipient, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_BySenderByRecipient, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by ids and token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+      streamIds: [
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-610",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-611",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-612",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-613",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-614",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-70",
+      ],
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_ByIdsByToken, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_ByIdsByToken, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by recipient and token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_ByRecipientByToken, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_ByRecipientByToken, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender and token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_BySenderByToken, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_BySenderByToken, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender or recipient yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_BySender_Or_ByRecipient, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(
+        theGraphQueries.getStreams_BySender_Or_ByRecipient,
+        variables,
+      ),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by sender yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_BySender, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_BySender, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by recipient yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_ByRecipient, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_ByRecipient, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by ids yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      streamIds: [
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-610",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-611",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-612",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-613",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-614",
+        "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-70",
+      ],
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_ByIds, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_ByIds, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("Filter by token yields the same results", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      subgraphId: 999999,
+      chainId: 11155111,
+      token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_ByToken, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_ByToken, variables),
       SKIP_CLEANUP,
       "TheGraph",
     );

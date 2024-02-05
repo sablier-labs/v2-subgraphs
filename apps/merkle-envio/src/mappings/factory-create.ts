@@ -67,7 +67,7 @@ async function handlerLinear(input: CreateLinearHandler) {
     category: ActionCategory.Create,
     campaign: campaign.id,
 
-    from: event.params.admin.toLowerCase(), // TODO missing event.transaction.from, remove when available
+    from: event.txOrigin?.toLowerCase(),
   };
 
   /** ------- Update -------- */

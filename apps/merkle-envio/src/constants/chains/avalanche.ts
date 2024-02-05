@@ -20,14 +20,3 @@ export let factory: string[][] = [
  */
 
 export let initializer = factory[0][0];
-
-/**
- *
- *
- *
- * TODO V2
- *
- *
- *
- *
- */

@@ -19,6 +19,7 @@ export type Action = object & {
   claimIndex: string | undefined;
   claimTokenId: string | undefined;
   clawbackAmount: string | undefined;
+  campaign?: Campaign;
   from: string | undefined;
 };
 
@@ -31,10 +32,12 @@ export type Campaign = object & {
 };
 
 export type Campaigns = { campaigns: Campaign[] };
+export type Actions = { actions: Action[] };
 export type Metadata = { campaign: Campaign; actions: Action[] };
 
 export const cleanup = {
   action: cleanup_action,
+  actions: cleanup_actions,
   asset: cleanup_asset,
   campaign: cleanup_campaign,
   campaigns: cleanup_campaigns,
@@ -96,8 +99,29 @@ export function cleanup_action(
     value.id = value.id.substring(0, value.id.lastIndexOf("-"));
   }
 
+  if (value.campaign) {
+    value.campaign = cleanup_campaign(value.campaign, skip, vendor);
+  }
   /** From values are inconclusive */
   delete value.from;
+
+  return value;
+}
+
+export function cleanup_actions(
+  source: unknown,
+  skip: boolean,
+  vendor?: Vendor,
+): Actions {
+  const value = { ...(source as Actions) };
+
+  if (skip) {
+    return value;
+  }
+
+  value.actions = value.actions.map((action) =>
+    cleanup_action(action, skip, vendor),
+  );
 
   return value;
 }
