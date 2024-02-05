@@ -6,11 +6,19 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ContractInitializer
+<<<<<<< HEAD
     network: optimism-sepolia
     source:
       address: "0xe59D28bEF2D37E99b93E734ed1dDcFc4B9C1bf73"
       abi: SablierV2LockupLinear
       startBlock: 7451810
+=======
+    network: mainnet
+    source:
+      address: "0x17c4f98c40e69a6A0D5c42B11E3733f076A99E20"
+      abi: SablierV2LockupLinear
+      startBlock: 63524900
+>>>>>>> 1c8c14e (feat: add lightlink subgraphs)
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -45,7 +53,15 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: ContractLockupLinear
+<<<<<<< HEAD
     network: optimism-sepolia
+=======
+<<<<<<< HEAD
+    network: optimism-sepolia
+=======
+    network: mainnet
+>>>>>>> 8e3edf4 (feat: add lightlink subgraphs)
+>>>>>>> 1c8c14e (feat: add lightlink subgraphs)
     source:
       abi: SablierV2LockupLinear
     mapping:
@@ -104,7 +120,15 @@ templates:
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
     name: ContractLockupDynamic
+<<<<<<< HEAD
     network: optimism-sepolia
+=======
+<<<<<<< HEAD
+    network: optimism-sepolia
+=======
+    network: mainnet
+>>>>>>> 8e3edf4 (feat: add lightlink subgraphs)
+>>>>>>> 1c8c14e (feat: add lightlink subgraphs)
     source:
       abi: SablierV2LockupDynamic
     mapping:
