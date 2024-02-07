@@ -1,86 +1,8 @@
-import { gql } from "graphql-request";
-import * as F from "./utils/fragments";
-import { Envio, TheGraph } from "./utils/networking";
-import { cleanup } from "./utils/cleanup";
-import { SKIP_CLEANUP } from "./utils/constants";
-
-const getMetadata_ByCampaign_Envio = gql/* GraphQL */ `
-  query getMetadata_ByCampaign(
-    $campaignId: String!
-    $campaignIdClone: String!
-    $dayFrom: numeric!
-    $dayTo: numeric!
-  ) {
-    Campaign(where: { id: { _eq: $campaignId } }) {
-      id
-      assetObject {
-        ...AssetFragment
-      }
-      activities(
-        limit: 7
-        where: { _and: [{ day: { _gte: $dayFrom, _lte: $dayTo } }] }
-      ) {
-        ...ActivityFragment
-      }
-      actions(limit: 5, order_by: { subgraphId: desc }) {
-        ...ActionFragment
-      }
-    }
-    Action(
-      limit: 10
-      order_by: { subgraphId: desc }
-      where: {
-        _and: [
-          { campaign: { _eq: $campaignIdClone } }
-          { category: { _eq: "Claim" } }
-        ]
-      }
-    ) {
-      ...ActionFragment
-    }
-  }
-  ${F.CampaignFragment_Envio}
-  ${F.ActionFragment_Envio}
-  ${F.ActivityFragment_Envio}
-  ${F.AssetFragment_Envio}
-  ${F.FactoryFragment_Envio}
-`;
-
-const getMetadata_ByCampaign_TheGraph = gql/* GraphQL */ `
-  query getMetadata_ByCampaign(
-    $campaignId: ID!
-    $campaignIdClone: String!
-    $dayFrom: BigInt!
-    $dayTo: BigInt!
-  ) {
-    campaign(id: $campaignId) {
-      id
-      asset {
-        ...AssetFragment
-      }
-      activities(first: 7, where: { day_gte: $dayFrom, day_lte: $dayTo }) {
-        ...ActivityFragment
-      }
-      actions(first: 5, orderBy: subgraphId, orderDirection: desc) {
-        ...ActionFragment
-      }
-    }
-    actions(
-      first: 10
-      orderBy: subgraphId
-      orderDirection: desc
-      where: { campaign: $campaignIdClone, category: Claim }
-    ) {
-      ...ActionFragment
-    }
-  }
-
-  ${F.CampaignFragment_TheGraph}
-  ${F.ActionFragment_TheGraph}
-  ${F.ActivityFragment_TheGraph}
-  ${F.AssetFragment_TheGraph}
-  ${F.FactoryFragment_TheGraph}
-`;
+import { Envio, TheGraph } from "./setup/networking";
+import { cleanup } from "./setup/cleanup";
+import { SKIP_CLEANUP } from "./setup/constants";
+import * as envioQueries from "./setup/queries-envio";
+import * as theGraphQueries from "./setup/queries-the-graph";
 
 describe("Campaign  0x9c...6531 (Sepolia)", () => {
   test("Metadata results are the same", async () => {
@@ -92,13 +14,13 @@ describe("Campaign  0x9c...6531 (Sepolia)", () => {
     } as const;
 
     const received = cleanup.metadata(
-      await Envio(getMetadata_ByCampaign_Envio, variables),
+      await Envio(envioQueries.getMetadata_ByCampaign, variables),
       SKIP_CLEANUP,
       "Envio",
     );
 
     const expected = cleanup.metadata(
-      await TheGraph(getMetadata_ByCampaign_TheGraph, variables),
+      await TheGraph(theGraphQueries.getMetadata_ByCampaign, variables),
       SKIP_CLEANUP,
       "TheGraph",
     );

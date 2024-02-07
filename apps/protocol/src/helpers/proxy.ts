@@ -10,6 +10,12 @@ export function bindProxyOwner(stream: Stream): Stream {
     return stream;
   }
 
+  let registryValidation = getContractRegistry();
+  if (!registryValidation || registryValidation.length === 0) {
+    stream.proxied = false;
+    return stream;
+  }
+
   let proxy = PRBProxyContract.bind(Address.fromBytes(stream.sender));
 
   let owner = proxy.try_owner();

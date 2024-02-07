@@ -66,8 +66,6 @@ async function handlerLinear(input: CreateLinearHandler) {
     ...post_action.entity,
     category: ActionCategory.Create,
     campaign: campaign.id,
-
-    from: event.params.admin.toLowerCase(), // TODO missing event.transaction.from, remove when available
   };
 
   /** ------- Update -------- */

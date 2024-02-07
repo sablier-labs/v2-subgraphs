@@ -27,7 +27,7 @@
     "clean-modules": "rimraf node_modules",
     "clean-generated": "rimraf $npm_package_config_dir_generated && rimraf generated",
     "codegen": "envio codegen",
-    "dev": "pnpm run setup && UNSTABLE__TEMP_UNORDERED_HEAD_MODE=true && pnpm envio dev",
+    "dev": "pnpm run setup && UNSTABLE__TEMP_UNORDERED_HEAD_MODE=true && LOG_LEVEL=trace && pnpm envio dev",
     "setup": "pnpm clean && pnpm template && pnpm codegen",
     "start": "ts-node generated/src/Index.bs.js",
     "template": "pnpm template-chain && pnpm template-config",
@@ -54,7 +54,7 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "envio": "0.0.0-force-npm-publish-undefined-20240130123255-a8884de5",
+    "envio": " 0.0.30-beta.txOrigin",
     "viem": "1.16.6"
   }
 }

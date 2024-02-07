@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 0.0.0-force-npm-publish-undefined-20240130123255-a8884de5
-        version: 0.0.0-force-npm-publish-undefined-20240130123255-a8884de5
+        specifier: ' 0.0.30-beta.txOrigin'
+        version: 0.0.30-beta.txOrigin
       viem:
         specifier: 1.16.6
         version: 1.16.6(typescript@5.2.2)
@@ -1496,12 +1496,14 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /call-bind@1.0.5:
-    resolution: {integrity: sha512-C3nQxfFZxFRVoJoGKKI8y3MOEo129NQ+FgQ08iye+Mk4zNZZGdjfs06bVTr+DBSlA66Q2VEcMki/cUCP4SercQ==}
+  /call-bind@1.0.6:
+    resolution: {integrity: sha512-Mj50FLHtlsoVfRfnHaZvyrooHcrlceNZdL/QBvJJVd9Ta55qCQK0gs4ss2oZDeV9zFCs6ewzYgVE5yfVmfFpVg==}
+    engines: {node: '>= 0.4'}
     dependencies:
+      es-errors: 1.3.0
       function-bind: 1.1.2
-      get-intrinsic: 1.2.2
-      set-function-length: 1.2.0
+      get-intrinsic: 1.2.4
+      set-function-length: 1.2.1
     dev: false
 
   /callsites@3.1.0:
@@ -1707,11 +1709,12 @@ packages:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
 
-  /define-data-property@1.1.1:
-    resolution: {integrity: sha512-E7uGkTzkk1d0ByLeSc6ZsFS79Axg+m1P/VsgYsxHgiuc3tFSj+MjMIwe90FC4lOAZzNBdY7kkO2P2wKdsQ1vgQ==}
+  /define-data-property@1.1.2:
+    resolution: {integrity: sha512-SRtsSqsDbgpJBbW3pABMCOt6rQyeM8s8RiyeSN8jYG8sYmt/kGJejbydttUsnDs1tadr19tvhT4ShwMyoqAm4g==}
     engines: {node: '>= 0.4'}
     dependencies:
-      get-intrinsic: 1.2.2
+      es-errors: 1.3.0
+      get-intrinsic: 1.2.4
       gopd: 1.0.1
       has-property-descriptors: 1.0.1
     dev: false
@@ -1782,28 +1785,37 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@0.0.0-force-npm-publish-undefined-20240130123255-a8884de5:
-    resolution: {integrity: sha512-XH5jEAl8VKCIRz50Z6JDpaVonFs7wjaYJloEcJK9pK0AUDT8XyslSiEb79/asPjMzkSlY2hzp8IwCB6sNvtrog==}
+  /envio-darwin-arm64@0.0.30-beta.txOrigin:
+    resolution: {integrity: sha512-rnUYfhbUIfBLRvdKK4LWtZmnuUug40cI0e28HhT+etGAvr1Kw+RYxP8UZqTzPVHWxZqDiEOYiYrPMVaqZm/WDA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-x64@0.0.0-force-npm-publish-undefined-20240130123255-a8884de5:
-    resolution: {integrity: sha512-CZy5LxPPgYovuf5mgHMpSbWcn45L9gvu1MPL85w+vSrmLnhsOPsRCyiqgJ5iBJYLaI9LLqC+Q+PSga+ibCnYqA==}
+  /envio-darwin-x64@0.0.30-beta.txOrigin:
+    resolution: {integrity: sha512-TMjYdThECJPF3a1YtyXZ+2kleGHjjUbhh3DYlmA7siFjhntRnVQdaP7tK2FCV6YuO9ZT1ZPvNpah8xAwUBRf6Q==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /envio-linux-x64@0.0.30-beta.txOrigin:
+    resolution: {integrity: sha512-zMPh+zVoEMcFsPewyZOMcYDPYfWUDCKNnmCb/YzL3FFrOiyli4R4md9wCbHFuypwjs+gONxI7A+uSgAB0iCZjA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio@0.0.0-force-npm-publish-undefined-20240130123255-a8884de5:
-    resolution: {integrity: sha512-HGJF15iVdKYTjkD2QKwmJFq6qbBHEzT+KOpn1eF61aNLzskoP1m+dhRsw1DxQPkGzLNvbmaBtOUeqWZfyCJDwQ==}
+  /envio@0.0.30-beta.txOrigin:
+    resolution: {integrity: sha512-qh3JAoSaFIWL/Vtj0JBBut4EjWloK/D4U/AM6t47UsqawYtszimkPb7GpjAKRl4R9Y8h+FQqGhAeTXUn1Roscg==}
     hasBin: true
     optionalDependencies:
-      envio-darwin-arm64: 0.0.0-force-npm-publish-undefined-20240130123255-a8884de5
-      envio-linux-x64: 0.0.0-force-npm-publish-undefined-20240130123255-a8884de5
+      envio-darwin-arm64: 0.0.30-beta.txOrigin
+      envio-darwin-x64: 0.0.30-beta.txOrigin
+      envio-linux-x64: 0.0.30-beta.txOrigin
     dev: false
 
   /error-ex@1.3.2:
@@ -1811,6 +1823,11 @@ packages:
     dependencies:
       is-arrayish: 0.2.1
     dev: true
+
+  /es-errors@1.3.0:
+    resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}
+    engines: {node: '>= 0.4'}
+    dev: false
 
   /escalade@3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -2225,9 +2242,11 @@ packages:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
     engines: {node: 6.* || 8.* || >= 10.*}
 
-  /get-intrinsic@1.2.2:
-    resolution: {integrity: sha512-0gSo4ml/0j98Y3lngkFEot/zhiCeWsbYIlZ+uZOVgzLyLaUw7wxUL+nCTP0XJvJg1AXulJRI3UJi8GsbDuxdGA==}
+  /get-intrinsic@1.2.4:
+    resolution: {integrity: sha512-5uYhsJH8VJBTv7oslg4BznJYhDoRI6waYCxMmCdnTrcCrHA/fCFKoTFz2JKKE0HdDFUF7/oQuhzumXJK7paBRQ==}
+    engines: {node: '>= 0.4'}
     dependencies:
+      es-errors: 1.3.0
       function-bind: 1.1.2
       has-proto: 1.0.1
       has-symbols: 1.0.3
@@ -2307,7 +2326,7 @@ packages:
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
-      get-intrinsic: 1.2.2
+      get-intrinsic: 1.2.4
     dev: false
 
   /graceful-fs@4.2.11:
@@ -2348,7 +2367,7 @@ packages:
   /has-property-descriptors@1.0.1:
     resolution: {integrity: sha512-VsX8eaIewvas0xnvinAe9bw4WfIeODpGYikiWYLH+dma0Jw6KHYqWiWfhQlgOVK8D6PvjubK5Uc4P0iIhIcNVg==}
     dependencies:
-      get-intrinsic: 1.2.2
+      get-intrinsic: 1.2.4
     dev: false
 
   /has-proto@1.0.1:
@@ -3512,7 +3531,7 @@ packages:
     resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
     engines: {node: '>=0.6'}
     dependencies:
-      side-channel: 1.0.4
+      side-channel: 1.0.5
     dev: false
 
   /queue-microtask@1.2.3:
@@ -3723,13 +3742,14 @@ packages:
       - supports-color
     dev: false
 
-  /set-function-length@1.2.0:
-    resolution: {integrity: sha512-4DBHDoyHlM1IRPGYcoxexgh67y4ueR53FKV1yyxwFMY7aCqcN/38M1+SwZ/qJQ8iLv7+ck385ot4CcisOAPT9w==}
+  /set-function-length@1.2.1:
+    resolution: {integrity: sha512-j4t6ccc+VsKwYHso+kElc5neZpjtq9EnRICFZtWyBsLojhmeF/ZBd/elqm22WJh/BziDe/SBiOeAt0m2mfLD0g==}
     engines: {node: '>= 0.4'}
     dependencies:
-      define-data-property: 1.1.1
+      define-data-property: 1.1.2
+      es-errors: 1.3.0
       function-bind: 1.1.2
-      get-intrinsic: 1.2.2
+      get-intrinsic: 1.2.4
       gopd: 1.0.1
       has-property-descriptors: 1.0.1
     dev: false
@@ -3750,11 +3770,13 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /side-channel@1.0.4:
-    resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
+  /side-channel@1.0.5:
+    resolution: {integrity: sha512-QcgiIWV4WV7qWExbN5llt6frQB/lBven9pqliLXfGPB+K9ZYXxDozp0wLkHS24kWCm+6YXH/f0HhnObZnZOBnQ==}
+    engines: {node: '>= 0.4'}
     dependencies:
-      call-bind: 1.0.5
-      get-intrinsic: 1.2.2
+      call-bind: 1.0.6
+      es-errors: 1.3.0
+      get-intrinsic: 1.2.4
       object-inspect: 1.13.1
     dev: false
 
