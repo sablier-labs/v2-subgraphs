@@ -4,6 +4,7 @@
 **/static
 **/generated
 
+apps/*/subgraph.yaml
 packages/*/subgraph.yaml
 
 # Node.js

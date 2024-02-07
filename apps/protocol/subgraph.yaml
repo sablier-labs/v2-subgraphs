@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ContractInitializer
-    network: scroll
+    network: optimism-sepolia
     source:
-      address: "0x80640ca758615ee83801ec43452feea09a202d33"
+      address: "0xe59D28bEF2D37E99b93E734ed1dDcFc4B9C1bf73"
       abi: SablierV2LockupLinear
-      startBlock: 284000
+      startBlock: 7451810
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -45,7 +45,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: ContractLockupLinear
-    network: scroll
+    network: optimism-sepolia
     source:
       abi: SablierV2LockupLinear
     mapping:
@@ -104,7 +104,7 @@ templates:
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
     name: ContractLockupDynamic
-    network: scroll
+    network: optimism-sepolia
     source:
       abi: SablierV2LockupDynamic
     mapping:
