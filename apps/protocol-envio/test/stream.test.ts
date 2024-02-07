@@ -695,7 +695,7 @@ describe("Streams (Sepolia)", () => {
     expect(received.streams).toEqual(expected.streams);
   });
 
-  test.only("First 29 subgraph aliases after the 1000 mark", async () => {
+  test("First 29 subgraph aliases after the 1000 mark", async () => {
     const variables = {
       first: 29,
       skip: 1300,
@@ -719,6 +719,53 @@ describe("Streams (Sepolia)", () => {
     );
 
     console.log(received.streams, expected.streams);
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test.only("All entries are the same", async () => {
+    const received = { streams: [] } as ReturnType<typeof cleanup.streams>;
+    const expected = { streams: [] } as ReturnType<typeof cleanup.streams>;
+
+    const variables = {
+      first: 1000,
+      skip: 0,
+      chainId: 11155111,
+    };
+
+    let done = false;
+
+    while (!done) {
+      const received_slice = cleanup.streams(
+        await Envio(envioQueries.getStreamAliases_Asc, variables),
+        SKIP_CLEANUP,
+        "Envio",
+      );
+
+      const expected_slice = cleanup.streams(
+        await TheGraph(theGraphQueries.getStreamAliases_Asc, variables),
+        SKIP_CLEANUP,
+        "TheGraph",
+      );
+
+      received.streams.push(...received_slice.streams);
+      expected.streams.push(...expected_slice.streams);
+
+      if (
+        received_slice.streams.length < variables.first &&
+        expected_slice.streams.length < variables.first
+      ) {
+        done = true;
+      } else {
+        variables.skip = variables.skip + variables.first;
+      }
+    }
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
 
     expect(received.streams.length).toBeGreaterThan(0);
     expect(received.streams.length).toEqual(expected.streams.length);
