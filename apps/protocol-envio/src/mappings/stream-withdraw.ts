@@ -45,7 +45,7 @@ function handler(input: WithdrawHandler) {
     stream: stream.id,
 
     /** --------------- */
-    addressA: event.txOrigin?.toLowerCase(),
+    addressA: event.txOrigin?.toLowerCase() || "",
     addressB: event.params.to.toLowerCase(),
     amountB: event.params.amount,
   };

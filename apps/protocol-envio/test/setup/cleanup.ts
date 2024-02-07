@@ -68,9 +68,6 @@ export function cleanup_action(
     value.contract = cleanup_contract(value.contract, skip, vendor);
   }
 
-  /** From values are inconclusive */
-  delete value.from;
-
   return value;
 }
 
@@ -174,6 +171,7 @@ export function cleanup_stream(
   }
 
   if (value.segments) {
+    /** Segments should be re-ordered */
     value.segments = value.segments.sort((a, b) =>
       String(a.position).localeCompare(String(b.position)),
     );
@@ -184,9 +182,6 @@ export function cleanup_stream(
       cleanup_action(action, skip, vendor),
     );
   }
-
-  /** From values are inconclusive */
-  delete value.from;
 
   return value;
 }

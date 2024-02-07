@@ -634,4 +634,53 @@ export const getStreams = gql/* GraphQL */ `
   ${F.SegmentFragment_TheGraph}
   ${F.StreamFragment_TheGraph}
 `;
-//
+
+export const getStreams_Asc = gql/* GraphQL */ `
+  query getStreams(
+    $first: Int!
+    $skip: Int!
+    $chainId: BigInt!
+    $subgraphId: BigInt!
+  ) {
+    streams(
+      first: $first
+      skip: $skip
+      orderBy: subgraphId
+      orderDirection: asc
+      where: { subgraphId_lt: $subgraphId }
+    ) {
+      ...StreamFragment
+    }
+  }
+  ${F.AssetFragment_TheGraph}
+  ${F.BatchFragment_TheGraph}
+  ${F.ContractFragment_TheGraph}
+  ${F.SegmentFragment_TheGraph}
+  ${F.StreamFragment_TheGraph}
+`;
+
+export const getStreamAliases = gql/* GraphQL */ `
+  query getStreamIds($first: Int!, $skip: Int!, $chainId: BigInt!) {
+    streams(
+      first: $first
+      skip: $skip
+      orderBy: subgraphId
+      orderDirection: desc
+    ) {
+      alias
+    }
+  }
+`;
+
+export const getStreamAliases_Asc = gql/* GraphQL */ `
+  query getStreamIds($first: Int!, $skip: Int!, $chainId: BigInt!) {
+    streams(
+      first: $first
+      skip: $skip
+      orderBy: subgraphId
+      orderDirection: asc
+    ) {
+      alias
+    }
+  }
+`;

@@ -37,7 +37,7 @@ export function createAction(event: Event, watcher_: Watcher) {
   const entity = {
     id,
     block: BigInt(event.blockNumber),
-    from: event.txOrigin?.toLowerCase(),
+    from: event.txOrigin?.toLowerCase() || "",
     hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
     subgraphId: watcher_.actionIndex,

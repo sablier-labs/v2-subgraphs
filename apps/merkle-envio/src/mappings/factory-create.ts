@@ -66,8 +66,6 @@ async function handlerLinear(input: CreateLinearHandler) {
     ...post_action.entity,
     category: ActionCategory.Create,
     campaign: campaign.id,
-
-    from: event.txOrigin?.toLowerCase(),
   };
 
   /** ------- Update -------- */

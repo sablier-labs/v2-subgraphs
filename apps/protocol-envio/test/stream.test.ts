@@ -1,5 +1,3 @@
-import { gql } from "graphql-request";
-import * as F from "./setup/fragments";
 import { Envio, TheGraph } from "./setup/networking";
 import { cleanup } from "./setup/cleanup";
 import { SKIP_CLEANUP } from "./setup/constants";
@@ -7,10 +5,10 @@ import * as envioQueries from "./setup/queries-envio";
 import * as theGraphQueries from "./setup/queries-the-graph";
 
 describe("Streams (Sepolia)", () => {
-  test("First 10 results before subgraphId are the same", async () => {
+  test("First 100 results before subgraphId are the same", async () => {
     const variables = {
       first: 100,
-      skip: 20,
+      skip: 0,
       subgraphId: 999999,
       chainId: 11155111,
     } as const;
@@ -23,6 +21,35 @@ describe("Streams (Sepolia)", () => {
 
     const expected = cleanup.streams(
       await TheGraph(theGraphQueries.getStreams, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test("First 100 results from subgraph creation", async () => {
+    const variables = {
+      first: 100,
+      skip: 0,
+      chainId: 11155111,
+      subgraphId: 9999999,
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreams_Asc, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreams_Asc, variables),
       SKIP_CLEANUP,
       "TheGraph",
     );
@@ -662,6 +689,36 @@ describe("Streams (Sepolia)", () => {
     console.info(
       `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
     );
+
+    expect(received.streams.length).toBeGreaterThan(0);
+    expect(received.streams.length).toEqual(expected.streams.length);
+    expect(received.streams).toEqual(expected.streams);
+  });
+
+  test.only("First 29 subgraph aliases after the 1000 mark", async () => {
+    const variables = {
+      first: 29,
+      skip: 1300,
+      chainId: 11155111,
+    } as const;
+
+    const received = cleanup.streams(
+      await Envio(envioQueries.getStreamAliases_Asc, variables),
+      SKIP_CLEANUP,
+      "Envio",
+    );
+
+    const expected = cleanup.streams(
+      await TheGraph(theGraphQueries.getStreamAliases_Asc, variables),
+      SKIP_CLEANUP,
+      "TheGraph",
+    );
+
+    console.info(
+      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
+    );
+
+    console.log(received.streams, expected.streams);
 
     expect(received.streams.length).toBeGreaterThan(0);
     expect(received.streams.length).toEqual(expected.streams.length);

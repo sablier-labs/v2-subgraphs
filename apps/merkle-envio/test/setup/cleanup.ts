@@ -102,8 +102,6 @@ export function cleanup_action(
   if (value.campaign) {
     value.campaign = cleanup_campaign(value.campaign, skip, vendor);
   }
-  /** From values are inconclusive */
-  delete value.from;
 
   return value;
 }
@@ -136,9 +134,6 @@ export function cleanup_campaign(
   if (skip) {
     return value;
   }
-
-  /** From values are inconclusive */
-  delete value.from;
 
   if (value.asset) {
     value.asset = cleanup_asset(value.asset, skip, vendor);
