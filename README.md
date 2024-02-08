@@ -40,7 +40,10 @@ Airstreams.
 
 Read more about Envio [here](https://docs.envio.dev).
 
-### Subgraph: Protocol-Envio
+> [!WARNING] The Sablier V2 indexers (Envio) are still under development and are not used in production for now. Feel
+> free to read the docs or preview the implementation while we finish the stable integration.
+
+### Indexer: Protocol-Envio
 
 The **Protocol-Envio** indexer watches over the core functionality of Sablier V2. It handles events such as
 `Create Stream`, `Withdraw` or `Transfer`.
@@ -48,7 +51,7 @@ The **Protocol-Envio** indexer watches over the core functionality of Sablier V2
 [Documentation](https://docs.sablier.com/api/indexers/protocol/entities) and
 [Endpoints](https://docs.sablier.com/api/indexers/endpoints).
 
-### Subgraph: Merkle-Envio (Airstreams)
+### Indexer: Merkle-Envio (Airstreams)
 
 The **Merkle-Envio** subgraph watches over the Merkle Lockup functionality from Sablier V2's periphery contracts. It
 handles events such as `Create Campaign`, `Claim` or `Clawback`. In the client interfaces it is used to track activity
