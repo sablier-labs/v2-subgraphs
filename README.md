@@ -40,7 +40,8 @@ Airstreams.
 
 Read more about Envio [here](https://docs.envio.dev).
 
-> [!WARNING] The Sablier V2 indexers (Envio) are still under development and are not used in production for now. Feel
+> [!WARNING]
+> The Sablier V2 indexers (Envio) are still under development and are not used in production for now. Feel
 > free to read the docs or preview the implementation while we finish the stable integration.
 
 ### Indexer: Protocol-Envio
