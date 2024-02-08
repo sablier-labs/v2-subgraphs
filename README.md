@@ -1,37 +1,61 @@
 # Sablier V2 Subgraphs
 
-### Setup
+Sablier relies on specific dependencies to source data or manage off-chain flows. All of these are either public or
+fully open-source, so feel free to roam around and suggest improvements or optimizations where needed.
 
-1. [Authenticate](https://thegraph.com/docs/en/deploying/hosted-service/) with the hosted service credentials (Sablier's
-   profile)
+As an alternative to reading data from the contracts or listening to onchain events, we use a set of subgraphs and
+indexers. These act as a middleware between the chain and our interfaces and allow for caching, formatting and querying
+data.
 
-   ```
-   graph auth --product hosted-service <ACCESS_TOKEN>
-   ```
+For every The Graph subgraph you will find a dedicated Envio indexer that mirrors its functionality and can be used as a
+fallback or as a completely alternative query engine.
 
-2. Generate configuration
+## The Graph Subgraphs
 
-   Make sure to run `yarn setup:goerli` or `yarn setup:<chain_name>` to generate imports before `codegen` and
-   `deploy:<chain_name>`.
+Read more about The Graph [here](https://thegraph.com/docs/en/).
 
-### Caveats
+Sablier supports multiple chains for which we've deployed subgraphs at either the Hosted Network level or within the
+Decentralized Network (see Ethereum, Arbitrum or Polygon's endpoints).
 
-To offer a backwards compatible subgraph (between Sablier Core/ Sablier Periphery **v1.0** and **v1.1**) we'll aggregate
-the ABIs of the two versions. This will cause the Lockup Linear and Dynamic ABIs to contain multiple events with the
-same name, but different signatures (due to event parameters).
+### Subgraph: Protocol
 
-Luckily, because of [this issue](https://github.com/graphprotocol/graph-tooling/pull/247) in `graph-tooling`, event
-names will be de-duplicated using a numbering scheme (e.g. a duplicated `Event` will become `Event`, `Event1`, ...).
+The **Protocol** subgraph watches over the core functionality of Sablier V2. It handles events such as `Create Stream`,
+`Withdraw` or `Transfer`.
 
-## Subgraph: Protocol
+[Documentation](https://docs.sablier.com/api/subgraphs/protocol/entities) and
+[Endpoints](https://docs.sablier.com/api/subgraphs/endpoints).
 
-See the Sablier V2 Subgraphs documentation [here](https://docs.sablier.com/api/subgraphs/overview). Endpoints are
-available [here](https://docs.sablier.com/api/subgraphs/endpoints).
+### Subgraph: Merkle (Airstreams)
 
-## Subgraph: Merkle Streamer
+The **Merkle** subgraph watches over the Merkle Lockup functionality from Sablier V2's periphery contracts. It handles
+events such as `Create Campaign`, `Claim` or `Clawback`. In the client interfaces it is used to track activity for
+Airstreams.
 
-See the Sablier V2 Subgraphs (Merkle Streamer) documentation [here](https://docs.sablier.com/api/subgraphs/overview).
+[Documentation](https://docs.sablier.com/api/subgraphs/merkle/entities) and
+[Endpoints](https://docs.sablier.com/api/subgraphs/endpoints).
 
-## Subgraph: PRB Proxy
+---
 
-See the PRB Proxy documentation [here](https://github.com/PaulRBerg/prb-proxy).
+## Envio Indexers
+
+Read more about Envio [here](https://docs.envio.dev).
+
+> [!WARNING] The Sablier V2 indexers (Envio) are still under development and are not used in production for now. Feel
+> free to read the docs or preview the implementation while we finish the stable integration.
+
+### Indexer: Protocol-Envio
+
+The **Protocol-Envio** indexer watches over the core functionality of Sablier V2. It handles events such as
+`Create Stream`, `Withdraw` or `Transfer`.
+
+[Documentation](https://docs.sablier.com/api/indexers/protocol/entities) and
+[Endpoints](https://docs.sablier.com/api/indexers/endpoints).
+
+### Indexer: Merkle-Envio (Airstreams)
+
+The **Merkle-Envio** subgraph watches over the Merkle Lockup functionality from Sablier V2's periphery contracts. It
+handles events such as `Create Campaign`, `Claim` or `Clawback`. In the client interfaces it is used to track activity
+for Airstreams.
+
+[Documentation](https://docs.sablier.com/api/indexers/merkle/entities) and
+[Endpoints](https://docs.sablier.com/api/indexers/endpoints).

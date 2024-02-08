@@ -4,6 +4,7 @@
 **/static
 **/generated
 
+apps/*/subgraph.yaml
 packages/*/subgraph.yaml
 
 # Node.js
@@ -44,3 +45,35 @@ yarn-error.log*
 # TypeScript cache
 *.tsbuildinfo
 
+
+# Envio
+
+**/lib/*
+**/benchmarks/
+**/artifacts
+**/logs
+*.exe
+*.obj
+*.out
+*.compile
+*.native
+*.byte
+*.cmo
+*.annot
+*.cmi
+*.cmx
+*.cmt
+*.cmti
+*.cma
+*.a
+*.cmxa
+*.obj
+*~
+*.annot
+*.cmj
+*.bak
+*.mlast
+*.mliast
+.merlin
+.bsb.lock
+*.bs.js

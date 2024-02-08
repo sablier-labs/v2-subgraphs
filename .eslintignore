@@ -13,3 +13,4 @@
 # files
 next.config.base.js
 *.typegen.ts
+*.js
