@@ -725,7 +725,7 @@ describe("Streams (Sepolia)", () => {
     expect(received.streams).toEqual(expected.streams);
   });
 
-  test.only("All entries are the same", async () => {
+  test("All entries are the same", async () => {
     const received = { streams: [] } as ReturnType<typeof cleanup.streams>;
     const expected = { streams: [] } as ReturnType<typeof cleanup.streams>;
 
