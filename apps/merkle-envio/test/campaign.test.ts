@@ -5,7 +5,6 @@ import { cleanup } from "./setup/cleanup";
 import { SKIP_CLEANUP } from "./setup/constants";
 
 describe("Campaigns (Sepolia)", () => {
-  //fails due to envio indexing error
   test("First 100 results before subgraphId are the same", async () => {
     const variables = {
       first: 100,
@@ -84,7 +83,6 @@ describe("Campaigns (Sepolia)", () => {
     expect(received.actions).toEqual(expected.actions);
   });
 
-  //fails due to indexing error
   test("Get 100 campaigns by asset results are the same", async () => {
     const variables = {
       first: 100,
@@ -233,6 +231,53 @@ describe("Campaigns (Sepolia)", () => {
       SKIP_CLEANUP,
       "TheGraph",
     );
+
+    console.info(
+      `Comparing ${received.campaigns.length}, ${expected.campaigns.length} results.`,
+    );
+
+    expect(received.campaigns.length).toBeGreaterThan(0);
+    expect(received.campaigns.length).toEqual(expected.campaigns.length);
+    expect(received.campaigns).toEqual(expected.campaigns);
+  });
+
+  test("All entries are the same (asc)", async () => {
+    const received = { campaigns: [] } as ReturnType<typeof cleanup.campaigns>;
+    const expected = { campaigns: [] } as ReturnType<typeof cleanup.campaigns>;
+
+    const variables = {
+      first: 1000,
+      skip: 0,
+      chainId: 11155111,
+    };
+
+    let done = false;
+
+    while (!done) {
+      const received_slice = cleanup.campaigns(
+        await Envio(envioQueries.getCampaigns_Asc, variables),
+        SKIP_CLEANUP,
+        "Envio",
+      );
+
+      const expected_slice = cleanup.campaigns(
+        await TheGraph(theGraphQueries.getCampaigns_Asc, variables),
+        SKIP_CLEANUP,
+        "TheGraph",
+      );
+
+      received.campaigns.push(...received_slice.campaigns);
+      expected.campaigns.push(...expected_slice.campaigns);
+
+      if (
+        received_slice.campaigns.length < variables.first &&
+        expected_slice.campaigns.length < variables.first
+      ) {
+        done = true;
+      } else {
+        variables.skip = variables.skip + variables.first;
+      }
+    }
 
     console.info(
       `Comparing ${received.campaigns.length}, ${expected.campaigns.length} results.`,

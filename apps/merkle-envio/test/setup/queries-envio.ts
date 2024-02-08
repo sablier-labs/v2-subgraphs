@@ -186,6 +186,24 @@ export const getCampaigns = gql/* GraphQL */ `
   ${F.FactoryFragment_Envio}
 `;
 
+export const getCampaigns_Asc = gql/* GraphQL */ `
+  query getCampaigns($first: Int!, $skip: Int!, $chainId: numeric!) {
+    Campaign(
+      limit: $first
+      offset: $skip
+      distinct_on: [subgraphId]
+      order_by: { subgraphId: asc }
+      where: { chainId: { _eq: $chainId } }
+    ) {
+      ...CampaignFragment
+    }
+  }
+
+  ${F.CampaignFragment_Envio}
+  ${F.AssetFragment_Envio}
+  ${F.FactoryFragment_Envio}
+`;
+
 export const getCampaignById = gql/* GraphQL */ `
   query getCampaignById($airstreamId: String!) {
     Campaign(where: { id: { _eq: $airstreamId } }) {
