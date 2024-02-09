@@ -731,6 +731,7 @@ describe("Streams (Sepolia)", () => {
       first: 1000,
       skip: 0,
       chainId: 11155111,
+      subgraphId: 9999999,
     };
 
     let done = false;
