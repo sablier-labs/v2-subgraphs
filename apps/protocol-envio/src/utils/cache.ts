@@ -4,8 +4,8 @@ import * as path from "path";
 import { CacheCategory } from "../constants";
 import { Address } from "../types";
 
-type Shape = Record<string, Record<string, string>>;
-type ShapeProxy = Shape & Record<Address, { owner: Address }>;
+type Shape = Record<string, Record<string, string | undefined>>;
+type ShapeProxy = Shape & Record<Address, { owner: Address | undefined }>;
 
 type ShapeToken = Shape &
   Record<Address, { decimals: string; name: string; symbol: string }>;

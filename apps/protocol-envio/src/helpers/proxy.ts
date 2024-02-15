@@ -15,9 +15,9 @@ export async function bindProxy({
     const cache = Cache.init(CacheCategory.Proxy, chainId);
     const entry = cache.read(sender);
 
-    if (entry && entry.owner?.length > 0) {
+    if (entry) {
       return {
-        parties: [...parties, entry.owner],
+        parties: entry.owner ? [...parties, entry.owner] : parties,
         proxender: entry.owner,
         proxied: true,
       } satisfies Entity;
@@ -55,6 +55,7 @@ export async function bindProxy({
       }
     } catch (_error) {
       /** This throw can be caused by a non-proxy setup (a.k.a. trying to call the proxy method on an EOA). */
+      cache.add({ [sender.toLowerCase()]: { owner: undefined } });
     }
   }
 
