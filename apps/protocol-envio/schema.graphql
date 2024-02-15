@@ -40,6 +40,16 @@ type Contract {
   streams: [Stream!]! @derivedFrom(field: "contract")
 }
 
+enum ActionCategory {
+  Approval
+  ApprovalForAll
+  Cancel
+  Create
+  Renounce
+  Transfer
+  Withdraw
+}
+
 type Action {
   "unique identifier resolving to transaction hash concatenated with the chain id and the log index (there may be multiple actions per tx)"
   id: ID!
@@ -55,7 +65,7 @@ type Action {
   "transaction details: block number"
   block: BigInt!
   "category of action e.g. Deposit or Withdraw"
-  category: String!
+  category: ActionCategory!
   "hardcoded chainId"
   chainId: BigInt!
   "contract through which the stream actions has been triggered"
@@ -70,6 +80,11 @@ type Action {
   subgraphId: BigInt!
   "transaction details: timestamp"
   timestamp: BigInt!
+}
+
+enum StreamCategory {
+  LockupLinear
+  LockupDynamic
 }
 
 type Stream {
@@ -88,7 +103,7 @@ type Stream {
   "asset (ERC20 token) supported by this stream"
   asset: Asset!
   "type of stream (for sorting reasons)"
-  category: String!
+  category: StreamCategory!
   "hardcoded chainId"
   chainId: BigInt!
   "contract through which this stream has been created"
