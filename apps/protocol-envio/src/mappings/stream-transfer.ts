@@ -51,7 +51,7 @@ function handler(input: TransferHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Transfer,
-    stream: stream.id,
+    stream_id: stream.id,
 
     /** --------------- */
     addressA: event.params.from.toLowerCase(),

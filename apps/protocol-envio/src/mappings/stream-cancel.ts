@@ -42,7 +42,7 @@ function handler(input: CancelHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Cancel,
-    stream: stream.id,
+    stream_id: stream.id,
     /** --------------- */
     addressA: event.params.sender.toLowerCase(),
     addressB: event.params.recipient.toLowerCase(),
@@ -56,7 +56,7 @@ function handler(input: CancelHandler) {
     ...stream,
     cancelable: false,
     canceled: true,
-    canceledAction: action.id,
+    canceledAction_id: action.id,
     canceledTime: BigInt(event.blockTimestamp),
     intactAmount: event.params.recipientAmount, // The only amount remaining in the stream is the non-withdrawn recipient amount
   };

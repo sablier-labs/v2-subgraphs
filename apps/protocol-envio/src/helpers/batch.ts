@@ -73,7 +73,7 @@ export function createBatcher(event: Event, sender: Address) {
 export function createBatch(event: Event, batcher: Batcher) {
   const entity: Batch = {
     id: generateBatchId(event),
-    batcher: batcher.id,
+    batcher_id: batcher.id,
     hash: event.transactionHash.toLowerCase(),
     timestamp: BigInt(event.blockTimestamp),
     label: undefined,

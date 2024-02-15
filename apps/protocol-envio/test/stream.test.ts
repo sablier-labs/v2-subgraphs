@@ -769,7 +769,7 @@ describe("Streams (Sepolia)", () => {
     expect(received.streams.length).toBeGreaterThan(0);
     expect(received.streams.length).toEqual(expected.streams.length);
     expect(received.streams).toEqual(expected.streams);
-  });
+  }, 10000 /* test is sometimes slow due to query to theGraph */);
 
   test("All alias entries are the same (asc)", async () => {
     const received = { streams: [] } as ReturnType<typeof cleanup.streams>;
@@ -816,5 +816,5 @@ describe("Streams (Sepolia)", () => {
     expect(received.streams.length).toBeGreaterThan(0);
     expect(received.streams.length).toEqual(expected.streams.length);
     expect(received.streams).toEqual(expected.streams);
-  });
+  }, 10000 /* test is sometimes slow due to query to theGraph */);
 });

@@ -42,7 +42,7 @@ function handler(input: ApprovalHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Approval,
-    stream: stream.id,
+    stream_id: stream.id,
 
     /** --------------- */
     addressA: event.params.owner.toLowerCase(),

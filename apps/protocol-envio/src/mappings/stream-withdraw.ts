@@ -42,7 +42,7 @@ function handler(input: WithdrawHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Withdraw,
-    stream: stream.id,
+    stream_id: stream.id,
 
     /** --------------- */
     addressA: event.txOrigin?.toLowerCase() || "",
@@ -62,7 +62,7 @@ function handler(input: WithdrawHandler) {
     withdrawnAmount: withdrawn,
   };
 
-  if (stream.canceledAction) {
+  if (stream.canceledAction_id) {
     stream = {
       ...stream,
       intactAmount: stream.intactAmount - amount, // The intact amount (recipient) has been set in the cancel action, now subtract
