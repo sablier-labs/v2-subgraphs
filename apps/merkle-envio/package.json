@@ -55,6 +55,6 @@
   },
   "dependencies": {
     "envio": "0.0.30-beta.txOrigin",
-    "viem": "1.16.6"
+    "viem": "^2.7.9"
   }
 }

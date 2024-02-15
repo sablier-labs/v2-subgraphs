@@ -1,6 +1,6 @@
 import { CacheCategory } from "../constants";
 import type { Address, Event, Asset } from "../types";
-import { Cache, framework } from "../utils";
+import { Cache, framework, fromHex } from "../utils";
 
 export function getAsset(
   event: Event,
@@ -109,7 +109,7 @@ async function details(address: Address, chainId: number) {
   } catch (_error) {
     /** Some tokens store their parameters as bytes not strings */
     try {
-      const erc20Bytes = framework.getERC20Contract(address, client);
+      const erc20Bytes = framework.getERC20BytesContract(address, client);
       const [decimals, name, symbol] = await Promise.all([
         erc20Bytes.read.decimals(),
         erc20Bytes.read.name(),
@@ -118,8 +118,8 @@ async function details(address: Address, chainId: number) {
 
       const entry = {
         decimals: decimals?.toString() || "",
-        name: name?.toString() || "",
-        symbol: symbol?.toString() || "",
+        name: fromHex(name),
+        symbol: fromHex(symbol),
       } as const;
 
       cache.add({ [address.toLowerCase()]: entry });

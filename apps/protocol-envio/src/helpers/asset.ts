@@ -1,7 +1,6 @@
 import { CacheCategory } from "../constants";
 import type { Address, Event, Asset } from "../types";
-import { Cache, framework } from "../utils";
-import { fromHex } from "viem";
+import { Cache, framework, fromHex } from "../utils";
 
 export function getAsset(
   event: Event,
@@ -119,8 +118,8 @@ async function details(address: Address, chainId: number) {
 
       const entry = {
         decimals: decimals?.toString() || "",
-        name: fromHex((name?.toString() || "") as `0x${string}`, "string"),
-        symbol: fromHex((symbol?.toString() || "") as `0x${string}`, "string"),
+        name: fromHex(name),
+        symbol: fromHex(symbol),
       } as const;
 
       cache.add({ [address.toLowerCase()]: entry });

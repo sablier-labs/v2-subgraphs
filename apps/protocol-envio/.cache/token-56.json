@@ -1,1 +1,77 @@
-{"0xe9e7cea3dedca5984780bafc599bd69add087d56":{"decimals":"18","name":"BUSD Token","symbol":"BUSD"},"0xa3870fbbeb730ba99e4107051612af3465ca9f5e":{"decimals":"18","name":"STABLE","symbol":"STABLE"},"0x55d398326f99059ff775485246999027b3197955":{"decimals":"18","name":"Tether USD","symbol":"USDT"},"0x250632378e573c6be1ac2f97fcdf00515d0aa91b":{"decimals":"18","name":"Binance Beacon ETH","symbol":"BETH"},"0x790330ef9c31b3e1ddaec02d28259f4717b1c321":{"decimals":"18","name":"Xerify","symbol":"XRFY"},"0x11a38e06699b238d6d9a0c7a01f3ac63a07ad318":{"decimals":"18","name":"USDFI","symbol":"USDFI"},"0x2170ed0880ac9a755fd29b2688956bd959f933f8":{"decimals":"18","name":"Ethereum Token","symbol":"ETH"},"0xb9e781890ca75d4680f857e5cf35c498b0edfd31":{"decimals":"5","name":"POMBTest","symbol":"POMB"},"0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d":{"decimals":"18","name":"USD Coin","symbol":"USDC"},"0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3":{"decimals":"18","name":"Dai Token","symbol":"DAI"},"0xbf5140a22578168fd562dccf235e5d43a02ce9b1":{"decimals":"18","name":"Uniswap","symbol":"UNI"},"0x53e75e405047cd8195e64876f54fa5c33d5fc311":{"decimals":"18","name":"Test","symbol":"TEST"},"0xb192d5fc358d35194282a1a06814aba006198010":{"decimals":"18","name":"myMessage","symbol":"MESA"},"0x2e263804ae82c926342e01056a52863c172a136f":{"decimals":"18","name":"VestingTest","symbol":"VTEST"}}
+{
+  "0xe9e7cea3dedca5984780bafc599bd69add087d56": {
+    "decimals": "18",
+    "name": "BUSD Token",
+    "symbol": "BUSD"
+  },
+  "0xa3870fbbeb730ba99e4107051612af3465ca9f5e": {
+    "decimals": "18",
+    "name": "STABLE",
+    "symbol": "STABLE"
+  },
+  "0x55d398326f99059ff775485246999027b3197955": {
+    "decimals": "18",
+    "name": "Tether USD",
+    "symbol": "USDT"
+  },
+  "0x250632378e573c6be1ac2f97fcdf00515d0aa91b": {
+    "decimals": "18",
+    "name": "Binance Beacon ETH",
+    "symbol": "BETH"
+  },
+  "0x790330ef9c31b3e1ddaec02d28259f4717b1c321": {
+    "decimals": "18",
+    "name": "Xerify",
+    "symbol": "XRFY"
+  },
+  "0x11a38e06699b238d6d9a0c7a01f3ac63a07ad318": {
+    "decimals": "18",
+    "name": "USDFI",
+    "symbol": "USDFI"
+  },
+  "0x2170ed0880ac9a755fd29b2688956bd959f933f8": {
+    "decimals": "18",
+    "name": "Ethereum Token",
+    "symbol": "ETH"
+  },
+  "0xb9e781890ca75d4680f857e5cf35c498b0edfd31": {
+    "decimals": "5",
+    "name": "POMBTest",
+    "symbol": "POMB"
+  },
+  "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d": {
+    "decimals": "18",
+    "name": "USD Coin",
+    "symbol": "USDC"
+  },
+  "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3": {
+    "decimals": "18",
+    "name": "Dai Token",
+    "symbol": "DAI"
+  },
+  "0xbf5140a22578168fd562dccf235e5d43a02ce9b1": {
+    "decimals": "18",
+    "name": "Uniswap",
+    "symbol": "UNI"
+  },
+  "0x53e75e405047cd8195e64876f54fa5c33d5fc311": {
+    "decimals": "18",
+    "name": "Test",
+    "symbol": "TEST"
+  },
+  "0xb192d5fc358d35194282a1a06814aba006198010": {
+    "decimals": "18",
+    "name": "myMessage",
+    "symbol": "MESA"
+  },
+  "0x2e263804ae82c926342e01056a52863c172a136f": {
+    "decimals": "18",
+    "name": "VestingTest",
+    "symbol": "VTEST"
+  },
+  "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
+    "decimals": "18",
+    "name": "Wrapped BNB",
+    "symbol": "WBNB"
+  }
+}

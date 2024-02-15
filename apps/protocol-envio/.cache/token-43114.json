@@ -1,1 +1,17 @@
-{"0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e":{"decimals":"6","name":"USD Coin","symbol":"USDC"},"0x913c61ec3573e5e4ee6488552535fb1be84ff2ac":{"decimals":"18","name":"Xave Token","symbol":"XAV"}}
+{
+  "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e": {
+    "decimals": "6",
+    "name": "USD Coin",
+    "symbol": "USDC"
+  },
+  "0x913c61ec3573e5e4ee6488552535fb1be84ff2ac": {
+    "decimals": "18",
+    "name": "Xave Token",
+    "symbol": "XAV"
+  },
+  "0x7171f8b378b9f22b83711a2c8d5c44b939f63993": {
+    "decimals": "18",
+    "name": "360Beta",
+    "symbol": "360Beta"
+  }
+}

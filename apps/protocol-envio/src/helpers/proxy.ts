@@ -16,46 +16,49 @@ export async function bindProxy({
     const entry = cache.read(sender);
 
     if (entry) {
-      return {
-        parties: entry.owner ? [...parties, entry.owner] : parties,
-        proxender: entry.owner,
-        proxied: true,
-      } satisfies Entity;
-    }
-
-    const client = framework.getClient(chainId);
-    const chain = configuration(chainId);
-
-    try {
-      const proxy = framework.getPRBProxyContract(sender, client);
-      const [owner_] = (await Promise.all([proxy.read.owner()])) as string[];
-
-      if (owner_ && owner_.length) {
-        const owner = owner_.toLowerCase();
-        const registry = framework.getPRBProxyRegistryContract(
-          chain.registry,
-          client,
-        );
-
-        const [reverse_] = (await Promise.all([
-          registry.read.getProxy([owner as `0x${string}`]),
-        ])) as string[];
-
-        const reverse = reverse_?.toLowerCase();
-
-        if (reverse === sender.toLowerCase()) {
-          cache.add({ [sender.toLowerCase()]: { owner } });
-
-          return {
-            parties: [...parties, owner],
-            proxender: owner,
-            proxied: true,
-          } satisfies Entity;
-        }
+      /** There's a cache entry for this proxy. We'll define the proxied aspect based on the entry containing an owner or not. */
+      if (entry.owner && entry.owner.length > 0) {
+        return {
+          parties: entry.owner ? [...parties, entry.owner] : parties,
+          proxender: entry.owner,
+          proxied: true,
+        } satisfies Entity;
       }
-    } catch (_error) {
-      /** This throw can be caused by a non-proxy setup (a.k.a. trying to call the proxy method on an EOA). */
-      cache.add({ [sender.toLowerCase()]: { owner: undefined } });
+    } else {
+      const client = framework.getClient(chainId);
+      const chain = configuration(chainId);
+
+      try {
+        const proxy = framework.getPRBProxyContract(sender, client);
+        const [owner_] = (await Promise.all([proxy.read.owner()])) as string[];
+
+        if (owner_ && owner_.length) {
+          const owner = owner_.toLowerCase();
+          const registry = framework.getPRBProxyRegistryContract(
+            chain.registry,
+            client,
+          );
+
+          const [reverse_] = (await Promise.all([
+            registry.read.getProxy([owner as `0x${string}`]),
+          ])) as string[];
+
+          const reverse = reverse_?.toLowerCase();
+
+          if (reverse === sender.toLowerCase()) {
+            cache.add({ [sender.toLowerCase()]: { owner } });
+
+            return {
+              parties: [...parties, owner],
+              proxender: owner,
+              proxied: true,
+            } satisfies Entity;
+          }
+        }
+      } catch (_error) {
+        /** This throw can be caused by a non-proxy setup (a.k.a. trying to call the proxy method on an EOA). */
+        cache.add({ [sender.toLowerCase()]: { owner: undefined } });
+      }
     }
   }
 
