@@ -1,4 +1,5 @@
 name: sablier-v2-merkle
+unordered_multichain_mode: true
 contracts:
   - name: MerkleLockupFactoryV21
     handler: src/mappings/index.ts

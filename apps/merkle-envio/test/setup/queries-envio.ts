@@ -50,7 +50,7 @@ export const getCampaigns_ByAdminByAsset = gql/* GraphQL */ `
       where: {
         _and: [
           { admin: { _eq: $admin } }
-          { asset: { _iregex: $asset } }
+          { asset_id: { _iregex: $asset } }
           { subgraphId: { _lt: $subgraphId } }
           { chainId: { _eq: $chainId } }
         ]
@@ -142,7 +142,7 @@ export const getCampaigns_ByAsset = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { asset: { _iregex: $asset } }
+          { asset_id: { _iregex: $asset } }
           { subgraphId: { _lt: $subgraphId } }
           { chainId: { _eq: $chainId } }
         ]
@@ -229,16 +229,16 @@ export const getActions_ByCampaign = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { campaign: { _eq: $airstreamId } }
+          { campaign_id: { _eq: $airstreamId } }
           { subgraphId: { _lt: $subgraphId } }
           { chainId: { _eq: $chainId } }
         ]
       }
     ) {
       ...ActionFragment
-      campaignObject {
+      campaign {
         id
-        assetObject {
+        asset {
           ...AssetFragment
         }
       }
@@ -258,7 +258,7 @@ export const getMetadata_ByCampaign = gql/* GraphQL */ `
   ) {
     Campaign(where: { id: { _eq: $campaignId } }) {
       id
-      assetObject {
+      asset {
         ...AssetFragment
       }
       activities(
@@ -276,7 +276,7 @@ export const getMetadata_ByCampaign = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { campaign: { _eq: $campaignIdClone } }
+          { campaign_id: { _eq: $campaignIdClone } }
           { category: { _eq: "Claim" } }
         ]
       }

@@ -36,13 +36,13 @@ function createCampaign(
 
     /** --------------- */
 
-    clawbackAction: undefined,
+    clawbackAction_id: undefined,
     clawbackTime: undefined,
 
     claimedAmount: 0n,
     claimedCount: 0n,
 
-    factory: factory.id,
+    factory_id: factory.id,
   } satisfies Entity;
 
   /** --------------- */
@@ -106,7 +106,7 @@ export async function createLinearCampaign(
 
   /** --------------- */
   /** Asset: managed by the event handler (upstream) */
-  const partAsset = { asset: asset.id } satisfies Entity;
+  const partAsset = { asset_id: asset.id } satisfies Entity;
 
   /** --------------- */
   const campaign: Campaign = {

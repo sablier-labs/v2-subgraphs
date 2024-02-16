@@ -38,7 +38,7 @@ function handler(input: ClawbackHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Clawback,
-    campaign: campaign.id,
+    campaign_id: campaign.id,
     /** --------------- */
     clawbackFrom: event.params.admin.toLowerCase(),
     clawbackTo: event.params.to.toLowerCase(),
@@ -50,7 +50,7 @@ function handler(input: ClawbackHandler) {
   campaign = {
     ...campaign,
     clawbackTime: BigInt(event.blockTimestamp),
-    clawbackAction: action.id,
+    clawbackAction_id: action.id,
   };
 
   context.Action.set(action);
