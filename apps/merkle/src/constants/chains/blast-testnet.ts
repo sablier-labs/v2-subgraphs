@@ -1,6 +1,6 @@
 export let chainId = 168587773;
 export let chain = "blast-testnet";
-export let startBlock = 1631900;
+export let startBlock = 1703000;
 
 /** Rule: keep addresses lowercased */
 
@@ -9,7 +9,9 @@ export let startBlock = 1631900;
  * @example export let factory = [[address1, alias1, version1], [address2, alias2, version2]]
  */
 
-export let factory: string[][] = []; // TODO
+export let factory: string[][] = [
+  ["0x03781ad6ac55e5625311343dc563b799c0be09a3", "MSF2", "V21"],
+];
 
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.
