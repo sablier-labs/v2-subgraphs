@@ -1,6 +1,6 @@
-export let chainId = 168587773;
-export let chain = "blast-testnet";
-export let startBlock = 2306000;
+export let chainId = 81457;
+export let chain = "blast-mainnet";
+export let startBlock = 243800;
 
 /** Rule: keep addresses lowercased */
 
@@ -10,11 +10,11 @@ export let startBlock = 2306000;
  */
 
 export let linear: string[][] = [
-  ["0xe31ac61c7762930625d4700d7ea9282b7e57b816", "LL2", "V21"],
+  ["0xcb099efc90e88690e287259410b9ae63e1658cc6", "LL2", "V21"],
 ];
 
 export let dynamic: string[][] = [
-  ["0x8ab55a8e046634d5ad87f64d65c1e96275e48712", "LD2", "V21"],
+  ["0xdf578c2c70a86945999c65961417057363530a1c", "LD2", "V21"],
 ];
 
 /** PRBProxy registry */
