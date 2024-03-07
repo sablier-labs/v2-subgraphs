@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 0.0.31
-        version: 0.0.31
+        specifier: 0.0.32
+        version: 0.0.32
       viem:
         specifier: ^2.7.9
         version: 2.7.9(typescript@5.2.2)
@@ -1865,37 +1865,37 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@0.0.31:
-    resolution: {integrity: sha512-LnSJ5It4IHpUjvI1KHP2VzLJ/e1O/zbxGBD5Rhu5XocqjgqMSD47mB5L1GJ0+cMTB6Iouujk1deUxZea6zBAFA==}
+  /envio-darwin-arm64@0.0.32:
+    resolution: {integrity: sha512-2fXD1naNYsMb/nq+Y7jMY4KzAtzcLJ0XLXoJASn37k1QS9QbehQzfe8azUSxVK3VMhzxXmj6zE1SyyiDcT3t7g==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-darwin-x64@0.0.31:
-    resolution: {integrity: sha512-o1/MGtPeElJjT3R54/vISah2/994yJf8vs2T+Ma4WTrCk1vnzRYoFYa185phWbRD6mv/Q/6/nrcI9wQpLYNFsA==}
+  /envio-darwin-x64@0.0.32:
+    resolution: {integrity: sha512-/f8myAITg+fpizwiTMkcARnt5bi5gVXJUg5nsPCTsmge6sHvze2Hfwd2VvHpMGoo/RwgIvPmNYwU3C+j21hAfA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-x64@0.0.31:
-    resolution: {integrity: sha512-FqSoMlFa/h5RFZ8ngi2gnU5qDBb1fIJkIIvKEGOZtFuaB4RTBwuCrhMSqEJdBBjqRxKmbbB6jHUeHIVZMqAhuA==}
+  /envio-linux-x64@0.0.32:
+    resolution: {integrity: sha512-VAvBs67ImXSs8j/lfZ8Q8QYoE2ixhAmeHoAm2YZA179O6CW5MPkTIz6E3BWwhsr90oT/LU+kXXeCaTv1tXKfMA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio@0.0.31:
-    resolution: {integrity: sha512-O2ohY4FHPl6jsi2hnhz1pxKpouO409nSzqoOSEyAhx6K3FPCs0RdnqsW8Xos+IiPHVIfB06Cc1x44W1FBRWc7g==}
+  /envio@0.0.32:
+    resolution: {integrity: sha512-ueCvHoU8Szjud3PzlfsD1lbnhFrGaf+D1Xd+4qemzFHjogv4EBDxE+dnZpjYpfr0y6XA337AVPHWd2wTlAa7Gg==}
     hasBin: true
     optionalDependencies:
-      envio-darwin-arm64: 0.0.31
-      envio-darwin-x64: 0.0.31
-      envio-linux-x64: 0.0.31
+      envio-darwin-arm64: 0.0.32
+      envio-darwin-x64: 0.0.32
+      envio-linux-x64: 0.0.32
     dev: false
 
   /error-ex@1.3.2:
