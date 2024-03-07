@@ -95,6 +95,9 @@ export const StreamFragment_Envio = gql/* GraphQL */ `
     proxender
     transferable
     version
+    actions(order_by: { subgraphId: asc }, limit: 1000) {
+      ...ActionFragment
+    }
     asset {
       ...AssetFragment
     }
@@ -104,7 +107,7 @@ export const StreamFragment_Envio = gql/* GraphQL */ `
     contract {
       ...ContractFragment
     }
-    segments {
+    segments(order_by: { position: asc }, limit: 1000) {
       ...SegmentFragment
     }
   }
@@ -208,13 +211,16 @@ export const StreamFragment_TheGraph = gql/* GraphQL */ `
     asset {
       ...AssetFragment
     }
+    actions(orderBy: subgraphId, orderDirection: asc, first: 1000) {
+      ...ActionFragment
+    }
     batch {
       ...BatchFragment
     }
     contract {
       ...ContractFragment
     }
-    segments {
+    segments(orderBy: position, orderDirection: asc, first: 1000) {
       ...SegmentFragment
     }
   }

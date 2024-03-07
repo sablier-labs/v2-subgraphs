@@ -27,7 +27,7 @@
     "clean-modules": "rimraf node_modules",
     "clean-generated": "rimraf $npm_package_config_dir_generated && rimraf generated",
     "codegen": "envio codegen",
-    "dev": "pnpm run setup && LOG_LEVEL=trace pnpm envio dev",
+    "dev": "MAX_BATCH_SIZE=1 && pnpm run setup && pnpm envio dev",
     "setup": "pnpm clean && pnpm template && pnpm codegen",
     "start": "ts-node generated/src/Index.bs.js",
     "template": "pnpm template-chain && pnpm template-config",

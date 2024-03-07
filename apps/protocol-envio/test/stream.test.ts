@@ -1,6 +1,6 @@
 import { Envio, TheGraph } from "./setup/networking";
 import { cleanup } from "./setup/cleanup";
-import { SKIP_CLEANUP } from "./setup/constants";
+import { chainId, SKIP_CLEANUP } from "./setup/constants";
 import * as envioQueries from "./setup/queries-envio";
 import * as theGraphQueries from "./setup/queries-the-graph";
 
@@ -10,7 +10,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
     } as const;
 
     const received = cleanup.streams(
@@ -38,7 +38,7 @@ describe("Streams (Sepolia)", () => {
     const variables = {
       first: 100,
       skip: 0,
-      chainId: 11155111,
+      chainId,
       subgraphId: 9999999,
     } as const;
 
@@ -68,7 +68,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
@@ -116,7 +116,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
@@ -154,7 +154,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
       streamIds: [
@@ -198,7 +198,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
       streamIds: [
@@ -242,7 +242,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
       streamIds: [
@@ -286,7 +286,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
@@ -324,7 +324,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       streamIds: [
         "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
@@ -364,7 +364,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
       streamIds: [
         "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
@@ -404,7 +404,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
     } as const;
@@ -435,7 +435,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
       streamIds: [
         "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
@@ -475,7 +475,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
     } as const;
@@ -506,7 +506,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
     } as const;
@@ -537,7 +537,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
     } as const;
@@ -571,7 +571,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       sender: "0xf976aF93B0A5A9F55A7f285a3B5355B8575Eb5bc".toLowerCase(),
     } as const;
 
@@ -601,7 +601,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634".toLowerCase(),
     } as const;
 
@@ -631,7 +631,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       streamIds: [
         "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-608",
         "0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a-11155111-609",
@@ -670,7 +670,7 @@ describe("Streams (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 999999,
-      chainId: 11155111,
+      chainId,
       token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a".toLowerCase(),
     } as const;
 
@@ -699,7 +699,7 @@ describe("Streams (Sepolia)", () => {
     const variables = {
       first: 29,
       skip: 1300,
-      chainId: 11155111,
+      chainId,
     } as const;
 
     const received = cleanup.streams(
@@ -730,7 +730,7 @@ describe("Streams (Sepolia)", () => {
     const variables = {
       first: 1000,
       skip: 0,
-      chainId: 11155111,
+      chainId,
       subgraphId: 9999999,
     };
 
@@ -778,7 +778,7 @@ describe("Streams (Sepolia)", () => {
     const variables = {
       first: 1000,
       skip: 0,
-      chainId: 11155111,
+      chainId,
     };
 
     let done = false;
