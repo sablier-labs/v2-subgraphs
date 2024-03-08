@@ -654,18 +654,12 @@ export const getStreams = gql/* GraphQL */ `
 `;
 
 export const getStreams_Asc = gql/* GraphQL */ `
-  query getStreams(
-    $first: Int!
-    $skip: Int!
-    $chainId: BigInt!
-    $subgraphId: BigInt!
-  ) {
+  query getStreams_Asc($first: Int!, $chainId: BigInt!, $subgraphId: BigInt!) {
     streams(
       first: $first
-      skip: $skip
       orderBy: subgraphId
       orderDirection: asc
-      where: { subgraphId_lt: $subgraphId }
+      where: { subgraphId_gt: $subgraphId }
     ) {
       ...StreamFragment
     }
@@ -678,28 +672,16 @@ export const getStreams_Asc = gql/* GraphQL */ `
   ${F.StreamFragment_TheGraph}
 `;
 
-export const getStreamAliases = gql/* GraphQL */ `
-  query getStreamIds($first: Int!, $skip: Int!, $chainId: BigInt!) {
-    streams(
-      first: $first
-      skip: $skip
-      orderBy: subgraphId
-      orderDirection: desc
-    ) {
-      alias
-    }
-  }
-`;
-
 export const getStreamAliases_Asc = gql/* GraphQL */ `
-  query getStreamIds($first: Int!, $skip: Int!, $chainId: BigInt!) {
+  query getStreamIds($first: Int!, $subgraphId: Int!, $chainId: BigInt!) {
     streams(
       first: $first
-      skip: $skip
+      where: { subgraphId_gt: $subgraphId }
       orderBy: subgraphId
       orderDirection: asc
     ) {
       alias
+      subgraphId
     }
   }
 `;

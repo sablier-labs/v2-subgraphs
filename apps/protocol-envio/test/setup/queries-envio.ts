@@ -771,21 +771,19 @@ export const getStreams = gql/* GraphQL */ `
 `;
 
 export const getStreams_Asc = gql/* GraphQL */ `
-  query getStreams(
+  query getStreams_Asc(
     $first: Int!
-    $skip: Int!
     $chainId: numeric!
     $subgraphId: numeric!
   ) {
     Stream(
       limit: $first
-      offset: $skip
       distinct_on: [subgraphId]
       order_by: { subgraphId: asc }
       where: {
         _and: [
           { chainId: { _eq: $chainId } }
-          { subgraphId: { _lt: $subgraphId } }
+          { subgraphId: { _gt: $subgraphId } }
         ]
       }
     ) {
@@ -800,30 +798,20 @@ export const getStreams_Asc = gql/* GraphQL */ `
   ${F.StreamFragment_Envio}
 `;
 
-export const getStreamAliases = gql/* GraphQL */ `
-  query getStreamsAliases($first: Int!, $skip: Int!, $chainId: numeric!) {
-    Stream(
-      limit: $first
-      offset: $skip
-      distinct_on: [subgraphId]
-      order_by: { subgraphId: desc }
-      where: { chainId: { _eq: $chainId } }
-    ) {
-      alias
-    }
-  }
-`;
-
 export const getStreamAliases_Asc = gql/* GraphQL */ `
-  query getStreamsAliases($first: Int!, $skip: Int!, $chainId: numeric!) {
+  query getStreamsAliases_Asc(
+    $first: Int!
+    $subgraphId: numeric!
+    $chainId: numeric!
+  ) {
     Stream(
       limit: $first
-      offset: $skip
       distinct_on: [subgraphId]
       order_by: { subgraphId: asc }
-      where: { chainId: { _eq: $chainId } }
+      where: { chainId: { _eq: $chainId }, subgraphId: { _gt: $subgraphId } }
     ) {
       alias
+      subgraphId
     }
   }
 `;
