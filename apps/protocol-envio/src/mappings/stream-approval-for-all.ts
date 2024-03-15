@@ -32,7 +32,7 @@ function handler(input: ApprovalForAllHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Approval,
-    stream: undefined,
+    stream_id: undefined,
 
     /** --------------- */
     addressA: event.params.owner.toLowerCase(),

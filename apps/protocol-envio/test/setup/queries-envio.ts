@@ -21,7 +21,7 @@ export const getStreams_BySenderByRecipientByIdsByToken = gql/* GraphQL */ `
         _or: [
           {
             _and: [
-              { asset: { _regex: $token } }
+              { asset_id: { _regex: $token } }
               { chainId: { _eq: $chainId } }
               { sender: { _eq: $sender } }
               { recipient: { _eq: $recipient } }
@@ -31,7 +31,7 @@ export const getStreams_BySenderByRecipientByIdsByToken = gql/* GraphQL */ `
           }
           {
             _and: [
-              { asset: { _regex: $token } }
+              { asset_id: { _regex: $token } }
               { chainId: { _eq: $chainId } }
               { proxender: { _eq: $sender } }
               { recipient: { _eq: $recipient } }
@@ -121,7 +121,7 @@ export const getStreams_BySenderByIdsByToken = gql/* GraphQL */ `
         _or: [
           {
             _and: [
-              { asset: { _iregex: $token } }
+              { asset_id: { _iregex: $token } }
               { chainId: { _eq: $chainId } }
               { sender: { _eq: $sender } }
               { id: { _in: $streamIds } }
@@ -130,7 +130,7 @@ export const getStreams_BySenderByIdsByToken = gql/* GraphQL */ `
           }
           {
             _and: [
-              { asset: { _iregex: $token } }
+              { asset_id: { _iregex: $token } }
               { chainId: { _eq: $chainId } }
               { proxender: { _eq: $sender } }
               { id: { _in: $streamIds } }
@@ -167,7 +167,7 @@ export const getStreams_ByRecipientByIdsByToken = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { asset: { _iregex: $token } }
+          { asset_id: { _iregex: $token } }
           { chainId: { _eq: $chainId } }
           { recipient: { _eq: $recipient } }
           { id: { _in: $streamIds } }
@@ -205,7 +205,7 @@ export const getStreams_BySenderByRecipientByToken = gql/* GraphQL */ `
         _or: [
           {
             _and: [
-              { asset: { _iregex: $token } }
+              { asset_id: { _iregex: $token } }
               { chainId: { _eq: $chainId } }
               { sender: { _eq: $sender } }
               { recipient: { _eq: $recipient } }
@@ -214,7 +214,7 @@ export const getStreams_BySenderByRecipientByToken = gql/* GraphQL */ `
           }
           {
             _and: [
-              { asset: { _iregex: $token } }
+              { asset_id: { _iregex: $token } }
               { chainId: { _eq: $chainId } }
               { proxender: { _eq: $sender } }
               { recipient: { _eq: $recipient } }
@@ -377,7 +377,7 @@ export const getStreams_ByIdsByToken = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { asset: { _iregex: $token } }
+          { asset_id: { _iregex: $token } }
           { chainId: { _eq: $chainId } }
           { id: { _in: $streamIds } }
           { subgraphId: { _lt: $subgraphId } }
@@ -411,7 +411,7 @@ export const getStreams_ByRecipientByToken = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { asset: { _iregex: $token } }
+          { asset_id: { _iregex: $token } }
           { chainId: { _eq: $chainId } }
           { recipient: { _eq: $recipient } }
           { subgraphId: { _lt: $subgraphId } }
@@ -447,7 +447,7 @@ export const getStreams_BySenderByToken = gql/* GraphQL */ `
         _or: [
           {
             _and: [
-              { asset: { _iregex: $token } }
+              { asset_id: { _iregex: $token } }
               { chainId: { _eq: $chainId } }
               { sender: { _eq: $sender } }
               { subgraphId: { _lt: $subgraphId } }
@@ -455,7 +455,7 @@ export const getStreams_BySenderByToken = gql/* GraphQL */ `
           }
           {
             _and: [
-              { asset: { _iregex: $token } }
+              { asset_id: { _iregex: $token } }
               { chainId: { _eq: $chainId } }
               { proxender: { _eq: $sender } }
               { subgraphId: { _lt: $subgraphId } }
@@ -517,7 +517,7 @@ export const getStreams_BySender_Or_ByRecipient_Or_ByToken = gql/* GraphQL */ `
           {
             _and: [
               { chainId: { _eq: $chainId } }
-              { asset: { _iregex: $token } }
+              { asset_id: { _iregex: $token } }
               { subgraphId: { _lt: $subgraphId } }
             ]
           }
@@ -705,7 +705,7 @@ export const getStreams_ByToken = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { asset: { _iregex: $token } }
+          { asset_id: { _iregex: $token } }
           { chainId: { _eq: $chainId } }
           { subgraphId: { _lt: $subgraphId } }
         ]

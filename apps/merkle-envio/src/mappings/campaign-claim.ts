@@ -44,7 +44,7 @@ function handler(input: ClaimHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Claim,
-    campaign: campaign.id,
+    campaign_id: campaign.id,
     /** --------------- */
     claimIndex: BigInt(event.params.index),
     claimAmount: BigInt(event.params.amount),

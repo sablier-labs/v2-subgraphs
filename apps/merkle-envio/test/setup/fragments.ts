@@ -5,7 +5,7 @@ export const ActionFragment_Envio = gql/* GraphQL */ `
     id
     chainId
     subgraphId
-    campaignObject {
+    campaign {
       id
     }
     category
@@ -53,7 +53,7 @@ export const ActivityFragment_Envio = gql/* GraphQL */ `
     day
     amount
     claims
-    campaignObject {
+    campaign {
       id
     }
   }
@@ -85,10 +85,10 @@ export const CampaignFragment_Envio = gql/* GraphQL */ `
     claimedAmount
     claimedCount
     version
-    assetObject {
+    asset {
       ...AssetFragment
     }
-    factoryObject {
+    factory {
       ...FactoryFragment
     }
   }

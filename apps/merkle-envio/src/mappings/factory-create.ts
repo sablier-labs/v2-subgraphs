@@ -65,7 +65,7 @@ async function handlerLinear(input: CreateLinearHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Create,
-    campaign: campaign.id,
+    campaign_id: campaign.id,
   };
 
   /** ------- Update -------- */

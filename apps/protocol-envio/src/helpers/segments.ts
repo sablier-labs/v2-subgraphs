@@ -63,7 +63,7 @@ export function createSegments(
 
     const segment: Segment = {
       ...entity,
-      stream: stream.id,
+      stream_id: stream.id,
       position: BigInt(i - 1),
     };
 

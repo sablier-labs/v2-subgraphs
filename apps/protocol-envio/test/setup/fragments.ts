@@ -14,7 +14,7 @@ export const ActionFragment_Envio = gql/* GraphQL */ `
     id
     chainId
     subgraphId
-    streamObject {
+    stream {
       id
     }
     category
@@ -26,7 +26,7 @@ export const ActionFragment_Envio = gql/* GraphQL */ `
     addressB
     amountA
     amountB
-    contractObject {
+    contract {
       ...ContractFragment
     }
   }
@@ -95,13 +95,13 @@ export const StreamFragment_Envio = gql/* GraphQL */ `
     proxender
     transferable
     version
-    assetObject {
+    asset {
       ...AssetFragment
     }
-    batchObject {
+    batch {
       ...BatchFragment
     }
-    contractObject {
+    contract {
       ...ContractFragment
     }
     segments {

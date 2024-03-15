@@ -42,7 +42,7 @@ function handler(input: TransferAdminHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.TransferAdmin,
-    campaign: campaign.id,
+    campaign_id: campaign.id,
   };
 
   watcher = post_action.watcher;

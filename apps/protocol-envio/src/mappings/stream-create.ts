@@ -92,7 +92,7 @@ async function handlerDynamic(input: CreateDynamicHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Create,
-    stream: stream.id,
+    stream_id: stream.id,
     /** --------------- */
     addressA: event.params.sender.toLowerCase(),
     addressB: event.params.recipient.toLowerCase(),
@@ -106,7 +106,7 @@ async function handlerDynamic(input: CreateDynamicHandler) {
   if (stream.cancelable == false) {
     stream = {
       ...stream,
-      renounceAction: action.id,
+      renounceAction_id: action.id,
       renounceTime: BigInt(event.blockTimestamp),
     };
   }
@@ -180,7 +180,7 @@ async function handlerLinear(input: CreateLinearHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Create,
-    stream: stream.id,
+    stream_id: stream.id,
     /** --------------- */
     addressA: event.params.sender.toLowerCase(),
     addressB: event.params.recipient.toLowerCase(),
@@ -194,7 +194,7 @@ async function handlerLinear(input: CreateLinearHandler) {
   if (stream.cancelable == false) {
     stream = {
       ...stream,
-      renounceAction: action.id,
+      renounceAction_id: action.id,
       renounceTime: BigInt(event.blockTimestamp),
     };
   }

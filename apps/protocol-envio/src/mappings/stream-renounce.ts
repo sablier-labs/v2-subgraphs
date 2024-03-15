@@ -42,7 +42,7 @@ function handler(input: RenounceHandler) {
   const action: Action = {
     ...post_action.entity,
     category: ActionCategory.Renounce,
-    stream: stream.id,
+    stream_id: stream.id,
   };
 
   watcher = post_action.watcher;
@@ -50,7 +50,7 @@ function handler(input: RenounceHandler) {
   stream = {
     ...stream,
     cancelable: false,
-    renounceAction: action.id,
+    renounceAction_id: action.id,
     renounceTime: BigInt(event.blockTimestamp),
   };
 

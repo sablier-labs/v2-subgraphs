@@ -39,7 +39,7 @@ function createStream(
     id,
     tokenId,
     alias,
-    contract: contract.id,
+    contract_id: contract.id,
     version: contract.version,
     subgraphId: BigInt(watcher.streamIndex),
     hash: event.transactionHash.toLowerCase(),
@@ -52,8 +52,8 @@ function createStream(
     canceled: false,
     transferable: true,
 
-    renounceAction: undefined,
-    canceledAction: undefined,
+    renounceAction_id: undefined,
+    canceledAction_id: undefined,
     cliffAmount: undefined,
     withdrawnAmount: 0n,
 
@@ -62,7 +62,7 @@ function createStream(
     renounceTime: undefined,
 
     /** --------------- */
-    batch: batch.id,
+    batch_id: batch.id,
     position: BigInt(batch.size),
   } satisfies Entity;
 
@@ -176,7 +176,7 @@ export async function createDynamicStream(
 
   /** --------------- */
   /** Asset: managed by the event handler (upstream) */
-  const partAsset = { asset: asset.id } satisfies Entity;
+  const partAsset = { asset_id: asset.id } satisfies Entity;
 
   /** --------------- */
   /** Batch: managed by the base creator method (downstream) */
@@ -287,7 +287,7 @@ export async function createLinearStream(
 
   /** --------------- */
   /** Asset: managed by the event handler (upstream) */
-  const partAsset = { asset: asset.id } satisfies Entity;
+  const partAsset = { asset_id: asset.id } satisfies Entity;
 
   /** --------------- */
   /** Batch: managed by the base creator method (downstream) */

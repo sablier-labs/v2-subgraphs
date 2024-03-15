@@ -71,7 +71,7 @@ export function createActivity(event: Event, campaignId: string) {
   const entity = {
     id,
     day,
-    campaign: campaignId,
+    campaign_id: campaignId,
     timestamp: BigInt(event.blockTimestamp),
     /** --------------- */
     amount: 0n,
