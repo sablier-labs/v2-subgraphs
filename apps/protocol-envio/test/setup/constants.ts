@@ -4,6 +4,7 @@ export type Vendor = "Envio" | "TheGraph";
 
 const CHAIN_ETHEREUM_ID = 1;
 const CHAIN_SEPOLIA_ID = 11155111;
+const CHAIN_OPTIMISM_ID = 10;
 
 export const configurations: Record<
   number,
@@ -51,11 +52,30 @@ export const configurations: Record<
       "0xafb979d9afad1ad27c5eff4e27226e3ab9e5dcc9-1-10469",
     ],
   },
+  [CHAIN_OPTIMISM_ID]: {
+    endpoint: {
+      Envio: "http://localhost:8080/v1/graphql",
+      TheGraph:
+        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-optimism",
+    },
+    token: "0x1e925de1c68ef83bd98ee3e130ef14a50309c01b",
+    recipient: "0xf748879edbe8cca140940788163d7be4d2a2e46a",
+    sender: "0xbea586A167853ADddEF12818f264f1F9823fBc18",
+    streamIds: [
+      "0xb923abdca17aed90eb5ec5e407bd37164f632bfd-10-3190",
+      "0xb923abdca17aed90eb5ec5e407bd37164f632bfd-10-3178",
+      "0xb923abdca17aed90eb5ec5e407bd37164f632bfd-10-3160",
+      "0xb923abdca17aed90eb5ec5e407bd37164f632bfd-10-3157",
+      "0xb923abdca17aed90eb5ec5e407bd37164f632bfd-10-3137",
+      "0xb923abdca17aed90eb5ec5e407bd37164f632bfd-10-3116",
+      "0xb923abdca17aed90eb5ec5e407bd37164f632bfd-10-3110",
+    ],
+  },
 };
 
 /** SPECIALIZED CONFIGURATION */
 
-export const chainId = CHAIN_SEPOLIA_ID;
+export const chainId = CHAIN_OPTIMISM_ID;
 export const endpoint = configurations[chainId].endpoint;
 export const configuration = configurations[chainId];
 
