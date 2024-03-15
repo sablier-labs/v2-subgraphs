@@ -44,6 +44,7 @@ export const getStreams_BySenderByRecipientByIdsByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -91,6 +92,7 @@ export const getStreams_BySenderByRecipientByIds = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -137,6 +139,7 @@ export const getStreams_BySenderByIdsByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -169,6 +172,7 @@ export const getStreams_ByRecipientByIdsByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -215,6 +219,7 @@ export const getStreams_BySenderByRecipientByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -245,6 +250,7 @@ export const getStreams_ByRecipientByIds = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -288,6 +294,7 @@ export const getStreams_BySenderByIds = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -331,6 +338,7 @@ export const getStreams_BySenderByRecipient = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -357,6 +365,7 @@ export const getStreams_ByIdsByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -387,6 +396,7 @@ export const getStreams_ByRecipientByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -430,6 +440,7 @@ export const getStreams_BySenderByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -462,6 +473,7 @@ export const getStreams_BySender_Or_ByRecipient = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -492,6 +504,7 @@ export const getStreams_BySender = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -517,6 +530,7 @@ export const getStreams_ByRecipient = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -542,6 +556,7 @@ export const getStreams_ByIds = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -567,6 +582,7 @@ export const getStreams_ByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -602,6 +618,7 @@ export const getStreams_BySender_Or_ByRecipient_Or_ByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -628,6 +645,7 @@ export const getStreams = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -636,22 +654,17 @@ export const getStreams = gql/* GraphQL */ `
 `;
 
 export const getStreams_Asc = gql/* GraphQL */ `
-  query getStreams(
-    $first: Int!
-    $skip: Int!
-    $chainId: BigInt!
-    $subgraphId: BigInt!
-  ) {
+  query getStreams_Asc($first: Int!, $chainId: BigInt!, $subgraphId: BigInt!) {
     streams(
       first: $first
-      skip: $skip
       orderBy: subgraphId
       orderDirection: asc
-      where: { subgraphId_lt: $subgraphId }
+      where: { subgraphId_gt: $subgraphId }
     ) {
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.BatchFragment_TheGraph}
   ${F.ContractFragment_TheGraph}
@@ -659,28 +672,16 @@ export const getStreams_Asc = gql/* GraphQL */ `
   ${F.StreamFragment_TheGraph}
 `;
 
-export const getStreamAliases = gql/* GraphQL */ `
-  query getStreamIds($first: Int!, $skip: Int!, $chainId: BigInt!) {
-    streams(
-      first: $first
-      skip: $skip
-      orderBy: subgraphId
-      orderDirection: desc
-    ) {
-      alias
-    }
-  }
-`;
-
 export const getStreamAliases_Asc = gql/* GraphQL */ `
-  query getStreamIds($first: Int!, $skip: Int!, $chainId: BigInt!) {
+  query getStreamIds($first: Int!, $subgraphId: Int!, $chainId: BigInt!) {
     streams(
       first: $first
-      skip: $skip
+      where: { subgraphId_gt: $subgraphId }
       orderBy: subgraphId
       orderDirection: asc
     ) {
       alias
+      subgraphId
     }
   }
 `;

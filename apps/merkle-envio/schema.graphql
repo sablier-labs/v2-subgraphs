@@ -1,3 +1,15 @@
+enum ActionCategory {
+  Claim
+  Clawback
+  Create
+  TransferAdmin
+}
+
+enum CampaignCategory {
+  LockupDynamic
+  LockupLinear
+}
+
 type Action {
   "unique identifier resolving to transaction hash concatenated with the log index (there may be multiple actions per tx) and the chainId"
   id: String!
@@ -5,7 +17,7 @@ type Action {
   "transaction details: block number"
   block: BigInt!
   "category of action e.g. Create or Clawback"
-  category: String!
+  category: ActionCategory!
   "hardcoded chain id"
   chainId: BigInt!
   "contract through which the stream actions has been triggered"
@@ -93,7 +105,7 @@ type Campaign {
   "timestamp of the campaign creation (for sorting reasons)"
   timestamp: BigInt!
   "category of the produced streams e.g. LockupLinear or LockupDynamic"
-  category: String!
+  category: CampaignCategory!
 
   "address of the campaign admin, entitled to clawback"
   admin: Bytes!

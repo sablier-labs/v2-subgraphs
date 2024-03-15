@@ -29,6 +29,8 @@ export const getCampaigns_ByAdminByIds = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_Envio}
+  ${F.ActionFragment_Envio}
+  ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
 `;
@@ -61,6 +63,8 @@ export const getCampaigns_ByAdminByAsset = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_Envio}
+  ${F.ActionFragment_Envio}
+  ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
 `;
@@ -92,6 +96,8 @@ export const getCampaigns_ByAdmin = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_Envio}
+  ${F.ActionFragment_Envio}
+  ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
 `;
@@ -123,6 +129,8 @@ export const getCampaigns_ByIds = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_Envio}
+  ${F.ActionFragment_Envio}
+  ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
 `;
@@ -153,6 +161,8 @@ export const getCampaigns_ByAsset = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_Envio}
+  ${F.ActionFragment_Envio}
+  ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
 `;
@@ -160,14 +170,12 @@ export const getCampaigns_ByAsset = gql/* GraphQL */ `
 export const getCampaigns = gql/* GraphQL */ `
   query getCampaigns(
     $first: Int!
-    $skip: Int!
     $subgraphId: numeric!
     $chainId: numeric!
     $asset: String # Required for compatibility
   ) {
     Campaign(
       limit: $first
-      offset: $skip
       distinct_on: [subgraphId]
       order_by: { subgraphId: desc }
       where: {
@@ -182,24 +190,27 @@ export const getCampaigns = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_Envio}
+  ${F.ActionFragment_Envio}
+  ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
 `;
 
 export const getCampaigns_Asc = gql/* GraphQL */ `
-  query getCampaigns($first: Int!, $skip: Int!, $chainId: numeric!) {
+  query getCampaigns($first: Int!, $subgraphId: numeric!, $chainId: numeric!) {
     Campaign(
       limit: $first
-      offset: $skip
       distinct_on: [subgraphId]
       order_by: { subgraphId: asc }
-      where: { chainId: { _eq: $chainId } }
+      where: { chainId: { _eq: $chainId }, subgraphId: { _gt: $subgraphId } }
     ) {
       ...CampaignFragment
     }
   }
 
   ${F.CampaignFragment_Envio}
+  ${F.ActionFragment_Envio}
+  ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
 `;
@@ -212,6 +223,8 @@ export const getCampaignById = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_Envio}
+  ${F.ActionFragment_Envio}
+  ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
 `;

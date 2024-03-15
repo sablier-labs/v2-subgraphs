@@ -5,6 +5,10 @@ import type { Vendor } from "./constants";
  * Keep an eye on them.
  */
 
+export type Activity = object & {
+  id: string;
+};
+
 export type Asset = object & {
   id: string;
 };
@@ -26,9 +30,11 @@ export type Action = object & {
 export type Campaign = object & {
   asset: Asset;
   actions?: Action[];
+  activities?: Activity[];
   factory: Factory;
   from: string | undefined;
   clawbackTime: string | undefined;
+  subgraphId: string;
 };
 
 export type Campaigns = { campaigns: Campaign[] };
@@ -94,6 +100,9 @@ export function cleanup_action(
     return value;
   }
 
+  /** TO DO: remove once Mainnet is fully indexed */
+  delete value.from;
+
   if (vendor === "Envio") {
     /** Action identifiers in Envio contain a -chainId suffix */
     value.id = value.id.substring(0, value.id.lastIndexOf("-"));
@@ -134,6 +143,9 @@ export function cleanup_campaign(
   if (skip) {
     return value;
   }
+
+  /** TO DO: remove once Mainnet is fully indexed */
+  delete value.from;
 
   if (value.asset) {
     value.asset = cleanup_asset(value.asset, skip, vendor);

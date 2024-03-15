@@ -1,3 +1,23 @@
+enum ContractCategory {
+  LockupDynamic
+  LockupLinear
+}
+
+enum StreamCategory {
+  LockupDynamic
+  LockupLinear
+}
+
+enum ActionCategory {
+  Approval
+  ApprovalForAll
+  Cancel
+  Create
+  Renounce
+  Transfer
+  Withdraw
+}
+
 type Asset {
   "unique identifier resolving to the ERC20 asset/token address, concatenated with the chainId"
   id: ID!
@@ -30,7 +50,7 @@ type Contract {
   "chainId of the contract"
   chainId: BigInt!
   "category of contract e.g. LockupLinear or LockupDynamic"
-  category: String!
+  category: ContractCategory!
   "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
   version: String!
 
@@ -38,16 +58,6 @@ type Contract {
   actions: [Action!]! @derivedFrom(field: "contract")
   "streams created through this contract"
   streams: [Stream!]! @derivedFrom(field: "contract")
-}
-
-enum ActionCategory {
-  Approval
-  ApprovalForAll
-  Cancel
-  Create
-  Renounce
-  Transfer
-  Withdraw
 }
 
 type Action {
@@ -80,11 +90,6 @@ type Action {
   subgraphId: BigInt!
   "transaction details: timestamp"
   timestamp: BigInt!
-}
-
-enum StreamCategory {
-  LockupLinear
-  LockupDynamic
 }
 
 type Stream {

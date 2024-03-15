@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import * as F from "./fragments";
+
 //
 export const getStreams_BySenderByRecipientByIdsByToken = gql/* GraphQL */ `
   query getStreams_BySenderByRecipientByIdsByToken(
@@ -45,6 +46,7 @@ export const getStreams_BySenderByRecipientByIdsByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -95,6 +97,7 @@ export const getStreams_BySenderByRecipientByIds = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -143,6 +146,7 @@ export const getStreams_BySenderByIdsByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -179,6 +183,7 @@ export const getStreams_ByRecipientByIdsByToken = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -228,6 +233,7 @@ export const getStreams_BySenderByRecipientByToken = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -262,6 +268,7 @@ export const getStreams_ByRecipientByIds = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -308,6 +315,7 @@ export const getStreams_BySenderByIds = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -354,6 +362,7 @@ export const getStreams_BySenderByRecipient = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -388,6 +397,7 @@ export const getStreams_ByIdsByToken = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -422,6 +432,7 @@ export const getStreams_ByRecipientByToken = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -468,6 +479,7 @@ export const getStreams_BySenderByToken = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -527,6 +539,7 @@ export const getStreams_BySender_Or_ByRecipient_Or_ByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -579,6 +592,7 @@ export const getStreams_BySender_Or_ByRecipient = gql/* GraphQL */ `
     }
   }
 
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -621,6 +635,7 @@ export const getStreams_BySender = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -652,6 +667,7 @@ export const getStreams_ByRecipient = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -683,6 +699,7 @@ export const getStreams_ByIds = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -714,6 +731,7 @@ export const getStreams_ByToken = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -744,6 +762,7 @@ export const getStreams = gql/* GraphQL */ `
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -752,27 +771,26 @@ export const getStreams = gql/* GraphQL */ `
 `;
 
 export const getStreams_Asc = gql/* GraphQL */ `
-  query getStreams(
+  query getStreams_Asc(
     $first: Int!
-    $skip: Int!
     $chainId: numeric!
     $subgraphId: numeric!
   ) {
     Stream(
       limit: $first
-      offset: $skip
       distinct_on: [subgraphId]
       order_by: { subgraphId: asc }
       where: {
         _and: [
           { chainId: { _eq: $chainId } }
-          { subgraphId: { _lt: $subgraphId } }
+          { subgraphId: { _gt: $subgraphId } }
         ]
       }
     ) {
       ...StreamFragment
     }
   }
+  ${F.ActionFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.BatchFragment_Envio}
   ${F.ContractFragment_Envio}
@@ -780,30 +798,20 @@ export const getStreams_Asc = gql/* GraphQL */ `
   ${F.StreamFragment_Envio}
 `;
 
-export const getStreamAliases = gql/* GraphQL */ `
-  query getStreamsAliases($first: Int!, $skip: Int!, $chainId: numeric!) {
-    Stream(
-      limit: $first
-      offset: $skip
-      distinct_on: [subgraphId]
-      order_by: { subgraphId: desc }
-      where: { chainId: { _eq: $chainId } }
-    ) {
-      alias
-    }
-  }
-`;
-
 export const getStreamAliases_Asc = gql/* GraphQL */ `
-  query getStreamsAliases($first: Int!, $skip: Int!, $chainId: numeric!) {
+  query getStreamsAliases_Asc(
+    $first: Int!
+    $subgraphId: numeric!
+    $chainId: numeric!
+  ) {
     Stream(
       limit: $first
-      offset: $skip
       distinct_on: [subgraphId]
       order_by: { subgraphId: asc }
-      where: { chainId: { _eq: $chainId } }
+      where: { chainId: { _eq: $chainId }, subgraphId: { _gt: $subgraphId } }
     ) {
       alias
+      subgraphId
     }
   }
 `;
