@@ -91,6 +91,12 @@ export const CampaignFragment_Envio = gql/* GraphQL */ `
     factory {
       ...FactoryFragment
     }
+    actions(order_by: { subgraphId: asc }, limit: 1000) {
+      ...ActionFragment
+    }
+    activities(order_by: { timestamp: desc }, limit: 1000) {
+      ...ActivityFragment
+    }
   }
 `;
 
@@ -184,6 +190,12 @@ export const CampaignFragment_TheGraph = /* GraphQL */ `
     }
     factory {
       ...FactoryFragment
+    }
+    actions(orderBy: subgraphId, orderDirection: asc, first: 1000) {
+      ...ActionFragment
+    }
+    activities(orderBy: timestamp, orderDirection: desc, first: 1000) {
+      ...ActivityFragment
     }
   }
 `;

@@ -29,6 +29,8 @@ export const getCampaigns_ByAdminByIds = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_TheGraph}
+  ${F.ActionFragment_TheGraph}
+  ${F.ActivityFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.FactoryFragment_TheGraph}
 `;
@@ -61,6 +63,8 @@ export const getCampaigns_ByAdminByAsset = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_TheGraph}
+  ${F.ActionFragment_TheGraph}
+  ${F.ActivityFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.FactoryFragment_TheGraph}
 `;
@@ -91,6 +95,8 @@ export const getCampaigns_ByAdmin = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_TheGraph}
+  ${F.ActionFragment_TheGraph}
+  ${F.ActivityFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.FactoryFragment_TheGraph}
 `;
@@ -119,6 +125,8 @@ export const getCampaigns_ByIds = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_TheGraph}
+  ${F.ActionFragment_TheGraph}
+  ${F.ActivityFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.FactoryFragment_TheGraph}
 `;
@@ -143,15 +151,16 @@ export const getCampaigns_ByAsset = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_TheGraph}
+  ${F.ActionFragment_TheGraph}
+  ${F.ActivityFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.FactoryFragment_TheGraph}
 `;
 
 export const getCampaigns = gql/* GraphQL */ `
-  query getCampaigns($first: Int!, $skip: Int!, $subgraphId: BigInt!) {
+  query getCampaigns($first: Int!, $subgraphId: BigInt!) {
     campaigns(
       first: $first
-      skip: $skip
       orderBy: subgraphId
       orderDirection: desc
       where: { subgraphId_lt: $subgraphId }
@@ -161,23 +170,27 @@ export const getCampaigns = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_TheGraph}
+  ${F.ActionFragment_TheGraph}
+  ${F.ActivityFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.FactoryFragment_TheGraph}
 `;
 
 export const getCampaigns_Asc = gql/* GraphQL */ `
-  query getCampaigns($first: Int!, $skip: Int!, $chainId: Int!) {
+  query getCampaigns($first: Int!, $subgraphId: BigInt!, $chainId: Int!) {
     campaigns(
       first: $first
-      skip: $skip
       orderBy: subgraphId
       orderDirection: asc
+      where: { subgraphId_gt: $subgraphId }
     ) {
       ...CampaignFragment
     }
   }
 
   ${F.CampaignFragment_TheGraph}
+  ${F.ActionFragment_TheGraph}
+  ${F.ActivityFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.FactoryFragment_TheGraph}
 `;
@@ -190,6 +203,8 @@ export const getCampaignById = gql/* GraphQL */ `
   }
 
   ${F.CampaignFragment_TheGraph}
+  ${F.ActionFragment_TheGraph}
+  ${F.ActivityFragment_TheGraph}
   ${F.AssetFragment_TheGraph}
   ${F.FactoryFragment_TheGraph}
 `;

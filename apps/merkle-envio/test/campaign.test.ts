@@ -2,15 +2,14 @@ import * as envioQueries from "./setup/queries-envio";
 import * as theGraphQueries from "./setup/queries-the-graph";
 import { Envio, TheGraph } from "./setup/networking";
 import { cleanup } from "./setup/cleanup";
-import { SKIP_CLEANUP } from "./setup/constants";
+import { chainId, configuration, SKIP_CLEANUP } from "./setup/constants";
 
-describe("Campaigns (Sepolia)", () => {
+describe(`Campaigns (Chain Id: ${chainId})`, () => {
   test("First 100 results before subgraphId are the same", async () => {
     const variables = {
       first: 100,
-      skip: 0,
       subgraphId: 99999,
-      chainId: 11155111,
+      chainId,
     } as const;
 
     const received = cleanup.campaigns(
@@ -36,7 +35,7 @@ describe("Campaigns (Sepolia)", () => {
 
   test("Get campaignById results are the same", async () => {
     const variables = {
-      airstreamId: "0x8ca71b0f22d74a0a2ec2d176a30b4c6a07c6587c-11155111",
+      airstreamId: configuration.airstreamIds[0],
     } as const;
 
     const received = cleanup.campaign(
@@ -57,9 +56,9 @@ describe("Campaigns (Sepolia)", () => {
   test("Get actions by airstream results are the same", async () => {
     const variables = {
       first: 100,
-      airstreamId: "0x8ca71b0f22d74a0a2ec2d176a30b4c6a07c6587c-11155111",
+      airstreamId: configuration.airstreamIds[0],
       subgraphId: 99999,
-      chainId: 11155111,
+      chainId,
     } as const;
 
     const received = cleanup.actions(
@@ -88,8 +87,8 @@ describe("Campaigns (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 99999,
-      chainId: 11155111,
-      asset: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a",
+      chainId,
+      asset: configuration.asset,
     } as const;
 
     const received = cleanup.campaigns(
@@ -118,11 +117,8 @@ describe("Campaigns (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 99999,
-      airstreamIds: [
-        "0x8ca71b0f22d74a0a2ec2d176a30b4c6a07c6587c-11155111",
-        "0xc65a07656d99766998ea3f32b242a51ed06079f4-11155111",
-      ],
-      chainId: 11155111,
+      airstreamIds: configuration.airstreamIds,
+      chainId,
     } as const;
 
     const received = cleanup.campaigns(
@@ -151,8 +147,8 @@ describe("Campaigns (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 99999,
-      admin: "0xf31b00e025584486f7c37cf0ae0073c97c12c634",
-      chainId: 11155111,
+      admin: configuration.admin,
+      chainId,
     } as const;
 
     const received = cleanup.campaigns(
@@ -181,9 +177,9 @@ describe("Campaigns (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 99999,
-      admin: "0xf31b00e025584486f7c37cf0ae0073c97c12c634",
-      chainId: 11155111,
-      asset: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a",
+      admin: configuration.admin,
+      chainId,
+      asset: configuration.asset,
     } as const;
 
     const received = cleanup.campaigns(
@@ -212,12 +208,9 @@ describe("Campaigns (Sepolia)", () => {
       first: 100,
       skip: 0,
       subgraphId: 99999,
-      admin: "0xf31b00e025584486f7c37cf0ae0073c97c12c634",
-      chainId: 11155111,
-      airstreamIds: [
-        "0x2c86ca0c8b1d7c02d6a686eb1217987de13d73ec-11155111",
-        "0x457ea894243ded4b36f529921e3516f26630be32-11155111",
-      ],
+      admin: configuration.admin,
+      chainId,
+      airstreamIds: configuration.airstreamIds,
     } as const;
 
     const received = cleanup.campaigns(
@@ -247,8 +240,8 @@ describe("Campaigns (Sepolia)", () => {
 
     const variables = {
       first: 1000,
-      skip: 0,
-      chainId: 11155111,
+      subgraphId: 0,
+      chainId,
     };
 
     let done = false;
@@ -269,13 +262,25 @@ describe("Campaigns (Sepolia)", () => {
       received.campaigns.push(...received_slice.campaigns);
       expected.campaigns.push(...expected_slice.campaigns);
 
+      const expected_subgraphId =
+        expected_slice.campaigns?.[variables.first - 1]?.subgraphId;
+      const received_subgraphId =
+        received_slice.campaigns?.[variables.first - 1]?.subgraphId;
+
       if (
         received_slice.campaigns.length < variables.first &&
         expected_slice.campaigns.length < variables.first
       ) {
         done = true;
+      } else if (
+        !expected_subgraphId ||
+        expected_subgraphId !== received_subgraphId
+      ) {
+        done = true;
       } else {
-        variables.skip = variables.skip + variables.first;
+        variables.subgraphId = parseInt(
+          expected_slice.campaigns[variables.first - 1].subgraphId,
+        );
       }
     }
 
@@ -286,5 +291,5 @@ describe("Campaigns (Sepolia)", () => {
     expect(received.campaigns.length).toBeGreaterThan(0);
     expect(received.campaigns.length).toEqual(expected.campaigns.length);
     expect(received.campaigns).toEqual(expected.campaigns);
-  });
+  }, 40000 /* test is sometimes slow due to query to theGraph */);
 });
