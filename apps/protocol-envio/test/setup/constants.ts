@@ -22,7 +22,9 @@ export const configurations: Record<
 > = {
   [CHAIN_SEPOLIA_ID]: {
     endpoint: {
-      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
+      Envio: REMOTE
+        ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
+        : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-experimental",
     },
@@ -42,7 +44,9 @@ export const configurations: Record<
   },
   [CHAIN_ETHEREUM_ID]: {
     endpoint: {
-      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
+      Envio: REMOTE
+        ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
+        : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2",
     },
@@ -58,7 +62,9 @@ export const configurations: Record<
   },
   [CHAIN_OPTIMISM_ID]: {
     endpoint: {
-      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
+      Envio: REMOTE
+        ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
+        : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-optimism",
     },

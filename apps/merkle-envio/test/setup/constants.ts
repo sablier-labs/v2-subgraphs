@@ -18,7 +18,9 @@ export const configurations: Record<
 > = {
   [CHAIN_SEPOLIA_ID]: {
     endpoint: {
-      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
+      Envio: REMOTE
+        ? "https://indexer.bigdevenergy.link/508d217/v1/graphql"
+        : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms-experimental",
     },
@@ -33,7 +35,9 @@ export const configurations: Record<
   },
   [CHAIN_ETHEREUM_ID]: {
     endpoint: {
-      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
+      Envio: REMOTE
+        ? "https://indexer.bigdevenergy.link/508d217/v1/graphql"
+        : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms",
     },
