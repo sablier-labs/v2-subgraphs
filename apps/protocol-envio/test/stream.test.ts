@@ -4,7 +4,7 @@ import { chainId, configuration, SKIP_CLEANUP } from "./setup/constants";
 import * as envioQueries from "./setup/queries-envio";
 import * as theGraphQueries from "./setup/queries-the-graph";
 
-describe(`Streams (Chain Id: ${chainId} )`, () => {
+describe(`Streams (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})`, () => {
   test("First 100 results before subgraphId are the same", async () => {
     const variables = {
       first: 100,

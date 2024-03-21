@@ -3,9 +3,8 @@ export type Vendor = "Envio" | "TheGraph";
 export const CHAIN_ETHEREUM_ID = 1;
 export const CHAIN_SEPOLIA_ID = 11155111;
 
-export const REMOTE = ["true", true].includes(
-  process.env.SABLIER_FLAG_REMOTE_ENDPOINT || "",
-);
+export const SKIP_CLEANUP = false;
+export const REMOTE = true;
 
 export const configurations: Record<
   number,
@@ -60,5 +59,3 @@ export const configurations: Record<
 export const chainId = CHAIN_SEPOLIA_ID;
 export const endpoint = configurations[chainId].endpoint;
 export const configuration = configurations[chainId];
-
-export const SKIP_CLEANUP = false;

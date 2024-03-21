@@ -4,7 +4,7 @@ import { Envio, TheGraph } from "./setup/networking";
 import { cleanup } from "./setup/cleanup";
 import { chainId, configuration, SKIP_CLEANUP } from "./setup/constants";
 
-describe(`Campaigns (Chain Id: ${chainId})`, () => {
+describe(`Campaigns (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})`, () => {
   test("First 100 results before subgraphId are the same", async () => {
     const variables = {
       first: 100,

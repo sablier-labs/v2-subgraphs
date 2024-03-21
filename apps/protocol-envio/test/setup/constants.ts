@@ -6,9 +6,8 @@ const CHAIN_ETHEREUM_ID = 1;
 const CHAIN_SEPOLIA_ID = 11155111;
 const CHAIN_OPTIMISM_ID = 10;
 
-export const REMOTE = ["true", true].includes(
-  process.env.SABLIER_FLAG_REMOTE_ENDPOINT || "",
-);
+export const SKIP_CLEANUP = false;
+export const REMOTE = true;
 
 export const configurations: Record<
   number,
@@ -88,5 +87,3 @@ export const configurations: Record<
 export const chainId = CHAIN_ETHEREUM_ID;
 export const endpoint = configurations[chainId].endpoint;
 export const configuration = configurations[chainId];
-
-export const SKIP_CLEANUP = false;
