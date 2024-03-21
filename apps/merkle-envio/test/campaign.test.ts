@@ -291,5 +291,5 @@ describe(`Campaigns (Chain Id: ${chainId})`, () => {
     expect(received.campaigns.length).toBeGreaterThan(0);
     expect(received.campaigns.length).toEqual(expected.campaigns.length);
     expect(received.campaigns).toEqual(expected.campaigns);
-  }, 40000 /* test is sometimes slow due to query to theGraph */);
+  }, 500000 /* test is sometimes slow due to query to theGraph */);
 });

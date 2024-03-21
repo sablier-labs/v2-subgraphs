@@ -738,5 +738,5 @@ describe(`Streams (Chain Id: ${chainId} )`, () => {
     expect(received.streams.length).toBeGreaterThan(0);
     expect(received.streams.length).toEqual(expected.streams.length);
     expect(received.streams).toEqual(expected.streams);
-  }, 40000 /* test is sometimes slow due to query to theGraph */);
+  }, 500000 /* test is sometimes slow due to query to theGraph */);
 });

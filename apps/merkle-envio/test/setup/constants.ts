@@ -2,7 +2,10 @@ export type Vendor = "Envio" | "TheGraph";
 
 export const CHAIN_ETHEREUM_ID = 1;
 export const CHAIN_SEPOLIA_ID = 11155111;
-export const CHAIN_OPTIMISM_ID = 10;
+
+export const REMOTE = ["true", true].includes(
+  process.env.SABLIER_FLAG_REMOTE_ENDPOINT || "",
+);
 
 export const configurations: Record<
   number,
@@ -15,7 +18,7 @@ export const configurations: Record<
 > = {
   [CHAIN_SEPOLIA_ID]: {
     endpoint: {
-      Envio: "http://localhost:8080/v1/graphql",
+      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms-experimental",
     },
@@ -30,7 +33,7 @@ export const configurations: Record<
   },
   [CHAIN_ETHEREUM_ID]: {
     endpoint: {
-      Envio: "http://localhost:8080/v1/graphql",
+      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms",
     },
@@ -50,7 +53,7 @@ export const configurations: Record<
 
 /** SPECIALIZED CONFIGURATION */
 
-export const chainId = CHAIN_ETHEREUM_ID;
+export const chainId = CHAIN_SEPOLIA_ID;
 export const endpoint = configurations[chainId].endpoint;
 export const configuration = configurations[chainId];
 

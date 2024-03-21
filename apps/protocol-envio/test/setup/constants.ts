@@ -6,6 +6,10 @@ const CHAIN_ETHEREUM_ID = 1;
 const CHAIN_SEPOLIA_ID = 11155111;
 const CHAIN_OPTIMISM_ID = 10;
 
+export const REMOTE = ["true", true].includes(
+  process.env.SABLIER_FLAG_REMOTE_ENDPOINT || "",
+);
+
 export const configurations: Record<
   number,
   {
@@ -18,7 +22,7 @@ export const configurations: Record<
 > = {
   [CHAIN_SEPOLIA_ID]: {
     endpoint: {
-      Envio: "http://localhost:8080/v1/graphql",
+      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-experimental",
     },
@@ -38,15 +42,15 @@ export const configurations: Record<
   },
   [CHAIN_ETHEREUM_ID]: {
     endpoint: {
-      Envio: "http://localhost:8080/v1/graphql",
+      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2",
     },
-    token: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-    recipient: "0xce7da458acfaff35ffdaa51c41a2952c735e357c",
-    sender: "0x6882bc2784d61c41846e4d6dce88991cba0e1510",
+    token: "0x3bd7d4f524d09f4e331577247a048d56e4b67a7f",
+    recipient: "0x0ed07480ce890937bdd6c9ea442a1a88d78727d5",
+    sender: "0x8cc40bc56f32769858061bf8b26f3dd07486e170",
     streamIds: [
-      "0xafb979d9afad1ad27c5eff4e27226e3ab9e5dcc9-1-10779",
+      "0xafb979d9afad1ad27c5eff4e27226e3ab9e5dcc9-1-14090",
       "0xafb979d9afad1ad27c5eff4e27226e3ab9e5dcc9-1-10778",
       "0xafb979d9afad1ad27c5eff4e27226e3ab9e5dcc9-1-10776",
       "0xafb979d9afad1ad27c5eff4e27226e3ab9e5dcc9-1-10469",
@@ -54,7 +58,7 @@ export const configurations: Record<
   },
   [CHAIN_OPTIMISM_ID]: {
     endpoint: {
-      Envio: "http://localhost:8080/v1/graphql",
+      Envio: REMOTE ? "" : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-optimism",
     },
@@ -75,7 +79,7 @@ export const configurations: Record<
 
 /** SPECIALIZED CONFIGURATION */
 
-export const chainId = CHAIN_OPTIMISM_ID;
+export const chainId = CHAIN_ETHEREUM_ID;
 export const endpoint = configurations[chainId].endpoint;
 export const configuration = configurations[chainId];
 
