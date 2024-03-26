@@ -1,6 +1,12 @@
 import { Envio, TheGraph } from "./setup/networking";
 import { cleanup } from "./setup/cleanup";
-import { chainId, configuration, SKIP_CLEANUP } from "./setup/constants";
+import {
+  CHAIN_ETHEREUM_ID,
+  chainId,
+  configuration,
+  POWER_SKIP_SUBGRAPH_ID_ASC,
+  SKIP_CLEANUP,
+} from "./setup/constants";
 import * as envioQueries from "./setup/queries-envio";
 import * as theGraphQueries from "./setup/queries-the-graph";
 
@@ -629,7 +635,9 @@ describe(`Streams (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})
     const variables = {
       first: 1000,
       chainId,
-      subgraphId: 0,
+      subgraphId: [CHAIN_ETHEREUM_ID].includes(chainId)
+        ? POWER_SKIP_SUBGRAPH_ID_ASC
+        : 0,
     };
 
     let done = false;
@@ -679,7 +687,7 @@ describe(`Streams (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})
     expect(received.streams.length).toBeGreaterThan(0);
     expect(received.streams.length).toEqual(expected.streams.length);
     expect(received.streams).toEqual(expected.streams);
-  }, 500000 /* test is sometimes slow due to query to theGraph */);
+  }, 1000000 /* test is sometimes slow due to query to theGraph */);
 
   test("All alias entries are the same (asc)", async () => {
     const received = { streams: [] } as ReturnType<typeof cleanup.streams>;
@@ -687,7 +695,9 @@ describe(`Streams (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})
 
     const variables = {
       first: 1000,
-      subgraphId: 0,
+      subgraphId: [CHAIN_ETHEREUM_ID].includes(chainId)
+        ? POWER_SKIP_SUBGRAPH_ID_ASC
+        : 0,
       chainId,
     };
 

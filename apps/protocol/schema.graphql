@@ -1,11 +1,13 @@
 enum ContractCategory {
   LockupDynamic
   LockupLinear
+  LockupTranched
 }
 
 enum StreamCategory {
   LockupDynamic
   LockupLinear
+  LockupTranched
 }
 
 enum ActionCategory {
@@ -228,11 +230,36 @@ type Stream @entity {
   position: BigInt!
   "segments of the stream curve, only available on dynamic streams"
   segments: [Segment!]! @derivedFrom(field: "stream")
+  "segments of the stream curve, only available on dynamic streams"
+  tranches: [Tranche!]! @derivedFrom(field: "stream")
 
   "amount of fees paid to the broker"
   brokerFeeAmount: BigInt!
   "amount of fees paid to the protocol"
   protocolFeeAmount: BigInt!
+}
+
+type Tranche @entity {
+  "unique id resolving to stream id concatenated with the position of the tranche"
+  id: String!
+
+  "position of the tranche inside the array"
+  position: BigInt!
+  "stream upon which the tranche is used"
+  stream: Stream!
+  "amount resolving to the value streamed during this tranche"
+  amount: BigInt!
+
+  "timestamp resolving to the end moment of the tranche"
+  timestamp: BigInt!
+  "timestamp resolving to the *timestamp* parameter"
+  endTime: BigInt!
+  "timestamp resolving to the start moment of the timestamp (the end time of previous timestamp or the startTime of the stream)"
+  startTime: BigInt!
+  "derived amount resoling to the total amount streamed until the start of the timestamp"
+  startAmount: BigInt!
+  "derived amount resoling to the total amount streamed until the end of the timestamp"
+  endAmount: BigInt!
 }
 
 type Watcher @entity {

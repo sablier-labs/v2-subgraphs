@@ -2,6 +2,7 @@ import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import {
   chainId,
   dynamic,
+  tranched,
   initializer,
   linear,
   registry,
@@ -18,6 +19,7 @@ export let ADDRESS_ZERO = Bytes.fromHexString(
 
 export let StreamVersion_V20 = "V20";
 export let StreamVersion_V21 = "V21";
+export let StreamVersion_V22 = "V22";
 
 export function getContractInitializer(): string {
   return initializer.toLowerCase();
@@ -39,6 +41,14 @@ export function getContractsDynamic(): string[][] {
     item[0].toString().toLowerCase(),
     item[1].toString().toLowerCase(),
     item.length >= 3 ? item[2].toString() : StreamVersion_V20,
+  ]);
+}
+
+export function getContractsTranched(): string[][] {
+  return tranched.map<string[]>((item) => [
+    item[0].toString().toLowerCase(),
+    item[1].toString().toLowerCase(),
+    item.length >= 3 ? item[2].toString() : StreamVersion_V22,
   ]);
 }
 

@@ -2,10 +2,10 @@ import { Address } from "@graphprotocol/graph-ts";
 import { PRBProxy as PRBProxyContract } from "../generated/types/ContractInitializer/PRBProxy";
 import { PRBProxyRegistry as PRBProxyRegistryContract } from "../generated/types/ContractInitializer/PRBProxyRegistry";
 import { Stream } from "../generated/types/schema";
-import { StreamVersion_V21, getContractRegistry } from "../constants";
+import { StreamVersion_V20, getContractRegistry } from "../constants";
 
 export function bindProxyOwner(stream: Stream): Stream {
-  if (stream.version === StreamVersion_V21) {
+  if (stream.version !== StreamVersion_V20) {
     stream.proxied = false;
     return stream;
   }

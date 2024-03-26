@@ -2,13 +2,19 @@ import { Address } from "@graphprotocol/graph-ts";
 import {
   ContractLockupDynamic as DynamicTemplate,
   ContractLockupLinear as LinearTemplate,
+  ContractLockupTranched as TranchedTemplate,
 } from "../generated/types/templates";
 import {
   CreateLockupLinearStream as EventCreateLinear_V20,
   CreateLockupLinearStream1 as EventCreateLinear_V21,
+  CreateLockupLinearStream2 as EventCreateLinear_V22,
   TransferAdmin as EventTransferAdmin,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { getContractsDynamic, getContractsLinear } from "../constants";
+import {
+  getContractsDynamic,
+  getContractsLinear,
+  getContractsTranched,
+} from "../constants";
 import { createContract, getOrCreateWatcher } from "../helpers";
 
 function createContractLinear(
@@ -27,6 +33,15 @@ function createContractDynamic(
 ): void {
   DynamicTemplate.create(address);
   createContract(address, alias, version, "LockupDynamic");
+}
+
+function createContractTranched(
+  address: Address,
+  alias: string,
+  version: string,
+): void {
+  TranchedTemplate.create(address);
+  createContract(address, alias, version, "LockupTranched");
 }
 
 /**
@@ -63,6 +78,17 @@ export function handleInitializer(): void {
       );
     }
   }
+
+  let tranchedList = getContractsTranched();
+  if (tranchedList.length > 0) {
+    for (let i = 0; i < tranchedList.length; i++) {
+      createContractTranched(
+        Address.fromString(tranchedList[i][0]),
+        tranchedList[i][1],
+        tranchedList[i][2],
+      );
+    }
+  }
 }
 
 /** Genesis event from the Lockup Linear contract */
@@ -77,6 +103,12 @@ export function handleInitializer_Create_V20(
 }
 export function handleInitializer_Create_V21(
   _event: EventCreateLinear_V21,
+): void {
+  handleInitializer();
+}
+
+export function handleInitializer_Create_V22(
+  _event: EventCreateLinear_V22,
 ): void {
   handleInitializer();
 }

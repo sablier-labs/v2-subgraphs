@@ -21,7 +21,7 @@ export const configurations: Record<
         ? "https://indexer.bigdevenergy.link/508d217/v1/graphql"
         : "http://localhost:8080/v1/graphql",
       TheGraph:
-        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms-experimental",
+        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms-sepolia",
     },
     admin: "0xf31b00e025584486f7c37cf0ae0073c97c12c634",
     asset: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a",

@@ -26,10 +26,12 @@ dataSources:
           file: ./abis/PRBProxy.json
         - name: PRBProxyRegistry
           file: ./abis/PRBProxyRegistry.json
-        - name: SablierV2LockupDynamic
-          file: ./abis/SablierV2LockupDynamic.json
         - name: SablierV2LockupLinear
           file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2LockupDynamic
+          file: ./abis/SablierV2LockupDynamic.json
+        - name: SablierV2LockupTranched
+          file: ./abis/SablierV2LockupTranched.json
       eventHandlers:
         - event:
             CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
@@ -39,6 +41,10 @@ dataSources:
             CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
             address,bool,bool,(uint40,uint40,uint40),address)
           handler: handleInitializer_Create_V21
+        - event:
+            CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128),indexed
+            address,bool,bool,(uint40,uint40,uint40),address)
+          handler: handleInitializer_Create_V22
         - event: TransferAdmin(indexed address,indexed address)
           handler: handleInitializer_Admin
       file: ./src/mappings/index.ts
@@ -60,6 +66,7 @@ templates:
         - Contract
         - Segment
         - Stream
+        - Tranche
         - Watcher
       abis:
         - name: ERC20
@@ -70,10 +77,12 @@ templates:
           file: ./abis/PRBProxy.json
         - name: PRBProxyRegistry
           file: ./abis/PRBProxyRegistry.json
-        - name: SablierV2LockupDynamic
-          file: ./abis/SablierV2LockupDynamic.json
         - name: SablierV2LockupLinear
           file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2LockupDynamic
+          file: ./abis/SablierV2LockupDynamic.json
+        - name: SablierV2LockupTranched
+          file: ./abis/SablierV2LockupTranched.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -82,7 +91,7 @@ templates:
         - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel_V20
         - event: CancelLockupStream(uint256,indexed address,indexed address,indexed address,uint128,uint128)
-          handler: handleCancel_V21
+          handler: handleCancel_V21_V22
         - event:
             CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
             address,bool,(uint40,uint40,uint40),address)
@@ -91,6 +100,10 @@ templates:
             CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
             address,bool,bool,(uint40,uint40,uint40),address)
           handler: handleCreateLinear_V21
+        - event:
+            CreateLockupLinearStream(uint256,address,indexed address,indexed address,(uint128,uint128),indexed
+            address,bool,bool,(uint40,uint40,uint40),address)
+          handler: handleCreateLinear_V22
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
         - event: Transfer(indexed address,indexed address,indexed uint256)
@@ -100,7 +113,7 @@ templates:
         - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw_V20
         - event: WithdrawFromLockupStream(indexed uint256,indexed address,indexed address,uint128)
-          handler: handleWithdraw_V21
+          handler: handleWithdraw_V21_V22
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
     name: ContractLockupDynamic
@@ -119,6 +132,7 @@ templates:
         - Batcher
         - Segment
         - Stream
+        - Tranche
         - Watcher
       abis:
         - name: ERC20
@@ -129,10 +143,12 @@ templates:
           file: ./abis/PRBProxy.json
         - name: PRBProxyRegistry
           file: ./abis/PRBProxyRegistry.json
-        - name: SablierV2LockupDynamic
-          file: ./abis/SablierV2LockupDynamic.json
         - name: SablierV2LockupLinear
           file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2LockupDynamic
+          file: ./abis/SablierV2LockupDynamic.json
+        - name: SablierV2LockupTranched
+          file: ./abis/SablierV2LockupTranched.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -141,7 +157,7 @@ templates:
         - event: CancelLockupStream(indexed uint256,indexed address,indexed address,uint128,uint128)
           handler: handleCancel_V20
         - event: CancelLockupStream(uint256,indexed address,indexed address,indexed address,uint128,uint128)
-          handler: handleCancel_V21
+          handler: handleCancel_V21_V22
         - event:
             CreateLockupDynamicStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
             address,bool,(uint128,uint64,uint40)[],(uint40,uint40),address)
@@ -150,6 +166,10 @@ templates:
             CreateLockupDynamicStream(uint256,address,indexed address,indexed address,(uint128,uint128,uint128),indexed
             address,bool,bool,(uint128,uint64,uint40)[],(uint40,uint40),address)
           handler: handleCreateDynamic_V21
+        - event:
+            CreateLockupDynamicStream(uint256,address,indexed address,indexed address,(uint128,uint128),indexed
+            address,bool,bool,(uint128,uint64,uint40)[],(uint40,uint40),address)
+          handler: handleCreateDynamic_V22
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
         - event: Transfer(indexed address,indexed address,indexed uint256)
@@ -159,5 +179,59 @@ templates:
         - event: WithdrawFromLockupStream(indexed uint256,indexed address,uint128)
           handler: handleWithdraw_V20
         - event: WithdrawFromLockupStream(indexed uint256,indexed address,indexed address,uint128)
-          handler: handleWithdraw_V21
+          handler: handleWithdraw_V21_V22
+      file: ./src/mappings/index.ts
+  - kind: ethereum/contract
+    name: ContractLockupTranched
+    network: {{chain}}
+    source:
+      abi: SablierV2LockupTranched
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Action
+        - Asset
+        - Contract
+        - Batch
+        - Batcher
+        - Segment
+        - Stream
+        - Tranche
+        - Watcher
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20Bytes
+          file: ./abis/ERC20Bytes.json
+        - name: PRBProxy
+          file: ./abis/PRBProxy.json
+        - name: PRBProxyRegistry
+          file: ./abis/PRBProxyRegistry.json
+        - name: SablierV2LockupLinear
+          file: ./abis/SablierV2LockupLinear.json
+        - name: SablierV2LockupDynamic
+          file: ./abis/SablierV2LockupDynamic.json
+        - name: SablierV2LockupTranched
+          file: ./abis/SablierV2LockupTranched.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: CancelLockupStream(uint256,indexed address,indexed address,indexed address,uint128,uint128)
+          handler: handleCancel_V21_V22
+        - event:
+            CreateLockupTranchedStream(uint256,address,indexed address,indexed address,(uint128,uint128),indexed
+            address,bool,bool,(uint128,uint40)[],(uint40,uint40),address)
+          handler: handleCreateDynamic_V22
+        - event: RenounceLockupStream(indexed uint256)
+          handler: handleRenounce
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: TransferAdmin(indexed address,indexed address)
+          handler: handleTransferAdmin
+        - event: WithdrawFromLockupStream(indexed uint256,indexed address,indexed address,uint128)
+          handler: handleWithdraw_V21_V22
       file: ./src/mappings/index.ts
