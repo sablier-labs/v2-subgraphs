@@ -1,8 +1,8 @@
 import {
   LockupV20Contract_CancelLockupStream_handler as HandlerLinear_V20,
   LockupV20Contract_CancelLockupStream_loader as LoaderLinear_V20,
-  LockupV21Contract_CancelLockupStream_handler as HandlerLinear_V21,
-  LockupV21Contract_CancelLockupStream_loader as LoaderLinear_V21,
+  LockupV21Contract_CancelLockupStream_handler as HandlerLinear_V21_V22,
+  LockupV21Contract_CancelLockupStream_loader as LoaderLinear_V21_V22,
 } from "../../generated/src/Handlers.gen";
 
 import type { Action, CancelHandler, CancelLoader } from "../types";
@@ -69,5 +69,5 @@ function handler(input: CancelHandler) {
 LoaderLinear_V20(loader);
 HandlerLinear_V20(handler);
 
-LoaderLinear_V21(loader);
-HandlerLinear_V21(handler);
+LoaderLinear_V21_V22(loader);
+HandlerLinear_V21_V22(handler);

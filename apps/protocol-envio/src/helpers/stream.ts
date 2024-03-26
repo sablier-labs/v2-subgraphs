@@ -10,10 +10,12 @@ import type {
   Watcher,
   CreateDynamicArgs,
   CreateLinearArgs,
+  CreateTranchedArgs,
 } from "../types";
 
-import { StreamCategory, configuration } from "../constants";
+import { StreamCategory, StreamVersion, configuration } from "../constants";
 import { createSegments } from "./segments";
+import { createTranches } from "./tranches";
 import { bindProxy } from "./proxy";
 
 type Entity = Partial<Mutable<Stream>>;
@@ -165,8 +167,6 @@ export async function createDynamicStream(
 
     depositAmount: BigInt(event.params.amounts[0]),
     intactAmount: BigInt(event.params.amounts[0]),
-    protocolFeeAmount: BigInt(event.params.amounts[1]),
-    brokerFeeAmount: BigInt(event.params.amounts[2]),
 
     startTime: BigInt(event.params.range[0]),
     endTime: BigInt(event.params.range[1]),
@@ -177,6 +177,26 @@ export async function createDynamicStream(
   /** --------------- */
   /** Asset: managed by the event handler (upstream) */
   const partAsset = { asset_id: asset.id } satisfies Entity;
+
+  /** -------------- */
+  const partFees = (() => {
+    if (
+      contract.version === StreamVersion.V20 ||
+      contract.version === StreamVersion.V21
+    ) {
+      if (event.params.amounts.length === 3) {
+        return {
+          protocolFeeAmount: BigInt(event.params.amounts[1]),
+          brokerFeeAmount: BigInt(event.params.amounts[2]),
+        };
+      }
+    }
+
+    return {
+      protocolFeeAmount: BigInt(0),
+      brokerFeeAmount: BigInt(event.params.amounts[1]),
+    };
+  })() satisfies Entity;
 
   /** --------------- */
   /** Batch: managed by the base creator method (downstream) */
@@ -200,6 +220,7 @@ export async function createDynamicStream(
   const stream: Stream = {
     ...entity,
     ...partAsset,
+    ...partFees,
     ...partProxy,
     ...partTransferable,
   };
@@ -255,8 +276,6 @@ export async function createLinearStream(
 
     depositAmount: BigInt(event.params.amounts[0]),
     intactAmount: BigInt(event.params.amounts[0]),
-    protocolFeeAmount: BigInt(event.params.amounts[1]),
-    brokerFeeAmount: BigInt(event.params.amounts[2]),
 
     startTime: BigInt(event.params.range[0]),
     endTime: BigInt(event.params.range[2]),
@@ -268,7 +287,13 @@ export async function createLinearStream(
   const partCliff = (() => {
     const deposit = BigInt(entity.depositAmount);
     const cliffTime = BigInt(event.params.range[1]);
-    const cliff = BigInt(cliffTime) - BigInt(entity.startTime);
+    let cliff = BigInt(cliffTime) - BigInt(entity.startTime);
+
+    if (contract.version === StreamVersion.V22) {
+      if (cliffTime) {
+        cliff = BigInt(0);
+      }
+    }
 
     if (cliff !== 0n) {
       return {
@@ -282,6 +307,26 @@ export async function createLinearStream(
       cliff: false,
       cliffAmount: undefined,
       cliffTime: undefined,
+    };
+  })() satisfies Entity;
+
+  /** -------------- */
+  const partFees = (() => {
+    if (
+      contract.version === StreamVersion.V20 ||
+      contract.version === StreamVersion.V21
+    ) {
+      if (event.params.amounts.length === 3) {
+        return {
+          protocolFeeAmount: BigInt(event.params.amounts[1]),
+          brokerFeeAmount: BigInt(event.params.amounts[2]),
+        };
+      }
+    }
+
+    return {
+      protocolFeeAmount: BigInt(0),
+      brokerFeeAmount: BigInt(event.params.amounts[1]),
     };
   })() satisfies Entity;
 
@@ -308,6 +353,7 @@ export async function createLinearStream(
     ...entity,
     ...partAsset,
     ...partCliff,
+    ...partFees,
     ...partProxy,
     ...partTransferable,
   };
@@ -316,6 +362,100 @@ export async function createLinearStream(
     batch,
     batcher,
     stream,
+    watcher,
+  };
+}
+
+export async function createTranchedStream(
+  event: Event<CreateTranchedArgs>,
+  entities: {
+    asset: Asset;
+    batch: Batch;
+    batcher: Batcher;
+    contract: Contract;
+    watcher: Watcher;
+  },
+) {
+  let { asset, batch, batcher, contract, watcher } = entities;
+
+  const { entity: partial, ...post_create } = createStream(
+    event,
+    event.params.streamId,
+    {
+      batch,
+      batcher,
+      contract,
+      watcher,
+    },
+  );
+
+  batch = post_create.batch;
+  batcher = post_create.batcher;
+  watcher = post_create.watcher;
+
+  /** --------------- */
+
+  let entity = {
+    ...partial,
+    category: StreamCategory.LockupTranched,
+    funder: event.params.funder.toLowerCase(),
+    sender: event.params.sender.toLowerCase(),
+    recipient: event.params.recipient.toLowerCase(),
+    parties: [
+      event.params.sender.toLowerCase(),
+      event.params.recipient.toLowerCase(),
+    ],
+
+    cliff: false,
+    cliffAmount: undefined,
+    cliffTime: undefined,
+
+    depositAmount: BigInt(event.params.amounts[0]),
+    intactAmount: BigInt(event.params.amounts[0]),
+    protocolFeeAmount: BigInt(0),
+    brokerFeeAmount: BigInt(event.params.amounts[1]),
+
+    startTime: BigInt(event.params.range[0]),
+    endTime: BigInt(event.params.range[1]),
+    cancelable: event.params.cancelable,
+    duration: BigInt(event.params.range[1]) - BigInt(event.params.range[0]),
+  } satisfies Entity;
+
+  /** --------------- */
+  /** Asset: managed by the event handler (upstream) */
+  const partAsset = { asset_id: asset.id } satisfies Entity;
+
+  /** --------------- */
+  /** Batch: managed by the base creator method (downstream) */
+
+  /** --------------- */
+  /** Tranches: created, have to be saved */
+  const tranches = createTranches(event, entity);
+
+  /** --------------- */
+  const partProxy = await bindProxy(entity);
+
+  /** --------------- */
+  const partTransferable = {
+    transferable:
+      "transferable" in event.params
+        ? event.params.transferable
+        : entity.transferable,
+  };
+
+  /** --------------- */
+  const stream: Stream = {
+    ...entity,
+    ...partAsset,
+    ...partProxy,
+    ...partTransferable,
+  };
+
+  return {
+    batch,
+    batcher,
+    stream,
+    tranches,
     watcher,
   };
 }

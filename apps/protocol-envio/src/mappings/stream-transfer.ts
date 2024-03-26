@@ -1,8 +1,6 @@
 import {
-  LockupV20Contract_Transfer_handler as HandlerLinear_V20,
-  LockupV20Contract_Transfer_loader as LoaderLinear_V20,
-  LockupV21Contract_Transfer_handler as HandlerLinear_V21,
-  LockupV21Contract_Transfer_loader as LoaderLinear_V21,
+  LockupV20Contract_Transfer_handler as HandlerLinear_V20_V21_V22,
+  LockupV20Contract_Transfer_loader as LoaderLinear_V20_V21_V22,
 } from "../../generated/src/Handlers.gen";
 
 import type { Action, TransferHandler, TransferLoader } from "../types";
@@ -80,8 +78,5 @@ function handler(input: TransferHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLinear_V20(loader);
-HandlerLinear_V20(handler);
-
-LoaderLinear_V21(loader);
-HandlerLinear_V21(handler);
+LoaderLinear_V20_V21_V22(loader);
+HandlerLinear_V20_V21_V22(handler);
