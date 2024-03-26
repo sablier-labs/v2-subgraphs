@@ -3,7 +3,7 @@ import { Stream } from "../generated/types/schema";
 import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupTranched";
-import { getChainId, one, zero } from "../constants";
+import { getChainId, one, StreamVersion_V22, zero } from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch } from "./batch";
 import { getContractByAddress } from "./contract";
@@ -71,6 +71,16 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
     return null;
   }
 
+  let contract = getContractByAddress(dataSource.address());
+  if (contract == null) {
+    log.info(
+      "[SABLIER] Contract hasn't been registered before this create event: {}",
+      [dataSource.address().toHexString()],
+    );
+    log.error("[SABLIER]", []);
+    return null;
+  }
+
   /** --------------- */
   entity.category = "LockupLinear";
   entity.funder = event.params.funder;
@@ -90,7 +100,16 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   /** --------------- */
   let deposit = event.params.amounts.deposit;
   let duration = event.params.range.end.minus(event.params.range.start);
+
+  /** --------------- */
   let cliff = event.params.range.cliff.minus(event.params.range.start);
+
+  if (contract.version === StreamVersion_V22) {
+    if (event.params.range.cliff.isZero()) {
+      cliff = zero;
+    }
+  }
+
   if (!cliff.isZero()) {
     entity.cliff = true;
     entity.cliffAmount = deposit.times(cliff).div(duration);
