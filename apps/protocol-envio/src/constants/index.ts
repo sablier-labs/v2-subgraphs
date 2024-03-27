@@ -49,6 +49,7 @@ export function configuration(chainId: number | string | bigint) {
       ...configuration.V21.dynamic,
       ...configuration.V22.linear,
       ...configuration.V22.dynamic,
+      ...configuration.V22.tranched,
     ],
   };
 }

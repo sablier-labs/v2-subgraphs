@@ -231,7 +231,6 @@ async function handlerLinear(input: CreateLinearHandler) {
 
 async function handlerTranched(input: CreateTranchedHandler) {
   const { context, event } = input;
-
   /** ------- Initialize -------- */
 
   let { watcher, contract, contracts } = await initialize_async(
