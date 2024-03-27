@@ -225,7 +225,7 @@ templates:
         - event:
             CreateLockupTranchedStream(uint256,address,indexed address,indexed address,(uint128,uint128),indexed
             address,bool,bool,(uint128,uint40)[],(uint40,uint40),address)
-          handler: handleCreateDynamic_V22
+          handler: handleCreateTranched_V22
         - event: RenounceLockupStream(indexed uint256)
           handler: handleRenounce
         - event: Transfer(indexed address,indexed address,indexed uint256)

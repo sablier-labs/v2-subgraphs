@@ -2,7 +2,7 @@ import { BigInt, dataSource, ethereum, log } from "@graphprotocol/graph-ts";
 import { Stream } from "../generated/types/schema";
 import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupTranched";
+import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupTranched/SablierV2LockupTranched";
 import { getChainId, one, StreamVersion_V22, zero } from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch } from "./batch";

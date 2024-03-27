@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import { Tranche, Stream } from "../generated/types/schema";
-import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupTranched";
+import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupTranched/SablierV2LockupTranched";
 import { zero } from "../constants";
 
 export class TrancheInput {

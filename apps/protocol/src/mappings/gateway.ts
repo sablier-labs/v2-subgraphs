@@ -12,7 +12,7 @@ import {
   WithdrawFromLockupStream as EventWithdraw_V20,
   WithdrawFromLockupStream1 as EventWithdraw_V21_V22,
 } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
-import { CreateLockupTranchedStream as EventCreateTranched_V22 } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupTranched";
+import { CreateLockupTranchedStream as EventCreateTranched_V22 } from "../generated/types/templates/ContractLockupTranched/SablierV2LockupTranched";
 
 import {
   handleApproval,
@@ -143,18 +143,14 @@ function handleCreateLinear_V21(event_: EventCreateLinear_V21): void {
 }
 
 function handleCreateLinear_V22(event_: EventCreateLinear_V22): void {
-  let parameters_no_fee = event_.parameters.map((value, index) => {
-    if (index === 4) {
-      const amounts = value.value.toTuple();
-      amounts.push(ethereum.Value.fromUnsignedBigInt(zero));
-
-      return {
-        name: value.name,
-        value: ethereum.Value.fromTuple(amounts),
-      };
-    }
-    return value;
-  });
+  let parameters_no_fee = event_.parameters;
+  let amounts = parameters_no_fee[4].value.toTuple();
+  amounts.push(ethereum.Value.fromUnsignedBigInt(zero));
+  let parameter = new ethereum.EventParam(
+    parameters_no_fee[4].name,
+    ethereum.Value.fromTuple(amounts),
+  );
+  parameters_no_fee[4] = parameter;
 
   let parameters_no_transferrable = parameters_no_fee.filter(
     (_value, index) => index !== 7,
@@ -210,18 +206,14 @@ function handleCreateDynamic_V21(event_: EventCreateDynamic_V21): void {
 }
 
 function handleCreateDynamic_V22(event_: EventCreateDynamic_V22): void {
-  let parameters_no_fee = event_.parameters.map((value, index) => {
-    if (index === 4) {
-      const amounts = value.value.toTuple();
-      amounts.push(ethereum.Value.fromUnsignedBigInt(zero));
-
-      return {
-        name: value.name,
-        value: ethereum.Value.fromTuple(amounts),
-      };
-    }
-    return value;
-  });
+  let parameters_no_fee = event_.parameters;
+  let amounts = parameters_no_fee[4].value.toTuple();
+  amounts.push(ethereum.Value.fromUnsignedBigInt(zero));
+  let parameter = new ethereum.EventParam(
+    parameters_no_fee[4].name,
+    ethereum.Value.fromTuple(amounts),
+  );
+  parameters_no_fee[4] = parameter;
 
   let parameters_no_transferrable = parameters_no_fee.filter(
     (_value, index) => index !== 7,

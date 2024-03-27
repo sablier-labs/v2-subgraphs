@@ -1,7 +1,7 @@
 import { dataSource, log } from "@graphprotocol/graph-ts";
 import { Stream } from "../generated/types/schema";
 import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
-import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupTranched";
+import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupTranched/SablierV2LockupTranched";
 import {
   Approval as EventApproval,
   ApprovalForAll as EventApprovalForAll,
