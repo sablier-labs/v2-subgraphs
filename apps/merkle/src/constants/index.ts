@@ -13,8 +13,9 @@ export let ADDRESS_ZERO = Bytes.fromHexString(
   "0x0000000000000000000000000000000000000000",
 );
 
-export let StreamVersion_V20 = "V20";
+export let StreamVersion_V20 = "V20"; /** Not in use */
 export let StreamVersion_V21 = "V21";
+export let StreamVersion_V22 = "V22";
 
 export function getContractInitializer(): string {
   return initializer.toLowerCase();
@@ -27,6 +28,7 @@ export function getContractsFactory(): string[][] {
   return factory.map<string[]>((item) => [
     item[0].toString().toLowerCase(),
     item[1].toString().toLowerCase(),
+    item.length >= 3 ? item[2].toString() : StreamVersion_V21,
   ]);
 }
 

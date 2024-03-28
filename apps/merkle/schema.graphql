@@ -8,6 +8,7 @@ enum ActionCategory {
 enum CampaignCategory {
   LockupDynamic
   LockupLinear
+  LockupTranched
 }
 
 type Action @entity {
@@ -140,6 +141,8 @@ type Campaign @entity {
   streamCancelable: Boolean!
   "flag showing the transferability of the produced streams"
   streamTransferable: Boolean!
+  "a set of tranches with unlock percentages instead of concrete amounts, only available on tranched streams"
+  streamTranches: [Tranche!]! @derivedFrom(field: "campaign")
 
   "total claimed amount up to this point"
   claimedAmount: BigInt!
@@ -171,6 +174,30 @@ type Factory @entity {
 
   "list of campaigns"
   campaigns: [Campaign!]! @derivedFrom(field: "factory")
+}
+
+type Tranche @entity {
+  "unique id resolving to campaign id concatenated with the position of the tranche"
+  id: String!
+
+  "position of the tranche inside the array"
+  position: BigInt!
+  "stream upon which the tranche is used"
+  campaign: Campaign!
+  "percentage resolving to the percentage of value streamed during this tranche"
+  percentage: BigInt!
+  "timestamp resolving to the duration of the tranche"
+  duration: BigInt!
+
+  "derived percentage resoling to the total amount in percentages streamed until the start of the timestamp"
+  startPercentage: BigInt!
+  "derived percentage resoling to the total amount in percentages streamed until the end of the timestamp"
+  endPercentage: BigInt!
+
+  "duration accrued at the end of the tranche"
+  endDuration: BigInt!
+  "timestamp resolving to the duration accrued at the start of the tranche"
+  startDuration: BigInt!
 }
 
 type Watcher @entity {

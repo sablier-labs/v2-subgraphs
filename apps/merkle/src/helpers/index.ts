@@ -2,7 +2,9 @@ import { createAction, generateActionId } from "./action";
 import { getOrCreateActivity } from "./activity";
 import { getOrCreateAsset } from "./asset";
 import {
-  createCampaignLinear,
+  createCampaignLinear_V21,
+  createCampaignLinear_V22,
+  createCampaignTranched_V22,
   generateCampaignId,
   getCampaignById,
 } from "./campaign";
@@ -12,7 +14,9 @@ import { getOrCreateWatcher } from "./watcher";
 
 export {
   createAction,
-  createCampaignLinear,
+  createCampaignLinear_V21,
+  createCampaignLinear_V22,
+  createCampaignTranched_V22,
   createFactory,
   generateActionId,
   generateCampaignId,

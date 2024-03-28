@@ -1,13 +1,17 @@
 import { Address } from "@graphprotocol/graph-ts";
 import { Factory } from "../generated/types/schema";
-import { StreamVersion_V21, getChainId } from "../constants";
+import { getChainId } from "../constants";
 
 export function getFactoryByAddress(address: Address): Factory | null {
   const id = generateFactoryId(address);
   return Factory.load(id);
 }
 
-export function createFactory(address: Address, alias: string): Factory {
+export function createFactory(
+  address: Address,
+  alias: string,
+  version: string,
+): Factory {
   let id = generateFactoryId(address);
   let entity = getFactoryByAddress(address);
   if (entity == null) {
@@ -18,7 +22,7 @@ export function createFactory(address: Address, alias: string): Factory {
   entity.chainId = getChainId();
   entity.address = address;
 
-  entity.version = StreamVersion_V21;
+  entity.version = version;
 
   entity.save();
   return entity;
