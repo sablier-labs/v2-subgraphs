@@ -249,9 +249,9 @@ type Tranche @entity {
   stream: Stream!
   "amount resolving to the value streamed during this tranche"
   amount: BigInt!
-
   "timestamp resolving to the end moment of the tranche"
   timestamp: BigInt!
+
   "timestamp resolving to the *timestamp* parameter"
   endTime: BigInt!
   "timestamp resolving to the start moment of the timestamp (the end time of previous timestamp or the startTime of the stream)"

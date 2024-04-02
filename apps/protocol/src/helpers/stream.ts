@@ -3,7 +3,13 @@ import { Stream } from "../generated/types/schema";
 import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupTranched/SablierV2LockupTranched";
-import { getChainId, one, StreamVersion_V22, zero } from "../constants";
+import {
+  getChainId,
+  one,
+  StreamVersion_V20,
+  StreamVersion_V21,
+  zero,
+} from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch } from "./batch";
 import { getContractByAddress } from "./contract";
@@ -104,7 +110,12 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   /** --------------- */
   let cliff = event.params.range.cliff.minus(event.params.range.start);
 
-  if (contract.version === StreamVersion_V22) {
+  /** String comparisons will not work with "===", loose operators are required */
+  if (
+    contract.version != StreamVersion_V21 &&
+    contract.version != StreamVersion_V20
+  ) {
+    /** StreamVersion_V22 introduced zero cliffs for linear streams */
     if (event.params.range.cliff.isZero()) {
       cliff = zero;
     }
