@@ -18,7 +18,7 @@ export let linear: string[][] = [
 export let dynamic: string[][] = [
   ["0x421e1e7a53ff360f70a2d02037ee394fa474e035", "LD", "V20"],
   ["0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a", "LD2", "V21"],
-  ["0x3b653D40467EfE57f9d0EdEb01505C16f6231653", "LL3", "V22"],
+  ["0x3b653D40467EfE57f9d0EdEb01505C16f6231653", "LD3", "V22"],
 ];
 
 export let tranched: string[][] = [
