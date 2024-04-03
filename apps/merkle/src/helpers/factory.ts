@@ -1,6 +1,6 @@
 import { Address } from "@graphprotocol/graph-ts";
 import { Factory } from "../generated/types/schema";
-import { getChainId } from "../constants";
+import { getChainId, zero } from "../constants";
 
 export function getFactoryByAddress(address: Address): Factory | null {
   const id = generateFactoryId(address);
@@ -21,6 +21,7 @@ export function createFactory(
   entity.alias = alias.toLowerCase();
   entity.chainId = getChainId();
   entity.address = address;
+  entity.campaignIndex = zero;
 
   entity.version = version;
 

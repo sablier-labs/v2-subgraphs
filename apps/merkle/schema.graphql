@@ -95,6 +95,7 @@ type Campaign @entity {
   subgraphId: BigInt!
   "address of the campaign"
   address: Bytes!
+
   "underlying asset"
   asset: Asset!
   "factory producing the campaign"
@@ -118,6 +119,8 @@ type Campaign @entity {
   expires: Boolean!
   "time at which the campaign expires and clawback is enabled, if the expires flag is true"
   expiration: BigInt
+  "name assigned as the campaign title"
+  name: String!
 
   "ipfs content identifier for the list of recipients and other static details"
   ipfsCID: String!
@@ -149,6 +152,8 @@ type Campaign @entity {
   "number of claims requested up to this point"
   claimedCount: BigInt!
 
+  "index of the campaign based on the factory's campaignIndex"
+  position: BigInt!
   "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
   version: String!
 
@@ -162,7 +167,7 @@ type Factory @entity {
   "unique identifier resolving to contract address"
   id: String!
 
-  "hardcoded alias, resolved by replacing the contract address from the id with the contract alias"
+  "hardcoded alias"
   alias: String!
   "address of the contract"
   address: Bytes!
@@ -171,6 +176,9 @@ type Factory @entity {
 
   "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
   version: String!
+
+  "factory index for campaigns"
+  campaignIndex: BigInt!
 
   "list of campaigns"
   campaigns: [Campaign!]! @derivedFrom(field: "factory")

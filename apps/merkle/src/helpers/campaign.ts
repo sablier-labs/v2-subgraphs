@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
+import { Address, ethereum } from "@graphprotocol/graph-ts";
 import { Campaign } from "../generated/types/schema";
 import {
   CreateMerkleStreamerLL as EventCreateCampaignLL_V21,
@@ -23,10 +23,7 @@ export function getCampaignById(id: string): Campaign | null {
   return Campaign.load(id);
 }
 
-function createCampaignLinear(
-  id: string,
-  event: ethereum.Event,
-): Campaign | null {
+function createCampaign(id: string, event: ethereum.Event): Campaign | null {
   let entity = getCampaignById(id);
   if (entity != null) {
     log_exit("Campaign already registered at this address");
@@ -42,6 +39,7 @@ function createCampaignLinear(
   entity.subgraphId = watcher.campaignIndex;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
+  entity.name = "";
 
   entity.clawbackAction = null;
   entity.clawbackTime = null;
@@ -60,6 +58,11 @@ function createCampaignLinear(
     return null;
   }
   entity.factory = factory.id;
+  let index = factory.campaignIndex.plus(one);
+  factory.campaignIndex = index;
+  factory.save();
+
+  entity.position = index;
 
   /** --------------- */
 
@@ -73,7 +76,7 @@ export function createCampaignLinear_V21(
   event: EventCreateCampaignLL_V21,
 ): Campaign | null {
   let id = generateCampaignId(event.params.merkleStreamer);
-  let entity = createCampaignLinear(id, event);
+  let entity = createCampaign(id, event);
 
   if (entity == null) {
     log_exit("Campaign is missing.");
@@ -114,7 +117,7 @@ export function createCampaignLinear_V22(
   event: EventCreateCampaignLL_V22,
 ): Campaign | null {
   let id = generateCampaignId(event.params.merkleLockupLL);
-  let entity = createCampaignLinear(id, event);
+  let entity = createCampaign(id, event);
 
   if (entity == null) {
     log_exit("Campaign is missing.");
@@ -132,20 +135,19 @@ export function createCampaignLinear_V22(
   entity.streamCliffDuration = event.params.streamDurations.cliff;
   entity.streamTotalDuration = event.params.streamDurations.total;
 
-  let baseParams = baseParamsLL_V22(event);
-
-  entity.admin = baseParams.initialAdmin;
-  entity.expires = !baseParams.expiration.isZero();
-  entity.expiration = baseParams.expiration;
-  entity.root = baseParams.merkleRoot;
-  entity.ipfsCID = baseParams.ipfsCID;
-  entity.streamCancelable = baseParams.cancelable;
-  entity.streamTransferable = baseParams.transferable;
+  entity.name = event.params.baseParams.name;
+  entity.admin = event.params.baseParams.initialAdmin;
+  entity.expires = !event.params.baseParams.expiration.isZero();
+  entity.expiration = event.params.baseParams.expiration;
+  entity.root = event.params.baseParams.merkleRoot;
+  entity.ipfsCID = event.params.baseParams.ipfsCID;
+  entity.streamCancelable = event.params.baseParams.cancelable;
+  entity.streamTransferable = event.params.baseParams.transferable;
 
   entity.version = StreamVersion_V22;
 
   /** --------------- */
-  let asset = getOrCreateAsset(baseParams.asset);
+  let asset = getOrCreateAsset(event.params.baseParams.asset);
   entity.asset = asset.id;
 
   /** --------------- */
@@ -156,7 +158,7 @@ export function createCampaignTranched_V22(
   event: EventCreateCampaignLT_V22,
 ): Campaign | null {
   let id = generateCampaignId(event.params.merkleLockupLT);
-  let entity = createCampaignLinear(id, event);
+  let entity = createCampaign(id, event);
 
   if (entity == null) {
     log_exit("Campaign is missing.");
@@ -164,26 +166,26 @@ export function createCampaignTranched_V22(
   }
 
   entity.address = event.params.merkleLockupLT;
-  entity.category = "LockupLinear";
+  entity.category = "LockupTranched";
 
   entity.lockup = event.params.lockupTranched;
   entity.aggregateAmount = event.params.aggregateAmount;
   entity.totalRecipients = event.params.recipientsCount;
 
-  let baseParams = baseParamsLT_V22(event);
-
-  entity.admin = baseParams.initialAdmin;
-  entity.expires = !baseParams.expiration.isZero();
-  entity.expiration = baseParams.expiration;
-  entity.root = baseParams.merkleRoot;
-  entity.ipfsCID = baseParams.ipfsCID;
-  entity.streamCancelable = baseParams.cancelable;
-  entity.streamTransferable = baseParams.transferable;
+  entity.name = event.params.baseParams.name;
+  entity.admin = event.params.baseParams.initialAdmin;
+  entity.expires = !event.params.baseParams.expiration.isZero();
+  entity.expiration = event.params.baseParams.expiration;
+  entity.root = event.params.baseParams.merkleRoot;
+  entity.ipfsCID = event.params.baseParams.ipfsCID;
+  entity.streamCancelable = event.params.baseParams.cancelable;
+  entity.streamTransferable = event.params.baseParams.transferable;
+  entity.streamTotalDuration = event.params.totalDuration;
 
   entity.version = StreamVersion_V22;
 
   /** --------------- */
-  let asset = getOrCreateAsset(baseParams.asset);
+  let asset = getOrCreateAsset(event.params.baseParams.asset);
   entity.asset = asset.id;
 
   /** --------------- */
@@ -200,60 +202,4 @@ export function generateCampaignId(address: Address): string {
     .concat(getChainId().toString());
 
   return id;
-}
-
-/**
- *
- * Type helper for the Base Params / Constructor Params tuple
- *
- */
-
-function baseParamsLL_V22(
-  event: EventCreateCampaignLL_V22,
-): CreateMerkleLockupBaseParamsStruct {
-  return changetype<CreateMerkleLockupBaseParamsStruct>(
-    event.parameters[1].value.toTuple(),
-  );
-}
-
-function baseParamsLT_V22(
-  event: EventCreateCampaignLT_V22,
-): CreateMerkleLockupBaseParamsStruct {
-  return changetype<CreateMerkleLockupBaseParamsStruct>(
-    event.parameters[1].value.toTuple(),
-  );
-}
-
-class CreateMerkleLockupBaseParamsStruct extends ethereum.Tuple {
-  get initialAdmin(): Address {
-    return this[0].toAddress();
-  }
-
-  get asset(): Address {
-    return this[1].toAddress();
-  }
-
-  get ipfsCID(): string {
-    return this[2].toString();
-  }
-
-  get name(): string {
-    return this[3].toString();
-  }
-
-  get merkleRoot(): Bytes {
-    return this[4].toBytes();
-  }
-
-  get expiration(): BigInt {
-    return this[5].toBigInt();
-  }
-
-  get cancelable(): boolean {
-    return this[6].toBoolean();
-  }
-
-  get transferable(): boolean {
-    return this[7].toBoolean();
-  }
 }

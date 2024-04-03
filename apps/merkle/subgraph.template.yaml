@@ -34,12 +34,12 @@ dataSources:
             address,bytes32,uint40,(uint40,uint40),bool,bool,string,uint256,uint256)
           handler: handleInitializer
         - event:
-            CreateMerkleLockupLL(indexed address,(indexed
-            address,address,string,string,bytes32,uint40,bool,bool),address,(uint40,uint40),uint256,uint256)
+            CreateMerkleLockupLL(indexed
+            address,(address,address,string,string,bytes32,uint40,bool,bool),address,(uint40,uint40),uint256,uint256)
           handler: handleInitializer
         - event:
-            CreateMerkleLockupLT(indexed address,(indexed
-            address,address,string,string,bytes32,uint40,bool,bool),address,(uint64,uint40)[],uint256,uint256)
+            CreateMerkleLockupLT(indexed
+            address,(address,address,string,string,bytes32,uint40,bool,bool),address,(uint64,uint40)[],uint256,uint256,uint256)
           handler: handleInitializer
       file: ./src/mappings/index.ts
 templates:
@@ -76,12 +76,12 @@ templates:
             address,bytes32,uint40,(uint40,uint40),bool,bool,string,uint256,uint256)
           handler: handleCreateCampaignLL_V21
         - event:
-            CreateMerkleLockupLL(indexed address,(indexed
-            address,address,string,string,bytes32,uint40,bool,bool),address,(uint40,uint40),uint256,uint256)
+            CreateMerkleLockupLL(indexed
+            address,(address,address,string,string,bytes32,uint40,bool,bool),address,(uint40,uint40),uint256,uint256)
           handler: handleCreateCampaignLL_V22
         - event:
-            CreateMerkleLockupLT(indexed address,(indexed
-            address,address,string,string,bytes32,uint40,bool,bool),address,(uint64,uint40)[],uint256,uint256)
+            CreateMerkleLockupLT(indexed
+            address,(address,address,string,string,bytes32,uint40,bool,bool),address,(uint64,uint40)[],uint256,uint256,uint256)
           handler: handleCreateCampaignLT_V22
       file: ./src/mappings/index.ts
   - kind: ethereum/contract

@@ -1,4 +1,7 @@
-import { ContractMerkleLockupLL as ContractCampaignLL } from "../generated/types/templates";
+import {
+  ContractMerkleLockupLL as ContractCampaignLL,
+  ContractMerkleLockupLT as ContractCampaignLT,
+} from "../generated/types/templates";
 import {
   CreateMerkleStreamerLL as EventCreateCampaignLL_V21,
   CreateMerkleLockupLL as EventCreateCampaignLL_V22,
@@ -60,7 +63,7 @@ export function handleCreateCampaignLT_V22(
     return;
   }
 
-  ContractCampaignLL.create(event.params.merkleLockupLT);
+  ContractCampaignLT.create(event.params.merkleLockupLT);
   campaign.save();
 
   let action = createAction(event, "Create");
