@@ -70,6 +70,7 @@ const names: Record<Envio, [Singular, Plural]> = {
   Factory: ["factory", "factories"],
   Segment: ["segment", "segments"],
   Stream: ["stream", "streams"],
+  Tranches: ["tranche", "tranches"],
 };
 
 /**
