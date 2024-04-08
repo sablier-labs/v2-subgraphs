@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 0.0.34
-        version: 0.0.34
+        specifier: 0.0.37
+        version: 0.0.37
       viem:
         specifier: ^2.7.9
         version: 2.7.9(typescript@5.2.2)
@@ -988,8 +988,8 @@ packages:
       fastq: 1.16.0
     dev: true
 
-  /@opentelemetry/api@1.7.0:
-    resolution: {integrity: sha512-AdY5wvN0P2vXBi3b29hxZgSFvdhdxPB9+f0B6s//P9Q8nibRWeA3cHm8UmLpio9ABigkVHJ5NMPk+Mz8VCCyrw==}
+  /@opentelemetry/api@1.8.0:
+    resolution: {integrity: sha512-I/s6F7yKUDdtMsoBWXJe8Qz40Tui5vsuKCWJEWVL+5q9sSWRzzx6v2KeNsOBEwd94j0eWkpWCH4yB6rZg9Mf0w==}
     engines: {node: '>=8.0.0'}
     dev: false
 
@@ -1625,7 +1625,7 @@ packages:
       es-errors: 1.3.0
       function-bind: 1.1.2
       get-intrinsic: 1.2.4
-      set-function-length: 1.2.1
+      set-function-length: 1.2.2
     dev: false
 
   /callsites@3.1.0:
@@ -1966,46 +1966,46 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@0.0.34:
-    resolution: {integrity: sha512-/mou3DlVnn4jDYnpqBDZuU2kNo1qgnIfk4pPDVE0gVeljJN86DXA72F6MWGEeMnoYgpcHKxNSeDyBa2l768wCg==}
+  /envio-darwin-arm64@0.0.37:
+    resolution: {integrity: sha512-8MQE6OiRT/13QeYuxldnctz8jcsxtn3BokVkvrbXC93m5xkvOyiMOgEmpWlbysGkd+M4F/phPMoNCROBLpMjxA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-darwin-x64@0.0.34:
-    resolution: {integrity: sha512-B+ExhdEemN5zecpYC13slJ1HoWjJSZ06bEJ5/QObMS6w7Rn50/N+PLu60+mudn70lGBKT0CbnMqKFZZDwYYC3A==}
+  /envio-darwin-x64@0.0.37:
+    resolution: {integrity: sha512-Po8dFzkBAeIeh1xy2UFrbh12XAu1oTopEo5GcoVSvQ7DO6RmLBy55wtaKzx0XlzI3rpmQUnQ4GVhaYJQB82rIg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-arm64@0.0.34:
-    resolution: {integrity: sha512-cKKbDqV9Snbtw4W2jzagVNo9/HPfk8v41FIRGm25/Tvife+Hy3yqiTrx1+51iqsaQE6f9lFXqi1dAOtPiw2iBg==}
+  /envio-linux-arm64@0.0.37:
+    resolution: {integrity: sha512-LQzMEG2UHYx4W68txbKI7vMV1kPb+Rdq93A4d/1OnGDpAsyJg+Ik+AJHTLqLbp/AJGmoQ9yQM0uHg3EmDdvcxg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-x64@0.0.34:
-    resolution: {integrity: sha512-32nCWkuf6b5eg8t6kvgMDuCp0WNAT+AdqZJNYDQzpcZOCRxzTdTiciFWCfjBuUEkTQDXDq65UwY7cWxFU0e7aA==}
+  /envio-linux-x64@0.0.37:
+    resolution: {integrity: sha512-dTCdgkdlOMVBcNZuXFqGJajClCIh4yaw7WuQapHHTJOVjkCmsycYySygMacuQeeLY9JX1OFDAzjNpEARIrRRqw==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio@0.0.34:
-    resolution: {integrity: sha512-1xnBGGgXQkWe8zG7oW1Q0fzUd3ZDMkB7O14R6W8tiRAyt5l9nCEDWnHSjBRg9Ryp6iN5ngx0GI1uVnHv6kCWdg==}
+  /envio@0.0.37:
+    resolution: {integrity: sha512-h5bNd8MW4ApzgyFsW/siGMXyoSHZIFso92Zr7yJYsB/4j7eY6aKW/c63myLwSKK+adCMU96IiwTX+4L0DziPQQ==}
     hasBin: true
     optionalDependencies:
-      envio-darwin-arm64: 0.0.34
-      envio-darwin-x64: 0.0.34
-      envio-linux-arm64: 0.0.34
-      envio-linux-x64: 0.0.34
+      envio-darwin-arm64: 0.0.37
+      envio-darwin-x64: 0.0.37
+      envio-linux-arm64: 0.0.37
+      envio-linux-x64: 0.0.37
     dev: false
 
   /error-ex@1.3.2:
@@ -2285,8 +2285,8 @@ packages:
       - supports-color
     dev: false
 
-  /fast-copy@3.0.1:
-    resolution: {integrity: sha512-Knr7NOtK3HWRYGtHoJrjkaWepqT8thIVGAwt0p0aUs1zqkAzXZV4vo9fFNwyb5fcqK1GKYFYxldQdIDVKhUAfA==}
+  /fast-copy@3.0.2:
+    resolution: {integrity: sha512-dl0O9Vhju8IrcLndv2eU4ldt1ftXMqqfgN4H1cpmGV7P6jeB9FwpN9a2c8DPGE1Ys88rNUJVYDHq73CGAGOPfQ==}
     dev: false
 
   /fast-deep-equal@3.1.3:
@@ -2320,8 +2320,8 @@ packages:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
     dev: true
 
-  /fast-redact@3.3.0:
-    resolution: {integrity: sha512-6T5V1QK1u4oF+ATxs1lWUmlEk6P2T9HqJG3e2DnHOdVgZy2rFJBoEnrIedcTXlkAHU/zKC+7KETJ+KGGKwxgMQ==}
+  /fast-redact@3.5.0:
+    resolution: {integrity: sha512-dwsoQlS7h9hMeYUq1W++23NDcBLV4KqONnITDV9DjfS3q1SgDGVrBdvvTLUotWtPSD7asWDV9/CmsZPy8Hf70A==}
     engines: {node: '>=6'}
     dev: false
 
@@ -2438,7 +2438,7 @@ packages:
     dependencies:
       es-errors: 1.3.0
       function-bind: 1.1.2
-      has-proto: 1.0.1
+      has-proto: 1.0.3
       has-symbols: 1.0.3
       hasown: 2.0.0
     dev: false
@@ -2559,8 +2559,8 @@ packages:
       es-define-property: 1.0.0
     dev: false
 
-  /has-proto@1.0.1:
-    resolution: {integrity: sha512-7qE+iP+O+bgF9clE5+UoBFzE65mlBiVj3tKCrlNQ0Ogwm0BjpT/gK4SlLYDMybDh5I3TCTKnPPa0oMG7JDYrhg==}
+  /has-proto@1.0.3:
+    resolution: {integrity: sha512-SJ1amZAJUiZS+PhsVLf5tGydlaVB8EdFpaSO4gmiUKUOxk8qzn5AIy4ZeJUmh22znIdk/uMAUT2pl3FxzVUH+Q==}
     engines: {node: '>= 0.4'}
     dev: false
 
@@ -3725,7 +3725,7 @@ packages:
     dependencies:
       colorette: 2.0.20
       dateformat: 4.6.3
-      fast-copy: 3.0.1
+      fast-copy: 3.0.2
       fast-safe-stringify: 2.1.1
       help-me: 4.2.0
       joycon: 3.1.1
@@ -3735,7 +3735,7 @@ packages:
       pump: 3.0.0
       readable-stream: 4.5.2
       secure-json-parse: 2.7.0
-      sonic-boom: 3.8.0
+      sonic-boom: 3.8.1
       strip-json-comments: 3.1.1
     dev: false
 
@@ -3748,7 +3748,7 @@ packages:
     hasBin: true
     dependencies:
       atomic-sleep: 1.0.0
-      fast-redact: 3.3.0
+      fast-redact: 3.5.0
       on-exit-leak-free: 2.1.2
       pino-abstract-transport: 1.1.0
       pino-std-serializers: 6.2.2
@@ -3756,7 +3756,7 @@ packages:
       quick-format-unescaped: 4.0.4
       real-require: 0.2.0
       safe-stable-stringify: 2.4.3
-      sonic-boom: 3.8.0
+      sonic-boom: 3.8.1
       thread-stream: 2.4.1
     dev: false
 
@@ -3810,7 +3810,7 @@ packages:
     resolution: {integrity: sha512-UocpgIrKyA2TKLVZDSfm8rGkL13C19YrQBAiG3xo3aDFWcHedxRxI3z+cIcucoxpSO0h5lff5iv/SXoxyeopeA==}
     engines: {node: ^16 || ^18 || >=20}
     dependencies:
-      '@opentelemetry/api': 1.7.0
+      '@opentelemetry/api': 1.8.0
       tdigest: 0.1.2
     dev: false
 
@@ -3857,7 +3857,7 @@ packages:
     resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
     engines: {node: '>=0.6'}
     dependencies:
-      side-channel: 1.0.5
+      side-channel: 1.0.6
     dev: false
 
   /queue-microtask@1.2.3:
@@ -4137,8 +4137,8 @@ packages:
       - supports-color
     dev: false
 
-  /set-function-length@1.2.1:
-    resolution: {integrity: sha512-j4t6ccc+VsKwYHso+kElc5neZpjtq9EnRICFZtWyBsLojhmeF/ZBd/elqm22WJh/BziDe/SBiOeAt0m2mfLD0g==}
+  /set-function-length@1.2.2:
+    resolution: {integrity: sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==}
     engines: {node: '>= 0.4'}
     dependencies:
       define-data-property: 1.1.4
@@ -4169,8 +4169,8 @@ packages:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: false
 
-  /side-channel@1.0.5:
-    resolution: {integrity: sha512-QcgiIWV4WV7qWExbN5llt6frQB/lBven9pqliLXfGPB+K9ZYXxDozp0wLkHS24kWCm+6YXH/f0HhnObZnZOBnQ==}
+  /side-channel@1.0.6:
+    resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.7
@@ -4200,8 +4200,8 @@ packages:
       is-fullwidth-code-point: 3.0.0
     dev: false
 
-  /sonic-boom@3.8.0:
-    resolution: {integrity: sha512-ybz6OYOUjoQQCQ/i4LU8kaToD8ACtYP+Cj5qd2AO36bwbdewxWJ3ArmJ2cr6AvxlL2o0PqnCcPGUgkILbfkaCA==}
+  /sonic-boom@3.8.1:
+    resolution: {integrity: sha512-y4Z8LCDBuum+PBP3lSV7RHrXscqksve/bi0as7mhwVnBW+/wUqKT/2Kb7um8yqcFy0duYbbPxzt89Zy2nOCaxg==}
     dependencies:
       atomic-sleep: 1.0.0
     dev: false

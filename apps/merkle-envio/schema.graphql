@@ -8,6 +8,7 @@ enum ActionCategory {
 enum CampaignCategory {
   LockupDynamic
   LockupLinear
+  LockupTranched
 }
 
 type Action {
@@ -87,6 +88,30 @@ type Asset {
   campaigns: [Campaign!]! @derivedFrom(field: "asset")
 }
 
+type Tranche {
+  "unique id resolving to campaign id concatenated with the position of the tranche"
+  id: String!
+
+  "position of the tranche inside the array"
+  position: BigInt!
+  "campaign upon which the tranche is used"
+  campaign: Campaign!
+  "percentage resolving to the percentage of value streamed during this tranche"
+  percentage: BigInt!
+  "timestamp resolving to the duration of the tranche"
+  duration: BigInt!
+
+  "derived percentage resoling to the total amount in percentages streamed until the start of the timestamp"
+  startPercentage: BigInt!
+  "derived percentage resoling to the total amount in percentages streamed until the end of the timestamp"
+  endPercentage: BigInt!
+
+  "duration accrued at the end of the tranche"
+  endDuration: BigInt!
+  "timestamp resolving to the duration accrued at the start of the tranche"
+  startDuration: BigInt!
+}
+
 type Campaign {
   "unique identifier resolving to the contract address concatenated with the chain id"
   id: String!
@@ -94,6 +119,7 @@ type Campaign {
   subgraphId: BigInt!
   "address of the campaign"
   address: Bytes!
+
   "underlying asset"
   asset: Asset!
   "factory producing the campaign"
@@ -117,6 +143,8 @@ type Campaign {
   expires: Boolean!
   "time at which the campaign expires and clawback is enabled, if the expires flag is true"
   expiration: BigInt
+  "name assigned as the campaign title"
+  name: String!
 
   "ipfs content identifier for the list of recipients and other static details"
   ipfsCID: String!
@@ -149,6 +177,8 @@ type Campaign {
   "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
   version: String!
 
+  "a set of tranches with unlock percentages instead of concrete amounts, only available on tranched streams"
+  streamTranches: [Tranche!]! @derivedFrom(field: "campaign")
   "actions triggered in the context of this campaign"
   actions: [Action!]! @derivedFrom(field: "campaign")
   "list of daily activity snapshots for days with 1+ events"

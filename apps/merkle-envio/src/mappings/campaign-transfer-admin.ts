@@ -1,6 +1,8 @@
 import {
-  MerkleLLV21Contract_TransferAdmin_handler as HandlerLinear_V21,
-  MerkleLLV21Contract_TransferAdmin_loader as LoaderLinear_V21,
+  MerkleLockupV21Contract_TransferAdmin_handler as Handler_V21,
+  MerkleLockupV21Contract_TransferAdmin_loader as Loader_V21,
+  MerkleLockupV22Contract_TransferAdmin_handler as Handler_V22,
+  MerkleLockupV22Contract_TransferAdmin_loader as Loader_V22,
 } from "../../generated/src/Handlers.gen";
 
 import type {
@@ -57,5 +59,8 @@ function handler(input: TransferAdminHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLinear_V21(loader);
-HandlerLinear_V21(handler);
+Loader_V21(loader);
+Handler_V21(handler);
+
+Loader_V22(loader);
+Handler_V22(handler);

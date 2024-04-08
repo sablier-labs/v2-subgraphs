@@ -1,0 +1,69 @@
+import type {
+  Event,
+  Tranche,
+  Mutable,
+  CreateTranchedArgs,
+  Campaign,
+} from "../types";
+
+type Entity = Partial<Mutable<Tranche>>;
+
+class TrancheInput {
+  percentage: bigint;
+  duration: bigint;
+
+  constructor(percentage: bigint, duration: bigint) {
+    this.percentage = percentage;
+    this.duration = duration;
+  }
+}
+
+function createTranche(id: string, last: TrancheInput, current: TrancheInput) {
+  const entity = {
+    id,
+    percentage: current.percentage,
+    duration: current.duration,
+
+    startDuration: last.duration,
+    endDuration: BigInt(last.duration) + BigInt(current.duration),
+
+    startPercentage: last.percentage,
+    endPercentage: BigInt(last.percentage) + BigInt(current.percentage),
+  } as const;
+
+  return entity;
+}
+
+export function createTranches(
+  event: Event<CreateTranchedArgs>,
+  campaign: Pick<Campaign, "id">,
+) {
+  let params = event.params.tranchesWithPercentages;
+  let last = new TrancheInput(0n, 0n);
+
+  const tranches: Tranche[] = [];
+
+  for (let i = 1; i < params.length; i++) {
+    let id = campaign.id.concat("-").concat(i.toString());
+    let current = new TrancheInput(params[i][0], params[i][1]);
+    let tranche = {
+      ...createTranche(id, last, current),
+      campaign_id: campaign.id,
+      position: BigInt(i - 1),
+    };
+
+    tranches.push(tranche);
+
+    last = current;
+  }
+
+  return tranches;
+}
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export function generateTrancheId(streamId: string, index: number) {
+  return "".concat(streamId).concat("-").concat(index.toString());
+}

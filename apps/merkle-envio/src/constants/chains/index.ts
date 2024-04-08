@@ -42,5 +42,8 @@ export const chains = () => {
     V21: {
       factory: filter(item.factory, "V21"),
     },
+    V22: {
+      factory: filter(item.factory, "V22"),
+    },
   }));
 };
