@@ -1,8 +1,14 @@
-import { Address } from "@graphprotocol/graph-ts";
+import { Address, ethereum } from "@graphprotocol/graph-ts";
 import { Campaign } from "../generated/types/schema";
-import { CreateMerkleStreamerLL as EventCreateCampaignLL } from "../generated/types/templates/ContractMerkleStreamerFactory/SablierV2MerkleStreamerFactory";
+import {
+  CreateMerkleStreamerLL as EventCreateCampaignLL_V21,
+  CreateMerkleLockupLL as EventCreateCampaignLL_V22,
+  CreateMerkleLockupLT as EventCreateCampaignLT_V22,
+} from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupFactory";
+
 import {
   StreamVersion_V21,
+  StreamVersion_V22,
   getChainId,
   log_exit,
   one,
@@ -11,15 +17,13 @@ import {
 import { getOrCreateAsset } from "./asset";
 import { getFactoryByAddress } from "./factory";
 import { getOrCreateWatcher } from "./watcher";
+import { createTranches } from "./tranches";
 
 export function getCampaignById(id: string): Campaign | null {
   return Campaign.load(id);
 }
 
-export function createCampaignLinear(
-  event: EventCreateCampaignLL,
-): Campaign | null {
-  let id = generateCampaignId(event.params.merkleStreamer);
+function createCampaign(id: string, event: ethereum.Event): Campaign | null {
   let entity = getCampaignById(id);
   if (entity != null) {
     log_exit("Campaign already registered at this address");
@@ -31,15 +35,59 @@ export function createCampaignLinear(
 
   /** --------------- */
   entity = new Campaign(id);
-
   entity.chainId = getChainId();
   entity.subgraphId = watcher.campaignIndex;
-  entity.address = event.params.merkleStreamer;
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
+  entity.name = "";
+
+  entity.clawbackAction = null;
+  entity.clawbackTime = null;
+
+  entity.claimedAmount = zero;
+  entity.claimedCount = zero;
+
+  entity.streamCliff = false;
+  entity.streamCliffDuration = zero;
+  entity.streamTotalDuration = zero;
+
+  /** --------------- */
+  let factory = getFactoryByAddress(event.address);
+  if (factory == null) {
+    log_exit("Factory not yet registered at this address");
+    return null;
+  }
+  entity.factory = factory.id;
+  let index = factory.campaignIndex.plus(one);
+  factory.campaignIndex = index;
+  factory.save();
+
+  entity.position = index;
+
+  /** --------------- */
+
+  watcher.campaignIndex = watcher.campaignIndex.plus(one);
+  watcher.save();
+
+  return entity;
+}
+
+export function createCampaignLinear_V21(
+  event: EventCreateCampaignLL_V21,
+): Campaign | null {
+  let id = generateCampaignId(event.params.merkleStreamer);
+  let entity = createCampaign(id, event);
+
+  if (entity == null) {
+    log_exit("Campaign is missing.");
+    return null;
+  }
+
+  entity.address = event.params.merkleStreamer;
+  entity.category = "LockupLinear";
 
   entity.admin = event.params.admin;
-  entity.lockup = event.params.lockupLinear; // Replace when campaigns with LDs will be possible
+  entity.lockup = event.params.lockupLinear;
 
   entity.expires = !event.params.expiration.isZero();
   entity.expiration = event.params.expiration;
@@ -49,39 +97,99 @@ export function createCampaignLinear(
   entity.aggregateAmount = event.params.aggregateAmount;
   entity.totalRecipients = event.params.recipientsCount;
 
-  entity.category = "LockupLinear";
   entity.streamCliff = !event.params.streamDurations.cliff.isZero();
   entity.streamCliffDuration = event.params.streamDurations.cliff;
   entity.streamTotalDuration = event.params.streamDurations.total;
   entity.streamCancelable = event.params.cancelable;
   entity.streamTransferable = event.params.transferable;
 
-  entity.clawbackAction = null;
-  entity.clawbackTime = null;
-
-  entity.claimedAmount = zero;
-  entity.claimedCount = zero;
-
   entity.version = StreamVersion_V21;
-
-  /** --------------- */
-
-  /** --------------- */
-  let factory = getFactoryByAddress(event.address);
-  if (factory == null) {
-    log_exit("Factory not yet registered at this address");
-    return null;
-  }
-  entity.factory = factory.id;
 
   /** --------------- */
   let asset = getOrCreateAsset(event.params.asset);
   entity.asset = asset.id;
 
   /** --------------- */
+  return entity;
+}
 
-  watcher.campaignIndex = watcher.campaignIndex.plus(one);
-  watcher.save();
+export function createCampaignLinear_V22(
+  event: EventCreateCampaignLL_V22,
+): Campaign | null {
+  let id = generateCampaignId(event.params.merkleLockupLL);
+  let entity = createCampaign(id, event);
+
+  if (entity == null) {
+    log_exit("Campaign is missing.");
+    return null;
+  }
+
+  entity.address = event.params.merkleLockupLL;
+  entity.category = "LockupLinear";
+
+  entity.lockup = event.params.lockupLinear;
+  entity.aggregateAmount = event.params.aggregateAmount;
+  entity.totalRecipients = event.params.recipientsCount;
+
+  entity.streamCliff = !event.params.streamDurations.cliff.isZero();
+  entity.streamCliffDuration = event.params.streamDurations.cliff;
+  entity.streamTotalDuration = event.params.streamDurations.total;
+
+  entity.name = event.params.baseParams.name;
+  entity.admin = event.params.baseParams.initialAdmin;
+  entity.expires = !event.params.baseParams.expiration.isZero();
+  entity.expiration = event.params.baseParams.expiration;
+  entity.root = event.params.baseParams.merkleRoot;
+  entity.ipfsCID = event.params.baseParams.ipfsCID;
+  entity.streamCancelable = event.params.baseParams.cancelable;
+  entity.streamTransferable = event.params.baseParams.transferable;
+
+  entity.version = StreamVersion_V22;
+
+  /** --------------- */
+  let asset = getOrCreateAsset(event.params.baseParams.asset);
+  entity.asset = asset.id;
+
+  /** --------------- */
+  return entity;
+}
+
+export function createCampaignTranched_V22(
+  event: EventCreateCampaignLT_V22,
+): Campaign | null {
+  let id = generateCampaignId(event.params.merkleLockupLT);
+  let entity = createCampaign(id, event);
+
+  if (entity == null) {
+    log_exit("Campaign is missing.");
+    return null;
+  }
+
+  entity.address = event.params.merkleLockupLT;
+  entity.category = "LockupTranched";
+
+  entity.lockup = event.params.lockupTranched;
+  entity.aggregateAmount = event.params.aggregateAmount;
+  entity.totalRecipients = event.params.recipientsCount;
+
+  entity.name = event.params.baseParams.name;
+  entity.admin = event.params.baseParams.initialAdmin;
+  entity.expires = !event.params.baseParams.expiration.isZero();
+  entity.expiration = event.params.baseParams.expiration;
+  entity.root = event.params.baseParams.merkleRoot;
+  entity.ipfsCID = event.params.baseParams.ipfsCID;
+  entity.streamCancelable = event.params.baseParams.cancelable;
+  entity.streamTransferable = event.params.baseParams.transferable;
+  entity.streamTotalDuration = event.params.totalDuration;
+
+  entity.version = StreamVersion_V22;
+
+  /** --------------- */
+  let asset = getOrCreateAsset(event.params.baseParams.asset);
+  entity.asset = asset.id;
+
+  /** --------------- */
+  entity = createTranches(entity, event);
 
   /** --------------- */
   return entity;

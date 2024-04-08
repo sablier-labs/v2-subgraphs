@@ -11,7 +11,7 @@ export async function bindProxy({
   sender,
   version,
 }: Pick<Stream, "chainId" | "parties" | "sender" | "version">) {
-  if (version === StreamVersion.V20) {
+  if (version == StreamVersion.V20) {
     const cache = Cache.init(CacheCategory.Proxy, chainId);
     const entry = cache.read(sender);
 

@@ -8,6 +8,7 @@ import type { Vendor } from "./constants";
 export type Action = object & {
   id: string;
   contract?: Contract;
+  addressA: string | undefined;
   from: string | undefined;
 };
 
@@ -29,6 +30,7 @@ export type Contract = object & {
 
 export type Stream = object & {
   id: string;
+  category: string;
   subgraphId: string;
   alias?: string;
   asset?: Asset;
@@ -60,6 +62,9 @@ export function cleanup_action(
   if (skip) {
     return value;
   }
+
+  delete value.from;
+  delete value.addressA;
 
   if (vendor === "Envio") {
     /** Action identifiers in Envio contain a -chainId suffix */
@@ -159,6 +164,8 @@ export function cleanup_stream(
   if (skip) {
     return value;
   }
+
+  delete value.from;
 
   if (value.asset) {
     value.asset = cleanup_contract(value.asset, skip, vendor);

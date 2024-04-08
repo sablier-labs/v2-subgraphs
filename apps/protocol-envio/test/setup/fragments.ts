@@ -65,6 +65,19 @@ export const AssetFragment_Envio = gql/* GraphQL */ `
   }
 `;
 
+export const TrancheFragment_Envio = gql/* GraphQL */ `
+  fragment TrancheFragment on Tranche {
+    id
+    position
+    amount
+    timestamp
+    endTime
+    startTime
+    endAmount
+    startAmount
+  }
+`;
+
 export const StreamFragment_Envio = gql/* GraphQL */ `
   fragment StreamFragment on Stream {
     id
@@ -109,6 +122,9 @@ export const StreamFragment_Envio = gql/* GraphQL */ `
     }
     segments(order_by: { position: asc }, limit: 1000) {
       ...SegmentFragment
+    }
+    tranches(order_by: { position: asc }, limit: 1000) {
+      ...TrancheFragment
     }
   }
 `;
@@ -178,6 +194,19 @@ export const AssetFragment_TheGraph = gql/* GraphQL */ `
   }
 `;
 
+export const TrancheFragment_TheGraph = gql/* GraphQL */ `
+  fragment TrancheFragment on Tranche {
+    id
+    position
+    amount
+    timestamp
+    endTime
+    startTime
+    endAmount
+    startAmount
+  }
+`;
+
 export const StreamFragment_TheGraph = gql/* GraphQL */ `
   fragment StreamFragment on Stream {
     id
@@ -222,6 +251,9 @@ export const StreamFragment_TheGraph = gql/* GraphQL */ `
     }
     segments(orderBy: position, orderDirection: asc, first: 1000) {
       ...SegmentFragment
+    }
+    tranches(orderBy: position, orderDirection: asc, first: 1000) {
+      ...TrancheFragment
     }
   }
 `;

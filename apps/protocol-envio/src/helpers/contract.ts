@@ -69,7 +69,7 @@ export function generateContractIdFromEvent(event: Event) {
 }
 
 export function _initialize(event: Event): Contract[] {
-  const versions = [StreamVersion.V20, StreamVersion.V21];
+  const versions = [StreamVersion.V20, StreamVersion.V21, StreamVersion.V22];
 
   return chains
     .map((chain) => {
@@ -95,7 +95,17 @@ export function _initialize(event: Event): Contract[] {
             ),
           );
 
-          return [LL, LD].flat();
+          const LT = chain[version].tranched.map((tranched) =>
+            createContract(
+              event,
+              tranched.address,
+              tranched.alias,
+              version,
+              StreamCategory.LockupTranched,
+            ),
+          );
+
+          return [LL, LD, LT].flat();
         })
         .flat();
     })

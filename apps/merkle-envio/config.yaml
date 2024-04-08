@@ -13,7 +13,39 @@ contracts:
           - name: Asset
           - name: Factory
           - name: Watcher
-  - name: MerkleLLV21
+  - name: MerkleLockupFactoryV22
+    handler: src/mappings/index.ts
+    events:
+      - event: CreateMerkleLockupLL(address indexed merkleLockupLL, (address, address, string, string, bytes32, uint40, bool, bool) baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256 recipientsCount)
+        isAsync: true
+        requiredEntities:
+          - name: Asset
+          - name: Factory
+          - name: Watcher
+      - event: CreateMerkleLockupLT(address indexed merkleLockupLT, (address, address, string, string, bytes32, uint40, bool, bool) baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientsCount)
+        isAsync: true
+        requiredEntities:
+          - name: Asset
+          - name: Factory
+          - name: Watcher
+          - name: Tranche
+  - name: MerkleLockupV21
+    handler: src/mappings/index.ts
+    events:
+      - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
+        requiredEntities:
+          - name: Activity
+          - name: Campaign
+          - name: Watcher
+      - event: Clawback(address indexed admin, address indexed to, uint128 amount)
+        requiredEntities:
+          - name: Campaign
+          - name: Watcher
+      - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
+        requiredEntities:
+          - name: Campaign
+          - name: Watcher
+  - name: MerkleLockupV22
     handler: src/mappings/index.ts
     events:
       - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
@@ -36,60 +68,88 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x237400ef5a41886a75b0e036228221df075b3b80
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 8453
     start_block: 8026890
     contracts:
       - name: MerkleLockupFactoryV21
         address:
           - 0x5545c8e7c3e1f74adc98e518f2e8d23a002c4412
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 56
     start_block: 34438430
     contracts:
       - name: MerkleLockupFactoryV21
         address:
           - 0x434d73465aac4125d204a6637eb6c579d8d69f48
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 100
     start_block: 31491790
     contracts:
       - name: MerkleLockupFactoryV21
         address:
           - 0x777f66477ff83ababadf39a3f22a8cc3aee43765
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 1
     start_block: 17615650
     contracts:
       - name: MerkleLockupFactoryV21
         address:
           - 0x1a272b596b10f02931480bc7a3617db4a8d154e3
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 10
     start_block: 113621900
     contracts:
       - name: MerkleLockupFactoryV21
         address:
           - 0x044ec80fbec40f0ee7e7b3856828170971796c19
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 137
     start_block: 51245830
     contracts:
       - name: MerkleLockupFactoryV21
         address:
           - 0xf4906225e783fb8977410bdbfb960cabed6c2ef4
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 534352
     start_block: 1675330
     contracts:
       - name: MerkleLockupFactoryV21
         address:
           - 0xb3ade5463000e6c0d376e7d7570f372ebf98bdaf
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 11155111
     start_block: 4904890
     contracts:
       - name: MerkleLockupFactoryV21
         address:
           - 0xbacc1d151a78eed71d504f701c25e8739dc0262d
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+          - 0xd838e8f2c96795bffc31cd8b8e6694e913d25c4a
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22

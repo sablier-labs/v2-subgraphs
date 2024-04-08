@@ -1,6 +1,5 @@
-import { Address } from "@graphprotocol/graph-ts";
-import { CreateMerkleStreamerLL as EventCreateLinear } from "../generated/types/ContractInitializer/SablierV2MerkleStreamerFactory";
-import { ContractMerkleStreamerFactory as FactoryTemplate } from "../generated/types/templates";
+import { Address, ethereum } from "@graphprotocol/graph-ts";
+import { ContractMerkleLockupFactory as FactoryTemplate } from "../generated/types/templates";
 import { getContractsFactory } from "../constants";
 import { createFactory, getOrCreateWatcher } from "../helpers";
 
@@ -8,7 +7,7 @@ import { createFactory, getOrCreateWatcher } from "../helpers";
  * Use the oldest linear contract as a trigger to start indexing all the other contracts.
  */
 
-export function handleInitializer(_event: EventCreateLinear): void {
+export function handleInitializer(_event: ethereum.Event): void {
   let watcher = getOrCreateWatcher();
   if (watcher.initialized) {
     return;
@@ -22,9 +21,10 @@ export function handleInitializer(_event: EventCreateLinear): void {
     for (let i = 0; i < factories.length; i++) {
       const address = Address.fromString(factories[i][0]);
       const alias = factories[i][1];
+      const version = factories[i][2];
 
       FactoryTemplate.create(address);
-      createFactory(address, alias);
+      createFactory(address, alias, version);
     }
   }
 }

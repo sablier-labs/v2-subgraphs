@@ -1,4 +1,3 @@
-import { ADDRESS_ZERO } from "../constants";
 import type { Action, Event, Mutable, Watcher } from "../types";
 
 type Entity = Partial<Mutable<Action>>;

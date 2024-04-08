@@ -2,7 +2,7 @@ import {
   Claim as EventClaim,
   Clawback as EventClawback,
   TransferAdmin as EventTransferAdmin,
-} from "../generated/types/templates/ContractMerkleStreamerFactory/SablierV2MerkleStreamerLL";
+} from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupLL";
 import { log_exit, one } from "../constants";
 import {
   createAction,

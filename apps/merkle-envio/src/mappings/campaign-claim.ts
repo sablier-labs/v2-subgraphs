@@ -1,6 +1,8 @@
 import {
-  MerkleLLV21Contract_Claim_handler as HandlerLinear_V21,
-  MerkleLLV21Contract_Claim_loader as LoaderLinear_V21,
+  MerkleLockupV21Contract_Claim_handler as HandlerLinear_V21,
+  MerkleLockupV21Contract_Claim_loader as LoaderLinear_V21,
+  MerkleLockupV22Contract_Claim_handler as HandlerLinear_V22,
+  MerkleLockupV22Contract_Claim_loader as LoaderLinear_V22,
 } from "../../generated/src/Handlers.gen";
 
 import type { Action, ClaimHandler, ClaimLoader } from "../types";
@@ -81,3 +83,6 @@ function handler(input: ClaimHandler) {
 
 LoaderLinear_V21(loader);
 HandlerLinear_V21(handler);
+
+LoaderLinear_V22(loader);
+HandlerLinear_V22(handler);

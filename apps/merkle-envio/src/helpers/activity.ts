@@ -1,4 +1,4 @@
-import type { Activity, Campaign, Event, Mutable } from "../types";
+import type { Activity, Event, Mutable } from "../types";
 
 type Entity = Partial<Mutable<Activity>>;
 

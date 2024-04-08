@@ -13,7 +13,39 @@ contracts:
           - name: Asset
           - name: Factory
           - name: Watcher
-  - name: MerkleLLV21
+  - name: MerkleLockupFactoryV22
+    handler: src/mappings/index.ts
+    events:
+      - event: CreateMerkleLockupLL(address indexed merkleLockupLL, (address, address, string, string, bytes32, uint40, bool, bool) baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256 recipientsCount)
+        isAsync: true
+        requiredEntities:
+          - name: Asset
+          - name: Factory
+          - name: Watcher
+      - event: CreateMerkleLockupLT(address indexed merkleLockupLT, (address, address, string, string, bytes32, uint40, bool, bool) baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientsCount)
+        isAsync: true
+        requiredEntities:
+          - name: Asset
+          - name: Factory
+          - name: Watcher
+          - name: Tranche
+  - name: MerkleLockupV21
+    handler: src/mappings/index.ts
+    events:
+      - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
+        requiredEntities:
+          - name: Activity
+          - name: Campaign
+          - name: Watcher
+      - event: Clawback(address indexed admin, address indexed to, uint128 amount)
+        requiredEntities:
+          - name: Campaign
+          - name: Watcher
+      - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
+        requiredEntities:
+          - name: Campaign
+          - name: Watcher
+  - name: MerkleLockupV22
     handler: src/mappings/index.ts
     events:
       - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
@@ -39,5 +71,11 @@ networks:
           {{#V21.factory}}
           - {{address}}
           {{/V21.factory}}
-      - name: MerkleLLV21
+      - name: MerkleLockupFactoryV22
+        address:
+          {{#V22.factory}}
+          - {{address}}
+          {{/V22.factory}}
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
    {{/chains}}

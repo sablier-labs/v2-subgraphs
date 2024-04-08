@@ -45,10 +45,17 @@ export const chains = () => {
     V20: {
       dynamic: filter(item.dynamic, "V20"),
       linear: filter(item.linear, "V20"),
+      tranched: [],
     },
     V21: {
       dynamic: filter(item.dynamic, "V21"),
       linear: filter(item.linear, "V21"),
+      tranched: [],
+    },
+    V22: {
+      dynamic: filter(item.dynamic, "V22"),
+      linear: filter(item.linear, "V22"),
+      tranched: filter(item.tranched || [], "V22"),
     },
   }));
 };

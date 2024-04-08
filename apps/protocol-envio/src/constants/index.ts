@@ -7,11 +7,13 @@ export const ADDRESS_ZERO = String(
 export const StreamVersion = {
   V20: "V20",
   V21: "V21",
+  V22: "V22",
 } as const;
 
 export const StreamCategory = {
   LockupLinear: "LockupLinear",
   LockupDynamic: "LockupDynamic",
+  LockupTranched: "LockupTranched",
 } as const;
 
 export const ActionCategory = {
@@ -45,6 +47,9 @@ export function configuration(chainId: number | string | bigint) {
       ...configuration.V20.dynamic,
       ...configuration.V21.linear,
       ...configuration.V21.dynamic,
+      ...configuration.V22.linear,
+      ...configuration.V22.dynamic,
+      ...configuration.V22.tranched,
     ],
   };
 }

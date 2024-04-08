@@ -66,7 +66,7 @@ export function generateFactoryIdFromEvent(event: Event) {
 }
 
 export function _initialize(event: Event): Factory[] {
-  const versions = [StreamVersion.V21];
+  const versions = [StreamVersion.V21, StreamVersion.V22];
 
   return chains
     .map((chain) => {

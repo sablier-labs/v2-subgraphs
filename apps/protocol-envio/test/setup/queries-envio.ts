@@ -52,6 +52,7 @@ export const getStreams_BySenderByRecipientByIdsByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 //
 
@@ -103,6 +104,7 @@ export const getStreams_BySenderByRecipientByIds = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_BySenderByIdsByToken = gql/* GraphQL */ `
@@ -152,6 +154,7 @@ export const getStreams_BySenderByIdsByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_ByRecipientByIdsByToken = gql/* GraphQL */ `
@@ -189,6 +192,7 @@ export const getStreams_ByRecipientByIdsByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_BySenderByRecipientByToken = gql/* GraphQL */ `
@@ -239,6 +243,7 @@ export const getStreams_BySenderByRecipientByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_ByRecipientByIds = gql/* GraphQL */ `
@@ -274,6 +279,7 @@ export const getStreams_ByRecipientByIds = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_BySenderByIds = gql/* GraphQL */ `
@@ -321,6 +327,7 @@ export const getStreams_BySenderByIds = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_BySenderByRecipient = gql/* GraphQL */ `
@@ -368,6 +375,7 @@ export const getStreams_BySenderByRecipient = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_ByIdsByToken = gql/* GraphQL */ `
@@ -403,6 +411,7 @@ export const getStreams_ByIdsByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_ByRecipientByToken = gql/* GraphQL */ `
@@ -438,6 +447,7 @@ export const getStreams_ByRecipientByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_BySenderByToken = gql/* GraphQL */ `
@@ -485,6 +495,7 @@ export const getStreams_BySenderByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 //
@@ -545,6 +556,7 @@ export const getStreams_BySender_Or_ByRecipient_Or_ByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 //
 
@@ -598,6 +610,7 @@ export const getStreams_BySender_Or_ByRecipient = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_BySender = gql/* GraphQL */ `
@@ -641,6 +654,7 @@ export const getStreams_BySender = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_ByRecipient = gql/* GraphQL */ `
@@ -673,6 +687,7 @@ export const getStreams_ByRecipient = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_ByIds = gql/* GraphQL */ `
@@ -705,6 +720,7 @@ export const getStreams_ByIds = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_ByToken = gql/* GraphQL */ `
@@ -737,6 +753,7 @@ export const getStreams_ByToken = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 //
@@ -768,6 +785,7 @@ export const getStreams = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreams_Asc = gql/* GraphQL */ `
@@ -796,6 +814,7 @@ export const getStreams_Asc = gql/* GraphQL */ `
   ${F.ContractFragment_Envio}
   ${F.SegmentFragment_Envio}
   ${F.StreamFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getStreamAliases_Asc = gql/* GraphQL */ `
@@ -812,6 +831,7 @@ export const getStreamAliases_Asc = gql/* GraphQL */ `
     ) {
       alias
       subgraphId
+      category
     }
   }
 `;

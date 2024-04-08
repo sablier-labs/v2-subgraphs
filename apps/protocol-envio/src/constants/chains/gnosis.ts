@@ -19,6 +19,8 @@ export let dynamic: string[][] = [
   ["0x1df83c7682080b0f0c26a20c6c9cb8623e0df24e", "LD2", "V21"],
 ];
 
+export let tranched: string[][] = [];
+
 /** PRBProxy registry */
 export let registry = "0x584009e9ede26e212182c9745f5c000191296a78";
 

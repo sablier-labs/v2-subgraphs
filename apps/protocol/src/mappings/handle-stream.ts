@@ -1,6 +1,7 @@
 import { dataSource, log } from "@graphprotocol/graph-ts";
 import { Stream } from "../generated/types/schema";
 import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierV2LockupDynamic";
+import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupTranched/SablierV2LockupTranched";
 import {
   Approval as EventApproval,
   ApprovalForAll as EventApprovalForAll,
@@ -17,7 +18,11 @@ import {
   getContractByAddress,
   getStreamByIdFromSource,
 } from "../helpers";
-import { createDynamicStream, createLinearStream } from "../helpers/stream";
+import {
+  createDynamicStream,
+  createLinearStream,
+  createTranchedStream,
+} from "../helpers/stream";
 
 export function handleCreateLinear(event: EventCreateLinear): Stream | null {
   let stream = createLinearStream(event);
@@ -44,6 +49,32 @@ export function handleCreateLinear(event: EventCreateLinear): Stream | null {
 
 export function handleCreateDynamic(event: EventCreateDynamic): Stream | null {
   let stream = createDynamicStream(event);
+  if (stream == null) {
+    return null;
+  }
+
+  let action = createAction(event);
+  action.category = "Create";
+  action.addressA = event.params.sender;
+  action.addressB = event.params.recipient;
+  action.amountA = event.params.amounts.deposit;
+
+  if (stream.cancelable == false) {
+    stream.renounceAction = action.id;
+    stream.renounceTime = event.block.timestamp;
+  }
+
+  stream.save();
+  action.stream = stream.id;
+  action.save();
+
+  return stream;
+}
+
+export function handleCreateTranched(
+  event: EventCreateTranched,
+): Stream | null {
+  let stream = createTranchedStream(event);
   if (stream == null) {
     return null;
   }

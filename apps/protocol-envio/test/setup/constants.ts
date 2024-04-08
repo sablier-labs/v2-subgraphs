@@ -2,14 +2,13 @@
 
 export type Vendor = "Envio" | "TheGraph";
 
-const CHAIN_ETHEREUM_ID = 1;
-const CHAIN_SEPOLIA_ID = 11155111;
-const CHAIN_OPTIMISM_ID = 10;
+export const CHAIN_ETHEREUM_ID = 1;
+export const CHAIN_SEPOLIA_ID = 11155111;
+export const CHAIN_OPTIMISM_ID = 10;
 
-export const SKIP_CLEANUP = false;
-export const REMOTE = true;
-
-export const configurations: Record<
+export const _configurations = (
+  REMOTE: boolean,
+): Record<
   number,
   {
     endpoint: Record<Vendor, string>;
@@ -18,7 +17,7 @@ export const configurations: Record<
     sender: string;
     streamIds: string[];
   }
-> = {
+> => ({
   [CHAIN_SEPOLIA_ID]: {
     endpoint: {
       Envio: REMOTE
@@ -80,10 +79,15 @@ export const configurations: Record<
       "0xb923abdca17aed90eb5ec5e407bd37164f632bfd-10-3110",
     ],
   },
-};
+});
 
 /** SPECIALIZED CONFIGURATION */
 
-export const chainId = CHAIN_ETHEREUM_ID;
+export const REMOTE = false;
+export const SKIP_CLEANUP = false;
+export const POWER_SKIP_SUBGRAPH_ID_ASC = 0;
+
+export const chainId = CHAIN_SEPOLIA_ID;
+export const configurations = _configurations(REMOTE);
 export const endpoint = configurations[chainId].endpoint;
 export const configuration = configurations[chainId];
