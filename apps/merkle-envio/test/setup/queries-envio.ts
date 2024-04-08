@@ -33,6 +33,7 @@ export const getCampaigns_ByAdminByIds = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getCampaigns_ByAdminByAsset = gql/* GraphQL */ `
@@ -67,6 +68,7 @@ export const getCampaigns_ByAdminByAsset = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getCampaigns_ByAdmin = gql/* GraphQL */ `
@@ -100,6 +102,7 @@ export const getCampaigns_ByAdmin = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getCampaigns_ByIds = gql/* GraphQL */ `
@@ -133,6 +136,7 @@ export const getCampaigns_ByIds = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getCampaigns_ByAsset = gql/* GraphQL */ `
@@ -165,6 +169,7 @@ export const getCampaigns_ByAsset = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getCampaigns = gql/* GraphQL */ `
@@ -194,6 +199,7 @@ export const getCampaigns = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getCampaigns_Asc = gql/* GraphQL */ `
@@ -213,6 +219,7 @@ export const getCampaigns_Asc = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getCampaignById = gql/* GraphQL */ `
@@ -227,6 +234,7 @@ export const getCampaignById = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;
 
 export const getActions_ByCampaign = gql/* GraphQL */ `
@@ -302,4 +310,5 @@ export const getMetadata_ByCampaign = gql/* GraphQL */ `
   ${F.ActivityFragment_Envio}
   ${F.AssetFragment_Envio}
   ${F.FactoryFragment_Envio}
+  ${F.TrancheFragment_Envio}
 `;

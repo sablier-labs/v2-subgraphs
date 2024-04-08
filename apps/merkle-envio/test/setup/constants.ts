@@ -1,12 +1,10 @@
 export type Vendor = "Envio" | "TheGraph";
-
 export const CHAIN_ETHEREUM_ID = 1;
 export const CHAIN_SEPOLIA_ID = 11155111;
 
-export const SKIP_CLEANUP = false;
-export const REMOTE = true;
-
-export const configurations: Record<
+export const _configurations = (
+  REMOTE: boolean,
+): Record<
   number,
   {
     endpoint: Record<Vendor, string>;
@@ -14,18 +12,19 @@ export const configurations: Record<
     asset: string;
     airstreamIds: string[];
   }
-> = {
+> => ({
   [CHAIN_SEPOLIA_ID]: {
     endpoint: {
       Envio: REMOTE
         ? "https://indexer.bigdevenergy.link/508d217/v1/graphql"
         : "http://localhost:8080/v1/graphql",
       TheGraph:
-        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms-sepolia",
+        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-ms-experimental",
     },
     admin: "0xf31b00e025584486f7c37cf0ae0073c97c12c634",
     asset: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a",
     airstreamIds: [
+      "0x8ca71b0f22d74a0a2ec2d176a30b4c6a07c6587c-11155111",
       "0x8ca71b0f22d74a0a2ec2d176a30b4c6a07c6587c-11155111",
       "0xc65a07656d99766998ea3f32b242a51ed06079f4-11155111",
       "0x2c86ca0c8b1d7c02d6a686eb1217987de13d73ec-11155111",
@@ -52,10 +51,14 @@ export const configurations: Record<
       "0x84b3b8fa483e7f5a57e3beb1c6d3996c67e3d25c-1",
     ],
   },
-};
+});
 
 /** SPECIALIZED CONFIGURATION */
 
+export const SKIP_CLEANUP = false;
+export const REMOTE = false;
+
 export const chainId = CHAIN_SEPOLIA_ID;
+export const configurations = _configurations(REMOTE);
 export const endpoint = configurations[chainId].endpoint;
 export const configuration = configurations[chainId];

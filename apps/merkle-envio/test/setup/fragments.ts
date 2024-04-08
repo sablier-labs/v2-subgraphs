@@ -59,6 +59,19 @@ export const ActivityFragment_Envio = gql/* GraphQL */ `
   }
 `;
 
+export const TrancheFragment_Envio = gql/* GraphQL */ `
+  fragment TrancheFragment on Tranche {
+    id
+    position
+    percentage
+    duration
+    startPercentage
+    endPercentage
+    endDuration
+    startDuration
+  }
+`;
+
 export const CampaignFragment_Envio = gql/* GraphQL */ `
   fragment CampaignFragment on Campaign {
     id
@@ -96,6 +109,9 @@ export const CampaignFragment_Envio = gql/* GraphQL */ `
     }
     activities(order_by: { timestamp: desc }, limit: 1000) {
       ...ActivityFragment
+    }
+    streamTranches(order_by: { position: desc }, limit: 100) {
+      ...TrancheFragment
     }
   }
 `;
@@ -159,6 +175,19 @@ export const ActivityFragment_TheGraph = /* GraphQL */ `
   }
 `;
 
+export const TrancheFragment_TheGraph = gql/* GraphQL */ `
+  fragment TrancheFragment on Tranche {
+    id
+    position
+    percentage
+    duration
+    startPercentage
+    endPercentage
+    endDuration
+    startDuration
+  }
+`;
+
 export const CampaignFragment_TheGraph = /* GraphQL */ `
   fragment CampaignFragment on Campaign {
     id
@@ -196,6 +225,9 @@ export const CampaignFragment_TheGraph = /* GraphQL */ `
     }
     activities(orderBy: timestamp, orderDirection: desc, first: 1000) {
       ...ActivityFragment
+    }
+    streamTranches(orderBy: position, orderDirection: desc, first: 1000) {
+      ...TrancheFragment
     }
   }
 `;

@@ -30,6 +30,7 @@ export type Contract = object & {
 
 export type Stream = object & {
   id: string;
+  category: string;
   subgraphId: string;
   alias?: string;
   asset?: Asset;
