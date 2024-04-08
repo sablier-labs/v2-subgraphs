@@ -6,10 +6,7 @@ export const CHAIN_ETHEREUM_ID = 1;
 export const CHAIN_SEPOLIA_ID = 11155111;
 export const CHAIN_OPTIMISM_ID = 10;
 
-export const SKIP_CLEANUP = false;
-export const REMOTE = true;
-
-export const POWER_SKIP_SUBGRAPH_ID_ASC = 0;
+export const REMOTE = false;
 
 export const configurations: Record<
   number,
@@ -27,7 +24,7 @@ export const configurations: Record<
         ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
         : "http://localhost:8080/v1/graphql",
       TheGraph:
-        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-sepolia",
+        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-experimental",
     },
     token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a",
     recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634",
@@ -85,6 +82,9 @@ export const configurations: Record<
 };
 
 /** SPECIALIZED CONFIGURATION */
+
+export const SKIP_CLEANUP = false;
+export const POWER_SKIP_SUBGRAPH_ID_ASC = 0;
 
 export const chainId = CHAIN_SEPOLIA_ID;
 export const endpoint = configurations[chainId].endpoint;

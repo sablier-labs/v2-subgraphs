@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 0.0.34
-        version: 0.0.34
+        specifier: 0.0.37
+        version: 0.0.37
       viem:
         specifier: ^2.7.9
         version: 2.7.9(typescript@5.2.2)
@@ -1966,46 +1966,46 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@0.0.34:
-    resolution: {integrity: sha512-/mou3DlVnn4jDYnpqBDZuU2kNo1qgnIfk4pPDVE0gVeljJN86DXA72F6MWGEeMnoYgpcHKxNSeDyBa2l768wCg==}
+  /envio-darwin-arm64@0.0.37:
+    resolution: {integrity: sha512-8MQE6OiRT/13QeYuxldnctz8jcsxtn3BokVkvrbXC93m5xkvOyiMOgEmpWlbysGkd+M4F/phPMoNCROBLpMjxA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-darwin-x64@0.0.34:
-    resolution: {integrity: sha512-B+ExhdEemN5zecpYC13slJ1HoWjJSZ06bEJ5/QObMS6w7Rn50/N+PLu60+mudn70lGBKT0CbnMqKFZZDwYYC3A==}
+  /envio-darwin-x64@0.0.37:
+    resolution: {integrity: sha512-Po8dFzkBAeIeh1xy2UFrbh12XAu1oTopEo5GcoVSvQ7DO6RmLBy55wtaKzx0XlzI3rpmQUnQ4GVhaYJQB82rIg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-arm64@0.0.34:
-    resolution: {integrity: sha512-cKKbDqV9Snbtw4W2jzagVNo9/HPfk8v41FIRGm25/Tvife+Hy3yqiTrx1+51iqsaQE6f9lFXqi1dAOtPiw2iBg==}
+  /envio-linux-arm64@0.0.37:
+    resolution: {integrity: sha512-LQzMEG2UHYx4W68txbKI7vMV1kPb+Rdq93A4d/1OnGDpAsyJg+Ik+AJHTLqLbp/AJGmoQ9yQM0uHg3EmDdvcxg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-x64@0.0.34:
-    resolution: {integrity: sha512-32nCWkuf6b5eg8t6kvgMDuCp0WNAT+AdqZJNYDQzpcZOCRxzTdTiciFWCfjBuUEkTQDXDq65UwY7cWxFU0e7aA==}
+  /envio-linux-x64@0.0.37:
+    resolution: {integrity: sha512-dTCdgkdlOMVBcNZuXFqGJajClCIh4yaw7WuQapHHTJOVjkCmsycYySygMacuQeeLY9JX1OFDAzjNpEARIrRRqw==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio@0.0.34:
-    resolution: {integrity: sha512-1xnBGGgXQkWe8zG7oW1Q0fzUd3ZDMkB7O14R6W8tiRAyt5l9nCEDWnHSjBRg9Ryp6iN5ngx0GI1uVnHv6kCWdg==}
+  /envio@0.0.37:
+    resolution: {integrity: sha512-h5bNd8MW4ApzgyFsW/siGMXyoSHZIFso92Zr7yJYsB/4j7eY6aKW/c63myLwSKK+adCMU96IiwTX+4L0DziPQQ==}
     hasBin: true
     optionalDependencies:
-      envio-darwin-arm64: 0.0.34
-      envio-darwin-x64: 0.0.34
-      envio-linux-arm64: 0.0.34
-      envio-linux-x64: 0.0.34
+      envio-darwin-arm64: 0.0.37
+      envio-darwin-x64: 0.0.37
+      envio-linux-arm64: 0.0.37
+      envio-linux-x64: 0.0.37
     dev: false
 
   /error-ex@1.3.2:

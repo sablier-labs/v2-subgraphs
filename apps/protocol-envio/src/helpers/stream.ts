@@ -181,8 +181,8 @@ export async function createDynamicStream(
   /** -------------- */
   const partFees = (() => {
     if (
-      contract.version === StreamVersion.V20 ||
-      contract.version === StreamVersion.V21
+      contract.version == StreamVersion.V20 ||
+      contract.version == StreamVersion.V21
     ) {
       if (event.params.amounts.length === 3) {
         return {
@@ -289,16 +289,20 @@ export async function createLinearStream(
     const cliffTime = BigInt(event.params.range[1]);
     let cliff = BigInt(cliffTime) - BigInt(entity.startTime);
 
-    if (contract.version === StreamVersion.V22) {
-      if (cliffTime) {
-        cliff = BigInt(0);
+    if (
+      contract.version != StreamVersion.V21 &&
+      contract.version != StreamVersion.V20
+    ) {
+      if (cliffTime == 0n) {
+        cliff = 0n;
       }
     }
 
     if (cliff !== 0n) {
       return {
         cliff: true,
-        cliffAmount: BigInt(deposit * cliff) / BigInt(entity.duration),
+        cliffAmount:
+          (BigInt(deposit) * BigInt(cliff)) / BigInt(entity.duration),
         cliffTime,
       };
     }
@@ -313,8 +317,8 @@ export async function createLinearStream(
   /** -------------- */
   const partFees = (() => {
     if (
-      contract.version === StreamVersion.V20 ||
-      contract.version === StreamVersion.V21
+      contract.version == StreamVersion.V20 ||
+      contract.version == StreamVersion.V21
     ) {
       if (event.params.amounts.length === 3) {
         return {
