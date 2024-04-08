@@ -5,7 +5,7 @@ import { Stream } from "../generated/types/schema";
 import { StreamVersion_V20, getContractRegistry } from "../constants";
 
 export function bindProxyOwner(stream: Stream): Stream {
-  if (stream.version !== StreamVersion_V20) {
+  if (stream.version != StreamVersion_V20) {
     stream.proxied = false;
     return stream;
   }

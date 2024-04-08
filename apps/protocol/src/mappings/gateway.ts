@@ -29,48 +29,6 @@ import {
 import { ethereum } from "@graphprotocol/graph-ts";
 import { zero } from "../constants";
 
-/**
- * ------------------------- CHANGELOG -------------------------
- *
- * V2.0
- *
- * -------------------------------------------------------------
- *
- * V2.1
- *
- * ↳ The proxy system is not needed any more, so proxy tracking
- *   will be disabled
- *
- * ↳ "Create" events include a "transferable" boolean
- *   ↳ The event will be transformed to its V2.0 shape and the
- *     flag will be handled separately
- *
- * ↳ "Cancel" events emit an "asset" address
- *   ↳ The event will be transformed to its V2.0 shape
- *
- * ↳ "Withdraw" events emit an "asset" address
- *   ↳ The event will be transformed to its V2.0 shape
- *
- * -------------------------------------------------------------
- *
- * V2.2
- *
- * ↳ "Create" events do not include a "protocolFee" amount any
- *    more (protocol fees have been removed)
- *   ↳ The event will be transformed to its V2.0 shape with a
- *     generic "ZERO" fee added to the amounts tuple
- *
- * ↳ "Create" events will handle "cliff" time differently
- *   ↳ While in prior versions, a non-cliff stream had a
- *     range.cliff === range.start, for V2.2 non-cliff streams
- *     will showcase a range.cliff equal to ZERO
- *
- * ↳ A new flavor of Lockup contract has been added:
- *   Lockup Tranched
- *
- * -------------------------------------------------------------
- */
-
 function handleCancel_V20(event: EventCancel_V20): void {
   handleCancel(event);
 }

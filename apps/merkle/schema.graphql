@@ -144,8 +144,6 @@ type Campaign @entity {
   streamCancelable: Boolean!
   "flag showing the transferability of the produced streams"
   streamTransferable: Boolean!
-  "a set of tranches with unlock percentages instead of concrete amounts, only available on tranched streams"
-  streamTranches: [Tranche!]! @derivedFrom(field: "campaign")
 
   "total claimed amount up to this point"
   claimedAmount: BigInt!
@@ -157,6 +155,8 @@ type Campaign @entity {
   "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
   version: String!
 
+  "a set of tranches with unlock percentages instead of concrete amounts, only available on tranched streams"
+  streamTranches: [Tranche!]! @derivedFrom(field: "campaign")
   "actions triggered in the context of this campaign"
   actions: [Action!]! @derivedFrom(field: "campaign")
   "list of daily activity snapshots for days with 1+ events"
