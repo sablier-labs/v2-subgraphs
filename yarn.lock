@@ -442,9 +442,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphprotocol/graph-cli@npm:^0.69.1":
-  version: 0.69.1
-  resolution: "@graphprotocol/graph-cli@npm:0.69.1"
+"@graphprotocol/graph-cli@npm:^0.71.1":
+  version: 0.71.1
+  resolution: "@graphprotocol/graph-cli@npm:0.71.1"
   dependencies:
     "@float-capital/float-subgraph-uncrashable": ^0.0.0-alpha.4
     "@oclif/core": 2.8.6
@@ -475,16 +475,16 @@ __metadata:
     yaml: 1.10.2
   bin:
     graph: bin/run
-  checksum: c14713fb6e64991a3a41dafbe7c28d69eb49f5c0d75cd91efd3315d084de43631c7f303404c49045d3455ffa6691a8c2a6b8d9b214a4e9342a113e2ecff4ffc2
+  checksum: 3d5a5111e0b47e627545313da76a655e580c571e8b2d7b80064fe7c41030bd294cecfa79c3c22eee70be3b689d3624d1f695a2e20e8cfbfb6183b7adc3019d4c
   languageName: node
   linkType: hard
 
-"@graphprotocol/graph-ts@npm:^0.34.0":
-  version: 0.34.0
-  resolution: "@graphprotocol/graph-ts@npm:0.34.0"
+"@graphprotocol/graph-ts@npm:^0.35.1":
+  version: 0.35.1
+  resolution: "@graphprotocol/graph-ts@npm:0.35.1"
   dependencies:
     assemblyscript: 0.19.10
-  checksum: ab50e4e5bf3bea9ed3348b96973b392b4c67f7455fa36f5b5e66a19ffe3da2eced82c8a16fa3d14ebb8e81ccadbf34b4e1c07931a863722bb9464209b855a103
+  checksum: 3f6aa6aa2edde80cea4f73b560367d440c206325d161e8c9fa35f18f4cd52db1ffd1f02410890e435122bcb2683cac719c928836d9f9a27e85f6fb65d98e8efd
   languageName: node
   linkType: hard
 
@@ -853,8 +853,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sablier/v2-subgraphs-merkle@workspace:apps/merkle"
   dependencies:
-    "@graphprotocol/graph-cli": ^0.69.1
-    "@graphprotocol/graph-ts": ^0.34.0
+    "@graphprotocol/graph-cli": ^0.71.1
+    "@graphprotocol/graph-ts": ^0.35.1
     "@trivago/prettier-plugin-sort-imports": 4.1.0
     "@typescript-eslint/eslint-plugin": ^5.59.11
     "@typescript-eslint/parser": ^5.59.11
@@ -873,8 +873,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sablier/v2-subgraphs-protocol@workspace:apps/protocol"
   dependencies:
-    "@graphprotocol/graph-cli": ^0.69.1
-    "@graphprotocol/graph-ts": ^0.34.0
+    "@graphprotocol/graph-cli": ^0.71.1
+    "@graphprotocol/graph-ts": ^0.35.1
     "@trivago/prettier-plugin-sort-imports": 4.1.0
     "@typescript-eslint/eslint-plugin": ^5.59.11
     "@typescript-eslint/parser": ^5.59.11
