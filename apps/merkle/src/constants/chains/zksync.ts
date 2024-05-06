@@ -1,5 +1,5 @@
 export let chainId = 324;
-export let chain = "zkSync-era";
+export let chain = "zksync-era";
 export let startBlock = 33148900;
 
 /** Rule: keep addresses lowercased */
