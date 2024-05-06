@@ -7,6 +7,7 @@ import * as optimism from "./optimism";
 import * as polygon from "./polygon";
 import * as scroll from "./scroll";
 import * as sepolia from "./sepolia";
+import * as zkSyncEra from "./zkSync-era";
 
 /** Airstreams don't have a deployment on Avalanche*/
 
@@ -33,6 +34,7 @@ export const chains = () => {
     polygon,
     scroll,
     sepolia,
+    zkSyncEra,
   ] as const;
 
   return list.map((item) => ({

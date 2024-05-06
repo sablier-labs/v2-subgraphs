@@ -8,6 +8,7 @@ import * as optimism from "./optimism";
 import * as polygon from "./polygon";
 import * as scroll from "./scroll";
 import * as sepolia from "./sepolia";
+import * as zkSyncEra from "./zkSync-era";
 
 const filter = (list: string[][], version: string) => {
   return (
@@ -33,6 +34,7 @@ export const chains = () => {
     polygon,
     scroll,
     sepolia,
+    zkSyncEra,
   ] as const;
 
   /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
