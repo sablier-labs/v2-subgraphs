@@ -2,10 +2,9 @@ import { Address, ethereum } from "@graphprotocol/graph-ts";
 import { Campaign } from "../generated/types/schema";
 import {
   CreateMerkleStreamerLL as EventCreateCampaignLL_V21,
-  CreateMerkleLockupLL as EventCreateCampaignLL_V22,
-  CreateMerkleLockupLT as EventCreateCampaignLT_V22,
+  CreateMerkleLL as EventCreateCampaignLL_V22,
+  CreateMerkleLT as EventCreateCampaignLT_V22,
 } from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupFactory";
-
 import {
   StreamVersion_V21,
   StreamVersion_V22,
@@ -16,8 +15,8 @@ import {
 } from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getFactoryByAddress } from "./factory";
-import { getOrCreateWatcher } from "./watcher";
 import { createTranches } from "./tranches";
+import { getOrCreateWatcher } from "./watcher";
 
 export function getCampaignById(id: string): Campaign | null {
   return Campaign.load(id);
@@ -116,7 +115,7 @@ export function createCampaignLinear_V21(
 export function createCampaignLinear_V22(
   event: EventCreateCampaignLL_V22,
 ): Campaign | null {
-  let id = generateCampaignId(event.params.merkleLockupLL);
+  let id = generateCampaignId(event.params.merkleLL);
   let entity = createCampaign(id, event);
 
   if (entity == null) {
@@ -124,12 +123,12 @@ export function createCampaignLinear_V22(
     return null;
   }
 
-  entity.address = event.params.merkleLockupLL;
+  entity.address = event.params.merkleLL;
   entity.category = "LockupLinear";
 
   entity.lockup = event.params.lockupLinear;
   entity.aggregateAmount = event.params.aggregateAmount;
-  entity.totalRecipients = event.params.recipientsCount;
+  entity.totalRecipients = event.params.recipientCount;
 
   entity.streamCliff = !event.params.streamDurations.cliff.isZero();
   entity.streamCliffDuration = event.params.streamDurations.cliff;
@@ -157,7 +156,7 @@ export function createCampaignLinear_V22(
 export function createCampaignTranched_V22(
   event: EventCreateCampaignLT_V22,
 ): Campaign | null {
-  let id = generateCampaignId(event.params.merkleLockupLT);
+  let id = generateCampaignId(event.params.merkleLT);
   let entity = createCampaign(id, event);
 
   if (entity == null) {
@@ -165,12 +164,12 @@ export function createCampaignTranched_V22(
     return null;
   }
 
-  entity.address = event.params.merkleLockupLT;
+  entity.address = event.params.merkleLT;
   entity.category = "LockupTranched";
 
   entity.lockup = event.params.lockupTranched;
   entity.aggregateAmount = event.params.aggregateAmount;
-  entity.totalRecipients = event.params.recipientsCount;
+  entity.totalRecipients = event.params.recipientCount;
 
   entity.name = event.params.baseParams.name;
   entity.admin = event.params.baseParams.initialAdmin;

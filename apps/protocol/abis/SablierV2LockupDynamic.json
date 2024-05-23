@@ -381,109 +381,93 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "streamId",
-        "type": "uint256",
-        "indexed": false
-      },
-      {
-        "internalType": "address",
-        "name": "funder",
-        "type": "address",
-        "indexed": false
-      },
-      {
-        "internalType": "address",
-        "name": "sender",
-        "type": "address",
-        "indexed": true
-      },
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address",
-        "indexed": true
-      },
-      {
-        "internalType": "struct Lockup.CreateAmounts",
-        "name": "amounts",
-        "type": "tuple",
-        "components": [
-          {
-            "internalType": "uint128",
-            "name": "deposit",
-            "type": "uint128"
-          },
-          {
-            "internalType": "uint128",
-            "name": "brokerFee",
-            "type": "uint128"
-          }
-        ],
-        "indexed": false
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "asset",
-        "type": "address",
-        "indexed": true
-      },
-      {
-        "internalType": "bool",
-        "name": "cancelable",
-        "type": "bool",
-        "indexed": false
-      },
-      {
-        "internalType": "bool",
-        "name": "transferable",
-        "type": "bool",
-        "indexed": false
-      },
-      {
-        "internalType": "struct LockupDynamic.Segment[]",
-        "name": "segments",
-        "type": "tuple[]",
-        "components": [
-          {
-            "internalType": "uint128",
-            "name": "amount",
-            "type": "uint128"
-          },
-          {
-            "internalType": "UD2x18",
-            "name": "exponent",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint40",
-            "name": "timestamp",
-            "type": "uint40"
-          }
-        ],
-        "indexed": false
-      },
-      {
-        "internalType": "struct LockupDynamic.Range",
-        "name": "range",
-        "type": "tuple",
-        "components": [
-          { "internalType": "uint40", "name": "start", "type": "uint40" },
-          { "internalType": "uint40", "name": "end", "type": "uint40" }
-        ],
-        "indexed": false
-      },
-      {
-        "internalType": "address",
-        "name": "broker",
-        "type": "address",
-        "indexed": false
-      }
-    ],
     "type": "event",
     "name": "CreateLockupDynamicStream",
+    "inputs": [
+      {
+        "name": "streamId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "funder",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "name": "sender",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "recipient",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "amounts",
+        "type": "tuple",
+        "indexed": false,
+        "internalType": "struct Lockup.CreateAmounts",
+        "components": [
+          { "name": "deposit", "type": "uint128", "internalType": "uint128" },
+          {
+            "name": "brokerFee",
+            "type": "uint128",
+            "internalType": "uint128"
+          }
+        ]
+      },
+      {
+        "name": "asset",
+        "type": "address",
+        "indexed": true,
+        "internalType": "contract IERC20"
+      },
+      {
+        "name": "cancelable",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      },
+      {
+        "name": "transferable",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      },
+      {
+        "name": "segments",
+        "type": "tuple[]",
+        "indexed": false,
+        "internalType": "struct LockupDynamic.Segment[]",
+        "components": [
+          { "name": "amount", "type": "uint128", "internalType": "uint128" },
+          { "name": "exponent", "type": "uint64", "internalType": "UD2x18" },
+          { "name": "timestamp", "type": "uint40", "internalType": "uint40" }
+        ]
+      },
+      {
+        "name": "timestamps",
+        "type": "tuple",
+        "indexed": false,
+        "internalType": "struct LockupDynamic.Timestamps",
+        "components": [
+          { "name": "start", "type": "uint40", "internalType": "uint40" },
+          { "name": "end", "type": "uint40", "internalType": "uint40" }
+        ]
+      },
+      {
+        "name": "broker",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
     "anonymous": false
   },
   {

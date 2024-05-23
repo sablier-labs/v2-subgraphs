@@ -4,10 +4,10 @@ import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/ty
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierV2LockupLinear";
 import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupTranched/SablierV2LockupTranched";
 import {
-  getChainId,
-  one,
   StreamVersion_V20,
   StreamVersion_V21,
+  getChainId,
+  one,
   zero,
 } from "../constants";
 import { getOrCreateAsset } from "./asset";
@@ -218,12 +218,14 @@ export function createTranchedStream(
   entity.protocolFeeAmount = zero;
   entity.intactAmount = event.params.amounts.deposit;
 
-  entity.startTime = event.params.range.start;
-  entity.endTime = event.params.range.end;
+  entity.startTime = event.params.timestamps.start;
+  entity.endTime = event.params.timestamps.end;
   entity.cancelable = event.params.cancelable;
   entity.cliff = false;
 
-  entity.duration = event.params.range.end.minus(event.params.range.start);
+  entity.duration = event.params.timestamps.end.minus(
+    event.params.timestamps.start,
+  );
 
   /** --------------- */
   let asset = getOrCreateAsset(event.params.asset);

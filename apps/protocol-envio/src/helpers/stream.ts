@@ -419,10 +419,11 @@ export async function createTranchedStream(
     protocolFeeAmount: BigInt(0),
     brokerFeeAmount: BigInt(event.params.amounts[1]),
 
-    startTime: BigInt(event.params.range[0]),
-    endTime: BigInt(event.params.range[1]),
+    startTime: BigInt(event.params.timestamps[0]),
+    endTime: BigInt(event.params.timestamps[1]),
     cancelable: event.params.cancelable,
-    duration: BigInt(event.params.range[1]) - BigInt(event.params.range[0]),
+    duration:
+      BigInt(event.params.timestamps[1]) - BigInt(event.params.timestamps[0]),
   } satisfies Entity;
 
   /** --------------- */

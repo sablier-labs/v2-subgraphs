@@ -23,6 +23,8 @@ import type {
   CreateTranchedLoader,
   CreateTranchedHandler,
   Action,
+  CreateLinearHandler22,
+  CreateDynamicHandler22,
 } from "../types";
 
 import {
@@ -147,6 +149,23 @@ async function handlerDynamic(input: CreateDynamicHandler) {
   await context.Watcher.set(watcher);
 }
 
+async function handlerDynamic22(input: CreateDynamicHandler22) {
+  const { context, event } = input;
+
+  const { timestamps, amounts, ...params_no_timestamps } = event.params;
+  await handlerDynamic({
+    context,
+    event: {
+      ...event,
+      params: {
+        ...params_no_timestamps,
+        range: timestamps,
+        amounts: [...amounts, BigInt(0)],
+      },
+    },
+  });
+}
+
 async function handlerLinear(input: CreateLinearHandler) {
   const { context, event } = input;
 
@@ -227,6 +246,23 @@ async function handlerLinear(input: CreateLinearHandler) {
   await context.Batcher.set(batcher);
   await context.Stream.set(stream);
   await context.Watcher.set(watcher);
+}
+
+async function handlerLinear22(input: CreateLinearHandler22) {
+  const { context, event } = input;
+
+  const { timestamps, amounts, ...params_no_timestamps } = event.params;
+  await handlerLinear({
+    context,
+    event: {
+      ...event,
+      params: {
+        ...params_no_timestamps,
+        range: timestamps,
+        amounts: [...amounts, BigInt(0)],
+      },
+    },
+  });
 }
 
 async function handlerTranched(input: CreateTranchedHandler) {
@@ -329,10 +365,10 @@ LoaderLinear_V21(loader);
 HandlerLinearAsync_V21(handlerLinear);
 
 LoaderDynamic_V22(loader);
-HandlerDynamicAsync_V22(handlerDynamic);
+HandlerDynamicAsync_V22(handlerDynamic22);
 
 LoaderLinear_V22(loader);
-HandlerLinearAsync_V22(handlerLinear);
+HandlerLinearAsync_V22(handlerLinear22);
 
 LoaderTranched_V22(loader);
 HandlerTranchedAsync_V22(handlerTranched);

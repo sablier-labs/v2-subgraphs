@@ -131,7 +131,7 @@ contracts:
       - event:
           CreateLockupLinearStream(uint256 streamId, address funder, address indexed sender, address indexed recipient,
           (uint128,uint128) amounts, address indexed asset, bool cancelable, bool transferable,
-          (uint40,uint40,uint40) range, address broker)
+          (uint40,uint40,uint40) timestamps, address broker)
         isAsync: true
         requiredEntities:
           - name: Asset
@@ -142,7 +142,7 @@ contracts:
       - event:
           CreateLockupDynamicStream(uint256 streamId, address funder, address indexed sender, address indexed recipient,
           (uint128,uint128) amounts, address indexed asset, bool cancelable, bool transferable,
-          (uint128,uint64,uint40)[] segments, (uint40,uint40) range, address broker)
+          (uint128,uint64,uint40)[] segments, (uint40,uint40) timestamps, address broker)
         isAsync: true
         requiredEntities:
           - name: Asset
@@ -154,7 +154,7 @@ contracts:
       - event:
           CreateLockupTranchedStream(uint256 streamId, address funder, address indexed sender, address indexed recipient,
           (uint128,uint128) amounts, address indexed asset, bool cancelable, bool transferable,
-          (uint128,uint40)[] tranches, (uint40,uint40) range, address broker)
+          (uint128,uint40)[] tranches, (uint40,uint40) timestamps, address broker)
         isAsync: true
         requiredEntities:
           - name: Asset

@@ -186,10 +186,10 @@
         ]
       },
       {
-        "name": "range",
+        "name": "timestamps",
         "type": "tuple",
         "indexed": false,
-        "internalType": "struct LockupTranched.Range",
+        "internalType": "struct LockupTranched.Timestamps",
         "components": [
           { "name": "start", "type": "uint40", "internalType": "uint40" },
           { "name": "end", "type": "uint40", "internalType": "uint40" }
@@ -230,7 +230,31 @@
     ],
     "anonymous": false
   },
-
+  {
+    "type": "event",
+    "name": "SetNFTDescriptor",
+    "inputs": [
+      {
+        "name": "admin",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "oldNFTDescriptor",
+        "type": "address",
+        "indexed": false,
+        "internalType": "contract ISablierV2NFTDescriptor"
+      },
+      {
+        "name": "newNFTDescriptor",
+        "type": "address",
+        "indexed": false,
+        "internalType": "contract ISablierV2NFTDescriptor"
+      }
+    ],
+    "anonymous": false
+  },
   {
     "type": "event",
     "name": "Transfer",

@@ -1,10 +1,10 @@
 import {
   MerkleLockupFactoryV21Contract_CreateMerkleStreamerLL_handlerAsync as HandlerLinearAsync_V21,
   MerkleLockupFactoryV21Contract_CreateMerkleStreamerLL_loader as LoaderLinear_V21,
-  MerkleLockupFactoryV22Contract_CreateMerkleLockupLL_handlerAsync as HandlerLinearAsync_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLockupLL_loader as LoaderLinear_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLockupLT_handlerAsync as HandlerTranchedAsync_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLockupLT_loader as LoaderTranched_V22,
+  MerkleLockupFactoryV22Contract_CreateMerkleLL_handlerAsync as HandlerLinearAsync_V22,
+  MerkleLockupFactoryV22Contract_CreateMerkleLL_loader as LoaderLinear_V22,
+  MerkleLockupFactoryV22Contract_CreateMerkleLT_handlerAsync as HandlerTranchedAsync_V22,
+  MerkleLockupFactoryV22Contract_CreateMerkleLT_loader as LoaderTranched_V22,
 } from "../../generated/src/Handlers.gen";
 
 import type {
@@ -46,7 +46,7 @@ function loaderLinear_V21(input: CreateLinearLoader_V21) {
 function loaderLinear_V22(input: CreateLinearLoader_V22) {
   const { context, event } = input;
 
-  const assetId = generateAssetId(event, event.params.baseParams[1]);
+  const assetId = generateAssetId(event, event.params.baseParams[0]);
   const factoryId = generateFactoryIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
@@ -54,13 +54,13 @@ function loaderLinear_V22(input: CreateLinearLoader_V22) {
   context.Factory.load(factoryId);
   context.Watcher.load(watcherId);
 
-  context.contractRegistration.addMerkleLockupV22(event.params.merkleLockupLL);
+  context.contractRegistration.addMerkleLockupV22(event.params.merkleLL);
 }
 
 function loaderTranched_V22(input: CreateTranchedLoader_V22) {
   const { context, event } = input;
 
-  const assetId = generateAssetId(event, event.params.baseParams[1]);
+  const assetId = generateAssetId(event, event.params.baseParams[0]);
   const factoryId = generateFactoryIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
@@ -68,7 +68,7 @@ function loaderTranched_V22(input: CreateTranchedLoader_V22) {
   context.Factory.load(factoryId);
   context.Watcher.load(watcherId);
 
-  context.contractRegistration.addMerkleLockupV22(event.params.merkleLockupLT);
+  context.contractRegistration.addMerkleLockupV22(event.params.merkleLT);
 }
 
 async function handlerLinear_V21(input: CreateLinearHandler_V21) {
@@ -142,7 +142,7 @@ async function handlerLinear_V22(input: CreateLinearHandler_V22) {
 
   let asset = await getOrCreateAsset_async(
     event,
-    event.params.baseParams[1],
+    event.params.baseParams[0],
     context.Asset.get,
   );
 
@@ -198,7 +198,7 @@ async function handlerTranched_V22(input: CreateTranchedHandler_V22) {
 
   let asset = await getOrCreateAsset_async(
     event,
-    event.params.baseParams[1],
+    event.params.baseParams[0],
     context.Asset.get,
   );
 
