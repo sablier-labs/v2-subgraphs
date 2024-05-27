@@ -90,16 +90,15 @@
     "name": "CreateMerkleStreamerLL",
     "type": "event"
   },
-
   {
     "type": "event",
-    "name": "CreateMerkleLockupLL",
+    "name": "CreateMerkleLL",
     "inputs": [
       {
-        "name": "merkleLockupLL",
+        "name": "merkleLL",
         "type": "address",
         "indexed": true,
-        "internalType": "contract ISablierV2MerkleLockupLL"
+        "internalType": "contract ISablierV2MerkleLL"
       },
       {
         "name": "baseParams",
@@ -108,24 +107,28 @@
         "internalType": "struct MerkleLockup.ConstructorParams",
         "components": [
           {
-            "name": "initialAdmin",
-            "type": "address",
-            "internalType": "address"
-          },
-          {
             "name": "asset",
             "type": "address",
             "internalType": "contract IERC20"
           },
+          { "name": "cancelable", "type": "bool", "internalType": "bool" },
+          {
+            "name": "expiration",
+            "type": "uint40",
+            "internalType": "uint40"
+          },
+          {
+            "name": "initialAdmin",
+            "type": "address",
+            "internalType": "address"
+          },
           { "name": "ipfsCID", "type": "string", "internalType": "string" },
-          { "name": "name", "type": "string", "internalType": "string" },
           {
             "name": "merkleRoot",
             "type": "bytes32",
             "internalType": "bytes32"
           },
-          { "name": "expiration", "type": "uint40", "internalType": "uint40" },
-          { "name": "cancelable", "type": "bool", "internalType": "bool" },
+          { "name": "name", "type": "string", "internalType": "string" },
           { "name": "transferable", "type": "bool", "internalType": "bool" }
         ]
       },
@@ -152,7 +155,7 @@
         "internalType": "uint256"
       },
       {
-        "name": "recipientsCount",
+        "name": "recipientCount",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"
@@ -162,13 +165,13 @@
   },
   {
     "type": "event",
-    "name": "CreateMerkleLockupLT",
+    "name": "CreateMerkleLT",
     "inputs": [
       {
-        "name": "merkleLockupLT",
+        "name": "merkleLT",
         "type": "address",
         "indexed": true,
-        "internalType": "contract ISablierV2MerkleLockupLT"
+        "internalType": "contract ISablierV2MerkleLT"
       },
       {
         "name": "baseParams",
@@ -177,24 +180,28 @@
         "internalType": "struct MerkleLockup.ConstructorParams",
         "components": [
           {
-            "name": "initialAdmin",
-            "type": "address",
-            "internalType": "address"
-          },
-          {
             "name": "asset",
             "type": "address",
             "internalType": "contract IERC20"
           },
+          { "name": "cancelable", "type": "bool", "internalType": "bool" },
+          {
+            "name": "expiration",
+            "type": "uint40",
+            "internalType": "uint40"
+          },
+          {
+            "name": "initialAdmin",
+            "type": "address",
+            "internalType": "address"
+          },
           { "name": "ipfsCID", "type": "string", "internalType": "string" },
-          { "name": "name", "type": "string", "internalType": "string" },
           {
             "name": "merkleRoot",
             "type": "bytes32",
             "internalType": "bytes32"
           },
-          { "name": "expiration", "type": "uint40", "internalType": "uint40" },
-          { "name": "cancelable", "type": "bool", "internalType": "bool" },
+          { "name": "name", "type": "string", "internalType": "string" },
           { "name": "transferable", "type": "bool", "internalType": "bool" }
         ]
       },
@@ -208,7 +215,7 @@
         "name": "tranchesWithPercentages",
         "type": "tuple[]",
         "indexed": false,
-        "internalType": "struct MerkleLockupLT.TrancheWithPercentage[]",
+        "internalType": "struct MerkleLT.TrancheWithPercentage[]",
         "components": [
           {
             "name": "unlockPercentage",
@@ -231,7 +238,7 @@
         "internalType": "uint256"
       },
       {
-        "name": "recipientsCount",
+        "name": "recipientCount",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"

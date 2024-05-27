@@ -1,5 +1,6 @@
 import * as arbitrum from "./arbitrum";
 import * as base from "./base";
+import * as blast from "./blast";
 import * as bsc from "./bsc";
 import * as gnosis from "./gnosis";
 import * as mainnet from "./mainnet";
@@ -27,6 +28,7 @@ export const chains = () => {
   const list = [
     arbitrum,
     base,
+    blast,
     bsc,
     gnosis,
     mainnet,

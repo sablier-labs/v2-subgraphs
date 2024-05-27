@@ -140,7 +140,7 @@ export async function createLinearCampaign_V22(
 
   const { entity: partial, ...post_create } = createCampaign(
     event,
-    event.params.merkleLockupLL,
+    event.params.merkleLL,
     {
       factory,
       watcher,
@@ -152,13 +152,13 @@ export async function createLinearCampaign_V22(
   /** --------------- */
 
   const params = {
-    initialAdmin: event.params.baseParams[0],
-    asset: event.params.baseParams[1],
-    ipfsCID: event.params.baseParams[2],
-    name: event.params.baseParams[3],
-    merkleRoot: event.params.baseParams[4],
-    expiration: event.params.baseParams[5],
-    cancelable: event.params.baseParams[6],
+    asset: event.params.baseParams[0],
+    cancelable: event.params.baseParams[1],
+    expiration: event.params.baseParams[2],
+    initialAdmin: event.params.baseParams[3],
+    ipfsCID: event.params.baseParams[4],
+    merkleRoot: event.params.baseParams[5],
+    name: event.params.baseParams[6],
     transferable: event.params.baseParams[7],
   } as const;
 
@@ -174,7 +174,7 @@ export async function createLinearCampaign_V22(
     root: params.merkleRoot,
     ipfsCID: params.ipfsCID,
     aggregateAmount: BigInt(event.params.aggregateAmount),
-    totalRecipients: BigInt(event.params.recipientsCount),
+    totalRecipients: BigInt(event.params.recipientCount),
     /** --------------- */
     category: StreamCategory.LockupLinear,
     streamCliff: BigInt(event.params.streamDurations[0]) !== 0n,
@@ -214,7 +214,7 @@ export async function createTranchedCampaign_V22(
 
   const { entity: partial, ...post_create } = createCampaign(
     event,
-    event.params.merkleLockupLT,
+    event.params.merkleLT,
     {
       factory,
       watcher,
@@ -226,13 +226,13 @@ export async function createTranchedCampaign_V22(
   /** --------------- */
 
   const params = {
-    initialAdmin: event.params.baseParams[0],
-    asset: event.params.baseParams[1],
-    ipfsCID: event.params.baseParams[2],
-    name: event.params.baseParams[3],
-    merkleRoot: event.params.baseParams[4],
-    expiration: event.params.baseParams[5],
-    cancelable: event.params.baseParams[6],
+    asset: event.params.baseParams[0],
+    cancelable: event.params.baseParams[1],
+    expiration: event.params.baseParams[2],
+    initialAdmin: event.params.baseParams[3],
+    ipfsCID: event.params.baseParams[4],
+    merkleRoot: event.params.baseParams[5],
+    name: event.params.baseParams[6],
     transferable: event.params.baseParams[7],
   } as const;
 
@@ -248,7 +248,7 @@ export async function createTranchedCampaign_V22(
     root: params.merkleRoot,
     ipfsCID: params.ipfsCID,
     aggregateAmount: BigInt(event.params.aggregateAmount),
-    totalRecipients: BigInt(event.params.recipientsCount),
+    totalRecipients: BigInt(event.params.recipientCount),
     /** --------------- */
     category: StreamCategory.LockupTranched,
     streamTotalDuration: BigInt(event.params.totalDuration),

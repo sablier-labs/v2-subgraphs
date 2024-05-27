@@ -1,7 +1,5 @@
-import { getContract } from "viem";
+import { getContract, erc20Abi, erc20Abi_bytes32 } from "viem";
 import { Address } from "../../types";
-import ERC20 from "../../../abis/ERC20.json";
-import ERC20Bytes from "../../../abis/ERC20Bytes.json";
 import type { getClient } from "./client";
 
 export function getERC20Contract(
@@ -10,7 +8,7 @@ export function getERC20Contract(
 ) {
   return getContract({
     address: address as `0x${string}`,
-    abi: ERC20,
+    abi: erc20Abi,
     client,
   });
 }
@@ -21,7 +19,7 @@ export function getERC20BytesContract(
 ) {
   return getContract({
     address: address as `0x${string}`,
-    abi: ERC20Bytes,
+    abi: erc20Abi_bytes32,
     client,
   });
 }

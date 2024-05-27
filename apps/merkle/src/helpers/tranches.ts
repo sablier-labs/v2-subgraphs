@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
-import { Tranche, Campaign } from "../generated/types/schema";
-import { CreateMerkleLockupLT as EventCreateTranched } from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupFactory";
+import { Campaign, Tranche } from "../generated/types/schema";
+import { CreateMerkleLT as EventCreateTranched } from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupFactory";
 import { zero } from "../constants";
 
 export class TrancheInput {

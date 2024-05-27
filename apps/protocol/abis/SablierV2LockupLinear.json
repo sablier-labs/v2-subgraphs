@@ -430,10 +430,10 @@
         "internalType": "bool"
       },
       {
-        "name": "range",
+        "name": "timestamps",
         "type": "tuple",
         "indexed": false,
-        "internalType": "struct LockupLinear.Range",
+        "internalType": "struct LockupLinear.Timestamps",
         "components": [
           { "name": "start", "type": "uint40", "internalType": "uint40" },
           { "name": "cliff", "type": "uint40", "internalType": "uint40" },

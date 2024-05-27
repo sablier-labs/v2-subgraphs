@@ -1,11 +1,11 @@
 import {
-  ContractMerkleLockupLL as ContractCampaignLL,
-  ContractMerkleLockupLT as ContractCampaignLT,
+  ContractMerkleLL as ContractCampaignLL,
+  ContractMerkleLT as ContractCampaignLT,
 } from "../generated/types/templates";
 import {
   CreateMerkleStreamerLL as EventCreateCampaignLL_V21,
-  CreateMerkleLockupLL as EventCreateCampaignLL_V22,
-  CreateMerkleLockupLT as EventCreateCampaignLT_V22,
+  CreateMerkleLL as EventCreateCampaignLL_V22,
+  CreateMerkleLT as EventCreateCampaignLT_V22,
 } from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupFactory";
 import { log_exit } from "../constants";
 import {
@@ -43,7 +43,7 @@ export function handleCreateCampaignLL_V22(
     return;
   }
 
-  ContractCampaignLL.create(event.params.merkleLockupLL);
+  ContractCampaignLL.create(event.params.merkleLL);
   campaign.save();
 
   let action = createAction(event, "Create");
@@ -63,7 +63,7 @@ export function handleCreateCampaignLT_V22(
     return;
   }
 
-  ContractCampaignLT.create(event.params.merkleLockupLT);
+  ContractCampaignLT.create(event.params.merkleLT);
   campaign.save();
 
   let action = createAction(event, "Create");

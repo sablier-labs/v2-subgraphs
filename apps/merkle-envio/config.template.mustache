@@ -16,13 +16,13 @@ contracts:
   - name: MerkleLockupFactoryV22
     handler: src/mappings/index.ts
     events:
-      - event: CreateMerkleLockupLL(address indexed merkleLockupLL, (address, address, string, string, bytes32, uint40, bool, bool) baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256 recipientsCount)
+      - event: CreateMerkleLL(address indexed merkleLL, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256 recipientCount)
         isAsync: true
         requiredEntities:
           - name: Asset
           - name: Factory
           - name: Watcher
-      - event: CreateMerkleLockupLT(address indexed merkleLockupLT, (address, address, string, string, bytes32, uint40, bool, bool) baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientsCount)
+      - event: CreateMerkleLT(address indexed merkleLT, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientCount)
         isAsync: true
         requiredEntities:
           - name: Asset

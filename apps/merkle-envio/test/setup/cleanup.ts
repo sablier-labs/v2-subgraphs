@@ -25,6 +25,7 @@ export type Action = object & {
   clawbackAmount: string | undefined;
   campaign?: Campaign;
   from: string | undefined;
+  subgraphId?: string | undefined;
 };
 
 export type Campaign = object & {

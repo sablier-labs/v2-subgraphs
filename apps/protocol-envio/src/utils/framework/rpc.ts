@@ -42,6 +42,13 @@ export const fallbacks: { id: number; rpcEndpoints: string[] }[] = [
     ],
   },
   {
+    id: library.blast.id,
+    rpcEndpoints: [
+      ...library.blast.rpcUrls.default.http,
+      "https://blast.blockpi.network/v1/rpc/public",
+    ],
+  },
+  {
     id: library.bsc.id,
     rpcEndpoints: [
       ...library.bsc.rpcUrls.default.http,
@@ -116,6 +123,15 @@ export const fallbacks: { id: number; rpcEndpoints: string[] }[] = [
       "https://1rpc.io/sepolia",
       "https://gateway.tenderly.co/public/sepolia",
       "https://rpc2.sepolia.org",
+    ],
+  },
+  {
+    id: library.zkSync.id,
+    rpcEndpoints: [
+      ...library.zkSync.rpcUrls.default.http,
+      "https://mainnet.era.zksync.io",
+      "https://1rpc.io/zksync2-era",
+      "https://endpoints.omniatech.io/v1/zksync-era/mainnet/public",
     ],
   },
 ];

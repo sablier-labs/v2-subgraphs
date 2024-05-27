@@ -114,6 +114,8 @@ function handleCreateLinear_V22(event_: EventCreateLinear_V22): void {
     (_value, index) => index !== 7,
   );
 
+  /** event.params.timestamps -> [8] -> event.params.range */
+
   let event = new EventCreateLinear_V20(
     event_.address,
     event_.logIndex,
@@ -176,6 +178,8 @@ function handleCreateDynamic_V22(event_: EventCreateDynamic_V22): void {
   let parameters_no_transferrable = parameters_no_fee.filter(
     (_value, index) => index !== 7,
   );
+
+  /** event.params.timestamps -> [8] -> event.params.range */
 
   let event = new EventCreateDynamic_V20(
     event_.address,
