@@ -54,7 +54,7 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "envio": "0.0.37",
-    "viem": "^2.7.9"
+    "envio": "1.1.0",
+    "viem": "^2.12.5"
   }
 }
