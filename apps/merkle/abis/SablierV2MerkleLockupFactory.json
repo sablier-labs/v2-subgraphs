@@ -90,7 +90,6 @@
     "name": "CreateMerkleStreamerLL",
     "type": "event"
   },
-
   {
     "type": "event",
     "name": "CreateMerkleLL",

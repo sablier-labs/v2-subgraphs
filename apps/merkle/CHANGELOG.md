@@ -3,13 +3,17 @@
 ## V2.2
 
 - **Merkle Streamer** has been renamed to **Merkle Lockup**: events will now include this name change e.g.
-  `CreateMerkleLockupLL`
+  `CreateMerkleLL`
 
 - **Create** events now include a `name` string parameter for campaigns
 
 - **Create** events have changed their signature to include a `baseParams` tuple
 
-- **Lockup Tranched**: a new flavor of Lockup contract has been added, together with the `CreateMerkleLockupLT` event
+- **Lockup Tranched**: a new flavor of Lockup contract has been added, together with the `CreateMerkleLT` event
+
+- **Merkle Lockup**s now include a grace period (7 days **after** the first claim) when funds can be clawed-back to
+  prevent accidents during configuration. Campaigns will now have a mandatory clawback period at the start and an
+  optional one (based on expiration) in the end.
 
 ## V2.1
 

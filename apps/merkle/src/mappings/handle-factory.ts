@@ -1,6 +1,6 @@
 import {
-  ContractMerkleLockupLL as ContractCampaignLL,
-  ContractMerkleLockupLT as ContractCampaignLT,
+  ContractMerkleLL as ContractCampaignLL,
+  ContractMerkleLT as ContractCampaignLT,
 } from "../generated/types/templates";
 import {
   CreateMerkleStreamerLL as EventCreateCampaignLL_V21,
