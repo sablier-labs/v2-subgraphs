@@ -148,10 +148,41 @@ export async function createDynamicStream(
   batcher = post_create.batcher;
   watcher = post_create.watcher;
 
+  /** -------------- */
+
+  const timestamps = (() => {
+    if (
+      contract.version == StreamVersion.V20 ||
+      contract.version == StreamVersion.V21
+    ) {
+      if ("range" in event.params) {
+        return {
+          startTime: BigInt(event.params.range[0]),
+          endTime: BigInt(event.params.range[1]),
+          duration:
+            BigInt(event.params.range[1]) - BigInt(event.params.range[0]),
+        };
+      }
+    }
+
+    if ("timestamps" in event.params) {
+      return {
+        startTime: BigInt(event.params.timestamps[0]),
+        endTime: BigInt(event.params.timestamps[1]),
+        duration:
+          BigInt(event.params.timestamps[1]) -
+          BigInt(event.params.timestamps[0]),
+      };
+    }
+
+    throw new Error("Missing time component in create event");
+  })() satisfies Entity;
+
   /** --------------- */
 
   let entity = {
     ...partial,
+    ...timestamps,
     category: StreamCategory.LockupDynamic,
     funder: event.params.funder.toLowerCase(),
     sender: event.params.sender.toLowerCase(),
@@ -168,10 +199,7 @@ export async function createDynamicStream(
     depositAmount: BigInt(event.params.amounts[0]),
     intactAmount: BigInt(event.params.amounts[0]),
 
-    startTime: BigInt(event.params.range[0]),
-    endTime: BigInt(event.params.range[1]),
     cancelable: event.params.cancelable,
-    duration: BigInt(event.params.range[1]) - BigInt(event.params.range[0]),
   } satisfies Entity;
 
   /** --------------- */
@@ -261,6 +289,38 @@ export async function createLinearStream(
   batcher = post_create.batcher;
   watcher = post_create.watcher;
 
+  /** -------------- */
+
+  const timestamps = (() => {
+    if (
+      contract.version == StreamVersion.V20 ||
+      contract.version == StreamVersion.V21
+    ) {
+      if ("range" in event.params) {
+        return {
+          cliffTime: BigInt(event.params.range[1]),
+          startTime: BigInt(event.params.range[0]),
+          endTime: BigInt(event.params.range[2]),
+          duration:
+            BigInt(event.params.range[2]) - BigInt(event.params.range[0]),
+        };
+      }
+    }
+
+    if ("timestamps" in event.params) {
+      return {
+        cliffTime: BigInt(event.params.timestamps[1]),
+        startTime: BigInt(event.params.timestamps[0]),
+        endTime: BigInt(event.params.timestamps[2]),
+        duration:
+          BigInt(event.params.timestamps[2]) -
+          BigInt(event.params.timestamps[0]),
+      };
+    }
+
+    throw new Error("Missing time component in create event");
+  })() satisfies Entity;
+
   /** --------------- */
 
   let entity = {
@@ -277,16 +337,17 @@ export async function createLinearStream(
     depositAmount: BigInt(event.params.amounts[0]),
     intactAmount: BigInt(event.params.amounts[0]),
 
-    startTime: BigInt(event.params.range[0]),
-    endTime: BigInt(event.params.range[2]),
     cancelable: event.params.cancelable,
-    duration: BigInt(event.params.range[2]) - BigInt(event.params.range[0]),
+
+    startTime: timestamps.startTime,
+    endTime: timestamps.endTime,
+    duration: timestamps.duration,
   } satisfies Entity;
 
   /** --------------- */
   const partCliff = (() => {
     const deposit = BigInt(entity.depositAmount);
-    const cliffTime = BigInt(event.params.range[1]);
+    const cliffTime = BigInt(timestamps.cliffTime);
     let cliff = BigInt(cliffTime) - BigInt(entity.startTime);
 
     if (
@@ -397,10 +458,22 @@ export async function createTranchedStream(
   batcher = post_create.batcher;
   watcher = post_create.watcher;
 
+  /** -------------- */
+
+  const timestamps = (() => {
+    return {
+      startTime: BigInt(event.params.timestamps[0]),
+      endTime: BigInt(event.params.timestamps[1]),
+      duration:
+        BigInt(event.params.timestamps[1]) - BigInt(event.params.timestamps[0]),
+    };
+  })() satisfies Entity;
+
   /** --------------- */
 
   let entity = {
     ...partial,
+    ...timestamps,
     category: StreamCategory.LockupTranched,
     funder: event.params.funder.toLowerCase(),
     sender: event.params.sender.toLowerCase(),
@@ -419,11 +492,7 @@ export async function createTranchedStream(
     protocolFeeAmount: BigInt(0),
     brokerFeeAmount: BigInt(event.params.amounts[1]),
 
-    startTime: BigInt(event.params.timestamps[0]),
-    endTime: BigInt(event.params.timestamps[1]),
     cancelable: event.params.cancelable,
-    duration:
-      BigInt(event.params.timestamps[1]) - BigInt(event.params.timestamps[0]),
   } satisfies Entity;
 
   /** --------------- */

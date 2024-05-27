@@ -117,12 +117,11 @@ export type CreateLinearHandler = {
     | HandlerCreateLinearContext_V20
     | HandlerCreateLinearContext_V21
     | HandlerCreateLinearContext_V22;
-  event: Event<EventCreateLinearArgs_V20 | EventCreateLinearArgs_V21>;
-};
-
-export type CreateLinearHandler22 = {
-  context: HandlerCreateLinearContext_V22;
-  event: Event<EventCreateLinearArgs_V22>;
+  event: Event<
+    | EventCreateLinearArgs_V20
+    | EventCreateLinearArgs_V21
+    | EventCreateLinearArgs_V22
+  >;
 };
 
 export type CreateDynamicLoader = {
@@ -142,12 +141,11 @@ export type CreateDynamicHandler = {
     | HandlerCreateDynamicContext_V20
     | HandlerCreateDynamicContext_V21
     | HandlerCreateDynamicContext_V22;
-  event: Event<EventCreateDynamicArgs_V20 | EventCreateDynamicArgs_V21>;
-};
-
-export type CreateDynamicHandler22 = {
-  context: HandlerCreateDynamicContext_V22;
-  event: Event<EventCreateDynamicArgs_V22>;
+  event: Event<
+    | EventCreateDynamicArgs_V20
+    | EventCreateDynamicArgs_V21
+    | EventCreateDynamicArgs_V22
+  >;
 };
 
 export type CreateTranchedLoader = {
@@ -206,10 +204,12 @@ export type WithdrawHandler = {
 
 export type CreateLinearArgs =
   | EventCreateLinearArgs_V20
-  | EventCreateLinearArgs_V21;
+  | EventCreateLinearArgs_V21
+  | EventCreateLinearArgs_V22;
 export type CreateDynamicArgs =
   | EventCreateDynamicArgs_V20
-  | EventCreateDynamicArgs_V21;
+  | EventCreateDynamicArgs_V21
+  | EventCreateDynamicArgs_V22;
 export type CreateTranchedArgs = EventCreateTranchedArgs_V22;
 export type CancelArgs = EventCancelArgs_V20 | EventCancelArgs_V21_V22;
 export type ApprovalArgs = EventApprovalArgs_V20_V21_V22;
