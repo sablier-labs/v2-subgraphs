@@ -1,7 +1,7 @@
 {
   "name": "@sablier/v2-subgraphs-protocol-envio",
   "description": "Sablier V2 protocol indexer (Envio)",
-  "version": "1.0.0",
+  "version": "2.2.0",
   "author": {
     "name": "Sablier Labs Ltd",
     "url": "https://sablier.com"
