@@ -1,6 +1,6 @@
 export let chainId = 43114;
 export let chain = "avalanche";
-export let startBlock = Infinity;
+export let startBlock = 41023950;
 
 /** Rule: keep addresses lowercased */
 
