@@ -24,7 +24,7 @@ export const _configurations = (
         ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
         : "http://localhost:8080/v1/graphql",
       TheGraph:
-        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-experimental",
+        "https://api.studio.thegraph.com/proxy/57079/sablier-v2-experimental/version/latest",
     },
     token: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a",
     recipient: "0xf31b00e025584486f7c37cf0ae0073c97c12c634",
@@ -46,7 +46,7 @@ export const _configurations = (
         ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
         : "http://localhost:8080/v1/graphql",
       TheGraph:
-        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2",
+        "https://api.studio.thegraph.com/proxy/57079/sablier-v2/version/latest/",
     },
     token: "0x3bd7d4f524d09f4e331577247a048d56e4b67a7f",
     recipient: "0x0ed07480ce890937bdd6c9ea442a1a88d78727d5",
@@ -64,7 +64,7 @@ export const _configurations = (
         ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
         : "http://localhost:8080/v1/graphql",
       TheGraph:
-        "https://api.thegraph.com/subgraphs/name/sablier-labs/sablier-v2-optimism",
+        "https://api.studio.thegraph.com/proxy/57079/sablier-v2-optimism/version/latest",
     },
     token: "0x1e925de1c68ef83bd98ee3e130ef14a50309c01b",
     recipient: "0xf748879edbe8cca140940788163d7be4d2a2e46a",
