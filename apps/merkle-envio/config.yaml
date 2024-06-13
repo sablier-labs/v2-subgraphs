@@ -43,6 +43,7 @@ contracts:
           - name: Watcher
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
         requiredEntities:
+          - name: Asset
           - name: Campaign
           - name: Watcher
   - name: MerkleLockupV22
@@ -59,6 +60,7 @@ contracts:
           - name: Watcher
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
         requiredEntities:
+          - name: Asset
           - name: Campaign
           - name: Watcher
 networks:
