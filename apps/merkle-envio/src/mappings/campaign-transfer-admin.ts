@@ -16,6 +16,7 @@ import {
   generateCampaignId,
   getOrCreateWatcher,
   getCampaign,
+  generateCampaignNickname,
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
@@ -25,7 +26,9 @@ function loader(input: TransferAdminLoader) {
   const campaignId = generateCampaignId(event, event.srcAddress);
   const watcherId = event.chainId.toString();
 
-  context.Campaign.load(campaignId, {});
+  context.Campaign.load(campaignId, {
+    loadAsset: true,
+  });
   context.Watcher.load(watcherId);
 }
 
@@ -36,6 +39,7 @@ function handler(input: TransferAdminHandler) {
 
   let watcher = getOrCreateWatcher(event, context.Watcher.get);
   let campaign = getCampaign(event, context.Campaign.get);
+  let asset = context.Campaign.getAsset(campaign);
 
   /** ------- Process -------- */
 
@@ -52,6 +56,11 @@ function handler(input: TransferAdminHandler) {
   campaign = {
     ...campaign,
     admin: event.params.newAdmin.toLowerCase(),
+  };
+
+  campaign = {
+    ...campaign,
+    nickname: generateCampaignNickname(campaign, asset),
   };
 
   context.Action.set(action);

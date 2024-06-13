@@ -1,11 +1,12 @@
 import { Address, ethereum } from "@graphprotocol/graph-ts";
-import { Campaign } from "../generated/types/schema";
+import { Asset, Campaign } from "../generated/types/schema";
 import {
   CreateMerkleStreamerLL as EventCreateCampaignLL_V21,
   CreateMerkleLL as EventCreateCampaignLL_V22,
   CreateMerkleLT as EventCreateCampaignLT_V22,
 } from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupFactory";
 import {
+  StreamVersion_V20,
   StreamVersion_V21,
   StreamVersion_V22,
   getChainId,
@@ -39,6 +40,7 @@ function createCampaign(id: string, event: ethereum.Event): Campaign | null {
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
   entity.name = "";
+  entity.nickname = "";
 
   entity.clawbackAction = null;
   entity.clawbackTime = null;
@@ -109,6 +111,15 @@ export function createCampaignLinear_V21(
   entity.asset = asset.id;
 
   /** --------------- */
+  let nickname = generateCampaignNickname(
+    event.params.admin,
+    asset,
+    "",
+    StreamVersion_V21,
+  );
+  entity.nickname = nickname;
+
+  /** --------------- */
   return entity;
 }
 
@@ -148,6 +159,15 @@ export function createCampaignLinear_V22(
   /** --------------- */
   let asset = getOrCreateAsset(event.params.baseParams.asset);
   entity.asset = asset.id;
+
+  /** --------------- */
+  let nickname = generateCampaignNickname(
+    event.params.baseParams.initialAdmin,
+    asset,
+    event.params.baseParams.name,
+    StreamVersion_V22,
+  );
+  entity.nickname = nickname;
 
   /** --------------- */
   return entity;
@@ -191,7 +211,32 @@ export function createCampaignTranched_V22(
   entity = createTranches(entity, event);
 
   /** --------------- */
+  let nickname = generateCampaignNickname(
+    event.params.baseParams.initialAdmin,
+    asset,
+    event.params.baseParams.name,
+    StreamVersion_V22,
+  );
+  entity.nickname = nickname;
+
+  /** --------------- */
   return entity;
+}
+
+export function generateCampaignNickname(
+  admin: Address,
+  asset: Asset,
+  name: string,
+  version: string,
+): string {
+  if (version === StreamVersion_V21) {
+    let prefix = admin.toHexString().slice(0, 6);
+    let suffix = admin.toHexString().slice(-4);
+
+    return `${asset.symbol} by ${prefix}..${suffix}`;
+  } else {
+    return `${asset.symbol} in ${name || ""}`;
+  }
 }
 
 export function generateCampaignId(address: Address): string {

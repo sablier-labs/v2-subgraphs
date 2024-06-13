@@ -120,6 +120,8 @@ export async function createLinearCampaign_V21(
   const campaign: Campaign = {
     ...entity,
     ...partAsset,
+
+    nickname: generateCampaignNickname(entity, asset),
   };
 
   return {
@@ -194,6 +196,8 @@ export async function createLinearCampaign_V22(
   const campaign: Campaign = {
     ...entity,
     ...partAsset,
+
+    nickname: generateCampaignNickname(entity, asset),
   };
 
   return {
@@ -270,6 +274,8 @@ export async function createTranchedCampaign_V22(
   const campaign: Campaign = {
     ...entity,
     ...partAsset,
+
+    nickname: generateCampaignNickname(entity, asset),
   };
 
   return {
@@ -310,6 +316,20 @@ export function getCampaign(
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
+
+export function generateCampaignNickname(
+  campaign: Pick<Campaign, "admin" | "name" | "version">,
+  asset: Asset,
+): string {
+  if (campaign.version === StreamVersion.V21) {
+    let prefix = campaign.admin.slice(0, 6);
+    let suffix = campaign.admin.slice(-4);
+
+    return `${asset.symbol} by ${prefix}..${suffix}`;
+  } else {
+    return `${asset.symbol} in ${campaign.name || ""}`;
+  }
+}
 
 export function generateCampaignId(event: Event, address: Address) {
   let id = ""

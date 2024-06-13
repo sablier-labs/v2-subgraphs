@@ -9,7 +9,10 @@ import {
   generateStreamId,
   getCampaignById,
   getOrCreateActivity,
+  getOrCreateAsset,
 } from "../helpers";
+import { generateCampaignNickname } from "../helpers/campaign";
+import { Address } from "@graphprotocol/graph-ts";
 
 export function handleClaim(event: EventClaim): void {
   let action = createAction(event, "Claim");
@@ -96,6 +99,16 @@ export function handleTransferAdmin(event: EventTransferAdmin): void {
 
   /** --------------- */
   action.save();
+
+  /** --------------- */
+
+  let nickname = generateCampaignNickname(
+    event.params.newAdmin,
+    getOrCreateAsset(Address.fromString(campaign.asset)),
+    campaign.name,
+    campaign.version,
+  );
+  campaign.nickname = nickname;
 
   /** --------------- */
   campaign.admin = event.params.newAdmin;
