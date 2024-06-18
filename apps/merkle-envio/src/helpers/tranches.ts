@@ -43,13 +43,13 @@ export function createTranches(
 
   const tranches: Tranche[] = [];
 
-  for (let i = 1; i < params.length; i++) {
+  for (let i = 0; i < params.length; i++) {
     let id = campaign.id.concat("-").concat(i.toString());
     let current = new TrancheInput(params[i][0], params[i][1]);
     let tranche = {
       ...createTranche(id, last, current),
       campaign_id: campaign.id,
-      position: BigInt(i - 1),
+      position: BigInt(i),
     };
 
     tranches.push(tranche);

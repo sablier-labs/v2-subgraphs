@@ -39,7 +39,7 @@ export function createTranches(
 
   let last = new TrancheInput(zero, zero);
 
-  for (let i = 1; i < tranches.length; i++) {
+  for (let i = 0; i < tranches.length; i++) {
     let id = campaign.id.concat("-").concat(i.toString());
     let current = new TrancheInput(
       tranches[i].unlockPercentage,
@@ -48,7 +48,7 @@ export function createTranches(
     let tranche: Tranche = createTranche(id, last, current);
 
     tranche.campaign = campaign.id;
-    tranche.position = BigInt.fromI32(i - 1);
+    tranche.position = BigInt.fromI32(i);
     tranche.save();
 
     last = current;
