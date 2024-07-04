@@ -40,7 +40,11 @@ function loaderLinear_V21(input: CreateLinearLoader_V21) {
   context.Factory.load(factoryId);
   context.Watcher.load(watcherId);
 
-  context.contractRegistration.addMerkleLockupV21(event.params.merkleStreamer);
+  if (isWhitelistedShape(event.chainId, event.params.merkleStreamer)) {
+    context.contractRegistration.addMerkleLockupV21(
+      event.params.merkleStreamer,
+    );
+  }
 }
 
 function loaderLinear_V22(input: CreateLinearLoader_V22) {
@@ -54,7 +58,9 @@ function loaderLinear_V22(input: CreateLinearLoader_V22) {
   context.Factory.load(factoryId);
   context.Watcher.load(watcherId);
 
-  context.contractRegistration.addMerkleLockupV22(event.params.merkleLL);
+  if (isWhitelistedShape(event.chainId, event.params.merkleLL)) {
+    context.contractRegistration.addMerkleLockupV22(event.params.merkleLL);
+  }
 }
 
 function loaderTranched_V22(input: CreateTranchedLoader_V22) {
@@ -68,7 +74,9 @@ function loaderTranched_V22(input: CreateTranchedLoader_V22) {
   context.Factory.load(factoryId);
   context.Watcher.load(watcherId);
 
-  context.contractRegistration.addMerkleLockupV22(event.params.merkleLT);
+  if (isWhitelistedShape(event.chainId, event.params.lockupTranched)) {
+    context.contractRegistration.addMerkleLockupV22(event.params.merkleLT);
+  }
 }
 
 async function handlerLinear_V21(input: CreateLinearHandler_V21) {
