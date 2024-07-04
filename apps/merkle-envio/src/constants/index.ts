@@ -1,4 +1,4 @@
-import { chains as generator } from "./chains";
+import { chains as generator } from "../../../../packages/constants/src/bundles/merkle-envio";
 
 export const ADDRESS_ZERO = String(
   "0x0000000000000000000000000000000000000000",

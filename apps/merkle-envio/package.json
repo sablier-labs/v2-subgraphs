@@ -17,7 +17,7 @@
     "url": "https://github.com/sablier-labs/v2-subgraphs.git"
   },
   "config": {
-    "dir_chains": "src/constants/chains",
+    "dir_chains": "../../packages/constants/src/bundles",
     "dir_generated": "src/generated",
     "flags_lint": "--ignore-path ../../.eslintignore .",
     "flags_prettier": "--config ../../.prettierrc.yml --ignore-path ../../.prettierignore"
@@ -31,8 +31,8 @@
     "setup": "pnpm clean && pnpm template && pnpm codegen",
     "start": "ts-node generated/src/Index.bs.js",
     "template": "pnpm template-chain && pnpm template-config",
-    "template-chain": "tsc --skipLibCheck $npm_package_config_dir_chains/index.ts --outDir $npm_package_config_dir_generated",
-    "template-config": "mustache $npm_package_config_dir_generated/index.js config.template.mustache > config.yaml",
+    "template-chain": "tsc --skipLibCheck $npm_package_config_dir_chains/merkle-envio.ts --outDir $npm_package_config_dir_generated",
+    "template-config": "mustache $npm_package_config_dir_generated/bundles/merkle-envio.js config.template.mustache > config.yaml",
     "test": "pnpm jest --verbose"
   },
   "devDependencies": {

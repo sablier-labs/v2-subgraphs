@@ -10,7 +10,7 @@
     "url": "https://github.com/sablier-labs/v2-subgraphs/issues"
   },
   "config": {
-    "dir_chains": "src/constants/chains",
+    "dir_chains": "../../packages/constants/src/addresses",
     "dir_generated": "src/generated",
     "flags_deploy": "--ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "flags_lint": "--ignore-path ../../.eslintignore .",

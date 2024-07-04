@@ -1,5 +1,9 @@
 import { BigInt, Bytes, log } from "@graphprotocol/graph-ts";
-import { chainId, factory, initializer } from "../generated/env";
+import {
+  chainId,
+  factory,
+  initializer_protocol as initializer,
+} from "../generated/env";
 
 export let zero = BigInt.fromI32(0);
 export let one = BigInt.fromI32(1);
