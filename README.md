@@ -17,6 +17,8 @@ Read more about The Graph [here](https://thegraph.com/docs/en/).
 Sablier supports multiple chains for which we've deployed subgraphs at either the Hosted Network level or within the
 Decentralized Network (see Ethereum, Arbitrum or Polygon's endpoints).
 
+Internal version: 2.2_1.1.N
+
 ### Subgraph: Protocol
 
 The **Protocol** subgraph watches over the core functionality of Sablier V2. It handles events such as `Create Stream`,
@@ -40,8 +42,7 @@ Airstreams.
 
 Read more about Envio [here](https://docs.envio.dev).
 
-> [!WARNING]
-> The Sablier V2 indexers (Envio) are still under development and are not used in production for now. Feel
+> [!WARNING] The Sablier V2 indexers (Envio) are still under development and are not used in production for now. Feel
 > free to read the docs or preview the implementation while we finish the stable integration.
 
 ### Indexer: Protocol-Envio
