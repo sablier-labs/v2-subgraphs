@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 1.3.0
+        version: 1.3.0
       viem:
         specifier: ^2.12.5
         version: 2.12.5(typescript@5.2.2)
@@ -81,6 +81,9 @@ importers:
       '@ryyppy/rescript-promise':
         specifier: 2.1.0
         version: 2.1.0
+      bignumber.js:
+        specifier: 9.1.2
+        version: 9.1.2
       date-fns:
         specifier: 3.3.1
         version: 3.3.1
@@ -124,17 +127,17 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
       rescript:
-        specifier: 11.0.1
-        version: 11.0.1
+        specifier: 11.1.0
+        version: 11.1.0
       rescript-envsafe:
-        specifier: 3.1.0
-        version: 3.1.0(rescript-schema@6.4.0)(rescript@11.0.1)
+        specifier: 4.0.0
+        version: 4.0.0(rescript-schema@6.4.0)(rescript@11.1.0)
       rescript-express:
         specifier: 0.4.1
         version: 0.4.1(express@4.19.2)
       rescript-schema:
         specifier: 6.4.0
-        version: 6.4.0(rescript@11.0.1)
+        version: 6.4.0(rescript@11.1.0)
       viem:
         specifier: 1.16.6
         version: 1.16.6(typescript@5.2.2)
@@ -1524,6 +1527,10 @@ packages:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: false
 
+  /bignumber.js@9.1.2:
+    resolution: {integrity: sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==}
+    dev: false
+
   /bintrees@1.0.2:
     resolution: {integrity: sha512-VOMgTMwjAaUG580SXn3LacVgjurrbMme7ZZNYGSSV7mmtY6QQRh0Eg3pwIcntQ77DErK1L0NxkbetjcoXzVwKw==}
     dev: false
@@ -1957,46 +1964,46 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@1.1.0:
-    resolution: {integrity: sha512-DzWnUo0EFVuhgkoRhBvuzpIg2dT9J4brVt/fSIXJDsDP6pOq+ITEO79T48Li49S3iK7T+WOsGfOE82L2rI5bCQ==}
+  /envio-darwin-arm64@1.3.0:
+    resolution: {integrity: sha512-QVI95RqGzDMpg46el+CCGodhWxGrC8cHgzv6AKKjziRrrCOEzzbCkGcIztPI64dyRQb5a+CQMXAZVyhGEgVoJw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-darwin-x64@1.1.0:
-    resolution: {integrity: sha512-4JS+4Y68gog93FMEvhVTBE7Pk8dVsUVEAloOMu/FpEFFxXNNRT9OjOGa2zrUleAZ8anIxqxyc6V96zIlS+QYSA==}
+  /envio-darwin-x64@1.3.0:
+    resolution: {integrity: sha512-vx3omWiUTGYLOzjo67FLpKZIsN5A8ukiNTLUuXongZRvvOmcA0U+mC4EidKByzooJpstTxZF5MI3aHLTZ4v/Kg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-arm64@1.1.0:
-    resolution: {integrity: sha512-wTeeONjBf9zwEsLP+JsRHMjAMweDC8AhCuNaDAiSV28Kzo9Bsmvv1togR/zav7SE4VLzf804dLx/qT9qmMipww==}
+  /envio-linux-arm64@1.3.0:
+    resolution: {integrity: sha512-d783uTiEZIqwCQpqhqIy65pQIkXQEB2Kvy5LRWLUajl4ABSpdeSe57u0H+GAsYDOiJGg5sHrwyPXIVEOaHI2yA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-x64@1.1.0:
-    resolution: {integrity: sha512-z8aNWpOmE4CIZuwkrpF4gxBofNIZ0MjAkOyT9PBVnwJ+dICm1bNyoMy0xtX+c7zfzmJEUIKNIF2Tad2/mV2xDQ==}
+  /envio-linux-x64@1.3.0:
+    resolution: {integrity: sha512-hYcxe+cgnyLloxtU/fNOyFRATVmbd6ggWU4Js+ASiiUSWseR4FFmnMMqsmzCURy9ibELr2d9+/QraNCgcsAMeA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio@1.1.0:
-    resolution: {integrity: sha512-oVRqQtRYqJJnLj6Rftoh+lrwCrW4RE7ZEfdhJDqfHPLwUy+Qzhi7jqWMPQ+SAnPjtyFNL1Rcsi7MEYJewZ9tEA==}
+  /envio@1.3.0:
+    resolution: {integrity: sha512-cF+Wwv3aIphGdO8Q/ALZPU9fYUFLmIqi4FjSIVEbuCiZzGsoLi+OtQE5OaIDiGG2+9GNMz7IcTzxlIhwk+FzBA==}
     hasBin: true
     optionalDependencies:
-      envio-darwin-arm64: 1.1.0
-      envio-darwin-x64: 1.1.0
-      envio-linux-arm64: 1.1.0
-      envio-linux-x64: 1.1.0
+      envio-darwin-arm64: 1.3.0
+      envio-darwin-x64: 1.3.0
+      envio-linux-arm64: 1.3.0
+      envio-linux-x64: 1.3.0
     dev: false
 
   /error-ex@1.3.2:
@@ -3963,14 +3970,14 @@ packages:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
 
-  /rescript-envsafe@3.1.0(rescript-schema@6.4.0)(rescript@11.0.1):
-    resolution: {integrity: sha512-XphCDfDloSvUwX/dhghRIK81AMKez0rmXUXvLyVW7s3cjzWjHKMc0GTYwIJDB6J7RRmXuA8ZPTsphwEj9yVJeQ==}
+  /rescript-envsafe@4.0.0(rescript-schema@6.4.0)(rescript@11.1.0):
+    resolution: {integrity: sha512-wekPTb1z2HpMfMiNP7MOCxFJCB9QTr3RMtUoaHNm9uV9d4S5nS7LDVmiak/d3cqFCT8nLjcdOS30CA/aU+E+Gg==}
     peerDependencies:
       rescript: 11.x
       rescript-schema: 6.x
     dependencies:
-      rescript: 11.0.1
-      rescript-schema: 6.4.0(rescript@11.0.1)
+      rescript: 11.1.0
+      rescript-schema: 6.4.0(rescript@11.1.0)
     dev: false
 
   /rescript-express@0.4.1(express@4.19.2):
@@ -3981,16 +3988,16 @@ packages:
       express: 4.19.2
     dev: false
 
-  /rescript-schema@6.4.0(rescript@11.0.1):
+  /rescript-schema@6.4.0(rescript@11.1.0):
     resolution: {integrity: sha512-rBHtZOEVskKKAf7jfJicuTA1xsQRu2qBdB73FVtPsUSmtgIYpGGKk4YSURQss7WYQEHRds+zPjFLJWzeAnwsLg==}
     peerDependencies:
       rescript: 11.x
     dependencies:
-      rescript: 11.0.1
+      rescript: 11.1.0
     dev: false
 
-  /rescript@11.0.1:
-    resolution: {integrity: sha512-7T4PRp/d0+CBNnY6PYKffFqo9tGZlvnZpboF/n+8SKS+JZ6VvXJO7W538VPZXf3EYx1COGAWWvkF9e/HgSAqHg==}
+  /rescript@11.1.0:
+    resolution: {integrity: sha512-9la2Dv+ACylQ77I8s4spPu1JnLZXbH5WgxcLHLLUBWgFFSiv0wXqgzWztrBIZqwFgVX5BYcwldUqUVcEzdCyHg==}
     engines: {node: '>=10'}
     hasBin: true
     requiresBuild: true

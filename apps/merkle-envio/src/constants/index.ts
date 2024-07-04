@@ -1,4 +1,5 @@
-import { chains as generator } from "../../../../packages/constants/src/bundles/merkle-envio";
+import { chains as generator_merkle } from "../../../../packages/constants/src/bundles/merkle-envio";
+import { chains as generator_protocol } from "../../../../packages/constants/src/bundles/protocol-envio";
 
 export const ADDRESS_ZERO = String(
   "0x0000000000000000000000000000000000000000",
@@ -27,7 +28,7 @@ export const CacheCategory = {
   Token: "token",
 } as const;
 
-export const chains = generator();
+export const chains = generator_merkle();
 
 export function configuration(chainId: number | string | bigint) {
   const configuration = chains.find((c) => String(c.id) === chainId.toString());
@@ -40,6 +41,30 @@ export function configuration(chainId: number | string | bigint) {
     ...configuration,
     contracts: [...configuration.V21.factory, ...configuration.V22.factory],
   };
+}
+
+export function isWhitelistedShape(
+  chainId: number | string | bigint,
+  address: string,
+) {
+  const configuration = generator_protocol().find(
+    (c) => String(c.id) === chainId.toString(),
+  );
+  if (!configuration) {
+    throw new Error("Missing chain configuration");
+  }
+
+  const contracts = [configuration?.V20, configuration?.V21, configuration?.V22]
+    .map((item) => [
+      ...(item?.linear || []),
+      ...(item?.dynamic || []),
+      ...(item?.tranched || []),
+    ])
+    .flat();
+
+  const addresses = contracts.map((c) => c.address.toLowerCase());
+
+  return addresses.includes(address.toLowerCase());
 }
 
 export type ActionCategory =
