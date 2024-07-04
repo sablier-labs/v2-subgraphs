@@ -3,7 +3,7 @@ import {
   chainId,
   dynamic,
   tranched,
-  initializer,
+  initializer_protocol as initializer,
   linear,
   registry,
 } from "../generated/env";

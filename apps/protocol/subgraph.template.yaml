@@ -8,9 +8,9 @@ dataSources:
     name: ContractInitializer
     network: {{chain}}
     source:
-      address: "{{initializer}}"
+      address: "{{initializer_protocol}}"
       abi: SablierV2LockupLinear
-      startBlock: {{startBlock}}
+      startBlock: {{startBlock_protocol}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

@@ -74,6 +74,16 @@ networks:
         address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
+  - id: 43114
+    start_block: 41023950
+    contracts:
+      - name: MerkleLockupFactoryV21
+        address:
+          - 0x4849e797d7aab20fcc8f807efafdfff98a83412e
+      - name: MerkleLockupFactoryV22
+        address:
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 8453
     start_block: 8026890
     contracts:
@@ -162,7 +172,6 @@ networks:
           - 0xbacc1d151a78eed71d504f701c25e8739dc0262d
       - name: MerkleLockupFactoryV22
         address:
-          - 0x927be1718e70cceabedaa419b6e790fa99d5b2ae
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 324

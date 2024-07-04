@@ -27,7 +27,7 @@ import {
   getOrCreateAsset_async,
   initialize_async,
 } from "../helpers";
-import { ActionCategory } from "../constants";
+import { ActionCategory, isWhitelistedShape } from "../constants";
 
 function loaderLinear_V21(input: CreateLinearLoader_V21) {
   const { context, event } = input;
@@ -73,6 +73,12 @@ function loaderTranched_V22(input: CreateTranchedLoader_V22) {
 
 async function handlerLinear_V21(input: CreateLinearHandler_V21) {
   const { context, event } = input;
+
+  /** ------- Authorize -------- */
+
+  if (!isWhitelistedShape(event.chainId, event.params.lockupLinear)) {
+    return;
+  }
 
   /** ------- Initialize -------- */
 
@@ -130,6 +136,12 @@ async function handlerLinear_V21(input: CreateLinearHandler_V21) {
 async function handlerLinear_V22(input: CreateLinearHandler_V22) {
   const { context, event } = input;
 
+  /** ------- Authorize -------- */
+
+  if (!isWhitelistedShape(event.chainId, event.params.lockupLinear)) {
+    return;
+  }
+
   /** ------- Initialize -------- */
 
   let { watcher, factory, factories } = await initialize_async(
@@ -185,6 +197,12 @@ async function handlerLinear_V22(input: CreateLinearHandler_V22) {
 
 async function handlerTranched_V22(input: CreateTranchedHandler_V22) {
   const { context, event } = input;
+
+  /** ------- Authorize -------- */
+
+  if (!isWhitelistedShape(event.chainId, event.params.lockupTranched)) {
+    return;
+  }
 
   /** ------- Initialize -------- */
 

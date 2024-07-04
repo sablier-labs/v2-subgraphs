@@ -1,0 +1,20 @@
+{
+  "name": "@sablier/v2-subgraphs-constants",
+  "description": "Sablier V2 subgraph constants",
+  "version": "2.2.0",
+  "author": {
+    "name": "Sablier Labs Ltd",
+    "url": "https://sablier.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sablier-labs/v2-subgraphs/issues"
+  },
+  "homepage": "https://github.com/sablier-labs/v2-subgraphs#readme",
+  "license": "LGPL-3.0",
+  "packageManager": "yarn@3.2.2",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sablier-labs/v2-subgraphs.git"
+  }
+}

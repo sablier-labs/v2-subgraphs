@@ -7,7 +7,7 @@ import {
   CreateMerkleLL as EventCreateCampaignLL_V22,
   CreateMerkleLT as EventCreateCampaignLT_V22,
 } from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupFactory";
-import { log_exit } from "../constants";
+import { isWhitelistedShape, log_debug, log_exit } from "../constants";
 import {
   createAction,
   createCampaignLinear_V21,
@@ -18,6 +18,13 @@ import {
 export function handleCreateCampaignLL_V21(
   event: EventCreateCampaignLL_V21,
 ): void {
+  if (!isWhitelistedShape(event.params.lockupLinear)) {
+    log_debug("Campaign skipped, shape contract not whitelisted: {}", [
+      event.params.lockupLinear.toString(),
+    ]);
+    return;
+  }
+
   let campaign = createCampaignLinear_V21(event);
   if (campaign == null) {
     return;
@@ -38,6 +45,13 @@ export function handleCreateCampaignLL_V21(
 export function handleCreateCampaignLL_V22(
   event: EventCreateCampaignLL_V22,
 ): void {
+  if (!isWhitelistedShape(event.params.lockupLinear)) {
+    log_debug("Campaign skipped, shape contract not whitelisted: {}", [
+      event.params.lockupLinear.toString(),
+    ]);
+    return;
+  }
+
   let campaign = createCampaignLinear_V22(event);
   if (campaign == null) {
     return;
@@ -58,6 +72,13 @@ export function handleCreateCampaignLL_V22(
 export function handleCreateCampaignLT_V22(
   event: EventCreateCampaignLT_V22,
 ): void {
+  if (!isWhitelistedShape(event.params.lockupTranched)) {
+    log_debug("Campaign skipped, shape contract not whitelisted: {}", [
+      event.params.lockupTranched.toString(),
+    ]);
+    return;
+  }
+
   let campaign = createCampaignTranched_V22(event);
   if (campaign == null) {
     return;
