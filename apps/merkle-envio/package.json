@@ -25,7 +25,7 @@
     "flags_prettier": "--config ../../.prettierrc.yml --ignore-path ../../.prettierignore"
   },
   "scripts": {
-    "clean": "rimraf tsconfig.tsbuildinfo config.yaml build generated src/generated",
+    "clean": "rimraf tsconfig.tsbuildinfo config.yaml build generated $npm_package_config_dir_generated",
     "clean-modules": "rimraf node_modules",
     "clean-generated": "rimraf $npm_package_config_dir_generated && rimraf generated",
     "codegen": "envio codegen",
