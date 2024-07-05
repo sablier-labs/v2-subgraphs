@@ -7,3 +7,5 @@
 **/lib
 **/out
 **/tmp
+
+!apps/*-envio/src/generated
