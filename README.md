@@ -42,8 +42,8 @@ Airstreams.
 
 Read more about Envio [here](https://docs.envio.dev).
 
-> [!WARNING] The Sablier V2 indexers (Envio) are still under development and are not used in production for now. Feel
-> free to read the docs or preview the implementation while we finish the stable integration.
+> [!Important] When new addresses are added to an Envio indexer (through the shared package) run `pnpm run setup` or
+> `pnpm run dev` to make sure the necessary files get generated.
 
 ### Indexer: Protocol-Envio
 
@@ -61,3 +61,8 @@ for Airstreams.
 
 [Documentation](https://docs.sablier.com/api/indexers/merkle/entities) and
 [Endpoints](https://docs.sablier.com/api/indexers/endpoints).
+
+> [!TIP] To track new addresses see the [`constants`](./packages/constants) folder. Pick the chain, append a new
+> contract and run the codegen steps to make sure everything runs smoothly. To add a new chain, create a dedicated
+> configuration and make sure to (1) add it in the envio [bundles](./packages/constants/src/bundles/) (2) add a
+> deployment script for subgraphs.

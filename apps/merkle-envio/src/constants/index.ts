@@ -1,5 +1,5 @@
-import { chains as generator_merkle } from "../../../../packages/constants/src/bundles/merkle-envio";
-import { chains as generator_protocol } from "../../../../packages/constants/src/bundles/protocol-envio";
+import { chains as generator_merkle } from "../generated/original/bundles/merkle-envio";
+import { chains as generator_protocol } from "../generated/original/bundles/protocol-envio";
 
 export const ADDRESS_ZERO = String(
   "0x0000000000000000000000000000000000000000",

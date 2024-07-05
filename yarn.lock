@@ -850,12 +850,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sablier/v2-subgraphs-constants@workspace:packages/constants":
-  version: 0.0.0-use.local
-  resolution: "@sablier/v2-subgraphs-constants@workspace:packages/constants"
-  languageName: unknown
-  linkType: soft
-
 "@sablier/v2-subgraphs-merkle@workspace:apps/merkle":
   version: 0.0.0-use.local
   resolution: "@sablier/v2-subgraphs-merkle@workspace:apps/merkle"
