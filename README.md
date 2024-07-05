@@ -17,8 +17,6 @@ Read more about The Graph [here](https://thegraph.com/docs/en/).
 Sablier supports multiple chains for which we've deployed subgraphs at either the Hosted Network level or within the
 Decentralized Network (see Ethereum, Arbitrum or Polygon's endpoints).
 
-Internal version: 2.2_1.1.N
-
 ### Subgraph: Protocol
 
 The **Protocol** subgraph watches over the core functionality of Sablier V2. It handles events such as `Create Stream`,
@@ -66,3 +64,5 @@ for Airstreams.
 > contract and run the codegen steps to make sure everything runs smoothly. To add a new chain, create a dedicated
 > configuration and make sure to (1) add it in the envio [bundles](./packages/constants/src/bundles/) (2) add a
 > deployment script for subgraphs.
+
+<sub>Version Trigger: [2]</sub>
