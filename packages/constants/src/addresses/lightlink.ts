@@ -26,7 +26,7 @@ export let tranched: string[][] = [
 
 export let factory: string[][] = [
   ["0xdB07a1749D5Ca49909C7C4159652Fbd527c735B8", "MSF2", "V21"],
-  ["0x5f12318fc6cca518a950e2ee16063a6317c2a9ef", "MSF3", "V22"],
+  ["0x278ac15622846806bd46fbdbdb8db8d09614173a", "MSF3", "V22"],
 ];
 
 /** PRBProxy registry */
