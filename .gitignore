@@ -4,6 +4,8 @@
 **/static
 **/generated
 
+!apps/*-envio/src/generated
+
 apps/*/subgraph.yaml
 packages/*/subgraph.yaml
 
