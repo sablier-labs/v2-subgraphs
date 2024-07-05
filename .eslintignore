@@ -9,6 +9,7 @@
 **/node_modules
 **/*.js
 
+**/apps/*-envio/src/generated
 
 # files
 next.config.base.js

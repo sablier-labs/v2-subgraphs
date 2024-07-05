@@ -13,5 +13,5 @@
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "exclude": ["**/generated", "**/node_modules"]
+  "exclude": ["*/generated", "**/node_modules"]
 }
