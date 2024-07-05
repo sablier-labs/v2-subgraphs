@@ -18,7 +18,7 @@ import {
   getCampaign,
   generateCampaignNickname,
 } from "../helpers";
-import { ActionCategory } from "../constants";
+import { ADDRESS_ZERO, ActionCategory } from "../constants";
 
 function loader(input: TransferAdminLoader) {
   const { context, event } = input;
@@ -34,6 +34,15 @@ function loader(input: TransferAdminLoader) {
 
 function handler(input: TransferAdminHandler) {
   const { context, event } = input;
+
+  /**
+   * As described in issue #18, we will first filter out
+   * any `Transfer` events emitted by the initial mint transaction
+   */
+
+  if (event.params.oldAdmin.toLowerCase() === ADDRESS_ZERO.toLowerCase()) {
+    return;
+  }
 
   /** ------- Fetch -------- */
 
