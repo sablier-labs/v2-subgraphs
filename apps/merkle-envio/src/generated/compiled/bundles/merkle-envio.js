@@ -13,6 +13,9 @@ var polygon = require("../addresses/polygon");
 var scroll = require("../addresses/scroll");
 var sepolia = require("../addresses/sepolia");
 var zksync = require("../addresses/zksync");
+var available = function (v) {
+    return v.factory.length > 0;
+};
 var filter = function (list, version) {
     return (list
         .filter(function (entry) { return entry[2] === version; })
@@ -41,16 +44,24 @@ var chains = function () {
         zksync,
     ];
     /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
-    return list.map(function (item) { return ({
-        id: item.chainId,
-        name: item.chain,
-        start_block: item.startBlock_merkle,
-        V21: {
+    return list.map(function (item) {
+        var V21 = {
             factory: filter(item.factory, "V21"),
-        },
-        V22: {
+            available: false,
+        };
+        V21.available = available(V21);
+        var V22 = {
             factory: filter(item.factory, "V22"),
-        },
-    }); });
+            available: false,
+        };
+        V22.available = available(V22);
+        return {
+            id: item.chainId,
+            name: item.chain,
+            start_block: item.startBlock_merkle,
+            V21: V21,
+            V22: V22,
+        };
+    });
 };
 exports.chains = chains;

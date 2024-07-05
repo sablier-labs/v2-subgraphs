@@ -34,8 +34,8 @@
     "start": "ts-node generated/src/Index.bs.js",
     "template": "pnpm template-move && pnpm template-chain && pnpm template-config",
     "template-move": "mkdir $npm_package_config_dir_generated && cp -R $npm_package_config_dir_source $npm_package_config_dir_chains",
-    "template-chain": "tsc --skipLibCheck $npm_package_config_dir_chains/bundles/merkle-envio.ts --outDir $npm_package_config_dir_compiled",
-    "template-config": "mustache $npm_package_config_dir_compiled/bundles/merkle-envio.js config.template.mustache > config.yaml",
+    "template-chain": "tsc --skipLibCheck $npm_package_config_dir_chains/bundles/protocol-envio.ts --outDir $npm_package_config_dir_compiled",
+    "template-config": "mustache $npm_package_config_dir_compiled/bundles/protocol-envio.js config.template.mustache > config.yaml",
     "test": "pnpm jest --verbose"
   },
   "devDependencies": {

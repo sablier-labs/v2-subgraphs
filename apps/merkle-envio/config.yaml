@@ -70,8 +70,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x237400ef5a41886a75b0e036228221df075b3b80
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 43114
@@ -80,8 +78,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x4849e797d7aab20fcc8f807efafdfff98a83412e
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 8453
@@ -90,8 +86,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x5545c8e7c3e1f74adc98e518f2e8d23a002c4412
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 81457
@@ -100,8 +94,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x92fc05e49c27884d554d98a5c01ff0894a9dc29a
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 56
@@ -110,8 +102,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x434d73465aac4125d204a6637eb6c579d8d69f48
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 100
@@ -120,8 +110,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x777f66477ff83ababadf39a3f22a8cc3aee43765
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 1
@@ -130,8 +118,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x1a272b596b10f02931480bc7a3617db4a8d154e3
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 10
@@ -140,8 +126,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x044ec80fbec40f0ee7e7b3856828170971796c19
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 137
@@ -150,8 +134,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0xf4906225e783fb8977410bdbfb960cabed6c2ef4
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 534352
@@ -160,8 +142,6 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0xb3ade5463000e6c0d376e7d7570f372ebf98bdaf
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 11155111
@@ -172,6 +152,7 @@ networks:
           - 0xbacc1d151a78eed71d504f701c25e8739dc0262d
       - name: MerkleLockupFactoryV22
         address:
+          - 0x56e9180a8d2c35c99f2f8a1a5ab8abe79e876e8c
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 324
@@ -180,7 +161,5 @@ networks:
       - name: MerkleLockupFactoryV21
         address:
           - 0x46de683d20c3575a0381ffd66c10ab6836390140
-      - name: MerkleLockupFactoryV22
-        address:
       - name: MerkleLockupV21
       - name: MerkleLockupV22

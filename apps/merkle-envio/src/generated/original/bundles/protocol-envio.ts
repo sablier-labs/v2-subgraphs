@@ -11,6 +11,14 @@ import * as scroll from "../addresses/scroll";
 import * as sepolia from "../addresses/sepolia";
 import * as zksync from "../addresses/zksync";
 
+const available = (v: {
+  linear: unknown[];
+  dynamic: unknown[];
+  tranched: unknown[];
+}) => {
+  return v.linear.length + v.dynamic.length + v.tranched.length > 0;
+};
+
 const filter = (list: string[][], version: string) => {
   return (
     list
@@ -41,25 +49,42 @@ export const chains = () => {
 
   /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
 
-  return list.map((item) => ({
-    id: item.chainId,
-    name: item.chain,
-    start_block: item.startBlock_protocol,
-    registry: item.registry?.toLowerCase() || "",
-    V20: {
+  return list.map((item) => {
+    const V20 = {
       dynamic: filter(item.dynamic, "V20"),
       linear: filter(item.linear, "V20"),
       tranched: [],
-    },
-    V21: {
+      available: false,
+    };
+
+    V20.available = available(V20);
+
+    const V21 = {
       dynamic: filter(item.dynamic, "V21"),
       linear: filter(item.linear, "V21"),
       tranched: [],
-    },
-    V22: {
+      available: false,
+    };
+
+    V21.available = available(V21);
+
+    const V22 = {
       dynamic: filter(item.dynamic, "V22"),
       linear: filter(item.linear, "V22"),
       tranched: filter(item.tranched || [], "V22"),
-    },
-  }));
+      available: false,
+    };
+
+    V22.available = available(V22);
+
+    return {
+      id: item.chainId,
+      name: item.chain,
+      start_block: item.startBlock_protocol,
+      registry: item.registry?.toLowerCase() || "",
+      V20,
+      V21,
+      V22,
+    };
+  });
 };

@@ -68,16 +68,20 @@ networks:
   - id: {{id}}
     start_block: {{start_block}}
     contracts:
+      {{#V21.available}}
       - name: MerkleLockupFactoryV21
         address:
           {{#V21.factory}}
           - {{address}}
           {{/V21.factory}}
+      {{/V21.available}}
+      {{#V22.available}}
       - name: MerkleLockupFactoryV22
         address:
           {{#V22.factory}}
           - {{address}}
           {{/V22.factory}}
+      {{/V22.available}}
       - name: MerkleLockupV21
       - name: MerkleLockupV22
    {{/chains}}

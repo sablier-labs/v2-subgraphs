@@ -185,6 +185,7 @@ networks:
   - id: {{id}}
     start_block: {{start_block}}
     contracts:
+      {{#V20.available}}
       - name: LockupV20
         address:
           {{#V20.linear}}
@@ -193,6 +194,8 @@ networks:
           {{#V20.dynamic}}
           - {{address}}
           {{/V20.dynamic}}
+      {{/V20.available}}
+      {{#V21.available}}
       - name: LockupV21
         address:
           {{#V21.linear}}
@@ -201,6 +204,8 @@ networks:
           {{#V21.dynamic}}
           - {{address}}
           {{/V21.dynamic}}
+      {{/V21.available}}
+      {{#V22.available}}
       - name: LockupV22
         address:
           {{#V22.linear}}
@@ -212,4 +217,5 @@ networks:
           {{#V22.tranched}}
           - {{address}}
           {{/V22.tranched}}
+      {{/V22.available}}
    {{/chains}}

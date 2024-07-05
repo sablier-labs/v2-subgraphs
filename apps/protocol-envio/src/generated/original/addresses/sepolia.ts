@@ -13,19 +13,22 @@ export let startBlock_merkle = 4904890;
 export let linear: string[][] = [
   ["0xd4300c5bc0b9e27c73ebabdc747ba990b1b570db", "LL", "V20"],
   ["0x7a43f8a888fa15e68c103e18b0439eb1e98e4301", "LL2", "V21"],
+  ["0x3e435560fd0a03ddf70694b35b673c25c65abb6c", "LL3", "V22"],
 ];
 
 export let dynamic: string[][] = [
   ["0x421e1e7a53ff360f70a2d02037ee394fa474e035", "LD", "V20"],
   ["0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a", "LD2", "V21"],
+  ["0x73bb6dd3f5828d60f8b3dbc8798eb10fba2c5636", "LD3", "V22"],
 ];
 
 export let tranched: string[][] = [
-  ["0xad8e8615585470be71301f8d090a26b4bcf8c8ab", "LT3", "V22"],
+  ["0x3a1bea13a8c24c0ea2b8fae91e4b2762a59d7af5", "LT3", "V22"],
 ];
 
 export let factory: string[][] = [
   ["0xbacc1d151a78eed71d504f701c25e8739dc0262d", "MSF2", "V21"],
+  ["0x56e9180a8d2c35c99f2f8a1a5ab8abe79e876e8c", "MSF3", "V22"],
 ];
 
 /** PRBProxy registry */
