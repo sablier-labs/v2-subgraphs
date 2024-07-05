@@ -10,6 +10,7 @@ import {
 import type { TransferAdminHandler, TransferAdminLoader } from "../types";
 
 import { generateContractIdFromEvent, initialize } from "../helpers";
+import { ADDRESS_ZERO } from "../constants";
 
 function loader(input: TransferAdminLoader) {
   const { context, event } = input;
@@ -22,6 +23,15 @@ function loader(input: TransferAdminLoader) {
 
 function handler(input: TransferAdminHandler) {
   const { context, event } = input;
+
+  /**
+   * As described in issue #18, we will first filter out
+   * any `Transfer` events emitted by the initial mint transaction
+   */
+
+  if (event.params.oldAdmin.toLowerCase() === ADDRESS_ZERO.toLowerCase()) {
+    return;
+  }
 
   /** ------- Initialize -------- */
 

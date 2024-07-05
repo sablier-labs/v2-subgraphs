@@ -194,6 +194,9 @@ networks:
           - 0xf390ce6f54e4dc7c5a5f7f8689062b7591f7111d
       - name: LockupV22
         address:
+          - 0x05a323a4c936fed6d02134c5f0877215cd186b51
+          - 0x53f5eeb133b99c6e59108f35bcc7a116da50c5ce
+          - 0x0da2c7aa93e7cd43e6b8d043aab5b85cfddf3818
   - id: 43114
     start_block: 32164210
     contracts:
@@ -207,6 +210,9 @@ networks:
           - 0x0310da0d8ff141166ed47548f00c96464880781f
       - name: LockupV22
         address:
+          - 0xc0bf14afb95ca4c049bdc19e06a3531d8065f6fd
+          - 0xe3826241e5eebb3f5fede33f9f677047674d3fbf
+          - 0xfa536049652bfb5f57ba8dcfbec1b2b2dd9803d3
   - id: 8453
     start_block: 1750270
     contracts:
@@ -220,6 +226,9 @@ networks:
           - 0x461e13056a3a3265cef4c593f01b2e960755de91
       - name: LockupV22
         address:
+          - 0x4cb16d4153123a74bc724d161050959754f378d8
+          - 0xf9e9ed67dd2fab3b3ca024a2d66fcf0764d36742
+          - 0xf4937657ed8b3f3cb379eed47b8818ee947beb1e
   - id: 81457
     start_block: 243800
     contracts:
@@ -244,6 +253,9 @@ networks:
           - 0xf900c5e3aa95b59cc976e6bc9c0998618729a5fa
       - name: LockupV22
         address:
+          - 0x88ad3b5c62a46df953a5d428d33d70408f53c408
+          - 0xeb6d84c585bf8aea34f05a096d6faa3b8477d146
+          - 0xab5f007b33edda56962a0fc428b15d544ea46591
   - id: 100
     start_block: 28766600
     contracts:
@@ -257,6 +269,9 @@ networks:
           - 0x1df83c7682080b0f0c26a20c6c9cb8623e0df24e
       - name: LockupV22
         address:
+          - 0xf1caeb104ab29271463259335357d57772c90758
+          - 0x555eb55cbc477aebbe5652d25d0fea04052d3971
+          - 0x59a4b7255a5d01247837600e7828a6f77f664b34
   - id: 1
     start_block: 17613130
     contracts:
@@ -270,6 +285,9 @@ networks:
           - 0x7cc7e125d83a581ff438608490cc0f7bdff79127
       - name: LockupV22
         address:
+          - 0x3962f6585946823440d274ad7c719b02b49de51e
+          - 0x9deabf7815b42bf4e9a03eec35a486ff74ee7459
+          - 0xf86b359035208e4529686a1825f2d5bee38c28a8
   - id: 10
     start_block: 106405050
     contracts:
@@ -283,6 +301,9 @@ networks:
           - 0xd6920c1094eabc4b71f3dc411a1566f64f4c206e
       - name: LockupV22
         address:
+          - 0x5c22471a86e9558ed9d22235dd5e0429207ccf4b
+          - 0x4994325f8d4b4a36bd643128beb3ec3e582192c0
+          - 0x90952912a50079bef00d5f49c975058d6573acdc
   - id: 137
     start_block: 44637120
     contracts:
@@ -296,6 +317,9 @@ networks:
           - 0xb194c7278c627d52e440316b74c5f24fc70c1565
       - name: LockupV22
         address:
+          - 0x8d87c5eddb5644d1a714f85930ca940166e465f0
+          - 0x8d4ddc187a73017a5d7cef733841f55115b13762
+          - 0xbf67f0a1e847564d0efad475782236d3fa7e9ec2
   - id: 534352
     start_block: 284000
     contracts:
@@ -309,6 +333,9 @@ networks:
           - 0xaaff2d11f9e7cd2a9cdc674931fac0358a165995
       - name: LockupV22
         address:
+          - 0xbc5dc6d77612e636da32af0d85ca3179a57330fd
+          - 0xac199bfea92aa4d4c3d8a49fd463ead99c7a6a8f
+          - 0xb0f78ddc01d829d8b567821eb193de8082b57d9d
   - id: 11155111
     start_block: 4067889
     contracts:
@@ -322,9 +349,9 @@ networks:
           - 0xc9940ad8f43aad8e8f33a4d5dbbf0a8f7ff4429a
       - name: LockupV22
         address:
-          - 0xb6431d14d182da1a1a7078f02907b3336adcf09b
-          - 0x03781ad6ac55e5625311343dc563b799c0be09a3
-          - 0xad8e8615585470be71301f8d090a26b4bcf8c8ab
+          - 0x3e435560fd0a03ddf70694b35b673c25c65abb6c
+          - 0x73bb6dd3f5828d60f8b3dbc8798eb10fba2c5636
+          - 0x3a1bea13a8c24c0ea2b8fae91e4b2762a59d7af5
   - id: 324
     start_block: 32472500
     contracts:
