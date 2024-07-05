@@ -11,13 +11,17 @@ export let startBlock = 32472500;
 
 export let linear: string[][] = [
   ["0x2fca69fa0a318efdf4c15ee8f13a873347a8a8d4", "LL2", "V21"],
+  ["0x8cb69b514e97a904743922e1adf3d1627deeee8d", "LL3", "V22"],
 ];
 
 export let dynamic: string[][] = [
   ["0xe6c7324bea8474209103e407779eec600c07cf3f", "LD2", "V21"],
+  ["0xf03f4bf48b108360baf1597fb8053ebe0f5245da", "LD3", "V22"],
 ];
 
-export let tranched: string[][] = [];
+export let tranched: string[][] = [
+  ["0x1fb145a47eb9b8bf565273e137356376197b3559", "LT3", "V22"],
+];
 
 /** PRBProxy registry */
 export let registry = "";
