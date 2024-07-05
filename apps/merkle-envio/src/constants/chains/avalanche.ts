@@ -11,6 +11,7 @@ export let startBlock = Infinity;
 
 export let factory: string[][] = [
   ["0x4849e797d7aab20fcc8f807efafdfff98a83412e", "MSF2", "V21"],
+  ["0x0430ed39ea2789acdf27b89268117ebabc8176d1", "MSF3", "V22"],
 ];
 
 /**

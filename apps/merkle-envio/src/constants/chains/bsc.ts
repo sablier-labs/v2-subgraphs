@@ -11,6 +11,7 @@ export let startBlock = 34438430;
 
 export let factory: string[][] = [
   ["0x434d73465aac4125d204a6637eb6c579d8d69f48", "MSF2", "V21"],
+  ["0x96aa12809cac29bba4944feca1dfdc8e1704e6c1", "MSF3", "V22"],
 ];
 
 /**

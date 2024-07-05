@@ -11,8 +11,8 @@ export let startBlock = 51245830;
 
 export let factory: string[][] = [
   ["0xf4906225e783fb8977410bdbfb960cabed6c2ef4", "MSF2", "V21"],
+  ["0xc28872e0c1f3633eed467907123727ac0155029d", "MSF3", "V22"],
 ];
-
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.
  * It should be a linear contract, the oldest/first one deployed on this chain.
