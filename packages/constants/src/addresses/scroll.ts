@@ -22,7 +22,9 @@ export let dynamic: string[][] = [
   ["0xac199bfea92aa4d4c3d8a49fd463ead99c7a6a8f", "LD3", "V22"],
 ];
 
-export let tranched: string[][] = [];
+export let tranched: string[][] = [
+  ["0xb0f78ddc01d829d8b567821eb193de8082b57d9d", "LT3", "V22"],
+];
 
 export let factory: string[][] = [
   ["0xb3ade5463000e6c0d376e7d7570f372ebf98bdaf", "MSF2", "V21"],
