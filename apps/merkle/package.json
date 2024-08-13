@@ -21,7 +21,7 @@
     "babel-register": "^6.26.0"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.74.1",
+    "@graphprotocol/graph-cli": "^0.80.0",
     "@graphprotocol/graph-ts": "^0.35.1",
     "@trivago/prettier-plugin-sort-imports": "4.1.0",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
@@ -84,7 +84,7 @@
     "setup:optimism-sepolia": "yarn clean-generated && CHAIN=optimism-sepolia yarn setup",
     "setup:polygon": "yarn clean-generated && CHAIN=polygon yarn setup",
     "setup:sepolia": "yarn clean-generated && CHAIN=sepolia yarn setup",
-    "setup:zksync-sepolia": "yarn clean-generated && CHAIN=zksync yarn setup",
+    "setup:zksync-sepolia": "yarn clean-generated && CHAIN=zksync-sepolia yarn setup",
     "template": "yarn template-chain && yarn template-subgraph && yarn template-env",
     "template-chain": "tsc $npm_package_config_dir_chains/$CHAIN.ts --outDir $npm_package_config_dir_generated",
     "template-env": "cp $npm_package_config_dir_chains/$CHAIN.ts $npm_package_config_dir_generated/env.ts",
