@@ -1,5 +1,5 @@
 export let chainId = 300;
-export let chain = "zksync-era-testnet";
+export let chain = "zksync-era-sepolia";
 export let startBlock_protocol = 3240000;
 export let startBlock_merkle = 3250000;
 

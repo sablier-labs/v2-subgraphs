@@ -10,7 +10,6 @@ import * as polygon from "../addresses/polygon";
 import * as scroll from "../addresses/scroll";
 import * as sepolia from "../addresses/sepolia";
 import * as zksync from "../addresses/zksync";
-import * as zksyncSepolia from "../addresses/zksync-sepolia";
 
 const available = (v: { factory: unknown[] }) => {
   return v.factory.length > 0;
@@ -42,7 +41,6 @@ export const chains = () => {
     scroll,
     sepolia,
     zksync,
-    zksyncSepolia,
   ] as const;
 
   /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
