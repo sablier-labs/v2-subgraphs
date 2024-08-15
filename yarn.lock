@@ -442,9 +442,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphprotocol/graph-cli@npm:^0.74.1":
-  version: 0.74.1
-  resolution: "@graphprotocol/graph-cli@npm:0.74.1"
+"@graphprotocol/graph-cli@npm:^0.80.0":
+  version: 0.80.0
+  resolution: "@graphprotocol/graph-cli@npm:0.80.0"
   dependencies:
     "@float-capital/float-subgraph-uncrashable": ^0.0.0-alpha.4
     "@oclif/core": 2.8.6
@@ -476,7 +476,7 @@ __metadata:
     yaml: 1.10.2
   bin:
     graph: bin/run
-  checksum: dd617e467940835309376922cdf8b11e0ffbc4476c175b363011cca80e70737df88e618ca85a5697dfbebca0356ffb5c7b0cba69db8407df3c75c230dd985c47
+  checksum: 072244e374f832fd0cae1dd301c3e64e2cf8a71be585b6a373dc5d207a3cca7cad0d104bacb3a161161490fba4636d47c7e1dd946abfd710d6587513942a2443
   languageName: node
   linkType: hard
 
@@ -875,7 +875,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sablier/v2-subgraphs-merkle@workspace:apps/merkle"
   dependencies:
-    "@graphprotocol/graph-cli": ^0.74.1
+    "@graphprotocol/graph-cli": ^0.80.0
     "@graphprotocol/graph-ts": ^0.35.1
     "@trivago/prettier-plugin-sort-imports": 4.1.0
     "@typescript-eslint/eslint-plugin": ^5.59.11
@@ -895,7 +895,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sablier/v2-subgraphs-protocol@workspace:apps/protocol"
   dependencies:
-    "@graphprotocol/graph-cli": ^0.74.1
+    "@graphprotocol/graph-cli": ^0.80.0
     "@graphprotocol/graph-ts": ^0.35.1
     "@trivago/prettier-plugin-sort-imports": 4.1.0
     "@typescript-eslint/eslint-plugin": ^5.59.11
