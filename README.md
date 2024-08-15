@@ -1,4 +1,6 @@
-# Sablier V2 Subgraphs
+![Sablier Branding](/assets/banner-subgraphs.png)
+
+# Sablier V2 Subgraphs and Indexers
 
 Sablier relies on specific dependencies to source data or manage off-chain flows. All of these are either public or
 fully open-source, so feel free to roam around and suggest improvements or optimizations where needed.
@@ -40,8 +42,10 @@ Airstreams.
 
 Read more about Envio [here](https://docs.envio.dev).
 
-> [!Important] When new addresses are added to an Envio indexer (through the shared package) run `pnpm run setup` or
-> `pnpm run dev` to make sure the necessary files get generated.
+> [!IMPORTANT]
+>
+> When new addresses are added to an Envio indexer (through the shared package) run `pnpm run setup` or `pnpm run dev`
+> to make sure the necessary files get generated.
 
 ### Indexer: Protocol-Envio
 
@@ -60,9 +64,11 @@ for Airstreams.
 [Documentation](https://docs.sablier.com/api/indexers/merkle/entities) and
 [Endpoints](https://docs.sablier.com/api/indexers/endpoints).
 
-> [!TIP] To track new addresses see the [`constants`](./packages/constants) folder. Pick the chain, append a new
-> contract and run the codegen steps to make sure everything runs smoothly. To add a new chain, create a dedicated
-> configuration and make sure to (1) add it in the envio [bundles](./packages/constants/src/bundles/) (2) add a
-> deployment script for subgraphs.
+> [!TIP]
+>
+> To track new addresses see the [`constants`](./packages/constants) folder. Pick the chain, append a new contract and
+> run the codegen steps to make sure everything runs smoothly. To add a new chain, create a dedicated configuration and
+> make sure to (1) add it in the envio [bundles](./packages/constants/src/bundles/) (2) add a deployment script for
+> subgraphs.
 
 <sub>Version Trigger: [2]</sub>
