@@ -289,7 +289,7 @@ async function handlerTranched_V22(
   await context.Watcher.set(watcher);
 }
 
-async function registerLinear_V21(input: CreateLinearRegister_V21) {
+function registerLinear_V21(input: CreateLinearRegister_V21) {
   const { context, event } = input;
 
   if (isWhitelistedShape(event.chainId, event.params.merkleStreamer)) {
@@ -297,7 +297,7 @@ async function registerLinear_V21(input: CreateLinearRegister_V21) {
   }
 }
 
-async function registerLinear_V22(input: CreateLinearRegister_V22) {
+function registerLinear_V22(input: CreateLinearRegister_V22) {
   const { context, event } = input;
 
   if (isWhitelistedShape(event.chainId, event.params.merkleLL)) {
@@ -305,7 +305,7 @@ async function registerLinear_V22(input: CreateLinearRegister_V22) {
   }
 }
 
-async function registerTranched_V22(input: CreateTranchedRegister_V22) {
+function registerTranched_V22(input: CreateTranchedRegister_V22) {
   const { context, event } = input;
 
   if (isWhitelistedShape(event.chainId, event.params.merkleLT)) {

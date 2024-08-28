@@ -30,19 +30,19 @@ const filter = (list: string[][], version: string) => {
 
 export const chains = () => {
   const list = [
-    arbitrum,
-    avalanche,
-    base,
-    blast,
-    bsc,
-    gnosis,
-    linea,
-    mainnet,
-    optimism,
-    polygon,
-    scroll,
+    // arbitrum,
+    // avalanche,
+    // base,
+    // blast,
+    // bsc,
+    // gnosis,
+    // linea,
+    // mainnet,
+    // optimism,
+    // polygon,
+    // scroll,
     sepolia,
-    zksync,
+    // zksync,
   ] as const;
 
   /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
