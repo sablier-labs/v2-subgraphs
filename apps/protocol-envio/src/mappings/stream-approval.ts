@@ -1,12 +1,4 @@
-import {
-  LockupV20Contract_Approval_handler as HandlerLockup_V20,
-  LockupV20Contract_Approval_loader as LoaderLockup_V20,
-  LockupV21Contract_Approval_handler as HandlerLockup_V21,
-  LockupV21Contract_Approval_loader as LoaderLockup_V21,
-  LockupV22Contract_Approval_handler as HandlerLockup_V22,
-  LockupV22Contract_Approval_loader as LoaderLockup_V22,
-} from "../../generated/src/Handlers.gen";
-
+import { LockupV20, LockupV21, LockupV22 } from "../../generated";
 import type { Action, ApprovalHandler, ApprovalLoader } from "../types";
 
 import {
@@ -17,9 +9,8 @@ import {
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: ApprovalLoader) {
+async function loader(input: ApprovalLoader) {
   const { context, event } = input;
-
   const streamId = generateStreamId(
     event,
     event.srcAddress,
@@ -27,11 +18,18 @@ function loader(input: ApprovalLoader) {
   );
   const watcherId = event.chainId.toString();
 
-  context.Stream.load(streamId, {});
-  context.Watcher.load(watcherId);
+  const [Stream, Watcher] = await Promise.all([
+    context.Stream.get(streamId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    Stream,
+    Watcher,
+  };
 }
 
-function handler(input: ApprovalHandler) {
+async function handler(input: ApprovalHandler<typeof loader>) {
   const { context, event } = input;
 
   /** ------- Fetch -------- */
@@ -58,11 +56,17 @@ function handler(input: ApprovalHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLockup_V20(loader);
-HandlerLockup_V20(handler);
+LockupV20.Approval.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V21(loader);
-HandlerLockup_V21(handler);
+LockupV21.Approval.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V22(loader);
-HandlerLockup_V22(handler);
+LockupV22.Approval.handlerWithLoader({
+  loader,
+  handler,
+});

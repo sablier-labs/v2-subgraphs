@@ -1,9 +1,7 @@
 import type {
   EventLog,
   /** Event: Approval (NFT) */
-  LockupV20Contract_ApprovalEvent_eventArgs as EventApprovalArgs_V20_V21_V22,
-  LockupV20Contract_ApprovalEvent_loaderContext as LoaderApprovalContext_V20_V21_V22,
-  LockupV20Contract_ApprovalEvent_handlerContext as HandlerApprovalContext_V20_V21_V22,
+  LockupV20_Approval_eventArgs as EventApprovalArgs_V20_V21_V22,
   /** Event: ApprovalForAll (NFT) */
   LockupV20Contract_ApprovalForAllEvent_eventArgs as EventApprovalForAllArgs_V20_V21_V22,
   LockupV20Contract_ApprovalForAllEvent_loaderContext as LoaderApprovalForAllContext_V20_V21_V22,
@@ -60,25 +58,34 @@ import type {
   LockupV21Contract_WithdrawFromLockupStreamEvent_handlerContext as HandlerWithdrawContext_V21_V22,
 } from "../../generated/src/Types.gen";
 
+import type { LockupV20_Approval_handlerWithLoader as HandlerApprovalContext_V20_V21_V22 } from "../../generated/src/Handlers.gen";
+
+import type { registeredLoaderHandler as RegisteredLoaderHandler } from "../../generated/src/RegisteredEvents.gen";
+
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 
 export type Event<Params extends object = {}> = EventLog<Params>;
+// export type Loader<HL> = Parameters<RegisteredLoaderHandler<HL, unknown>["loader"]>["0"];
+// export type Handler<HL, Loaded> = Parameters<RegisteredLoader<HL, Loaded>["handler"]>["0"];
 
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 
-export type ApprovalLoader = {
-  context: LoaderApprovalContext_V20_V21_V22;
-  event: Event<EventApprovalArgs_V20_V21_V22>;
-};
+type Loader<T extends (_1: RegisteredLoaderHandler<object, unknown>) => void> =
+  Parameters<Parameters<T>["0"]["loader"]>["0"];
+type Handler<
+  Loaded,
+  T extends (_1: RegisteredLoaderHandler<object, Loaded>) => void,
+> = Parameters<Parameters<T>["0"]["handler"]>["0"];
 
-export type ApprovalHandler = {
-  context: HandlerApprovalContext_V20_V21_V22;
-  event: Event<EventApprovalArgs_V20_V21_V22>;
-};
+export type ApprovalLoader = Loader<typeof HandlerApprovalContext_V20_V21_V22>;
+export type ApprovalHandler<Loaded> = Handler<
+  Loaded,
+  typeof HandlerApprovalContext_V20_V21_V22
+>;
 
 export type ApprovalForAllLoader = {
   context: LoaderApprovalForAllContext_V20_V21_V22;
