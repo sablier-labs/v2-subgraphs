@@ -2,22 +2,7 @@ import type { Activity, Event, Mutable } from "../types";
 
 type Entity = Partial<Mutable<Activity>>;
 
-export function getActivity(
-  event: Event,
-  campaignId: string,
-  loader: (id: string) => Activity | undefined,
-) {
-  const id = generateActivityId(event, campaignId);
-  const loaded = loader(id);
-
-  if (!loaded) {
-    throw new Error("Missing activity instance");
-  }
-
-  return loaded;
-}
-
-export async function getActivity_async(
+export async function getActivity(
   event: Event,
   campaignId: string,
   loader: (id: string) => Promise<Activity | undefined>,
@@ -32,22 +17,7 @@ export async function getActivity_async(
   return loaded;
 }
 
-export function getOrCreateActivity(
-  event: Event,
-  campaignId: string,
-  loader: (id: string) => Activity | undefined,
-) {
-  const id = generateActivityId(event, campaignId);
-  const loaded = loader(id);
-
-  if (!loaded) {
-    return createActivity(event, campaignId);
-  }
-
-  return loaded;
-}
-
-export async function getOrCreateActivity_async(
+export async function getOrCreateActivity(
   event: Event,
   campaignId: string,
   loader: (id: string) => Promise<Activity | undefined>,
@@ -63,7 +33,7 @@ export async function getOrCreateActivity_async(
 }
 
 export function createActivity(event: Event, campaignId: string) {
-  const timestamp = BigInt(event.blockTimestamp);
+  const timestamp = BigInt(event.block.timestamp);
   const day = timestamp / (60n * 60n * 24n);
 
   const id = generateActivityId(event, campaignId);
@@ -72,7 +42,7 @@ export function createActivity(event: Event, campaignId: string) {
     id,
     day,
     campaign_id: campaignId,
-    timestamp: BigInt(event.blockTimestamp),
+    timestamp: BigInt(event.block.timestamp),
     /** --------------- */
     amount: 0n,
     claims: 0n,
@@ -86,7 +56,7 @@ export function createActivity(event: Event, campaignId: string) {
 /** --------------------------------------------------------------------------------------------------------- */
 
 export function generateActivityId(event: Event, campaignId: string) {
-  const timestamp = BigInt(event.blockTimestamp);
+  const timestamp = BigInt(event.block.timestamp);
   const day = timestamp / (60n * 60n * 24n);
 
   return ""

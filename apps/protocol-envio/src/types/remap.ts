@@ -27,141 +27,7 @@ import type {
   LockupV21_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V21_V22,
 } from "../../generated/src/Types.gen";
 
-import type {
-  /** Event: Approval (NFT) */
-  LockupV20_Approval_handlerWithLoader as HandlerLoaderApproval_V20_V21_V22,
-  /** Event: ApprovalForAll (NFT) */
-  LockupV20_ApprovalForAll_handlerWithLoader as HandlerLoaderApprovalForAll_V20_V21_V22,
-  /** Event: Cancel (Lockup) */
-  LockupV20_CancelLockupStream_handlerWithLoader as HandlerLoaderCancel_V20,
-  LockupV21_CancelLockupStream_handlerWithLoader as HandlerLoaderCancel_V21_V22,
-
-  /** Event: Create Dynamic (Lockup) */
-  LockupV20_CreateLockupDynamicStream_handlerWithLoader as HandlerLoaderCreateDynamic_V20,
-  LockupV21_CreateLockupDynamicStream_handlerWithLoader as HandlerLoaderCreateDynamic_V21,
-  LockupV22_CreateLockupDynamicStream_handlerWithLoader as HandlerLoaderCreateDynamic_V22,
-  /** Event: Create Linear (Lockup) */
-  LockupV20_CreateLockupLinearStream_handlerWithLoader as HandlerLoaderCreateLinear_V20,
-  LockupV21_CreateLockupLinearStream_handlerWithLoader as HandlerLoaderCreateLinear_V21,
-  LockupV22_CreateLockupLinearStream_handlerWithLoader as HandlerLoaderCreateLinear_V22,
-  /** Event: Create Tranched (Lockup) */
-  LockupV22_CreateLockupTranchedStream_handlerWithLoader as HandlerLoaderCreateTranched_V22,
-  /** Event: Renounce (Lockup) */
-  LockupV20_RenounceLockupStream_handlerWithLoader as HandlerLoaderRenounce_V20_V21_V22,
-  /** Event: Transfer (NFT) */
-  LockupV20_Transfer_handlerWithLoader as HandlerLoaderTransfer_V20_V21_V22,
-  /** Event: TransferAdmin (Lockup) */
-  LockupV20_TransferAdmin_handlerWithLoader as HandlerLoaderTransferAdmin_V20_V21_V22,
-  /** Event: Withdraw (Lockup) */
-  LockupV20_WithdrawFromLockupStream_handlerWithLoader as HandlerLoaderWithdraw_V20,
-  LockupV21_WithdrawFromLockupStream_handlerWithLoader as HandlerLoaderWithdraw_V21_V22,
-} from "../../generated/src/Handlers.gen";
-
-import type { Loader, Handler } from "./utils";
-
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-
-export type ApprovalLoader = Loader<typeof HandlerLoaderApproval_V20_V21_V22>;
-export type ApprovalHandler<Loaded> = Handler<
-  Loaded,
-  typeof HandlerLoaderApproval_V20_V21_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type ApprovalForAllLoader = Loader<
-  typeof HandlerLoaderApprovalForAll_V20_V21_V22
->;
-export type ApprovalForAllHandler<Loaded> = Handler<
-  Loaded,
-  typeof HandlerLoaderApprovalForAll_V20_V21_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type CancelLoader = Loader<
-  typeof HandlerLoaderCancel_V20 | typeof HandlerLoaderCancel_V21_V22
->;
-export type CancelHandler<Loaded> = Handler<
-  Loaded,
-  typeof HandlerLoaderCancel_V20 | typeof HandlerLoaderCancel_V21_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type CreateLinearLoader = Loader<
-  | typeof HandlerLoaderCreateLinear_V20
-  | typeof HandlerLoaderCreateLinear_V21
-  | typeof HandlerLoaderCreateLinear_V22
->;
-export type CreateLinearHandler<Loaded> = Handler<
-  Loaded,
-  | typeof HandlerLoaderCreateLinear_V20
-  | typeof HandlerLoaderCreateLinear_V21
-  | typeof HandlerLoaderCreateLinear_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type CreateDynamicLoader = Loader<
-  | typeof HandlerLoaderCreateDynamic_V20
-  | typeof HandlerLoaderCreateDynamic_V21
-  | typeof HandlerLoaderCreateDynamic_V22
->;
-export type CreateDynamicHandler<Loaded> = Handler<
-  Loaded,
-  | typeof HandlerLoaderCreateDynamic_V20
-  | typeof HandlerLoaderCreateDynamic_V21
-  | typeof HandlerLoaderCreateDynamic_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type CreateTranchedLoader = Loader<
-  typeof HandlerLoaderCreateTranched_V22
->;
-export type CreateTranchedHandler<Loaded> = Handler<
-  Loaded,
-  typeof HandlerLoaderCreateTranched_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type RenounceLoader = Loader<typeof HandlerLoaderRenounce_V20_V21_V22>;
-export type RenounceHandler<Loaded> = Handler<
-  Loaded,
-  typeof HandlerLoaderRenounce_V20_V21_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type TransferLoader = Loader<typeof HandlerLoaderTransfer_V20_V21_V22>;
-export type TransferHandler<Loaded> = Handler<
-  Loaded,
-  typeof HandlerLoaderTransfer_V20_V21_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type TransferAdminLoader = Loader<
-  typeof HandlerLoaderTransferAdmin_V20_V21_V22
->;
-export type TransferAdminHandler<Loaded> = Handler<
-  Loaded,
-  typeof HandlerLoaderTransferAdmin_V20_V21_V22
->;
-
-/** ------------------------------------------------------------- */
-
-export type WithdrawLoader = Loader<
-  typeof HandlerLoaderWithdraw_V20 | typeof HandlerLoaderWithdraw_V21_V22
->;
-export type WithdrawHandler<Loaded> = Handler<
-  Loaded,
-  typeof HandlerLoaderWithdraw_V20 | typeof HandlerLoaderWithdraw_V21_V22
->;
+import type { Loader, Handler } from "./general";
 
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
@@ -183,6 +49,87 @@ export type RenounceArgs = EventRenounceArgs_V20_V21_V22;
 export type TransferArgs = EventTransferArgs_V20_V21_V22;
 export type TransferAdminArgs = EventTransferAdminArgs_V20_V21_V22;
 export type WithdrawArgs = EventWithdrawArgs_V20 | EventWithdrawArgs_V21_V22;
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+export type ApprovalLoader = Loader<ApprovalArgs>;
+export type ApprovalHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = ApprovalArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type ApprovalForAllLoader = Loader<ApprovalForAllArgs>;
+export type ApprovalForAllHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = ApprovalForAllArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type CancelLoader = Loader<CancelArgs>;
+export type CancelHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CancelArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type CreateLinearLoader = Loader<CreateLinearArgs>;
+export type CreateLinearHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateLinearArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type CreateDynamicLoader = Loader<CreateDynamicArgs>;
+export type CreateDynamicHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateDynamicArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type CreateTranchedLoader = Loader<CreateTranchedArgs>;
+export type CreateTranchedHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateTranchedArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type RenounceLoader = Loader<RenounceArgs>;
+export type RenounceHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = RenounceArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type TransferLoader = Loader<TransferArgs>;
+export type TransferHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = TransferArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type TransferAdminLoader = Loader<TransferAdminArgs>;
+export type TransferAdminHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = TransferAdminArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+export type WithdrawLoader = Loader<WithdrawArgs>;
+export type WithdrawHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = WithdrawArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
 
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */

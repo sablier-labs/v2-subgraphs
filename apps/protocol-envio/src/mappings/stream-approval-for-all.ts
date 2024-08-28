@@ -10,19 +10,20 @@ import { ActionCategory } from "../constants";
 async function loader(input: ApprovalForAllLoader) {
   const { context, event } = input;
   const watcherId = event.chainId.toString();
-  const [Watcher] = await Promise.all([context.Watcher.get(watcherId)]);
+  const [watcher] = await Promise.all([context.Watcher.get(watcherId)]);
 
   return {
-    Watcher,
+    watcher,
   };
 }
 
 async function handler(input: ApprovalForAllHandler<typeof loader>) {
-  const { context, event } = input;
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Fetch -------- */
 
-  let watcher = await getOrCreateWatcher(event, context.Watcher.get);
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
 
   const post_action = createAction(event, watcher);
 

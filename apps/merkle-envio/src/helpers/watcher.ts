@@ -1,66 +1,16 @@
 import type { Factory, Event, Watcher } from "../types";
-import {
-  _initialize,
-  generateFactoryId,
-  getFactory,
-  getFactory_async,
-} from "./factory";
+import { _initialize, generateFactoryId, getFactory } from "./factory";
 
-export async function initialize_async(
+export async function initialize(
   event: Event,
   loaderWatcher: (id: string) => Promise<Watcher | undefined>,
   loaderFactory: (id: string) => Promise<Factory | undefined>,
 ) {
-  const watcher = await getOrCreateWatcher_async(event, loaderWatcher);
+  const watcher = await getOrCreateWatcher(event, loaderWatcher);
 
   if (watcher.initialized) {
     try {
-      const factory = await getFactory_async(
-        event,
-        event.srcAddress,
-        loaderFactory,
-      );
-
-      return {
-        factory,
-        factories: [],
-        watcher,
-      };
-    } catch (_error) {
-      console.log("Initializing");
-    }
-  }
-
-  /** If the factory isn't already configured, we've just started indexing. Prepare the contracts. */
-  const factories = _initialize(event);
-  const factory = factories.find(
-    (f) => f.id === generateFactoryId(event, event.srcAddress),
-  );
-
-  if (!factory) {
-    throw new Error("Missing factory instance at initialization");
-  }
-
-  return {
-    factory,
-    factories,
-    watcher: {
-      ...watcher,
-      initialized: true,
-    },
-  };
-}
-
-export function initialize(
-  event: Event,
-  loaderWatcher: (id: string) => Watcher | undefined,
-  loaderFactory: (id: string) => Factory | undefined,
-) {
-  const watcher = getOrCreateWatcher(event, loaderWatcher);
-
-  if (watcher.initialized) {
-    try {
-      const factory = getFactory(event, event.srcAddress, loaderFactory);
+      const factory = await getFactory(event, event.srcAddress, loaderFactory);
 
       return {
         factory,
@@ -105,20 +55,7 @@ function createWatcher(event: Event): Watcher {
   return entity;
 }
 
-export function getOrCreateWatcher(
-  event: Event,
-  loader: (id: string) => Watcher | undefined,
-) {
-  const watcher = loader(event.chainId.toString());
-
-  if (watcher === undefined) {
-    return createWatcher(event);
-  }
-
-  return watcher;
-}
-
-export async function getOrCreateWatcher_async(
+export async function getOrCreateWatcher(
   event: Event,
   loader: (id: string) => Promise<Watcher | undefined>,
 ) {

@@ -19,19 +19,19 @@ async function loader(input: TransferLoader) {
   );
   const watcherId = event.chainId.toString();
 
-  const [Stream, Watcher] = await Promise.all([
+  const [stream, watcher] = await Promise.all([
     context.Stream.get(streamId),
     context.Watcher.get(watcherId),
   ]);
 
   return {
-    Stream,
-    Watcher,
+    stream,
+    watcher,
   };
 }
 
 async function handler(input: TransferHandler<typeof loader>) {
-  const { context, event } = input;
+  const { context, event, loaderReturn: loaded } = input;
 
   /**
    * As described in issue #18, we will first filter out
@@ -44,8 +44,13 @@ async function handler(input: TransferHandler<typeof loader>) {
 
   /** ------- Fetch -------- */
 
-  let watcher = await getOrCreateWatcher(event, context.Watcher.get);
-  let stream = await getStream(event, event.params.tokenId, context.Stream.get);
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
+  let stream =
+    loaded.stream ??
+    (await getStream(event, event.params.tokenId, context.Stream.get));
+
+  /** ------- Process -------- */
 
   const post_action = createAction(event, watcher);
 

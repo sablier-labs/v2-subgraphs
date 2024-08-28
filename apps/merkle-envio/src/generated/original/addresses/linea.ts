@@ -1,7 +1,7 @@
-export let chainId = 324;
-export let chain = "zksync-era";
-export let startBlock_protocol = 32472500;
-export let startBlock_merkle = 33148900;
+export let chainId = 59144;
+export let chain = "linea";
+export let startBlock_protocol = 7728000;
+export let startBlock_merkle = 7728000;
 
 /** Rule: keep addresses lowercased */
 
@@ -11,22 +11,19 @@ export let startBlock_merkle = 33148900;
  */
 
 export let linear: string[][] = [
-  ["0x2fca69fa0a318efdf4c15ee8f13a873347a8a8d4", "LL2", "V21"],
-  ["0x8cb69b514e97a904743922e1adf3d1627deeee8d", "LL3", "V22"],
+  ["0xb5d39049510f47ee7f74c528105d225e42747d63", "LL3", "V22"],
 ];
 
 export let dynamic: string[][] = [
-  ["0xe6c7324bea8474209103e407779eec600c07cf3f", "LD2", "V21"],
-  ["0xf03f4bf48b108360baf1597fb8053ebe0f5245da", "LD3", "V22"],
+  ["0xf2e46b249cfe09c2b3a2022dc81e0bb4be3336f1", "LD3", "V22"],
 ];
 
 export let tranched: string[][] = [
-  ["0x1fb145a47eb9b8bf565273e137356376197b3559", "LT3", "V22"],
+  ["0xc46ce4b77cbc46d17a2eceb2cc8e2ee23d96529f", "LT3", "V22"],
 ];
 
 export let factory: string[][] = [
-  ["0x46de683d20c3575a0381ffd66c10ab6836390140", "MSF2", "V21"],
-  ["0x8a84fcf962163a7e98bf0dafd918973c846fa5c8", "MSF3", "V22"],
+  ["0x35e9c3445a039b258eb7112a5eea259a825e8ac0", "MSF3", "V22"],
 ];
 
 /** PRBProxy registry */

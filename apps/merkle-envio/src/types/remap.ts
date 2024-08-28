@@ -1,99 +1,18 @@
 import type {
-  EventLog,
   /** Event: Create Linear (Factory) */
-  MerkleLockupFactoryV21Contract_CreateMerkleStreamerLLEvent_eventArgs as EventCreateLinearArgs_V21,
-  MerkleLockupFactoryV21Contract_CreateMerkleStreamerLLEvent_loaderContext as LoaderCreateLinearContext_V21,
-  MerkleLockupFactoryV21Contract_CreateMerkleStreamerLLEvent_handlerContextAsync as HandlerCreateLinearContext_V21,
-  MerkleLockupFactoryV22Contract_CreateMerkleLLEvent_eventArgs as EventCreateLinearArgs_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLLEvent_loaderContext as LoaderCreateLinearContext_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLLEvent_handlerContextAsync as HandlerCreateLinearContext_V22,
+  MerkleLockupFactoryV21_CreateMerkleStreamerLL_eventArgs as EventCreateLinearArgs_V21,
+  MerkleLockupFactoryV22_CreateMerkleLL_eventArgs as EventCreateLinearArgs_V22,
   /** Event: Create Tranched (Factory) */
-  MerkleLockupFactoryV22Contract_CreateMerkleLTEvent_eventArgs as EventCreateTranchedArgs_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLTEvent_loaderContext as LoaderCreateTranchedContext_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLTEvent_handlerContextAsync as HandlerCreateTranchedContext_V22,
+  MerkleLockupFactoryV22_CreateMerkleLT_eventArgs as EventCreateTranchedArgs_V22,
   /** Event: Claim (Merkle) */
-  MerkleLockupV21Contract_ClaimEvent_eventArgs as EventClaimArgs_V21_V22,
-  MerkleLockupV21Contract_ClaimEvent_loaderContext as LoaderClaimContext_V21_V22,
-  MerkleLockupV21Contract_ClaimEvent_handlerContext as HandlerClaimContext_V21_V22,
+  MerkleLockupV21_Claim_eventArgs as EventClaimArgs_V21_V22,
   /** Event: Clawback (Merkle) */
-  MerkleLockupV21Contract_ClawbackEvent_eventArgs as EventClawbackArgs_V21_V22,
-  MerkleLockupV21Contract_ClawbackEvent_loaderContext as LoaderClawbackContext_V21_V22,
-  MerkleLockupV21Contract_ClawbackEvent_handlerContext as HandlerClawbackContext_V21_V22,
+  MerkleLockupV21_Clawback_eventArgs as EventClawbackArgs_V21_V22,
   /** Event: Transfer Admin (Merkle) */
-  MerkleLockupV21Contract_TransferAdminEvent_eventArgs as EventTransferAdminArgs_V21_V22,
-  MerkleLockupV21Contract_TransferAdminEvent_loaderContext as LoaderTransferAdminContext_V21_V22,
-  MerkleLockupV21Contract_TransferAdminEvent_handlerContext as HandlerTransferAdminContext_V21_V22,
+  MerkleLockupV21_TransferAdmin_eventArgs as EventTransferAdminArgs_V21_V22,
 } from "../../generated/src/Types.gen";
 
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-
-export type Event<Params extends object = {}> = EventLog<Params>;
-
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-
-export type CreateLinearLoader_V21 = {
-  context: LoaderCreateLinearContext_V21;
-  event: Event<EventCreateLinearArgs_V21>;
-};
-
-export type CreateLinearHandler_V21 = {
-  context: HandlerCreateLinearContext_V21;
-  event: Event<EventCreateLinearArgs_V21>;
-};
-
-export type CreateLinearLoader_V22 = {
-  context: LoaderCreateLinearContext_V22;
-  event: Event<EventCreateLinearArgs_V22>;
-};
-
-export type CreateLinearHandler_V22 = {
-  context: HandlerCreateLinearContext_V22;
-  event: Event<EventCreateLinearArgs_V22>;
-};
-
-export type CreateTranchedLoader_V22 = {
-  context: LoaderCreateTranchedContext_V22;
-  event: Event<EventCreateTranchedArgs_V22>;
-};
-
-export type CreateTranchedHandler_V22 = {
-  context: HandlerCreateTranchedContext_V22;
-  event: Event<EventCreateTranchedArgs_V22>;
-};
-
-export type ClaimLoader = {
-  context: LoaderClaimContext_V21_V22;
-  event: Event<EventClaimArgs_V21_V22>;
-};
-
-export type ClaimHandler = {
-  context: HandlerClaimContext_V21_V22;
-  event: Event<EventClaimArgs_V21_V22>;
-};
-
-export type ClawbackLoader = {
-  context: LoaderClawbackContext_V21_V22;
-  event: Event<EventClawbackArgs_V21_V22>;
-};
-
-export type ClawbackHandler = {
-  context: HandlerClawbackContext_V21_V22;
-  event: Event<EventClawbackArgs_V21_V22>;
-};
-
-export type TransferAdminLoader = {
-  context: LoaderTransferAdminContext_V21_V22;
-  event: Event<EventTransferAdminArgs_V21_V22>;
-};
-
-export type TransferAdminHandler = {
-  context: HandlerTransferAdminContext_V21_V22;
-  event: Event<EventTransferAdminArgs_V21_V22>;
-};
+import type { Loader, Handler, Register } from "./general";
 
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
@@ -114,12 +33,64 @@ export type TransferAdminArgs = EventTransferAdminArgs_V21_V22;
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 
+export type CreateLinearLoader_V21 = Loader<CreateLinearArgs_V21>;
+export type CreateLinearHandler_V21<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateLinearArgs_V21,
+> = Handler<E, Awaited<ReturnType<L>>>;
+export type CreateLinearRegister_V21<E = CreateLinearArgs_V21> = Register<E>;
+
+export type CreateLinearLoader_V22 = Loader<CreateLinearArgs_V22>;
+export type CreateLinearHandler_V22<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateLinearArgs_V22,
+> = Handler<E, Awaited<ReturnType<L>>>;
+export type CreateLinearRegister_V22<E = CreateLinearArgs_V22> = Register<E>;
+
+/** ------------------------------------------------------------- */
+
+export type CreateTranchedLoader_V22 = Loader<CreateTranchedArgs_V22>;
+export type CreateTranchedHandler_V22<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateTranchedArgs_V22,
+> = Handler<E, Awaited<ReturnType<L>>>;
+export type CreateTranchedRegister_V22<E = CreateTranchedArgs_V22> =
+  Register<E>;
+
+/** ------------------------------------------------------------- */
+
+export type ClaimLoader = Loader<ClaimArgs>;
+export type ClaimHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = ClaimArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type ClawbackLoader = Loader<ClawbackArgs>;
+export type ClawbackHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = ClawbackArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type TransferAdminLoader = Loader<TransferAdminArgs>;
+export type TransferAdminHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = TransferAdminArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
 export type {
-  ActionEntity as Action,
-  ActivityEntity as Activity,
-  AssetEntity as Asset,
-  CampaignEntity as Campaign,
-  FactoryEntity as Factory,
-  TrancheEntity as Tranche,
-  WatcherEntity as Watcher,
+  Action,
+  Activity,
+  Asset,
+  Campaign,
+  Factory,
+  Tranche,
+  Watcher,
 } from "../../generated/src/Types.gen";

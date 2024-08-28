@@ -37,7 +37,7 @@ async function loader(
   const contractId = generateContractIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
-  const [Asset, Batch, Batcher, Contract, Watcher] = await Promise.all([
+  const [asset, batch, batcher, contract, watcher] = await Promise.all([
     context.Asset.get(assetId),
     context.Batch.get(batchId),
     context.Batcher.get(batcherId),
@@ -46,16 +46,16 @@ async function loader(
   ]);
 
   return {
-    Asset,
-    Batch,
-    Batcher,
-    Contract,
-    Watcher,
+    asset,
+    batch,
+    batcher,
+    contract,
+    watcher,
   };
 }
 
 async function handlerDynamic(input: CreateDynamicHandler<typeof loader>) {
-  const { context, event } = input;
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Initialize -------- */
 
@@ -63,21 +63,19 @@ async function handlerDynamic(input: CreateDynamicHandler<typeof loader>) {
     event,
     context.Watcher.get,
     context.Contract.get,
+    loaded,
   );
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset(
-    event,
-    event.params.asset,
-    context.Asset.get,
-  );
-  let batcher = await getOrCreateBatcher(
-    event,
-    event.params.sender,
-    context.Batcher.get,
-  );
-  let batch = await getOrCreateBatch(event, batcher, context.Batch.get);
+  let asset =
+    loaded.asset ??
+    (await getOrCreateAsset(event, event.params.asset, context.Asset.get));
+  let batcher =
+    loaded.batcher ??
+    (await getOrCreateBatcher(event, event.params.sender, context.Batcher.get));
+  let batch =
+    loaded.batch ?? (await getOrCreateBatch(event, batcher, context.Batch.get));
 
   /** ------- Process -------- */
 
@@ -143,7 +141,7 @@ async function handlerDynamic(input: CreateDynamicHandler<typeof loader>) {
 }
 
 async function handlerLinear(input: CreateLinearHandler<typeof loader>) {
-  const { context, event } = input;
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Initialize -------- */
 
@@ -151,21 +149,19 @@ async function handlerLinear(input: CreateLinearHandler<typeof loader>) {
     event,
     context.Watcher.get,
     context.Contract.get,
+    loaded,
   );
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset(
-    event,
-    event.params.asset,
-    context.Asset.get,
-  );
-  let batcher = await getOrCreateBatcher(
-    event,
-    event.params.sender,
-    context.Batcher.get,
-  );
-  let batch = await getOrCreateBatch(event, batcher, context.Batch.get);
+  let asset =
+    loaded.asset ??
+    (await getOrCreateAsset(event, event.params.asset, context.Asset.get));
+  let batcher =
+    loaded.batcher ??
+    (await getOrCreateBatcher(event, event.params.sender, context.Batcher.get));
+  let batch =
+    loaded.batch ?? (await getOrCreateBatch(event, batcher, context.Batch.get));
 
   /** ------- Process -------- */
 
@@ -225,28 +221,26 @@ async function handlerLinear(input: CreateLinearHandler<typeof loader>) {
 }
 
 async function handlerTranched(input: CreateTranchedHandler<typeof loader>) {
-  const { context, event } = input;
+  const { context, event, loaderReturn: loaded } = input;
   /** ------- Initialize -------- */
 
   let { watcher, contract, contracts } = await initialize(
     event,
     context.Watcher.get,
     context.Contract.get,
+    loaded,
   );
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset(
-    event,
-    event.params.asset,
-    context.Asset.get,
-  );
-  let batcher = await getOrCreateBatcher(
-    event,
-    event.params.sender,
-    context.Batcher.get,
-  );
-  let batch = await getOrCreateBatch(event, batcher, context.Batch.get);
+  let asset =
+    loaded.asset ??
+    (await getOrCreateAsset(event, event.params.asset, context.Asset.get));
+  let batcher =
+    loaded.batcher ??
+    (await getOrCreateBatcher(event, event.params.sender, context.Batcher.get));
+  let batch =
+    loaded.batch ?? (await getOrCreateBatch(event, batcher, context.Batch.get));
 
   /** ------- Process -------- */
 

@@ -9,19 +9,19 @@ async function loader(input: TransferAdminLoader) {
   const contractId = generateContractIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
-  const [Contract, Watcher] = await Promise.all([
+  const [contract, watcher] = await Promise.all([
     context.Contract.get(contractId),
     context.Watcher.get(watcherId),
   ]);
 
   return {
-    Contract,
-    Watcher,
+    contract,
+    watcher,
   };
 }
 
 async function handler(input: TransferAdminHandler<typeof loader>) {
-  const { context, event } = input;
+  const { context, event, loaderReturn: loaded } = input;
 
   /**
    * As described in issue #18, we will first filter out
@@ -38,6 +38,7 @@ async function handler(input: TransferAdminHandler<typeof loader>) {
     event,
     context.Watcher.get,
     context.Contract.get,
+    loaded,
   );
 
   /** ------- Process -------- */

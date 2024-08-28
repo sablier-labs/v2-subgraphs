@@ -1,10 +1,4 @@
-import {
-  MerkleLockupV21Contract_TransferAdmin_handler as Handler_V21,
-  MerkleLockupV21Contract_TransferAdmin_loader as Loader_V21,
-  MerkleLockupV22Contract_TransferAdmin_handler as Handler_V22,
-  MerkleLockupV22Contract_TransferAdmin_loader as Loader_V22,
-} from "../../generated/src/Handlers.gen";
-
+import { MerkleLockupV21, MerkleLockupV22 } from "../../generated";
 import type {
   Action,
   TransferAdminHandler,
@@ -20,20 +14,30 @@ import {
 } from "../helpers";
 import { ADDRESS_ZERO, ActionCategory } from "../constants";
 
-function loader(input: TransferAdminLoader) {
+async function loader(input: TransferAdminLoader) {
   const { context, event } = input;
 
   const campaignId = generateCampaignId(event, event.srcAddress);
   const watcherId = event.chainId.toString();
 
-  context.Campaign.load(campaignId, {
-    loadAsset: true,
-  });
-  context.Watcher.load(watcherId);
+  const [campaign, watcher] = await Promise.all([
+    context.Campaign.get(campaignId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  const asset = campaign?.asset_id
+    ? await context.Asset.get(campaign?.asset_id)
+    : undefined;
+
+  return {
+    asset,
+    campaign,
+    watcher,
+  };
 }
 
-function handler(input: TransferAdminHandler) {
-  const { context, event } = input;
+async function handler(input: TransferAdminHandler<typeof loader>) {
+  const { context, event, loaderReturn: loaded } = input;
 
   /**
    * As described in issue #18, we will first filter out
@@ -46,9 +50,15 @@ function handler(input: TransferAdminHandler) {
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
-  let campaign = getCampaign(event, context.Campaign.get);
-  let asset = context.Campaign.getAsset(campaign);
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
+  let campaign =
+    loaded.campaign ?? (await getCampaign(event, context.Campaign.get));
+  let asset = loaded.asset;
+
+  if (!asset) {
+    return;
+  }
 
   /** ------- Process -------- */
 
@@ -77,8 +87,12 @@ function handler(input: TransferAdminHandler) {
   context.Watcher.set(watcher);
 }
 
-Loader_V21(loader);
-Handler_V21(handler);
+MerkleLockupV21.TransferAdmin.handlerWithLoader({
+  loader,
+  handler,
+});
 
-Loader_V22(loader);
-Handler_V22(handler);
+MerkleLockupV22.TransferAdmin.handlerWithLoader({
+  loader,
+  handler,
+});

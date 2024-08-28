@@ -6,8 +6,6 @@ import type {
   Campaign,
 } from "../types";
 
-type Entity = Partial<Mutable<Tranche>>;
-
 class TrancheInput {
   percentage: bigint;
   duration: bigint;

@@ -1,5 +1,12 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: sablier-v2-merkle
 unordered_multichain_mode: true
+field_selection:
+  transaction_fields:
+    - "from"
+    - "to"
+    - "hash"
+    - "transactionIndex"
 contracts:
   - name: MerkleLockupFactoryV21
     handler: src/mappings/index.ts
@@ -8,61 +15,23 @@ contracts:
           CreateMerkleStreamerLL(address merkleStreamer, address indexed admin, address indexed lockupLinear, address
           indexed asset, bytes32 merkleRoot, uint40 expiration, (uint40, uint40) streamDurations, bool cancelable, bool
           transferable, string ipfsCID, uint256 aggregateAmount, uint256 recipientsCount)
-        isAsync: true
-        requiredEntities:
-          - name: Asset
-          - name: Factory
-          - name: Watcher
   - name: MerkleLockupFactoryV22
     handler: src/mappings/index.ts
     events:
       - event: CreateMerkleLL(address indexed merkleLL, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256 recipientCount)
-        isAsync: true
-        requiredEntities:
-          - name: Asset
-          - name: Factory
-          - name: Watcher
       - event: CreateMerkleLT(address indexed merkleLT, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientCount)
-        isAsync: true
-        requiredEntities:
-          - name: Asset
-          - name: Factory
-          - name: Watcher
-          - name: Tranche
   - name: MerkleLockupV21
     handler: src/mappings/index.ts
     events:
       - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
-        requiredEntities:
-          - name: Activity
-          - name: Campaign
-          - name: Watcher
       - event: Clawback(address indexed admin, address indexed to, uint128 amount)
-        requiredEntities:
-          - name: Campaign
-          - name: Watcher
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
-        requiredEntities:
-          - name: Asset
-          - name: Campaign
-          - name: Watcher
   - name: MerkleLockupV22
     handler: src/mappings/index.ts
     events:
       - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
-        requiredEntities:
-          - name: Activity
-          - name: Campaign
-          - name: Watcher
       - event: Clawback(address indexed admin, address indexed to, uint128 amount)
-        requiredEntities:
-          - name: Campaign
-          - name: Watcher
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
-        requiredEntities:
-          - name: Asset
-          - name: Campaign
-          - name: Watcher
 networks:
   {{#chains}}
   - id: {{id}}

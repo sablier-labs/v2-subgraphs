@@ -5,16 +5,16 @@ export async function initialize(
   event: Event,
   loaderWatcher: (id: string) => Promise<Watcher | undefined>,
   loaderContract: (id: string) => Promise<Contract | undefined>,
+  loaded?: { contract?: Contract; watcher?: Watcher },
 ) {
-  const watcher = await getOrCreateWatcher(event, loaderWatcher);
+  const watcher =
+    loaded?.watcher ?? (await getOrCreateWatcher(event, loaderWatcher));
 
   if (watcher.initialized) {
     try {
-      const contract = await getContract(
-        event,
-        event.srcAddress,
-        loaderContract,
-      );
+      const contract =
+        loaded?.contract ??
+        (await getContract(event, event.srcAddress, loaderContract));
 
       return {
         contract,

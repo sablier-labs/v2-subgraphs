@@ -19,28 +19,29 @@ async function loader(input: RenounceLoader) {
   );
   const watcherId = event.chainId.toString();
 
-  const [Stream, Watcher] = await Promise.all([
+  const [stream, watcher] = await Promise.all([
     context.Stream.get(streamId),
     context.Watcher.get(watcherId),
   ]);
 
   return {
-    Stream,
-    Watcher,
+    stream,
+    watcher,
   };
 }
 
 async function handler(input: RenounceHandler<typeof loader>) {
-  const { context, event } = input;
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Fetch -------- */
 
-  let watcher = await getOrCreateWatcher(event, context.Watcher.get);
-  let stream = await getStream(
-    event,
-    event.params.streamId,
-    context.Stream.get,
-  );
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
+  let stream =
+    loaded.stream ??
+    (await getStream(event, event.params.streamId, context.Stream.get));
+
+  /** ------- Process -------- */
 
   const post_action = createAction(event, watcher);
 

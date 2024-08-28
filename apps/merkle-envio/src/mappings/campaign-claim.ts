@@ -1,10 +1,4 @@
-import {
-  MerkleLockupV21Contract_Claim_handler as HandlerLinear_V21,
-  MerkleLockupV21Contract_Claim_loader as LoaderLinear_V21,
-  MerkleLockupV22Contract_Claim_handler as HandlerLinear_V22,
-  MerkleLockupV22Contract_Claim_loader as LoaderLinear_V22,
-} from "../../generated/src/Handlers.gen";
-
+import { MerkleLockupV21, MerkleLockupV22 } from "../../generated";
 import type { Action, ClaimHandler, ClaimLoader } from "../types";
 
 import {
@@ -18,26 +12,38 @@ import {
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: ClaimLoader) {
+async function loader(input: ClaimLoader) {
   const { context, event } = input;
 
   const campaignId = generateCampaignId(event, event.srcAddress);
   const activityId = generateActivityId(event, campaignId);
   const watcherId = event.chainId.toString();
 
-  context.Activity.load(activityId, {});
-  context.Campaign.load(campaignId, {});
-  context.Watcher.load(watcherId);
+  const [activity, campaign, watcher] = await Promise.all([
+    context.Activity.get(activityId),
+    context.Campaign.get(campaignId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    activity,
+    campaign,
+    watcher,
+  };
 }
 
-function handler(input: ClaimHandler) {
-  const { context, event } = input;
+async function handler(input: ClaimHandler<typeof loader>) {
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
-  let campaign = getCampaign(event, context.Campaign.get);
-  let activity = getOrCreateActivity(event, campaign?.id, context.Activity.get);
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
+  let campaign =
+    loaded.campaign ?? (await getCampaign(event, context.Campaign.get));
+  let activity =
+    loaded.activity ??
+    (await getOrCreateActivity(event, campaign?.id, context.Activity.get));
 
   /** ------- Process -------- */
 
@@ -81,8 +87,12 @@ function handler(input: ClaimHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLinear_V21(loader);
-HandlerLinear_V21(handler);
+MerkleLockupV21.Claim.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLinear_V22(loader);
-HandlerLinear_V22(handler);
+MerkleLockupV22.Claim.handlerWithLoader({
+  loader,
+  handler,
+});
