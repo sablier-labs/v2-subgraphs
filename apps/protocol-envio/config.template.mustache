@@ -1,6 +1,12 @@
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: sablier-v2-protocol
 unordered_multichain_mode: true
+field_selection:
+  transaction_fields:
+    - "from"
+    - "to"
+    - "hash"
+    - "transactionIndex"
 contracts:
   - name: LockupV20
     handler: src/mappings/index.ts

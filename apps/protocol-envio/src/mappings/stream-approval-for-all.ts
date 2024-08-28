@@ -1,33 +1,28 @@
-import {
-  LockupV20Contract_ApprovalForAll_handler as HandlerLockup_V20,
-  LockupV20Contract_ApprovalForAll_loader as LoaderLockup_V20,
-  LockupV21Contract_ApprovalForAll_handler as HandlerLockup_V21,
-  LockupV21Contract_ApprovalForAll_loader as LoaderLockup_V21,
-  LockupV22Contract_ApprovalForAll_handler as HandlerLockup_V22,
-  LockupV22Contract_ApprovalForAll_loader as LoaderLockup_V22,
-} from "../../generated/src/Handlers.gen";
-
 import type {
   Action,
   ApprovalForAllHandler,
   ApprovalForAllLoader,
 } from "../types";
-
+import { LockupV20, LockupV21, LockupV22 } from "../../generated";
 import { createAction, getOrCreateWatcher } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: ApprovalForAllLoader) {
+async function loader(input: ApprovalForAllLoader) {
   const { context, event } = input;
   const watcherId = event.chainId.toString();
-  context.Watcher.load(watcherId);
+  const [Watcher] = await Promise.all([context.Watcher.get(watcherId)]);
+
+  return {
+    Watcher,
+  };
 }
 
-function handler(input: ApprovalForAllHandler) {
+async function handler(input: ApprovalForAllHandler<typeof loader>) {
   const { context, event } = input;
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
+  let watcher = await getOrCreateWatcher(event, context.Watcher.get);
 
   const post_action = createAction(event, watcher);
 
@@ -48,11 +43,17 @@ function handler(input: ApprovalForAllHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLockup_V20(loader);
-HandlerLockup_V20(handler);
+LockupV20.ApprovalForAll.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V21(loader);
-HandlerLockup_V21(handler);
+LockupV21.ApprovalForAll.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V22(loader);
-HandlerLockup_V22(handler);
+LockupV22.ApprovalForAll.handlerWithLoader({
+  loader,
+  handler,
+});

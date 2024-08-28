@@ -34,8 +34,8 @@ async function handler(input: ApprovalHandler<typeof loader>) {
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
-  let stream = getStream(event, event.params.tokenId, context.Stream.get);
+  let watcher = await getOrCreateWatcher(event, context.Watcher.get);
+  let stream = await getStream(event, event.params.tokenId, context.Stream.get);
 
   const post_action = createAction(event, watcher);
 

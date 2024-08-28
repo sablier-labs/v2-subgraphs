@@ -1,12 +1,4 @@
-import {
-  LockupV20Contract_Transfer_handler as HandlerLockup_V20,
-  LockupV20Contract_Transfer_loader as LoaderLockup_V20,
-  LockupV21Contract_Transfer_handler as HandlerLockup_V21,
-  LockupV21Contract_Transfer_loader as LoaderLockup_V21,
-  LockupV22Contract_Transfer_handler as HandlerLockup_V22,
-  LockupV22Contract_Transfer_loader as LoaderLockup_V22,
-} from "../../generated/src/Handlers.gen";
-
+import { LockupV20, LockupV21, LockupV22 } from "../../generated";
 import type { Action, TransferHandler, TransferLoader } from "../types";
 
 import {
@@ -17,7 +9,7 @@ import {
 } from "../helpers";
 import { ADDRESS_ZERO, ActionCategory } from "../constants";
 
-function loader(input: TransferLoader) {
+async function loader(input: TransferLoader) {
   const { context, event } = input;
 
   const streamId = generateStreamId(
@@ -27,11 +19,18 @@ function loader(input: TransferLoader) {
   );
   const watcherId = event.chainId.toString();
 
-  context.Stream.load(streamId, {});
-  context.Watcher.load(watcherId);
+  const [Stream, Watcher] = await Promise.all([
+    context.Stream.get(streamId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    Stream,
+    Watcher,
+  };
 }
 
-function handler(input: TransferHandler) {
+async function handler(input: TransferHandler<typeof loader>) {
   const { context, event } = input;
 
   /**
@@ -45,8 +44,8 @@ function handler(input: TransferHandler) {
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
-  let stream = getStream(event, event.params.tokenId, context.Stream.get);
+  let watcher = await getOrCreateWatcher(event, context.Watcher.get);
+  let stream = await getStream(event, event.params.tokenId, context.Stream.get);
 
   const post_action = createAction(event, watcher);
 
@@ -82,11 +81,17 @@ function handler(input: TransferHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLockup_V20(loader);
-HandlerLockup_V20(handler);
+LockupV20.Transfer.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V21(loader);
-HandlerLockup_V21(handler);
+LockupV21.Transfer.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V22(loader);
-HandlerLockup_V22(handler);
+LockupV22.Transfer.handlerWithLoader({
+  loader,
+  handler,
+});

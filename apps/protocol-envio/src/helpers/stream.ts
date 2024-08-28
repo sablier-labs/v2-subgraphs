@@ -44,8 +44,8 @@ function createStream(
     contract_id: contract.id,
     version: contract.version,
     subgraphId: BigInt(watcher.streamIndex),
-    hash: event.transactionHash.toLowerCase(),
-    timestamp: BigInt(event.blockTimestamp),
+    hash: event.transaction.hash.toLowerCase(),
+    timestamp: BigInt(event.block.timestamp),
     chainId: BigInt(event.chainId),
 
     /** --------------- */
@@ -534,28 +534,13 @@ export async function createTranchedStream(
   };
 }
 
-export async function getStream_async(
+export async function getStream(
   event: Event,
   tokenId: bigint | string,
-  loader: (id: string) => Stream | undefined,
+  loader: (id: string) => Promise<Stream | undefined>,
 ) {
   const id = generateStreamId(event, event.srcAddress, tokenId);
   const stream = await loader(id);
-
-  if (!stream) {
-    throw new Error("Missing stream instance");
-  }
-
-  return stream;
-}
-
-export function getStream(
-  event: Event,
-  tokenId: bigint | string,
-  loader: (id: string) => Stream | undefined,
-) {
-  const id = generateStreamId(event, event.srcAddress, tokenId);
-  const stream = loader(id);
 
   if (!stream) {
     throw new Error("Missing stream instance");

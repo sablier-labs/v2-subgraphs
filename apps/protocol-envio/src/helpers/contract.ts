@@ -1,22 +1,7 @@
 import type { Address, Contract, Event } from "../types";
 import { chains, StreamCategory, StreamVersion } from "../constants";
 
-export function getContract(
-  event: Event,
-  address: Address,
-  loader: (id: string) => Contract | undefined,
-) {
-  const id = generateContractId(event, address);
-  const loaded = loader(id);
-
-  if (!loaded) {
-    throw new Error("Missing contract instance");
-  }
-
-  return loaded;
-}
-
-export async function getContract_async(
+export async function getContract(
   event: Event,
   address: Address,
   loader: (id: string) => Promise<Contract | undefined>,

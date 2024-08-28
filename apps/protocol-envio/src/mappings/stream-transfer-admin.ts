@@ -1,27 +1,26 @@
-import {
-  LockupV20Contract_TransferAdmin_handler as HandlerLockup_V20,
-  LockupV20Contract_TransferAdmin_loader as LoaderLockup_V20,
-  LockupV21Contract_TransferAdmin_handler as HandlerLockup_V21,
-  LockupV21Contract_TransferAdmin_loader as LoaderLockup_V21,
-  LockupV22Contract_TransferAdmin_handler as HandlerLockup_V22,
-  LockupV22Contract_TransferAdmin_loader as LoaderLockup_V22,
-} from "../../generated/src/Handlers.gen";
-
+import { LockupV20, LockupV21, LockupV22 } from "../../generated";
 import type { TransferAdminHandler, TransferAdminLoader } from "../types";
 
 import { generateContractIdFromEvent, initialize } from "../helpers";
 import { ADDRESS_ZERO } from "../constants";
 
-function loader(input: TransferAdminLoader) {
+async function loader(input: TransferAdminLoader) {
   const { context, event } = input;
   const contractId = generateContractIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
-  context.Contract.load(contractId);
-  context.Watcher.load(watcherId);
+  const [Contract, Watcher] = await Promise.all([
+    context.Contract.get(contractId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    Contract,
+    Watcher,
+  };
 }
 
-function handler(input: TransferAdminHandler) {
+async function handler(input: TransferAdminHandler<typeof loader>) {
   const { context, event } = input;
 
   /**
@@ -35,7 +34,7 @@ function handler(input: TransferAdminHandler) {
 
   /** ------- Initialize -------- */
 
-  let { contract, contracts, watcher } = initialize(
+  let { contract, contracts, watcher } = await initialize(
     event,
     context.Watcher.get,
     context.Contract.get,
@@ -61,11 +60,17 @@ function handler(input: TransferAdminHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLockup_V20(loader);
-HandlerLockup_V20(handler);
+LockupV20.TransferAdmin.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V21(loader);
-HandlerLockup_V21(handler);
+LockupV21.TransferAdmin.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V22(loader);
-HandlerLockup_V22(handler);
+LockupV22.TransferAdmin.handlerWithLoader({
+  loader,
+  handler,
+});

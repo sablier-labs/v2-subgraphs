@@ -1,12 +1,4 @@
-import {
-  LockupV20Contract_RenounceLockupStream_handler as HandlerLockup_V20,
-  LockupV20Contract_RenounceLockupStream_loader as LoaderLockup_V20,
-  LockupV21Contract_RenounceLockupStream_handler as HandlerLockup_V21,
-  LockupV21Contract_RenounceLockupStream_loader as LoaderLockup_V21,
-  LockupV22Contract_RenounceLockupStream_handler as HandlerLockup_V22,
-  LockupV22Contract_RenounceLockupStream_loader as LoaderLockup_V22,
-} from "../../generated/src/Handlers.gen";
-
+import { LockupV20, LockupV21, LockupV22 } from "../../generated";
 import type { Action, RenounceHandler, RenounceLoader } from "../types";
 
 import {
@@ -17,7 +9,7 @@ import {
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: RenounceLoader) {
+async function loader(input: RenounceLoader) {
   const { context, event } = input;
 
   const streamId = generateStreamId(
@@ -27,17 +19,28 @@ function loader(input: RenounceLoader) {
   );
   const watcherId = event.chainId.toString();
 
-  context.Stream.load(streamId, {});
-  context.Watcher.load(watcherId);
+  const [Stream, Watcher] = await Promise.all([
+    context.Stream.get(streamId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    Stream,
+    Watcher,
+  };
 }
 
-function handler(input: RenounceHandler) {
+async function handler(input: RenounceHandler<typeof loader>) {
   const { context, event } = input;
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
-  let stream = getStream(event, event.params.streamId, context.Stream.get);
+  let watcher = await getOrCreateWatcher(event, context.Watcher.get);
+  let stream = await getStream(
+    event,
+    event.params.streamId,
+    context.Stream.get,
+  );
 
   const post_action = createAction(event, watcher);
 
@@ -53,7 +56,7 @@ function handler(input: RenounceHandler) {
     ...stream,
     cancelable: false,
     renounceAction_id: action.id,
-    renounceTime: BigInt(event.blockTimestamp),
+    renounceTime: BigInt(event.block.timestamp),
   };
 
   context.Action.set(action);
@@ -61,11 +64,17 @@ function handler(input: RenounceHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLockup_V20(loader);
-HandlerLockup_V20(handler);
+LockupV20.RenounceLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V21(loader);
-HandlerLockup_V21(handler);
+LockupV21.RenounceLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V22(loader);
-HandlerLockup_V22(handler);
+LockupV22.RenounceLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
