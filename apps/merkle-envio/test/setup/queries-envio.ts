@@ -295,6 +295,7 @@ export const getMetadata_ByCampaign = gql/* GraphQL */ `
     Action(
       limit: 10
       order_by: { subgraphId: desc }
+      distinct_on: [subgraphId]
       where: {
         _and: [
           { campaign_id: { _eq: $campaignIdClone } }

@@ -289,46 +289,52 @@ async function handlerTranched_V22(
   await context.Watcher.set(watcher);
 }
 
-function registerLinear_V21(input: CreateLinearRegister_V21) {
-  const { context, event } = input;
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
 
-  if (isWhitelistedShape(event.chainId, event.params.merkleStreamer)) {
-    context.addMerkleLockupV21(event.params.merkleStreamer);
-  }
-}
-
-function registerLinear_V22(input: CreateLinearRegister_V22) {
-  const { context, event } = input;
-
-  if (isWhitelistedShape(event.chainId, event.params.merkleLL)) {
-    context.addMerkleLockupV22(event.params.merkleLL);
-  }
-}
-
-function registerTranched_V22(input: CreateTranchedRegister_V22) {
-  const { context, event } = input;
-
-  if (isWhitelistedShape(event.chainId, event.params.merkleLT)) {
-    context.addMerkleLockupV22(event.params.merkleLT);
-  }
-}
-
-MerkleLockupFactoryV21.CreateMerkleStreamerLL.contractRegister(
-  registerLinear_V21,
-);
 MerkleLockupFactoryV21.CreateMerkleStreamerLL.handlerWithLoader({
   loader: loaderLinear_V21,
   handler: handlerLinear_V21,
 });
-
-MerkleLockupFactoryV22.CreateMerkleLL.contractRegister(registerLinear_V22);
 MerkleLockupFactoryV22.CreateMerkleLL.handlerWithLoader({
   loader: loaderLinear_V22,
   handler: handlerLinear_V22,
 });
-
-MerkleLockupFactoryV22.CreateMerkleLT.contractRegister(registerTranched_V22);
 MerkleLockupFactoryV22.CreateMerkleLT.handlerWithLoader({
   loader: loaderTranched_V22,
   handler: handlerTranched_V22,
 });
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+MerkleLockupFactoryV21.CreateMerkleStreamerLL.contractRegister(
+  (input: CreateLinearRegister_V21) => {
+    const { context, event } = input;
+
+    if (isWhitelistedShape(event.chainId, event.params.lockupLinear)) {
+      context.addMerkleLockupV21(event.params.merkleStreamer);
+    }
+  },
+);
+
+MerkleLockupFactoryV22.CreateMerkleLL.contractRegister(
+  (input: CreateLinearRegister_V22) => {
+    const { context, event } = input;
+
+    if (isWhitelistedShape(event.chainId, event.params.lockupLinear)) {
+      context.addMerkleLockupV22(event.params.merkleLL);
+    }
+  },
+);
+MerkleLockupFactoryV22.CreateMerkleLT.contractRegister(
+  (input: CreateTranchedRegister_V22) => {
+    const { context, event } = input;
+
+    if (isWhitelistedShape(event.chainId, event.params.lockupTranched)) {
+      context.addMerkleLockupV22(event.params.merkleLT);
+    }
+  },
+);
