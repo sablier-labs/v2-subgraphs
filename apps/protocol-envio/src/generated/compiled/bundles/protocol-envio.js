@@ -7,6 +7,7 @@ var base = require("../addresses/base");
 var blast = require("../addresses/blast");
 var bsc = require("../addresses/bsc");
 var gnosis = require("../addresses/gnosis");
+var linea = require("../addresses/linea");
 var mainnet = require("../addresses/mainnet");
 var optimism = require("../addresses/optimism");
 var polygon = require("../addresses/polygon");
@@ -36,6 +37,7 @@ var chains = function () {
         blast,
         bsc,
         gnosis,
+        linea,
         mainnet,
         optimism,
         polygon,

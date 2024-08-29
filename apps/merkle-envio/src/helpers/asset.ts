@@ -2,22 +2,7 @@ import { CacheCategory } from "../constants";
 import type { Address, Event, Asset } from "../types";
 import { Cache, framework, fromHex } from "../utils";
 
-export function getAsset(
-  event: Event,
-  address: Address,
-  loader: (id: string) => Asset | undefined,
-) {
-  const id = generateAssetId(event, address);
-  const loaded = loader(id);
-
-  if (!loaded) {
-    throw new Error("Missing asset instance");
-  }
-
-  return loaded;
-}
-
-export async function getAsset_async(
+export async function getAsset(
   event: Event,
   address: Address,
   loader: (id: string) => Promise<Asset | undefined>,
@@ -32,7 +17,7 @@ export async function getAsset_async(
   return loaded;
 }
 
-export async function getOrCreateAsset_async(
+export async function getOrCreateAsset(
   event: Event,
   address: Address,
   loader: (id: string) => Promise<Asset | undefined>,

@@ -33,8 +33,8 @@ function createCampaign(
     id,
     address: address.toLowerCase(),
     subgraphId: BigInt(watcher.campaignIndex),
-    hash: event.transactionHash.toLowerCase(),
-    timestamp: BigInt(event.blockTimestamp),
+    hash: event.transaction.hash.toLowerCase(),
+    timestamp: BigInt(event.block.timestamp),
     chainId: BigInt(event.chainId),
 
     /** --------------- */
@@ -285,26 +285,12 @@ export async function createTranchedCampaign_V22(
   };
 }
 
-export async function getCampaign_async(
+export async function getCampaign(
   event: Event,
   loader: (id: string) => Promise<Campaign | undefined>,
 ) {
   const id = generateCampaignId(event, event.srcAddress);
   const loaded = await loader(id);
-
-  if (loaded === undefined) {
-    throw new Error("Missing campaign instance");
-  }
-
-  return loaded;
-}
-
-export function getCampaign(
-  event: Event,
-  loader: (id: string) => Campaign | undefined,
-) {
-  const id = generateCampaignId(event, event.srcAddress);
-  const loaded = loader(id);
 
   if (loaded === undefined) {
     throw new Error("Missing campaign instance");

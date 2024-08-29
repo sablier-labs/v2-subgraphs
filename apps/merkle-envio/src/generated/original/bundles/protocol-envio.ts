@@ -4,6 +4,7 @@ import * as base from "../addresses/base";
 import * as blast from "../addresses/blast";
 import * as bsc from "../addresses/bsc";
 import * as gnosis from "../addresses/gnosis";
+import * as linea from "../addresses/linea";
 import * as mainnet from "../addresses/mainnet";
 import * as optimism from "../addresses/optimism";
 import * as polygon from "../addresses/polygon";
@@ -39,6 +40,7 @@ export const chains = () => {
     blast,
     bsc,
     gnosis,
+    linea,
     mainnet,
     optimism,
     polygon,

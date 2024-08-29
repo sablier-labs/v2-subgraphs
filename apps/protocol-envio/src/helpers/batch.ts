@@ -1,21 +1,6 @@
 import type { Address, Batch, Batcher, Event } from "../types";
 
-export function getOrCreateBatch(
-  event: Event,
-  batcher: Batcher,
-  loader: (id: string) => Batch | undefined,
-) {
-  const id = generateBatchId(event);
-  const loaded = loader(id);
-
-  if (!loaded) {
-    return createBatch(event, batcher);
-  }
-
-  return loaded;
-}
-
-export async function getOrCreateBatch_async(
+export async function getOrCreateBatch(
   event: Event,
   batcher: Batcher,
   loader: (id: string) => Promise<Batch | undefined>,
@@ -30,22 +15,7 @@ export async function getOrCreateBatch_async(
   return loaded;
 }
 
-export function getOrCreateBatcher(
-  event: Event,
-  sender: Address,
-  loader: (id: string) => Batcher | undefined,
-) {
-  const id = generateBatcherId(event, sender);
-  const loaded = loader(id);
-
-  if (!loaded) {
-    return createBatcher(event, sender);
-  }
-
-  return loaded;
-}
-
-export async function getOrCreateBatcher_async(
+export async function getOrCreateBatcher(
   event: Event,
   sender: Address,
   loader: (id: string) => Promise<Batcher | undefined>,
@@ -74,8 +44,8 @@ export function createBatch(event: Event, batcher: Batcher) {
   const entity: Batch = {
     id: generateBatchId(event),
     batcher_id: batcher.id,
-    hash: event.transactionHash.toLowerCase(),
-    timestamp: BigInt(event.blockTimestamp),
+    hash: event.transaction.hash.toLowerCase(),
+    timestamp: BigInt(event.block.timestamp),
     label: undefined,
     size: 0n,
   };
@@ -89,7 +59,7 @@ export function createBatch(event: Event, batcher: Batcher) {
 
 export function generateBatchId(event: Event): string {
   return ""
-    .concat(event.transactionHash.toLowerCase())
+    .concat(event.transaction.hash.toLowerCase())
     .concat("-")
     .concat(event.chainId.toString());
 }

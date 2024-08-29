@@ -1,12 +1,4 @@
-import {
-  LockupV20Contract_WithdrawFromLockupStream_handler as HandlerLockup_V20,
-  LockupV20Contract_WithdrawFromLockupStream_loader as LoaderLockup_V20,
-  LockupV21Contract_WithdrawFromLockupStream_handler as HandlerLockup_V21,
-  LockupV21Contract_WithdrawFromLockupStream_loader as LoaderLockup_V21,
-  LockupV22Contract_WithdrawFromLockupStream_handler as HandlerLockup_V22,
-  LockupV22Contract_WithdrawFromLockupStream_loader as LoaderLockup_V22,
-} from "../../generated/src/Handlers.gen";
-
+import { LockupV20, LockupV21, LockupV22 } from "../../generated";
 import type { Action, WithdrawHandler, WithdrawLoader } from "../types";
 
 import {
@@ -17,7 +9,7 @@ import {
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: WithdrawLoader) {
+async function loader(input: WithdrawLoader) {
   const { context, event } = input;
 
   const streamId = generateStreamId(
@@ -27,17 +19,27 @@ function loader(input: WithdrawLoader) {
   );
   const watcherId = event.chainId.toString();
 
-  context.Stream.load(streamId, {});
-  context.Watcher.load(watcherId);
+  const [stream, watcher] = await Promise.all([
+    context.Stream.get(streamId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    stream,
+    watcher,
+  };
 }
 
-function handler(input: WithdrawHandler) {
-  const { context, event } = input;
+async function handler(input: WithdrawHandler<typeof loader>) {
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
-  let stream = getStream(event, event.params.streamId, context.Stream.get);
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
+  let stream =
+    loaded.stream ??
+    (await getStream(event, event.params.streamId, context.Stream.get));
 
   const post_action = createAction(event, watcher);
 
@@ -47,7 +49,7 @@ function handler(input: WithdrawHandler) {
     stream_id: stream.id,
 
     /** --------------- */
-    addressA: event.txOrigin?.toLowerCase() || "",
+    addressA: event.transaction.from?.toLowerCase() || "",
     addressB: event.params.to.toLowerCase(),
     amountB: event.params.amount,
   };
@@ -81,11 +83,17 @@ function handler(input: WithdrawHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLockup_V20(loader);
-HandlerLockup_V20(handler);
+LockupV20.WithdrawFromLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V21(loader);
-HandlerLockup_V21(handler);
+LockupV21.WithdrawFromLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V22(loader);
-HandlerLockup_V22(handler);
+LockupV22.WithdrawFromLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});

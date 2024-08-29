@@ -12,13 +12,18 @@ exports.startBlock_merkle = 244700;
  */
 exports.linear = [
     ["0xcb099efc90e88690e287259410b9ae63e1658cc6", "LL2", "V21"],
+    ["0x9b1468d29b4a5869f00c92517c57f8656e928b93", "LL3", "V22"],
 ];
 exports.dynamic = [
     ["0xdf578c2c70a86945999c65961417057363530a1c", "LD2", "V21"],
+    ["0xa705de617673e2fe63a4ea0e58c26897601d32a5", "LD3", "V22"],
 ];
-exports.tranched = [];
+exports.tranched = [
+    ["0x91fb72e5297e2728c10fde73bde74a4888a68570", "LT3", "V22"],
+];
 exports.factory = [
     ["0x92fc05e49c27884d554d98a5c01ff0894a9dc29a", "MSF2", "V21"],
+    ["0x3abcdda756d069cf3c7a17410602343966eaff27", "MSF3", "V22"],
 ];
 /** PRBProxy registry */
 exports.registry = "";

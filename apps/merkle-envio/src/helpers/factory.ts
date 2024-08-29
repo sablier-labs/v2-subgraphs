@@ -1,22 +1,7 @@
 import type { Address, Factory, Event } from "../types";
 import { chains, StreamVersion } from "../constants";
 
-export function getFactory(
-  event: Event,
-  address: Address,
-  loader: (id: string) => Factory | undefined,
-) {
-  const id = generateFactoryId(event, address);
-  const loaded = loader(id);
-
-  if (!loaded) {
-    throw new Error("Missing factory instance");
-  }
-
-  return loaded;
-}
-
-export async function getFactory_async(
+export async function getFactory(
   event: Event,
   address: Address,
   loader: (id: string) => Promise<Factory | undefined>,

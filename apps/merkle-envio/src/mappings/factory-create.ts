@@ -1,11 +1,7 @@
 import {
-  MerkleLockupFactoryV21Contract_CreateMerkleStreamerLL_handlerAsync as HandlerLinearAsync_V21,
-  MerkleLockupFactoryV21Contract_CreateMerkleStreamerLL_loader as LoaderLinear_V21,
-  MerkleLockupFactoryV22Contract_CreateMerkleLL_handlerAsync as HandlerLinearAsync_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLL_loader as LoaderLinear_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLT_handlerAsync as HandlerTranchedAsync_V22,
-  MerkleLockupFactoryV22Contract_CreateMerkleLT_loader as LoaderTranched_V22,
-} from "../../generated/src/Handlers.gen";
+  MerkleLockupFactoryV21,
+  MerkleLockupFactoryV22,
+} from "../../generated";
 
 import type {
   CreateLinearLoader_V21,
@@ -15,6 +11,9 @@ import type {
   CreateTranchedLoader_V22,
   CreateTranchedHandler_V22,
   Action,
+  CreateLinearRegister_V21,
+  CreateLinearRegister_V22,
+  CreateTranchedRegister_V22,
 } from "../types";
 
 import {
@@ -24,62 +23,74 @@ import {
   createTranchedCampaign_V22,
   generateAssetId,
   generateFactoryIdFromEvent,
-  getOrCreateAsset_async,
-  initialize_async,
+  getOrCreateAsset,
+  initialize,
 } from "../helpers";
 import { ActionCategory, isWhitelistedShape } from "../constants";
 
-function loaderLinear_V21(input: CreateLinearLoader_V21) {
+async function loaderLinear_V21(input: CreateLinearLoader_V21) {
   const { context, event } = input;
 
   const assetId = generateAssetId(event, event.params.asset);
   const factoryId = generateFactoryIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
-  context.Asset.load(assetId);
-  context.Factory.load(factoryId);
-  context.Watcher.load(watcherId);
+  const [asset, factory, watcher] = await Promise.all([
+    context.Asset.get(assetId),
+    context.Factory.get(factoryId),
+    context.Watcher.get(watcherId),
+  ]);
 
-  if (isWhitelistedShape(event.chainId, event.params.merkleStreamer)) {
-    context.contractRegistration.addMerkleLockupV21(
-      event.params.merkleStreamer,
-    );
-  }
+  return {
+    asset,
+    factory,
+    watcher,
+  };
 }
 
-function loaderLinear_V22(input: CreateLinearLoader_V22) {
+async function loaderLinear_V22(input: CreateLinearLoader_V22) {
   const { context, event } = input;
 
   const assetId = generateAssetId(event, event.params.baseParams[0]);
   const factoryId = generateFactoryIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
-  context.Asset.load(assetId);
-  context.Factory.load(factoryId);
-  context.Watcher.load(watcherId);
+  const [asset, factory, watcher] = await Promise.all([
+    context.Asset.get(assetId),
+    context.Factory.get(factoryId),
+    context.Watcher.get(watcherId),
+  ]);
 
-  if (isWhitelistedShape(event.chainId, event.params.merkleLL)) {
-    context.contractRegistration.addMerkleLockupV22(event.params.merkleLL);
-  }
+  return {
+    asset,
+    factory,
+    watcher,
+  };
 }
 
-function loaderTranched_V22(input: CreateTranchedLoader_V22) {
+async function loaderTranched_V22(input: CreateTranchedLoader_V22) {
   const { context, event } = input;
 
   const assetId = generateAssetId(event, event.params.baseParams[0]);
   const factoryId = generateFactoryIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
-  context.Asset.load(assetId);
-  context.Factory.load(factoryId);
-  context.Watcher.load(watcherId);
+  const [asset, factory, watcher] = await Promise.all([
+    context.Asset.get(assetId),
+    context.Factory.get(factoryId),
+    context.Watcher.get(watcherId),
+  ]);
 
-  if (isWhitelistedShape(event.chainId, event.params.lockupTranched)) {
-    context.contractRegistration.addMerkleLockupV22(event.params.merkleLT);
-  }
+  return {
+    asset,
+    factory,
+    watcher,
+  };
 }
 
-async function handlerLinear_V21(input: CreateLinearHandler_V21) {
+async function handlerLinear_V21(
+  input: CreateLinearHandler_V21<typeof loaderLinear_V21>,
+) {
   const { context, event } = input;
 
   /** ------- Authorize -------- */
@@ -90,7 +101,7 @@ async function handlerLinear_V21(input: CreateLinearHandler_V21) {
 
   /** ------- Initialize -------- */
 
-  let { watcher, factory, factories } = await initialize_async(
+  let { watcher, factory, factories } = await initialize(
     event,
     context.Watcher.get,
     context.Factory.get,
@@ -98,7 +109,7 @@ async function handlerLinear_V21(input: CreateLinearHandler_V21) {
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset_async(
+  let asset = await getOrCreateAsset(
     event,
     event.params.asset,
     context.Asset.get,
@@ -141,7 +152,9 @@ async function handlerLinear_V21(input: CreateLinearHandler_V21) {
   await context.Watcher.set(watcher);
 }
 
-async function handlerLinear_V22(input: CreateLinearHandler_V22) {
+async function handlerLinear_V22(
+  input: CreateLinearHandler_V22<typeof loaderLinear_V22>,
+) {
   const { context, event } = input;
 
   /** ------- Authorize -------- */
@@ -152,7 +165,7 @@ async function handlerLinear_V22(input: CreateLinearHandler_V22) {
 
   /** ------- Initialize -------- */
 
-  let { watcher, factory, factories } = await initialize_async(
+  let { watcher, factory, factories } = await initialize(
     event,
     context.Watcher.get,
     context.Factory.get,
@@ -160,7 +173,7 @@ async function handlerLinear_V22(input: CreateLinearHandler_V22) {
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset_async(
+  let asset = await getOrCreateAsset(
     event,
     event.params.baseParams[0],
     context.Asset.get,
@@ -203,7 +216,9 @@ async function handlerLinear_V22(input: CreateLinearHandler_V22) {
   await context.Watcher.set(watcher);
 }
 
-async function handlerTranched_V22(input: CreateTranchedHandler_V22) {
+async function handlerTranched_V22(
+  input: CreateTranchedHandler_V22<typeof loaderTranched_V22>,
+) {
   const { context, event } = input;
 
   /** ------- Authorize -------- */
@@ -214,7 +229,7 @@ async function handlerTranched_V22(input: CreateTranchedHandler_V22) {
 
   /** ------- Initialize -------- */
 
-  let { watcher, factory, factories } = await initialize_async(
+  let { watcher, factory, factories } = await initialize(
     event,
     context.Watcher.get,
     context.Factory.get,
@@ -222,7 +237,7 @@ async function handlerTranched_V22(input: CreateTranchedHandler_V22) {
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset_async(
+  let asset = await getOrCreateAsset(
     event,
     event.params.baseParams[0],
     context.Asset.get,
@@ -274,11 +289,52 @@ async function handlerTranched_V22(input: CreateTranchedHandler_V22) {
   await context.Watcher.set(watcher);
 }
 
-LoaderLinear_V21(loaderLinear_V21);
-HandlerLinearAsync_V21(handlerLinear_V21);
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
 
-LoaderLinear_V22(loaderLinear_V22);
-HandlerLinearAsync_V22(handlerLinear_V22);
+MerkleLockupFactoryV21.CreateMerkleStreamerLL.handlerWithLoader({
+  loader: loaderLinear_V21,
+  handler: handlerLinear_V21,
+});
+MerkleLockupFactoryV22.CreateMerkleLL.handlerWithLoader({
+  loader: loaderLinear_V22,
+  handler: handlerLinear_V22,
+});
+MerkleLockupFactoryV22.CreateMerkleLT.handlerWithLoader({
+  loader: loaderTranched_V22,
+  handler: handlerTranched_V22,
+});
 
-LoaderTranched_V22(loaderTranched_V22);
-HandlerTranchedAsync_V22(handlerTranched_V22);
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
+MerkleLockupFactoryV21.CreateMerkleStreamerLL.contractRegister(
+  (input: CreateLinearRegister_V21) => {
+    const { context, event } = input;
+
+    if (isWhitelistedShape(event.chainId, event.params.lockupLinear)) {
+      context.addMerkleLockupV21(event.params.merkleStreamer);
+    }
+  },
+);
+
+MerkleLockupFactoryV22.CreateMerkleLL.contractRegister(
+  (input: CreateLinearRegister_V22) => {
+    const { context, event } = input;
+
+    if (isWhitelistedShape(event.chainId, event.params.lockupLinear)) {
+      context.addMerkleLockupV22(event.params.merkleLL);
+    }
+  },
+);
+MerkleLockupFactoryV22.CreateMerkleLT.contractRegister(
+  (input: CreateTranchedRegister_V22) => {
+    const { context, event } = input;
+
+    if (isWhitelistedShape(event.chainId, event.params.lockupTranched)) {
+      context.addMerkleLockupV22(event.params.merkleLT);
+    }
+  },
+);

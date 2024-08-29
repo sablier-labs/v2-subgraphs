@@ -1,202 +1,33 @@
 import type {
-  EventLog,
   /** Event: Approval (NFT) */
-  LockupV20Contract_ApprovalEvent_eventArgs as EventApprovalArgs_V20_V21_V22,
-  LockupV20Contract_ApprovalEvent_loaderContext as LoaderApprovalContext_V20_V21_V22,
-  LockupV20Contract_ApprovalEvent_handlerContext as HandlerApprovalContext_V20_V21_V22,
+  LockupV20_Approval_eventArgs as EventApprovalArgs_V20_V21_V22,
   /** Event: ApprovalForAll (NFT) */
-  LockupV20Contract_ApprovalForAllEvent_eventArgs as EventApprovalForAllArgs_V20_V21_V22,
-  LockupV20Contract_ApprovalForAllEvent_loaderContext as LoaderApprovalForAllContext_V20_V21_V22,
-  LockupV20Contract_ApprovalForAllEvent_handlerContext as HandlerApprovalForAllContext_V20_V21_V22,
+  LockupV20_ApprovalForAll_eventArgs as EventApprovalForAllArgs_V20_V21_V22,
   /** Event: Cancel (Lockup) */
-  LockupV20Contract_CancelLockupStreamEvent_eventArgs as EventCancelArgs_V20,
-  LockupV20Contract_CancelLockupStreamEvent_loaderContext as LoaderCancelContext_V20,
-  LockupV20Contract_CancelLockupStreamEvent_handlerContext as HandlerCancelContext_V20,
-  LockupV21Contract_CancelLockupStreamEvent_eventArgs as EventCancelArgs_V21_V22,
-  LockupV21Contract_CancelLockupStreamEvent_loaderContext as LoaderCancelContext_V21_V22,
-  LockupV21Contract_CancelLockupStreamEvent_handlerContext as HandlerCancelContext_V21_V22,
+  LockupV20_CancelLockupStream_eventArgs as EventCancelArgs_V20,
+  LockupV21_CancelLockupStream_eventArgs as EventCancelArgs_V21_V22,
   /** Event: Create Dynamic (Lockup) */
-  LockupV20Contract_CreateLockupDynamicStreamEvent_eventArgs as EventCreateDynamicArgs_V20,
-  LockupV20Contract_CreateLockupDynamicStreamEvent_loaderContext as LoaderCreateDynamicContext_V20,
-  LockupV20Contract_CreateLockupDynamicStreamEvent_handlerContextAsync as HandlerCreateDynamicContext_V20,
-  LockupV21Contract_CreateLockupDynamicStreamEvent_eventArgs as EventCreateDynamicArgs_V21,
-  LockupV21Contract_CreateLockupDynamicStreamEvent_loaderContext as LoaderCreateDynamicContext_V21,
-  LockupV21Contract_CreateLockupDynamicStreamEvent_handlerContextAsync as HandlerCreateDynamicContext_V21,
-  LockupV22Contract_CreateLockupDynamicStreamEvent_eventArgs as EventCreateDynamicArgs_V22,
-  LockupV22Contract_CreateLockupDynamicStreamEvent_loaderContext as LoaderCreateDynamicContext_V22,
-  LockupV22Contract_CreateLockupDynamicStreamEvent_handlerContextAsync as HandlerCreateDynamicContext_V22,
+  LockupV20_CreateLockupDynamicStream_eventArgs as EventCreateDynamicArgs_V20,
+  LockupV21_CreateLockupDynamicStream_eventArgs as EventCreateDynamicArgs_V21,
+  LockupV22_CreateLockupDynamicStream_eventArgs as EventCreateDynamicArgs_V22,
   /** Event: Create Linear (Lockup) */
-  LockupV20Contract_CreateLockupLinearStreamEvent_eventArgs as EventCreateLinearArgs_V20,
-  LockupV20Contract_CreateLockupLinearStreamEvent_loaderContext as LoaderCreateLinearContext_V20,
-  LockupV20Contract_CreateLockupLinearStreamEvent_handlerContextAsync as HandlerCreateLinearContext_V20,
-  LockupV21Contract_CreateLockupLinearStreamEvent_eventArgs as EventCreateLinearArgs_V21,
-  LockupV21Contract_CreateLockupLinearStreamEvent_loaderContext as LoaderCreateLinearContext_V21,
-  LockupV21Contract_CreateLockupLinearStreamEvent_handlerContextAsync as HandlerCreateLinearContext_V21,
-  LockupV22Contract_CreateLockupLinearStreamEvent_eventArgs as EventCreateLinearArgs_V22,
-  LockupV22Contract_CreateLockupLinearStreamEvent_loaderContext as LoaderCreateLinearContext_V22,
-  LockupV22Contract_CreateLockupLinearStreamEvent_handlerContextAsync as HandlerCreateLinearContext_V22,
+  LockupV20_CreateLockupLinearStream_eventArgs as EventCreateLinearArgs_V20,
+  LockupV21_CreateLockupLinearStream_eventArgs as EventCreateLinearArgs_V21,
+  LockupV22_CreateLockupLinearStream_eventArgs as EventCreateLinearArgs_V22,
   /** Event: Create Tranched (Lockup) */
-  LockupV22Contract_CreateLockupTranchedStreamEvent_eventArgs as EventCreateTranchedArgs_V22,
-  LockupV22Contract_CreateLockupTranchedStreamEvent_loaderContext as LoaderCreateTranchedContext_V22,
-  LockupV22Contract_CreateLockupTranchedStreamEvent_handlerContextAsync as HandlerCreateTranchedContext_V22,
+  LockupV22_CreateLockupTranchedStream_eventArgs as EventCreateTranchedArgs_V22,
   /** Event: Renounce (Lockup) */
-  LockupV20Contract_RenounceLockupStreamEvent_eventArgs as EventRenounceArgs_V20_V21_V22,
-  LockupV20Contract_RenounceLockupStreamEvent_loaderContext as LoaderRenounceContext_V20_V21_V22,
-  LockupV20Contract_RenounceLockupStreamEvent_handlerContext as HandlerRenounceContext_V20_V21_V22,
+  LockupV20_RenounceLockupStream_eventArgs as EventRenounceArgs_V20_V21_V22,
   /** Event: Transfer (NFT) */
-  LockupV20Contract_TransferEvent_eventArgs as EventTransferArgs_V20_V21_V22,
-  LockupV20Contract_TransferEvent_loaderContext as LoaderTransferContext_V20_V21_V22,
-  LockupV20Contract_TransferEvent_handlerContext as HandlerTransferContext_V20_V21_V22,
+  LockupV20_Transfer_eventArgs as EventTransferArgs_V20_V21_V22,
   /** Event: TransferAdmin (Lockup) */
-  LockupV20Contract_TransferAdminEvent_eventArgs as EventTransferAdminArgs_V20_V21_V22,
-  LockupV20Contract_TransferAdminEvent_loaderContext as LoaderTransferAdminContext_V20_V21_V22,
-  LockupV20Contract_TransferAdminEvent_handlerContext as HandlerTransferAdminContext_V20_V21_V22,
+  LockupV20_TransferAdmin_eventArgs as EventTransferAdminArgs_V20_V21_V22,
   /** Event: Withdraw (Lockup) */
-  LockupV20Contract_WithdrawFromLockupStreamEvent_eventArgs as EventWithdrawArgs_V20,
-  LockupV20Contract_WithdrawFromLockupStreamEvent_loaderContext as LoaderWithdrawContext_V20,
-  LockupV20Contract_WithdrawFromLockupStreamEvent_handlerContext as HandlerWithdrawContext_V20,
-  LockupV21Contract_WithdrawFromLockupStreamEvent_eventArgs as EventWithdrawArgs_V21_V22,
-  LockupV21Contract_WithdrawFromLockupStreamEvent_loaderContext as LoaderWithdrawContext_V21_V22,
-  LockupV21Contract_WithdrawFromLockupStreamEvent_handlerContext as HandlerWithdrawContext_V21_V22,
+  LockupV20_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V20,
+  LockupV21_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V21_V22,
 } from "../../generated/src/Types.gen";
 
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-
-export type Event<Params extends object = {}> = EventLog<Params>;
-
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-/** --------------------------------------------------------------------------------------------------------- */
-
-export type ApprovalLoader = {
-  context: LoaderApprovalContext_V20_V21_V22;
-  event: Event<EventApprovalArgs_V20_V21_V22>;
-};
-
-export type ApprovalHandler = {
-  context: HandlerApprovalContext_V20_V21_V22;
-  event: Event<EventApprovalArgs_V20_V21_V22>;
-};
-
-export type ApprovalForAllLoader = {
-  context: LoaderApprovalForAllContext_V20_V21_V22;
-  event: Event<EventApprovalForAllArgs_V20_V21_V22>;
-};
-
-export type ApprovalForAllHandler = {
-  context: HandlerApprovalForAllContext_V20_V21_V22;
-  event: Event<EventApprovalForAllArgs_V20_V21_V22>;
-};
-
-export type CancelLoader = {
-  context: LoaderCancelContext_V20 | LoaderCancelContext_V21_V22;
-  event: Event<EventCancelArgs_V20 | EventCancelArgs_V21_V22>;
-};
-
-export type CancelHandler = {
-  context: HandlerCancelContext_V20 | HandlerCancelContext_V21_V22;
-  event: Event<EventCancelArgs_V20 | EventCancelArgs_V21_V22>;
-};
-
-export type CreateLinearLoader = {
-  context:
-    | LoaderCreateLinearContext_V20
-    | LoaderCreateLinearContext_V21
-    | LoaderCreateLinearContext_V22;
-  event: Event<
-    | EventCreateLinearArgs_V20
-    | EventCreateLinearArgs_V21
-    | EventCreateLinearArgs_V22
-  >;
-};
-
-export type CreateLinearHandler = {
-  context:
-    | HandlerCreateLinearContext_V20
-    | HandlerCreateLinearContext_V21
-    | HandlerCreateLinearContext_V22;
-  event: Event<
-    | EventCreateLinearArgs_V20
-    | EventCreateLinearArgs_V21
-    | EventCreateLinearArgs_V22
-  >;
-};
-
-export type CreateDynamicLoader = {
-  context:
-    | LoaderCreateDynamicContext_V20
-    | LoaderCreateDynamicContext_V21
-    | LoaderCreateDynamicContext_V22;
-  event: Event<
-    | EventCreateDynamicArgs_V20
-    | EventCreateDynamicArgs_V21
-    | EventCreateDynamicArgs_V22
-  >;
-};
-
-export type CreateDynamicHandler = {
-  context:
-    | HandlerCreateDynamicContext_V20
-    | HandlerCreateDynamicContext_V21
-    | HandlerCreateDynamicContext_V22;
-  event: Event<
-    | EventCreateDynamicArgs_V20
-    | EventCreateDynamicArgs_V21
-    | EventCreateDynamicArgs_V22
-  >;
-};
-
-export type CreateTranchedLoader = {
-  context: LoaderCreateTranchedContext_V22;
-  event: Event<EventCreateTranchedArgs_V22>;
-};
-
-export type CreateTranchedHandler = {
-  context: HandlerCreateTranchedContext_V22;
-  event: Event<EventCreateTranchedArgs_V22>;
-};
-
-export type RenounceLoader = {
-  context: LoaderRenounceContext_V20_V21_V22;
-  event: Event<EventRenounceArgs_V20_V21_V22>;
-};
-
-export type RenounceHandler = {
-  context: HandlerRenounceContext_V20_V21_V22;
-  event: Event<EventRenounceArgs_V20_V21_V22>;
-};
-
-export type TransferLoader = {
-  context: LoaderTransferContext_V20_V21_V22;
-  event: Event<EventTransferArgs_V20_V21_V22>;
-};
-
-export type TransferHandler = {
-  context: HandlerTransferContext_V20_V21_V22;
-  event: Event<EventTransferArgs_V20_V21_V22>;
-};
-
-export type TransferAdminLoader = {
-  context: LoaderTransferAdminContext_V20_V21_V22;
-  event: Event<EventTransferAdminArgs_V20_V21_V22>;
-};
-
-export type TransferAdminHandler = {
-  context: HandlerTransferAdminContext_V20_V21_V22;
-  event: Event<EventTransferAdminArgs_V20_V21_V22>;
-};
-
-export type WithdrawLoader = {
-  context: LoaderWithdrawContext_V20 | LoaderWithdrawContext_V21_V22;
-  event: Event<EventWithdrawArgs_V20 | EventWithdrawArgs_V21_V22>;
-};
-
-export type WithdrawHandler = {
-  context: HandlerWithdrawContext_V20 | HandlerWithdrawContext_V21_V22;
-  event: Event<EventWithdrawArgs_V20 | EventWithdrawArgs_V21_V22>;
-};
+import type { Loader, Handler } from "./general";
 
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
@@ -223,14 +54,95 @@ export type WithdrawArgs = EventWithdrawArgs_V20 | EventWithdrawArgs_V21_V22;
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
 
+export type ApprovalLoader = Loader<ApprovalArgs>;
+export type ApprovalHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = ApprovalArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type ApprovalForAllLoader = Loader<ApprovalForAllArgs>;
+export type ApprovalForAllHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = ApprovalForAllArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type CancelLoader = Loader<CancelArgs>;
+export type CancelHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CancelArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type CreateLinearLoader = Loader<CreateLinearArgs>;
+export type CreateLinearHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateLinearArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type CreateDynamicLoader = Loader<CreateDynamicArgs>;
+export type CreateDynamicHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateDynamicArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type CreateTranchedLoader = Loader<CreateTranchedArgs>;
+export type CreateTranchedHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateTranchedArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type RenounceLoader = Loader<RenounceArgs>;
+export type RenounceHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = RenounceArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type TransferLoader = Loader<TransferArgs>;
+export type TransferHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = TransferArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+
+export type TransferAdminLoader = Loader<TransferAdminArgs>;
+export type TransferAdminHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = TransferAdminArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** ------------------------------------------------------------- */
+export type WithdrawLoader = Loader<WithdrawArgs>;
+export type WithdrawHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = WithdrawArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+/** --------------------------------------------------------------------------------------------------------- */
+
 export type {
-  ActionEntity as Action,
-  AssetEntity as Asset,
-  BatchEntity as Batch,
-  BatcherEntity as Batcher,
-  ContractEntity as Contract,
-  SegmentEntity as Segment,
-  StreamEntity as Stream,
-  TrancheEntity as Tranche,
-  WatcherEntity as Watcher,
+  Action,
+  Asset,
+  Batch,
+  Batcher,
+  Contract,
+  Segment,
+  Stream,
+  Tranche,
+  Watcher,
 } from "../../generated/src/Types.gen";

@@ -1,19 +1,4 @@
-import {
-  LockupV20Contract_CreateLockupLinearStream_handlerAsync as HandlerLinearAsync_V20,
-  LockupV20Contract_CreateLockupLinearStream_loader as LoaderLinear_V20,
-  LockupV21Contract_CreateLockupLinearStream_handlerAsync as HandlerLinearAsync_V21,
-  LockupV21Contract_CreateLockupLinearStream_loader as LoaderLinear_V21,
-  LockupV22Contract_CreateLockupLinearStream_handlerAsync as HandlerLinearAsync_V22,
-  LockupV22Contract_CreateLockupLinearStream_loader as LoaderLinear_V22,
-  LockupV20Contract_CreateLockupDynamicStream_handlerAsync as HandlerDynamicAsync_V20,
-  LockupV20Contract_CreateLockupDynamicStream_loader as LoaderDynamic_V20,
-  LockupV21Contract_CreateLockupDynamicStream_handlerAsync as HandlerDynamicAsync_V21,
-  LockupV21Contract_CreateLockupDynamicStream_loader as LoaderDynamic_V21,
-  LockupV22Contract_CreateLockupDynamicStream_handlerAsync as HandlerDynamicAsync_V22,
-  LockupV22Contract_CreateLockupDynamicStream_loader as LoaderDynamic_V22,
-  LockupV22Contract_CreateLockupTranchedStream_handlerAsync as HandlerTranchedAsync_V22,
-  LockupV22Contract_CreateLockupTranchedStream_loader as LoaderTranched_V22,
-} from "../../generated/src/Handlers.gen";
+import { LockupV20, LockupV21, LockupV22 } from "../../generated";
 
 import type {
   CreateDynamicLoader,
@@ -34,14 +19,14 @@ import {
   generateBatchId,
   generateBatcherId,
   generateContractIdFromEvent,
-  getOrCreateAsset_async,
-  getOrCreateBatch_async,
-  getOrCreateBatcher_async,
-  initialize_async,
+  getOrCreateAsset,
+  getOrCreateBatch,
+  getOrCreateBatcher,
+  initialize,
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(
+async function loader(
   input: CreateLinearLoader | CreateDynamicLoader | CreateTranchedLoader,
 ) {
   const { context, event } = input;
@@ -52,37 +37,45 @@ function loader(
   const contractId = generateContractIdFromEvent(event);
   const watcherId = event.chainId.toString();
 
-  context.Asset.load(assetId);
-  context.Batch.load(batchId, {});
-  context.Batcher.load(batcherId);
-  context.Contract.load(contractId);
-  context.Watcher.load(watcherId);
+  const [asset, batch, batcher, contract, watcher] = await Promise.all([
+    context.Asset.get(assetId),
+    context.Batch.get(batchId),
+    context.Batcher.get(batcherId),
+    context.Contract.get(contractId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    asset,
+    batch,
+    batcher,
+    contract,
+    watcher,
+  };
 }
 
-async function handlerDynamic(input: CreateDynamicHandler) {
-  const { context, event } = input;
+async function handlerDynamic(input: CreateDynamicHandler<typeof loader>) {
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Initialize -------- */
 
-  let { watcher, contract, contracts } = await initialize_async(
+  let { watcher, contract, contracts } = await initialize(
     event,
     context.Watcher.get,
     context.Contract.get,
+    loaded,
   );
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset_async(
-    event,
-    event.params.asset,
-    context.Asset.get,
-  );
-  let batcher = await getOrCreateBatcher_async(
-    event,
-    event.params.sender,
-    context.Batcher.get,
-  );
-  let batch = await getOrCreateBatch_async(event, batcher, context.Batch.get);
+  let asset =
+    loaded.asset ??
+    (await getOrCreateAsset(event, event.params.asset, context.Asset.get));
+  let batcher =
+    loaded.batcher ??
+    (await getOrCreateBatcher(event, event.params.sender, context.Batcher.get));
+  let batch =
+    loaded.batch ?? (await getOrCreateBatch(event, batcher, context.Batch.get));
 
   /** ------- Process -------- */
 
@@ -118,7 +111,7 @@ async function handlerDynamic(input: CreateDynamicHandler) {
     stream = {
       ...stream,
       renounceAction_id: action.id,
-      renounceTime: BigInt(event.blockTimestamp),
+      renounceTime: BigInt(event.block.timestamp),
     };
   }
 
@@ -147,30 +140,28 @@ async function handlerDynamic(input: CreateDynamicHandler) {
   await context.Watcher.set(watcher);
 }
 
-async function handlerLinear(input: CreateLinearHandler) {
-  const { context, event } = input;
+async function handlerLinear(input: CreateLinearHandler<typeof loader>) {
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Initialize -------- */
 
-  let { watcher, contract, contracts } = await initialize_async(
+  let { watcher, contract, contracts } = await initialize(
     event,
     context.Watcher.get,
     context.Contract.get,
+    loaded,
   );
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset_async(
-    event,
-    event.params.asset,
-    context.Asset.get,
-  );
-  let batcher = await getOrCreateBatcher_async(
-    event,
-    event.params.sender,
-    context.Batcher.get,
-  );
-  let batch = await getOrCreateBatch_async(event, batcher, context.Batch.get);
+  let asset =
+    loaded.asset ??
+    (await getOrCreateAsset(event, event.params.asset, context.Asset.get));
+  let batcher =
+    loaded.batcher ??
+    (await getOrCreateBatcher(event, event.params.sender, context.Batcher.get));
+  let batch =
+    loaded.batch ?? (await getOrCreateBatch(event, batcher, context.Batch.get));
 
   /** ------- Process -------- */
 
@@ -206,7 +197,7 @@ async function handlerLinear(input: CreateLinearHandler) {
     stream = {
       ...stream,
       renounceAction_id: action.id,
-      renounceTime: BigInt(event.blockTimestamp),
+      renounceTime: BigInt(event.block.timestamp),
     };
   }
 
@@ -229,29 +220,27 @@ async function handlerLinear(input: CreateLinearHandler) {
   await context.Watcher.set(watcher);
 }
 
-async function handlerTranched(input: CreateTranchedHandler) {
-  const { context, event } = input;
+async function handlerTranched(input: CreateTranchedHandler<typeof loader>) {
+  const { context, event, loaderReturn: loaded } = input;
   /** ------- Initialize -------- */
 
-  let { watcher, contract, contracts } = await initialize_async(
+  let { watcher, contract, contracts } = await initialize(
     event,
     context.Watcher.get,
     context.Contract.get,
+    loaded,
   );
 
   /** ------- Fetch -------- */
 
-  let asset = await getOrCreateAsset_async(
-    event,
-    event.params.asset,
-    context.Asset.get,
-  );
-  let batcher = await getOrCreateBatcher_async(
-    event,
-    event.params.sender,
-    context.Batcher.get,
-  );
-  let batch = await getOrCreateBatch_async(event, batcher, context.Batch.get);
+  let asset =
+    loaded.asset ??
+    (await getOrCreateAsset(event, event.params.asset, context.Asset.get));
+  let batcher =
+    loaded.batcher ??
+    (await getOrCreateBatcher(event, event.params.sender, context.Batcher.get));
+  let batch =
+    loaded.batch ?? (await getOrCreateBatch(event, batcher, context.Batch.get));
 
   /** ------- Process -------- */
 
@@ -287,7 +276,7 @@ async function handlerTranched(input: CreateTranchedHandler) {
     stream = {
       ...stream,
       renounceAction_id: action.id,
-      renounceTime: BigInt(event.blockTimestamp),
+      renounceTime: BigInt(event.block.timestamp),
     };
   }
 
@@ -316,23 +305,37 @@ async function handlerTranched(input: CreateTranchedHandler) {
   await context.Watcher.set(watcher);
 }
 
-LoaderDynamic_V20(loader);
-HandlerDynamicAsync_V20(handlerDynamic);
+LockupV20.CreateLockupDynamicStream.handlerWithLoader({
+  loader,
+  handler: handlerDynamic,
+});
 
-LoaderLinear_V20(loader);
-HandlerLinearAsync_V20(handlerLinear);
+LockupV20.CreateLockupLinearStream.handlerWithLoader({
+  loader,
+  handler: handlerLinear,
+});
 
-LoaderDynamic_V21(loader);
-HandlerDynamicAsync_V21(handlerDynamic);
+LockupV21.CreateLockupDynamicStream.handlerWithLoader({
+  loader,
+  handler: handlerDynamic,
+});
 
-LoaderLinear_V21(loader);
-HandlerLinearAsync_V21(handlerLinear);
+LockupV21.CreateLockupLinearStream.handlerWithLoader({
+  loader,
+  handler: handlerLinear,
+});
 
-LoaderDynamic_V22(loader);
-HandlerDynamicAsync_V22(handlerDynamic);
+LockupV22.CreateLockupDynamicStream.handlerWithLoader({
+  loader,
+  handler: handlerDynamic,
+});
 
-LoaderLinear_V22(loader);
-HandlerLinearAsync_V22(handlerLinear);
+LockupV22.CreateLockupLinearStream.handlerWithLoader({
+  loader,
+  handler: handlerLinear,
+});
 
-LoaderTranched_V22(loader);
-HandlerTranchedAsync_V22(handlerTranched);
+LockupV22.CreateLockupTranchedStream.handlerWithLoader({
+  loader,
+  handler: handlerTranched,
+});

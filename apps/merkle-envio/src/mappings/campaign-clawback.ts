@@ -1,10 +1,4 @@
-import {
-  MerkleLockupV21Contract_Clawback_handler as Handler_V21,
-  MerkleLockupV21Contract_Clawback_loader as Loader_V21,
-  MerkleLockupV22Contract_Clawback_handler as Handler_V22,
-  MerkleLockupV22Contract_Clawback_loader as Loader_V22,
-} from "../../generated/src/Handlers.gen";
-
+import { MerkleLockupV21, MerkleLockupV22 } from "../../generated";
 import type { Action, ClawbackHandler, ClawbackLoader } from "../types";
 
 import {
@@ -15,23 +9,32 @@ import {
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: ClawbackLoader) {
+async function loader(input: ClawbackLoader) {
   const { context, event } = input;
 
   const campaignId = generateCampaignId(event, event.srcAddress);
   const watcherId = event.chainId.toString();
 
-  context.Campaign.load(campaignId, {});
-  context.Watcher.load(watcherId);
+  const [campaign, watcher] = await Promise.all([
+    context.Campaign.get(campaignId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    campaign,
+    watcher,
+  };
 }
 
-function handler(input: ClawbackHandler) {
-  const { context, event } = input;
+async function handler(input: ClawbackHandler<typeof loader>) {
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
-  let campaign = getCampaign(event, context.Campaign.get);
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
+  let campaign =
+    loaded.campaign ?? (await getCampaign(event, context.Campaign.get));
 
   /** ------- Process -------- */
 
@@ -51,7 +54,7 @@ function handler(input: ClawbackHandler) {
 
   campaign = {
     ...campaign,
-    clawbackTime: BigInt(event.blockTimestamp),
+    clawbackTime: BigInt(event.block.timestamp),
     clawbackAction_id: action.id,
   };
 
@@ -60,8 +63,12 @@ function handler(input: ClawbackHandler) {
   context.Watcher.set(watcher);
 }
 
-Loader_V21(loader);
-Handler_V21(handler);
+MerkleLockupV21.Clawback.handlerWithLoader({
+  loader,
+  handler,
+});
 
-Loader_V22(loader);
-Handler_V22(handler);
+MerkleLockupV22.Clawback.handlerWithLoader({
+  loader,
+  handler,
+});

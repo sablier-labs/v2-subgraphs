@@ -71,6 +71,15 @@ export const fallbacks: { id: number; rpcEndpoints: string[] }[] = [
     ],
   },
   {
+    id: library.linea.id,
+    rpcEndpoints: [
+      ...library.linea.rpcUrls.default.http,
+      "https://linea.blockpi.network/v1/rpc/public",
+      "https://rpc.linea.build",
+      "https://1rpc.io/linea",
+    ],
+  },
+  {
     id: library.mainnet.id,
     rpcEndpoints: [
       ...library.mainnet.rpcUrls.default.http,

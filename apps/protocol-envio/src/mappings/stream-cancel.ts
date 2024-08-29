@@ -1,13 +1,5 @@
-import {
-  LockupV20Contract_CancelLockupStream_handler as HandlerLockup_V20,
-  LockupV20Contract_CancelLockupStream_loader as LoaderLockup_V20,
-  LockupV21Contract_CancelLockupStream_handler as HandlerLockup_V21,
-  LockupV21Contract_CancelLockupStream_loader as LoaderLockup_V21,
-  LockupV22Contract_CancelLockupStream_handler as HandlerLockup_V22,
-  LockupV22Contract_CancelLockupStream_loader as LoaderLockup_V22,
-} from "../../generated/src/Handlers.gen";
-
 import type { Action, CancelHandler, CancelLoader } from "../types";
+import { LockupV20, LockupV21, LockupV22 } from "../../generated";
 
 import {
   createAction,
@@ -17,7 +9,7 @@ import {
 } from "../helpers";
 import { ActionCategory } from "../constants";
 
-function loader(input: CancelLoader) {
+async function loader(input: CancelLoader) {
   const { context, event } = input;
 
   const streamId = generateStreamId(
@@ -27,17 +19,27 @@ function loader(input: CancelLoader) {
   );
   const watcherId = event.chainId.toString();
 
-  context.Stream.load(streamId, {});
-  context.Watcher.load(watcherId);
+  const [stream, watcher] = await Promise.all([
+    context.Stream.get(streamId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    stream,
+    watcher,
+  };
 }
 
-function handler(input: CancelHandler) {
-  const { context, event } = input;
+async function handler(input: CancelHandler<typeof loader>) {
+  const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Fetch -------- */
 
-  let watcher = getOrCreateWatcher(event, context.Watcher.get);
-  let stream = getStream(event, event.params.streamId, context.Stream.get);
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
+  let stream =
+    loaded.stream ??
+    (await getStream(event, event.params.streamId, context.Stream.get));
 
   const post_action = createAction(event, watcher);
 
@@ -59,7 +61,7 @@ function handler(input: CancelHandler) {
     cancelable: false,
     canceled: true,
     canceledAction_id: action.id,
-    canceledTime: BigInt(event.blockTimestamp),
+    canceledTime: BigInt(event.block.timestamp),
     intactAmount: event.params.recipientAmount, // The only amount remaining in the stream is the non-withdrawn recipient amount
   };
 
@@ -68,11 +70,17 @@ function handler(input: CancelHandler) {
   context.Watcher.set(watcher);
 }
 
-LoaderLockup_V20(loader);
-HandlerLockup_V20(handler);
+LockupV20.CancelLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V21(loader);
-HandlerLockup_V21(handler);
+LockupV21.CancelLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
 
-LoaderLockup_V22(loader);
-HandlerLockup_V22(handler);
+LockupV22.CancelLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
