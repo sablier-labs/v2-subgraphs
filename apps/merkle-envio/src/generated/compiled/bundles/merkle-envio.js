@@ -1,7 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.chains = void 0;
+var arbitrum = require("../addresses/arbitrum");
+var avalanche = require("../addresses/avalanche");
+var base = require("../addresses/base");
+var blast = require("../addresses/blast");
+var bsc = require("../addresses/bsc");
+var gnosis = require("../addresses/gnosis");
+var linea = require("../addresses/linea");
+var mainnet = require("../addresses/mainnet");
+var optimism = require("../addresses/optimism");
+var polygon = require("../addresses/polygon");
+var scroll = require("../addresses/scroll");
 var sepolia = require("../addresses/sepolia");
+var zksync = require("../addresses/zksync");
 var available = function (v) {
     return v.factory.length > 0;
 };
@@ -19,19 +31,19 @@ var filter = function (list, version) {
 };
 var chains = function () {
     var list = [
-        // arbitrum,
-        // avalanche,
-        // base,
-        // blast,
-        // bsc,
-        // gnosis,
-        // linea,
-        // mainnet,
-        // optimism,
-        // polygon,
-        // scroll,
+        arbitrum,
+        avalanche,
+        base,
+        blast,
+        bsc,
+        gnosis,
+        linea,
+        mainnet,
+        optimism,
+        polygon,
+        scroll,
         sepolia,
-        // zksync,
+        zksync,
     ];
     /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
     return list.map(function (item) {
