@@ -26,9 +26,9 @@
     "url": "https://github.com/sablier-labs/v2-subgraphs.git"
   },
   "scripts": {
-    "g:auth": "graph auth --product hosted-service",
     "g:all-check": "yarn g:prettier-check && yarn g:lint-check",
     "g:all-fix": "yarn g:prettier-fix && yarn g:lint-fix",
+    "g:auth": "graph auth --product hosted-service",
     "g:clean": "yarn workspaces foreach --parallel --topological --verbose run clean",
     "g:clean-modules": "yarn workspaces foreach --parallel --topological --verbose run clean-modules && rimraf node_modules",
     "g:lint-check": "yarn workspaces foreach --parallel --topological --verbose ${WORKSPACE_FLAGS:-} run lint-check",
