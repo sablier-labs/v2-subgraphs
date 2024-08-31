@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/sablier-labs/v2-subgraphs#readme",
   "license": "LGPL-3.0",
-  "packageManager": "pnpm@9.9.0",
+  "packageManager": "pnpm@9.0.6",
   "private": true,
   "repository": {
     "type": "git",
