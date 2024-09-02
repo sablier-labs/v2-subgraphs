@@ -29,20 +29,37 @@ export async function bindProxy({
       const chain = configuration(chainId);
 
       try {
-        const proxy = framework.getPRBProxyContract(sender, client);
-        const [owner_] = (await Promise.all([proxy.read.owner()])) as string[];
+        const proxy = framework.getPRBProxyContract(sender);
+        const proxy_results = await client.multicall({
+          allowFailure: false,
+          contracts: [
+            {
+              ...proxy,
+              functionName: "owner",
+            },
+          ],
+        });
+        const owner_ = (proxy_results[0] || "") as string;
 
         if (owner_ && owner_.length) {
           const owner = owner_.toLowerCase();
+
           const registry = framework.getPRBProxyRegistryContract(
             chain.registry,
-            client,
           );
 
-          const [reverse_] = (await Promise.all([
-            registry.read.getProxy([owner as `0x${string}`]),
-          ])) as string[];
+          const registry_results = await client.multicall({
+            allowFailure: false,
+            contracts: [
+              {
+                ...proxy,
+                functionName: "getProxy",
+                args: [owner as `0x${string}`],
+              },
+            ],
+          });
 
+          const reverse_ = (registry_results[0] || "") as string;
           const reverse = reverse_?.toLowerCase();
 
           if (reverse === sender.toLowerCase()) {

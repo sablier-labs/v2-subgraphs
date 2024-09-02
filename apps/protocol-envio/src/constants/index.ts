@@ -1,4 +1,4 @@
-import { chains as generator } from "../generated/original/bundles/protocol-envio";
+import { chains as generator } from "../_generated/original/bundles/protocol-envio";
 
 export const ADDRESS_ZERO = String(
   "0x0000000000000000000000000000000000000000",

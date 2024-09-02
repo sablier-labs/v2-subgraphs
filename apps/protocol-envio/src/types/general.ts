@@ -1,18 +1,18 @@
-import type {
-  contractRegisterArgs,
-  loaderArgs,
-  handlerArgs,
-} from "../../generated/src/RegisteredEvents.gen";
-import { EventLog } from "../../generated/src/Types.gen";
+import {
+  EventLog,
+  HandlerTypes_contractRegisterArgs,
+  HandlerTypes_loaderArgs,
+  HandlerTypes_handlerArgs,
+} from "../../generated/src/Types.gen";
 
 export type Event<Params extends object = {}> = EventLog<Params>;
 
-export type Loader<eventArgs> = loaderArgs<eventArgs>;
-export type Handler<eventArgs, loaderReturn> = handlerArgs<
+export type Loader<eventArgs> = HandlerTypes_loaderArgs<eventArgs>;
+export type Handler<eventArgs, loaderReturn> = HandlerTypes_handlerArgs<
   eventArgs,
   loaderReturn
 >;
-export type Register<eventArgs> = contractRegisterArgs<eventArgs>;
+export type Register<eventArgs> = HandlerTypes_contractRegisterArgs<eventArgs>;
 
 export type Mutable<T> = { -readonly [K in keyof T]: T[K] };
 export type Address = string;

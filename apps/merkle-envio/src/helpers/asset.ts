@@ -71,17 +71,29 @@ async function details(address: Address, chainId: number) {
   const client = framework.getClient(chainId);
 
   try {
-    const erc20 = framework.getERC20Contract(address, client);
-    const [decimals, name, symbol] = await Promise.all([
-      erc20.read.decimals(),
-      erc20.read.name(),
-      erc20.read.symbol(),
-    ]);
+    const erc20 = framework.getERC20Contract(address);
+    const results = await client.multicall({
+      allowFailure: false,
+      contracts: [
+        {
+          ...erc20,
+          functionName: "decimals",
+        },
+        {
+          ...erc20,
+          functionName: "name",
+        },
+        {
+          ...erc20,
+          functionName: "symbol",
+        },
+      ],
+    });
 
     const entry = {
-      decimals: decimals?.toString() || "",
-      name: name?.toString() || "",
-      symbol: symbol?.toString() || "",
+      decimals: results[0].toString() || "",
+      name: results[1].toString() || "",
+      symbol: results[2].toString() || "",
     } as const;
 
     cache.add({ [address.toLowerCase()]: entry });
@@ -94,17 +106,29 @@ async function details(address: Address, chainId: number) {
   } catch (_error) {
     /** Some tokens store their parameters as bytes not strings */
     try {
-      const erc20Bytes = framework.getERC20BytesContract(address, client);
-      const [decimals, name, symbol] = await Promise.all([
-        erc20Bytes.read.decimals(),
-        erc20Bytes.read.name(),
-        erc20Bytes.read.symbol(),
-      ]);
+      const erc20Bytes = framework.getERC20BytesContract(address);
+      const results = await client.multicall({
+        allowFailure: false,
+        contracts: [
+          {
+            ...erc20Bytes,
+            functionName: "decimals",
+          },
+          {
+            ...erc20Bytes,
+            functionName: "name",
+          },
+          {
+            ...erc20Bytes,
+            functionName: "symbol",
+          },
+        ],
+      });
 
       const entry = {
-        decimals: decimals?.toString() || "",
-        name: fromHex(name),
-        symbol: fromHex(symbol),
+        decimals: results[0].toString() || "",
+        name: fromHex(results[1].toString() || ""),
+        symbol: fromHex(results[2].toString() || ""),
       } as const;
 
       cache.add({ [address.toLowerCase()]: entry });
