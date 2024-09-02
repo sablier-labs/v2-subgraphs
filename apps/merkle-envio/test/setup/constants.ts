@@ -17,7 +17,8 @@ export const _configurations = (
     endpoint: {
       Envio: REMOTE
         ? "https://indexer.bigdevenergy.link/508d217/v1/graphql"
-        : "http://localhost:8080/v1/graphql",
+        : // ? "https://indexer.bigdevenergy.link/508d217/v1/graphql" ## Production
+          "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.studio.thegraph.com/proxy/57079/sablier-v2-ms-experimental/version/latest",
     },
@@ -35,7 +36,8 @@ export const _configurations = (
     endpoint: {
       Envio: REMOTE
         ? "https://indexer.bigdevenergy.link/508d217/v1/graphql"
-        : "http://localhost:8080/v1/graphql",
+        : // ? "https://indexer.bigdevenergy.link/508d217/v1/graphql" // Production
+          "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.studio.thegraph.com/proxy/57079/sablier-v2-ms/version/latest",
     },
@@ -56,7 +58,7 @@ export const _configurations = (
 /** SPECIALIZED CONFIGURATION */
 
 export const SKIP_CLEANUP = false;
-export const REMOTE = false;
+export const REMOTE = true;
 
 export const chainId = CHAIN_SEPOLIA_ID;
 export const configurations = _configurations(REMOTE);

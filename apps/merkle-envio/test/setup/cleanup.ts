@@ -101,8 +101,7 @@ export function cleanup_action(
     return value;
   }
 
-  /** TO DO: remove once Mainnet is fully indexed */
-  delete value.from;
+  // value.subgraphId = "SKIP";
 
   if (vendor === "Envio") {
     /** Action identifiers in Envio contain a -chainId suffix */
@@ -144,9 +143,6 @@ export function cleanup_campaign(
   if (skip) {
     return value;
   }
-
-  /** TO DO: remove once Mainnet is fully indexed */
-  delete value.from;
 
   if (value.asset) {
     value.asset = cleanup_asset(value.asset, skip, vendor);

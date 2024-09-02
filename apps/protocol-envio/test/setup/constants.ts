@@ -21,8 +21,9 @@ export const _configurations = (
   [CHAIN_SEPOLIA_ID]: {
     endpoint: {
       Envio: REMOTE
-        ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
-        : "http://localhost:8080/v1/graphql",
+        ? "https://indexer.bigdevenergy.link/ed4cb82/v1/graphql"
+        : // ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql" // Production
+          "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.studio.thegraph.com/proxy/57079/sablier-v2-experimental/version/latest",
     },
@@ -61,8 +62,9 @@ export const _configurations = (
   [CHAIN_OPTIMISM_ID]: {
     endpoint: {
       Envio: REMOTE
-        ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql"
-        : "http://localhost:8080/v1/graphql",
+        ? "https://indexer.bigdevenergy.link/ed4cb82/v1/graphql"
+        : // ? "https://indexer.bigdevenergy.link/9e37ca4/v1/graphql" // Production
+          "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.studio.thegraph.com/proxy/57079/sablier-v2-optimism/version/latest",
     },
@@ -83,7 +85,7 @@ export const _configurations = (
 
 /** SPECIALIZED CONFIGURATION */
 
-export const REMOTE = false;
+export const REMOTE = true;
 export const SKIP_CLEANUP = false;
 export const POWER_SKIP_SUBGRAPH_ID_ASC = 0;
 

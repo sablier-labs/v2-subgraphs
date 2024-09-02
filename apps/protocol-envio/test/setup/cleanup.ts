@@ -63,9 +63,6 @@ export function cleanup_action(
     return value;
   }
 
-  delete value.from;
-  delete value.addressA;
-
   if (vendor === "Envio") {
     /** Action identifiers in Envio contain a -chainId suffix */
     value.id = value.id.substring(0, value.id.lastIndexOf("-"));
@@ -164,8 +161,6 @@ export function cleanup_stream(
   if (skip) {
     return value;
   }
-
-  delete value.from;
 
   if (value.asset) {
     value.asset = cleanup_contract(value.asset, skip, vendor);

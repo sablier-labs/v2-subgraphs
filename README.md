@@ -71,4 +71,12 @@ for Airstreams.
 > make sure to (1) add it in the envio [bundles](./packages/constants/src/bundles/) (2) add a deployment script for
 > subgraphs.
 
+> [!IMPORTANT]
+>
+> Some versions of Node may enforce the usage of [corepack](https://nodejs.org/api/corepack.html). Because this
+> repository leverages both `yarn` (root and the-graph) and `pnpm` (envio) it may scream due to a missing
+> `packageManager` **exact** entry for `pnpm`. If added, it will mess with Envio's hosted service. Therefore, we advise
+> [disabling corepack](https://stackoverflow.com/questions/78795659/how-to-disable-auto-setting-of-packagemanager-when-corepack-is-enabled#comment138977943_78822612)
+> to avoid the warning. It looks like it's being [deprecated](https://www.youtube.com/watch?v=I7qMwaxNNOc) anyway.
+
 <sub>Version Trigger: [4]</sub>
