@@ -71,4 +71,4 @@ for Airstreams.
 > make sure to (1) add it in the envio [bundles](./packages/constants/src/bundles/) (2) add a deployment script for
 > subgraphs.
 
-<sub>Version Trigger: [3]</sub>
+<sub>Version Trigger: [4]</sub>
