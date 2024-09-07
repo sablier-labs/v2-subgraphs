@@ -39,6 +39,7 @@
   "workspaces": [
     "apps/protocol",
     "apps/merkle",
+    "apps/flow",
     "packages/*"
   ]
 }
