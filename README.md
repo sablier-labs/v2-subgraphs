@@ -1,6 +1,6 @@
 ![Sablier Branding](/assets/banner-subgraphs.png)
 
-# Sablier V2 Subgraphs and Indexers
+# Sablier Subgraphs and Indexers
 
 Sablier relies on specific dependencies to source data or manage off-chain flows. All of these are either public or
 fully open-source, so feel free to roam around and suggest improvements or optimizations where needed.
@@ -19,22 +19,24 @@ Read more about The Graph [here](https://thegraph.com/docs/en/).
 Sablier supports multiple chains for which we've deployed subgraphs at either the Hosted Network level or within the
 Decentralized Network (see Ethereum, Arbitrum or Polygon's endpoints).
 
-### Subgraph: Protocol
+Subgraphs are configured using `yarn`.
 
-The **Protocol** subgraph watches over the core functionality of Sablier V2. It handles events such as `Create Stream`,
+### Subgraph: Lockup
+
+The **Lockup** subgraph watches over the core functionality of Sablier. It handles events such as `Create Stream`,
 `Withdraw` or `Transfer`.
 
-[Documentation](https://docs.sablier.com/api/subgraphs/protocol/entities) and
-[Endpoints](https://docs.sablier.com/api/subgraphs/endpoints).
+[Documentation](https://docs.sablier.com/api/lockup/overview) and
+[Endpoints](https://docs.sablier.com/api/lockup/endpoints).
 
-### Subgraph: Merkle (Airstreams)
+### Subgraph: Merkle/Drops (Airstreams)
 
-The **Merkle** subgraph watches over the Merkle Lockup functionality from Sablier V2's periphery contracts. It handles
+The **Merkle** subgraph watches over the Merkle Lockup functionality from Sablier's periphery contracts. It handles
 events such as `Create Campaign`, `Claim` or `Clawback`. In the client interfaces it is used to track activity for
 Airstreams.
 
-[Documentation](https://docs.sablier.com/api/subgraphs/merkle/entities) and
-[Endpoints](https://docs.sablier.com/api/subgraphs/endpoints).
+[Documentation](https://docs.sablier.com/api/drops/overview) and
+[Endpoints](https://docs.sablier.com/api/drops/endpoints).
 
 ---
 
@@ -47,22 +49,24 @@ Read more about Envio [here](https://docs.envio.dev).
 > When new addresses are added to an Envio indexer (through the shared package) run `pnpm run setup` or `pnpm run dev`
 > to make sure the necessary files get generated.
 
-### Indexer: Protocol-Envio
+Indexers are configured using `pnpm`.
 
-The **Protocol-Envio** indexer watches over the core functionality of Sablier V2. It handles events such as
-`Create Stream`, `Withdraw` or `Transfer`.
+### Indexer: Lockup-Envio
 
-[Documentation](https://docs.sablier.com/api/indexers/protocol/entities) and
-[Endpoints](https://docs.sablier.com/api/indexers/endpoints).
+The **Lockup-Envio** indexer watches over the core functionality of Sablier. It handles events such as `Create Stream`,
+`Withdraw` or `Transfer`.
+
+[Documentation](https://docs.sablier.com/api/lockup/overview) and
+[Endpoints](https://docs.sablier.com/api/lockup/endpoints).
 
 ### Indexer: Merkle-Envio (Airstreams)
 
-The **Merkle-Envio** subgraph watches over the Merkle Lockup functionality from Sablier V2's periphery contracts. It
+The **Merkle-Envio** subgraph watches over the Merkle Lockup functionality from Sablier's periphery contracts. It
 handles events such as `Create Campaign`, `Claim` or `Clawback`. In the client interfaces it is used to track activity
 for Airstreams.
 
-[Documentation](https://docs.sablier.com/api/indexers/merkle/entities) and
-[Endpoints](https://docs.sablier.com/api/indexers/endpoints).
+[Documentation](https://docs.sablier.com/api/drops/overview) and
+[Endpoints](https://docs.sablier.com/api/drops/endpoints).
 
 > [!TIP]
 >

@@ -33,7 +33,7 @@ type Action @entity {
   "transaction details: timestamp"
   timestamp: BigInt!
 
-  "claim action data: stream identifier as constructed in the protocol subgraph - origin contract address concatenated with the chainId and the tokenId"
+  "claim action data: stream identifier as constructed in the lockup subgraph - origin contract address concatenated with the chainId and the tokenId"
   claimStreamId: String
   "claim action data: native stream id"
   claimTokenId: BigInt
@@ -143,7 +143,7 @@ type Campaign @entity {
   streamCliffDuration: BigInt
   "total duration for produced streams"
   streamTotalDuration: BigInt!
-  "flag showing the *initial* cancelability of the produced streams (making it false is a one-way trip, tracked in the protocol subgraph)"
+  "flag showing the *initial* cancelability of the produced streams (making it false is a one-way trip, tracked in the lockup subgraph)"
   streamCancelable: Boolean!
   "flag showing the transferability of the produced streams"
   streamTransferable: Boolean!
@@ -155,7 +155,7 @@ type Campaign @entity {
 
   "index of the campaign based on the factory's campaignIndex"
   position: BigInt!
-  "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
+  "extended version of the lockup contracts, prefixed with a '2' (e.g. 'V20`, `V21`, `V22`)"
   version: String!
 
   "a set of tranches with unlock percentages instead of concrete amounts, only available on tranched streams"
@@ -177,7 +177,7 @@ type Factory @entity {
   "hardcoded chainId"
   chainId: BigInt!
 
-  "full version based on the v2-core contract versioning system (e.g. '2.0' / '2.1')"
+  "extended version of the lockup contracts, prefixed with a '2' (e.g. 'V20`, `V21`, `V22`)"
   version: String!
 
   "factory index for campaigns"
