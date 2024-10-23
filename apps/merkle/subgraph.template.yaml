@@ -1,6 +1,6 @@
 specVersion: 0.0.5
-description: sablier-v2-merkle
-repository: https://github.com/sablier-labs/v2-subgraphs
+description: sablier-merkle
+repository: https://github.com/sablier-labs/subgraphs
 schema:
   file: ./schema.graphql
 dataSources:
@@ -9,7 +9,7 @@ dataSources:
     network: {{chain}}
     source:
       address: "{{initializer_merkle}}"
-      abi: SablierV2MerkleLockupFactory
+      abi: SablierMerkleLockupFactory
       startBlock: {{startBlock_merkle}}
     mapping:
       kind: ethereum/events
@@ -22,12 +22,12 @@ dataSources:
           file: ./abis/ERC20.json
         - name: ERC20Bytes
           file: ./abis/ERC20Bytes.json
-        - name: SablierV2MerkleLockupFactory
-          file: ./abis/SablierV2MerkleLockupFactory.json
-        - name: SablierV2MerkleLL
-          file: ./abis/SablierV2MerkleLL.json
-        - name: SablierV2MerkleLT
-          file: ./abis/SablierV2MerkleLT.json
+        - name: SablierMerkleLockupFactory
+          file: ./abis/SablierMerkleLockupFactory.json
+        - name: SablierMerkleLL
+          file: ./abis/SablierMerkleLL.json
+        - name: SablierMerkleLT
+          file: ./abis/SablierMerkleLT.json
       eventHandlers:
         - event:
             CreateMerkleStreamerLL(address,indexed address,indexed address,indexed
@@ -47,7 +47,7 @@ templates:
     name: ContractMerkleLockupFactory
     network: {{chain}}
     source:
-      abi: SablierV2MerkleLockupFactory
+      abi: SablierMerkleLockupFactory
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -64,12 +64,12 @@ templates:
           file: ./abis/ERC20.json
         - name: ERC20Bytes
           file: ./abis/ERC20Bytes.json
-        - name: SablierV2MerkleLockupFactory
-          file: ./abis/SablierV2MerkleLockupFactory.json
-        - name: SablierV2MerkleLL
-          file: ./abis/SablierV2MerkleLL.json
-        - name: SablierV2MerkleLT
-          file: ./abis/SablierV2MerkleLT.json
+        - name: SablierMerkleLockupFactory
+          file: ./abis/SablierMerkleLockupFactory.json
+        - name: SablierMerkleLL
+          file: ./abis/SablierMerkleLL.json
+        - name: SablierMerkleLT
+          file: ./abis/SablierMerkleLT.json
       eventHandlers:
         - event:
             CreateMerkleStreamerLL(address,indexed address,indexed address,indexed
@@ -88,7 +88,7 @@ templates:
     name: ContractMerkleLL
     network: {{chain}}
     source:
-      abi: SablierV2MerkleLL
+      abi: SablierMerkleLL
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -105,12 +105,12 @@ templates:
           file: ./abis/ERC20.json
         - name: ERC20Bytes
           file: ./abis/ERC20Bytes.json
-        - name: SablierV2MerkleLockupFactory
-          file: ./abis/SablierV2MerkleLockupFactory.json
-        - name: SablierV2MerkleLL
-          file: ./abis/SablierV2MerkleLL.json
-        - name: SablierV2MerkleLT
-          file: ./abis/SablierV2MerkleLT.json
+        - name: SablierMerkleLockupFactory
+          file: ./abis/SablierMerkleLockupFactory.json
+        - name: SablierMerkleLL
+          file: ./abis/SablierMerkleLL.json
+        - name: SablierMerkleLT
+          file: ./abis/SablierMerkleLT.json
       eventHandlers:
         - event: Claim(uint256,indexed address,uint128,indexed uint256)
           handler: handleClaim
@@ -123,7 +123,7 @@ templates:
     name: ContractMerkleLT
     network: {{chain}}
     source:
-      abi: SablierV2MerkleLT
+      abi: SablierMerkleLT
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -140,12 +140,12 @@ templates:
           file: ./abis/ERC20.json
         - name: ERC20Bytes
           file: ./abis/ERC20Bytes.json
-        - name: SablierV2MerkleLockupFactory
-          file: ./abis/SablierV2MerkleLockupFactory.json
-        - name: SablierV2MerkleLL
-          file: ./abis/SablierV2MerkleLL.json
-        - name: SablierV2MerkleLT
-          file: ./abis/SablierV2MerkleLT.json
+        - name: SablierMerkleLockupFactory
+          file: ./abis/SablierMerkleLockupFactory.json
+        - name: SablierMerkleLL
+          file: ./abis/SablierMerkleLL.json
+        - name: SablierMerkleLT
+          file: ./abis/SablierMerkleLT.json
       eventHandlers:
         - event: Claim(uint256,indexed address,uint128,indexed uint256)
           handler: handleClaim

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
-name: sablier-v2-merkle
+name: sablier-merkle
 unordered_multichain_mode: true
 field_selection:
   transaction_fields:

@@ -4,7 +4,7 @@ import {
   CreateMerkleStreamerLL as EventCreateCampaignLL_V21,
   CreateMerkleLL as EventCreateCampaignLL_V22,
   CreateMerkleLT as EventCreateCampaignLT_V22,
-} from "../generated/types/templates/ContractMerkleLockupFactory/SablierV2MerkleLockupFactory";
+} from "../generated/types/templates/ContractMerkleLockupFactory/SablierMerkleLockupFactory";
 import {
   StreamVersion_V20,
   StreamVersion_V21,

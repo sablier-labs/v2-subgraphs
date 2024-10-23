@@ -1,13 +1,13 @@
 {
-  "name": "@sablier/v2-subgraphs-merkle",
-  "description": "Sablier V2 merkle subgraph (The Graph)",
-  "version": "2.2.0",
+  "name": "@sablier/subgraphs-merkle",
+  "description": "Sablier Merkle Subgraph (The Graph)",
+  "version": "1.0.0",
   "author": {
     "name": "Sablier Labs Ltd",
     "url": "https://sablier.com"
   },
   "bugs": {
-    "url": "https://github.com/sablier-labs/v2-subgraphs/issues"
+    "url": "https://github.com/sablier-labs/subgraphs/issues"
   },
   "config": {
     "dir_chains": "../../packages/constants/src/addresses",
@@ -33,13 +33,13 @@
     "rimraf": "^5.0.7",
     "typescript": "5.2.2"
   },
-  "homepage": "https://github.com/sablier-labs/v2-subgraphs#readme",
+  "homepage": "https://github.com/sablier-labs/subgraphs#readme",
   "license": "LGPL-3.0",
   "packageManager": "yarn@3.3.1",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/sablier-labs/v2-subgraphs.git"
+    "url": "https://github.com/sablier-labs/subgraphs.git"
   },
   "scripts": {
     "build": "graph build",

@@ -5,7 +5,7 @@ import {
   linear,
   dynamic,
   tranched,
-  initializer_protocol as initializer,
+  initializer_lockup as initializer,
 } from "../generated/env";
 
 export let zero = BigInt.fromI32(0);

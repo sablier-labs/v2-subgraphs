@@ -1,5 +1,5 @@
 import { chains as generator_merkle } from "../_generated/original/bundles/merkle-envio";
-import { chains as generator_protocol } from "../_generated/original/bundles/protocol-envio";
+import { chains as generator_lockup } from "../_generated/original/bundles/lockup-envio";
 
 export const ADDRESS_ZERO = String(
   "0x0000000000000000000000000000000000000000",
@@ -47,7 +47,7 @@ export function isWhitelistedShape(
   chainId: number | string | bigint,
   address: string,
 ) {
-  const configuration = generator_protocol().find(
+  const configuration = generator_lockup().find(
     (c) => String(c.id) === chainId.toString(),
   );
   if (!configuration) {
