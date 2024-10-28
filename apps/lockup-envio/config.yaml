@@ -275,6 +275,16 @@ networks:
           - 0x3e435560fd0a03ddf70694b35b673c25c65abb6c
           - 0x73bb6dd3f5828d60f8b3dbc8798eb10fba2c5636
           - 0x3a1bea13a8c24c0ea2b8fae91e4b2762a59d7af5
+  - id: 5845
+    start_block: 2515000
+    rpc_config:
+      url: https://rpc.tangle.tools/
+    contracts:
+      - name: LockupV22
+        address:
+          - 0xac19f4181e58efb7094e0cb4e1bb18c79f6aadf4
+          - 0x946654ab30dd6ed10236c89f2c8b2719df653691
+          - 0x63b92f7e2f69877184c955e63b9d8dff55e52e14
   - id: 324
     start_block: 32472500
     contracts:
