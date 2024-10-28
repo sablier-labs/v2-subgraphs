@@ -78,6 +78,10 @@ networks:
   {{#chains}}
   - id: {{id}}
     start_block: {{start_block}}
+    {{#hypersync}}
+    hypersync_config:
+      url: {{{hypersync}}}
+    {{/hypersync}}
     contracts:
       {{#V20.available}}
       - name: LockupV20

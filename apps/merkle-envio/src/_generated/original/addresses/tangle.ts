@@ -1,9 +1,7 @@
-export let chainId = 2818;
-export let chain = "morph";
-export let startBlock_lockup = 45000;
-export let startBlock_merkle = 45000;
-
-export let hypersync = "https://morph.hypersync.xyz/";
+export let chainId = 5845;
+export let chain = "tangle";
+export let startBlock_lockup = 	2515000;
+export let startBlock_merkle = 2516000;
 
 /** Rule: keep addresses lowercased */
 

@@ -51,7 +51,7 @@ export const chains = () => {
     polygon,
     scroll,
     sepolia,
-    tangle,
+    // tangle,
     zksync,
   ] as const;
 
@@ -89,6 +89,7 @@ export const chains = () => {
       id: item.chainId,
       name: item.chain,
       start_block: item.startBlock_lockup,
+      hypersync: "hypersync" in item ? item.hypersync : undefined,
       registry: item.registry?.toLowerCase() || "",
       V20,
       V21,

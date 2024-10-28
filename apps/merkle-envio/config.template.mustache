@@ -36,6 +36,10 @@ networks:
   {{#chains}}
   - id: {{id}}
     start_block: {{start_block}}
+    {{#hypersync}}
+    hypersync_config:
+      url: {{{hypersync}}}
+    {{/hypersync}}
     contracts:
       {{#V21.available}}
       - name: MerkleLockupFactoryV21

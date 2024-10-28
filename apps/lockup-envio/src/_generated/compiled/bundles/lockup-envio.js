@@ -9,6 +9,8 @@ var bsc = require("../addresses/bsc");
 var gnosis = require("../addresses/gnosis");
 var linea = require("../addresses/linea");
 var mainnet = require("../addresses/mainnet");
+var mode = require("../addresses/mode");
+var morph = require("../addresses/morph");
 var optimism = require("../addresses/optimism");
 var polygon = require("../addresses/polygon");
 var scroll = require("../addresses/scroll");
@@ -39,10 +41,13 @@ var chains = function () {
         gnosis,
         linea,
         mainnet,
+        mode,
+        morph,
         optimism,
         polygon,
         scroll,
         sepolia,
+        // tangle,
         zksync,
     ];
     /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
@@ -73,6 +78,7 @@ var chains = function () {
             id: item.chainId,
             name: item.chain,
             start_block: item.startBlock_lockup,
+            hypersync: "hypersync" in item ? item.hypersync : undefined,
             registry: ((_a = item.registry) === null || _a === void 0 ? void 0 : _a.toLowerCase()) || "",
             V20: V20,
             V21: V21,
