@@ -12,6 +12,7 @@ import * as optimism from "../addresses/optimism";
 import * as polygon from "../addresses/polygon";
 import * as scroll from "../addresses/scroll";
 import * as sepolia from "../addresses/sepolia";
+import * as tangle from "../addresses/tangle";
 import * as zksync from "../addresses/zksync";
 
 const available = (v: {
@@ -50,6 +51,7 @@ export const chains = () => {
     polygon,
     scroll,
     sepolia,
+    tangle,
     zksync,
   ] as const;
 
