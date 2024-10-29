@@ -1,16 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initializer_merkle = exports.initializer_lockup = exports.registry = exports.factory = exports.tranched = exports.dynamic = exports.linear = exports.rpcsync = exports.startBlock_merkle = exports.startBlock_lockup = exports.chain = exports.chainId = void 0;
+exports.initializer_merkle = exports.initializer_lockup = exports.registry = exports.factory = exports.tranched = exports.dynamic = exports.linear = exports.hypersync = exports.startBlock_merkle = exports.startBlock_lockup = exports.chain = exports.chainId = void 0;
 exports.chainId = 5845;
 exports.chain = "tangle";
 exports.startBlock_lockup = 2515000;
 exports.startBlock_merkle = 2516000;
-exports.rpcsync = [
-    {
-        key: "url",
-        value: "https://rpc.tangle.tools/",
-    },
-];
+exports.hypersync = "https://tangle.hypersync.xyz";
 /** Rule: keep addresses lowercased */
 /**
  * Keep aliases unique and always in sync with the frontend

@@ -182,6 +182,16 @@ networks:
           - 0x56e9180a8d2c35c99f2f8a1a5ab8abe79e876e8c
       - name: MerkleLockupV21
       - name: MerkleLockupV22
+  - id: 5845
+    start_block: 2516000
+    hypersync_config:
+      url: https://tangle.hypersync.xyz
+    contracts:
+      - name: MerkleLockupFactoryV22
+        address:
+          - 0x5e73bb96493c10919204045fcdb639d35ad859f8
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 324
     start_block: 33148900
     contracts:

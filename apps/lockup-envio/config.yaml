@@ -277,8 +277,8 @@ networks:
           - 0x3a1bea13a8c24c0ea2b8fae91e4b2762a59d7af5
   - id: 5845
     start_block: 2515000
-    rpc_config:
-      url: https://rpc.tangle.tools/
+    hypersync_config:
+      url: https://tangle.hypersync.xyz
     contracts:
       - name: LockupV22
         address:

@@ -3,12 +3,7 @@ export let chain = "tangle";
 export let startBlock_lockup = 2515000;
 export let startBlock_merkle = 2516000;
 
-export let rpcsync = [
-  {
-    key: "url",
-    value: "https://rpc.tangle.tools/",
-  },
-];
+export let hypersync = "https://tangle.hypersync.xyz";
 
 /** Rule: keep addresses lowercased */
 
