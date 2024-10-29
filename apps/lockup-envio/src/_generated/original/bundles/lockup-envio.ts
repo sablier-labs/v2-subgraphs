@@ -51,7 +51,7 @@ export const chains = () => {
     polygon,
     scroll,
     sepolia,
-    tangle,
+    // tangle,
     zksync,
   ] as const;
 

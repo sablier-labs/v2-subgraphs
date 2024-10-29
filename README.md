@@ -83,4 +83,4 @@ for Airstreams.
 > [disabling corepack](https://stackoverflow.com/questions/78795659/how-to-disable-auto-setting-of-packagemanager-when-corepack-is-enabled#comment138977943_78822612)
 > to avoid the warning. It looks like it's being [deprecated](https://www.youtube.com/watch?v=I7qMwaxNNOc) anyway.
 
-<sub>Version Trigger: [7]</sub>
+<sub>Version Trigger: [8]</sub>

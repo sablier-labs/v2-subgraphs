@@ -15,7 +15,7 @@ var optimism = require("../addresses/optimism");
 var polygon = require("../addresses/polygon");
 var scroll = require("../addresses/scroll");
 var sepolia = require("../addresses/sepolia");
-var tangle = require("../addresses/tangle");
+// import * as tangle from "../addresses/tangle";
 var zksync = require("../addresses/zksync");
 var available = function (v) {
     return v.factory.length > 0;
@@ -48,7 +48,7 @@ var chains = function () {
         polygon,
         scroll,
         sepolia,
-        tangle,
+        // tangle,
         zksync,
     ];
     /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
