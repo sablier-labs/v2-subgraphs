@@ -1,7 +1,9 @@
 export let chainId = 5845;
 export let chain = "tangle";
-export let startBlock_lockup = 	2515000;
+export let startBlock_lockup = 2515000;
 export let startBlock_merkle = 2516000;
+
+export let hypersync = "https://tangle.hypersync.xyz";
 
 /** Rule: keep addresses lowercased */
 

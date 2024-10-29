@@ -82,6 +82,10 @@ networks:
     hypersync_config:
       url: {{{hypersync}}}
     {{/hypersync}}
+    {{#rpcsync}}
+    rpc_config:
+      {{key}}: {{{value}}}
+    {{/rpcsync}}
     contracts:
       {{#V20.available}}
       - name: LockupV20
