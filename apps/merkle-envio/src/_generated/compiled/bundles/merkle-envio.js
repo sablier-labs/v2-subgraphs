@@ -10,7 +10,7 @@ var gnosis = require("../addresses/gnosis");
 var linea = require("../addresses/linea");
 var mainnet = require("../addresses/mainnet");
 var mode = require("../addresses/mode");
-var morph = require("../addresses/morph");
+// import * as morph from "../addresses/morph";
 var optimism = require("../addresses/optimism");
 var polygon = require("../addresses/polygon");
 var scroll = require("../addresses/scroll");
@@ -43,7 +43,7 @@ var chains = function () {
         linea,
         mainnet,
         mode,
-        morph,
+        // morph,
         optimism,
         polygon,
         scroll,

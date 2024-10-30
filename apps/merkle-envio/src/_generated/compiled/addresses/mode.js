@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initializer_merkle = exports.initializer_lockup = exports.registry = exports.factory = exports.tranched = exports.dynamic = exports.linear = exports.hypersync = exports.startBlock_merkle = exports.startBlock_lockup = exports.chain = exports.chainId = void 0;
 exports.chainId = 34443;
-exports.chain = "mode-mainnet";
+exports.chain = "mode";
 exports.startBlock_lockup = 11343000;
 exports.startBlock_merkle = 11343000;
 exports.hypersync = "https://mode.hypersync.xyz";

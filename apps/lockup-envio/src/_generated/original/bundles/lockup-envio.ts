@@ -7,7 +7,7 @@ import * as gnosis from "../addresses/gnosis";
 import * as linea from "../addresses/linea";
 import * as mainnet from "../addresses/mainnet";
 import * as mode from "../addresses/mode";
-import * as morph from "../addresses/morph";
+// import * as morph from "../addresses/morph";
 import * as optimism from "../addresses/optimism";
 import * as polygon from "../addresses/polygon";
 import * as scroll from "../addresses/scroll";
@@ -46,7 +46,7 @@ export const chains = () => {
     linea,
     mainnet,
     mode,
-    morph,
+    // morph,
     optimism,
     polygon,
     scroll,
