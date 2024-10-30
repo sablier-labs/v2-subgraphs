@@ -135,12 +135,21 @@ export const fallbacks: { id: number; rpcEndpoints: string[] }[] = [
     ],
   },
   {
-    id: library.zkSync.id,
+    id: library.zksync.id,
     rpcEndpoints: [
-      ...library.zkSync.rpcUrls.default.http,
+      ...library.zksync.rpcUrls.default.http,
       "https://mainnet.era.zksync.io",
       "https://1rpc.io/zksync2-era",
       "https://endpoints.omniatech.io/v1/zksync-era/mainnet/public",
+    ],
+  },
+  {
+    id: library.mode.id,
+    rpcEndpoints: [
+      ...library.mode.rpcUrls.default.http,
+      "https://mainnet.mode.network",
+      "https://mode.gateway.tenderly.co",
+      "https://1rpc.io/mode",
     ],
   },
 ];

@@ -191,16 +191,6 @@ networks:
           - 0x3962f6585946823440d274ad7c719b02b49de51e
           - 0x9deabf7815b42bf4e9a03eec35a486ff74ee7459
           - 0xf86b359035208e4529686a1825f2d5bee38c28a8
-  - id: 34443
-    start_block: 11343000
-    hypersync_config:
-      url: https://mode.hypersync.xyz
-    contracts:
-      - name: LockupV22
-        address:
-          - 0xd8c65bd7cb6924ef895b2edca03407c652f5a2c5
-          - 0x704552099f5ad679294d337638b9a57fd4726f52
-          - 0xbbfa51a10be68714fa33281646b986dae9f52021
   - id: 10
     start_block: 106405050
     contracts:

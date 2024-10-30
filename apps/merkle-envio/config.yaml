@@ -118,16 +118,6 @@ networks:
           - 0xf35ab407cf28012ba57caf5ee2f6d6e4420253bc
       - name: MerkleLockupV21
       - name: MerkleLockupV22
-  - id: 34443
-    start_block: 11343000
-    hypersync_config:
-      url: https://mode.hypersync.xyz
-    contracts:
-      - name: MerkleLockupFactoryV22
-        address:
-          - 0x0fd01dd30f96a15de6afad5627d45ef94752460a
-      - name: MerkleLockupV21
-      - name: MerkleLockupV22
   - id: 10
     start_block: 113621900
     contracts:

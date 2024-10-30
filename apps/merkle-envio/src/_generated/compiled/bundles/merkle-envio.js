@@ -9,7 +9,7 @@ var bsc = require("../addresses/bsc");
 var gnosis = require("../addresses/gnosis");
 var linea = require("../addresses/linea");
 var mainnet = require("../addresses/mainnet");
-var mode = require("../addresses/mode");
+// import * as mode from "../addresses/mode";
 // import * as morph from "../addresses/morph";
 var optimism = require("../addresses/optimism");
 var polygon = require("../addresses/polygon");
@@ -42,7 +42,7 @@ var chains = function () {
         gnosis,
         linea,
         mainnet,
-        mode,
+        // mode,
         // morph,
         optimism,
         polygon,
