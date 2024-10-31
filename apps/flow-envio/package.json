@@ -18,8 +18,8 @@
     "flags_prettier": "--config ../../.prettierrc.yml --ignore-path ../../.prettierignore"
   },
   "dependencies": {
-    "envio": "2.4.4",
-    "viem": "2.21.0"
+    "envio": "2.6.1",
+    "viem": "2.21.37"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.1.0",
@@ -37,7 +37,7 @@
     "rimraf": "^5.0.7",
     "ts-jest": "^29.1.2",
     "ts-node": "10.9.1",
-    "typescript": "5.2.2"
+    "typescript": "5.5.2"
   },
   "homepage": "https://github.com/sablier-labs/v2-subgraphs#readme",
   "license": "LGPL-3.0",
