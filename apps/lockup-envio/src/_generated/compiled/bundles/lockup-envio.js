@@ -9,14 +9,15 @@ var bsc = require("../addresses/bsc");
 var gnosis = require("../addresses/gnosis");
 var linea = require("../addresses/linea");
 var mainnet = require("../addresses/mainnet");
-// import * as mode from "../addresses/mode";
-// import * as morph from "../addresses/morph";
+var mode = require("../addresses/mode");
+var morph = require("../addresses/morph");
 var optimism = require("../addresses/optimism");
 var polygon = require("../addresses/polygon");
 var scroll = require("../addresses/scroll");
 var sepolia = require("../addresses/sepolia");
-// import * as tangle from "../addresses/tangle";
+var tangle = require("../addresses/tangle");
 var zksync = require("../addresses/zksync");
+var definitions_1 = require("./definitions");
 var available = function (v) {
     return v.linear.length + v.dynamic.length + v.tranched.length > 0;
 };
@@ -32,28 +33,34 @@ var filter = function (list, version) {
         });
     }) || []);
 };
+/**
+ * Bind a viem chain definition to a sablier indexer configuration.
+ * ↪ 🚨 Chains without valid viem definitions will not be taken into account.
+ */
 var chains = function () {
     var list = [
-        arbitrum,
-        avalanche,
-        base,
-        blast,
-        bsc,
-        gnosis,
-        linea,
-        mainnet,
-        // mode,
-        // morph,
-        optimism,
-        polygon,
-        scroll,
-        sepolia,
-        // tangle,
-        zksync,
+        [arbitrum, definitions_1.default.arbitrum],
+        [avalanche, definitions_1.default.avalanche],
+        [base, definitions_1.default.base],
+        [blast, definitions_1.default.blast],
+        [bsc, definitions_1.default.bsc],
+        [gnosis, definitions_1.default.gnosis],
+        [linea, definitions_1.default.linea],
+        [mainnet, definitions_1.default.mainnet],
+        [mode, undefined],
+        [morph, undefined],
+        [optimism, definitions_1.default.optimism],
+        [polygon, definitions_1.default.polygon],
+        [scroll, definitions_1.default.scroll],
+        [sepolia, definitions_1.default.sepolia],
+        [tangle, undefined],
+        [zksync, definitions_1.default.zksync],
     ];
-    /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
-    return list.map(function (item) {
-        var _a;
+    /** Merging the arrays with a spread operator will break mustache's template engine */
+    return list
+        .map(function (_a) {
+        var _b;
+        var item = _a[0], definition = _a[1];
         var V20 = {
             dynamic: filter(item.dynamic, "V20"),
             linear: filter(item.linear, "V20"),
@@ -76,16 +83,18 @@ var chains = function () {
         };
         V22.available = available(V22);
         return {
+            definition: definition,
             id: item.chainId,
             name: item.chain,
             start_block: item.startBlock_lockup,
             hypersync: "hypersync" in item ? item.hypersync : undefined,
             rpcsync: "rpcsync" in item ? item.rpcsync : undefined,
-            registry: ((_a = item.registry) === null || _a === void 0 ? void 0 : _a.toLowerCase()) || "",
+            registry: ((_b = item.registry) === null || _b === void 0 ? void 0 : _b.toLowerCase()) || "",
             V20: V20,
             V21: V21,
             V22: V22,
         };
-    });
+    })
+        .filter(function (item) { return item.definition; });
 };
 exports.chains = chains;

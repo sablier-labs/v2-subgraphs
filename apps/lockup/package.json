@@ -21,7 +21,7 @@
     "babel-register": "^6.26.0"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.80.0",
+    "@graphprotocol/graph-cli": "^0.87.0",
     "@graphprotocol/graph-ts": "^0.35.1",
     "@trivago/prettier-plugin-sort-imports": "4.1.0",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
@@ -31,7 +31,7 @@
     "mustache": "^4.2.0",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.7",
-    "typescript": "5.2.2"
+    "typescript": "5.5.2"
   },
   "homepage": "https://github.com/sablier-labs/subgraphs#readme",
   "license": "LGPL-3.0",

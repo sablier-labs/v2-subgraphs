@@ -442,9 +442,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphprotocol/graph-cli@npm:^0.80.0":
-  version: 0.80.0
-  resolution: "@graphprotocol/graph-cli@npm:0.80.0"
+"@graphprotocol/graph-cli@npm:^0.87.0":
+  version: 0.87.0
+  resolution: "@graphprotocol/graph-cli@npm:0.87.0"
   dependencies:
     "@float-capital/float-subgraph-uncrashable": ^0.0.0-alpha.4
     "@oclif/core": 2.8.6
@@ -476,7 +476,7 @@ __metadata:
     yaml: 1.10.2
   bin:
     graph: bin/run
-  checksum: 072244e374f832fd0cae1dd301c3e64e2cf8a71be585b6a373dc5d207a3cca7cad0d104bacb3a161161490fba4636d47c7e1dd946abfd710d6587513942a2443
+  checksum: 97a6e9fd9bebcf937ca7ec2173ddf1e22287e8089b9b734c273f6cf4c55de18018f69a7b517334e94f1fd72885e741f89b8a91087658f0f924f85899d0917050
   languageName: node
   linkType: hard
 
@@ -875,7 +875,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sablier/subgraphs-lockup@workspace:apps/lockup"
   dependencies:
-    "@graphprotocol/graph-cli": ^0.80.0
+    "@graphprotocol/graph-cli": ^0.87.0
     "@graphprotocol/graph-ts": ^0.35.1
     "@trivago/prettier-plugin-sort-imports": 4.1.0
     "@typescript-eslint/eslint-plugin": ^5.59.11
@@ -887,7 +887,7 @@ __metadata:
     mustache: ^4.2.0
     prettier: ^2.8.8
     rimraf: ^5.0.7
-    typescript: 5.2.2
+    typescript: 5.5.2
   languageName: unknown
   linkType: soft
 
@@ -895,7 +895,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sablier/subgraphs-merkle@workspace:apps/merkle"
   dependencies:
-    "@graphprotocol/graph-cli": ^0.80.0
+    "@graphprotocol/graph-cli": ^0.87.0
     "@graphprotocol/graph-ts": ^0.35.1
     "@trivago/prettier-plugin-sort-imports": 4.1.0
     "@typescript-eslint/eslint-plugin": ^5.59.11
@@ -907,7 +907,7 @@ __metadata:
     mustache: ^4.2.0
     prettier: ^2.8.8
     rimraf: ^5.0.7
-    typescript: 5.2.2
+    typescript: 5.5.2
   languageName: unknown
   linkType: soft
 
@@ -6352,23 +6352,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.2.2":
-  version: 5.2.2
-  resolution: "typescript@npm:5.2.2"
+"typescript@npm:5.5.2":
+  version: 5.5.2
+  resolution: "typescript@npm:5.5.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 7912821dac4d962d315c36800fe387cdc0a6298dba7ec171b350b4a6e988b51d7b8f051317786db1094bd7431d526b648aba7da8236607febb26cf5b871d2d3c
+  checksum: 9c5a7982dadcb2d38d129c575dd38645ae11588ae0d4a12852fb04482bbc5a1660b2371e48fd5b33b6b605cc57cefe777670054546856945a05e77bd22c8c2cd
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.2.2#~builtin<compat/typescript>":
-  version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=ad5954"
+"typescript@patch:typescript@5.5.2#~builtin<compat/typescript>":
+  version: 5.5.2
+  resolution: "typescript@patch:typescript@npm%3A5.5.2#~builtin<compat/typescript>::version=5.5.2&hash=ad5954"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 07106822b4305de3f22835cbba949a2b35451cad50888759b6818421290ff95d522b38ef7919e70fb381c5fe9c1c643d7dea22c8b31652a717ddbd57b7f4d554
+  checksum: 9d89bac0de650e15d6846485f238d1e65f1013f2c260d9e53e86a1da6ecf8109d9fad9402575c5c36a6592dc5d4370db090e12971c8630ae84453654baabb6b4
   languageName: node
   linkType: hard
 
