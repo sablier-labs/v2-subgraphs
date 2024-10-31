@@ -47,7 +47,7 @@ async function handler(input: WithdrawHandler<typeof loader>) {
 
   const action: Action = {
     ...post_action.entity,
-    category: ActionCategory.Restart,
+    category: ActionCategory.Withdraw,
     stream_id: stream.id,
 
     /** --------------- */

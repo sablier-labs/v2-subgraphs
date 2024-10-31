@@ -47,7 +47,7 @@ async function handler(input: VoidHandler<typeof loader>) {
 
   const action: Action = {
     ...post_action.entity,
-    category: ActionCategory.Restart,
+    category: ActionCategory.Void,
     stream_id: stream.id,
 
     /** --------------- */
