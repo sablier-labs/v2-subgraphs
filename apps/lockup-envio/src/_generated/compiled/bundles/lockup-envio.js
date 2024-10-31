@@ -47,13 +47,13 @@ var chains = function () {
         [gnosis, definitions_1.default.gnosis],
         [linea, definitions_1.default.linea],
         [mainnet, definitions_1.default.mainnet],
-        [mode, undefined],
-        [morph, undefined],
+        [mode, definitions_1.default.mode],
+        [morph, definitions_1.default.morph],
         [optimism, definitions_1.default.optimism],
         [polygon, definitions_1.default.polygon],
         [scroll, definitions_1.default.scroll],
         [sepolia, definitions_1.default.sepolia],
-        [tangle, undefined],
+        [tangle, definitions_1.default.tangle],
         [zksync, definitions_1.default.zksync],
     ];
     /** Merging the arrays with a spread operator will break mustache's template engine */

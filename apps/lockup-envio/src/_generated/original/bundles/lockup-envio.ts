@@ -51,13 +51,13 @@ export const chains = () => {
     [gnosis, definitions.gnosis],
     [linea, definitions.linea],
     [mainnet, definitions.mainnet],
-    [mode, undefined],
-    [morph, undefined],
+    [mode, definitions.mode],
+    [morph, definitions.morph],
     [optimism, definitions.optimism],
     [polygon, definitions.polygon],
     [scroll, definitions.scroll],
     [sepolia, definitions.sepolia],
-    [tangle, undefined],
+    [tangle, definitions.tangle],
     [zksync, definitions.zksync],
   ] as const;
 

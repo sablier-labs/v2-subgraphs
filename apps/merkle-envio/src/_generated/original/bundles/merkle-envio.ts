@@ -6,14 +6,15 @@ import * as bsc from "../addresses/bsc";
 import * as gnosis from "../addresses/gnosis";
 import * as linea from "../addresses/linea";
 import * as mainnet from "../addresses/mainnet";
-// import * as mode from "../addresses/mode";
-// import * as morph from "../addresses/morph";
+import * as mode from "../addresses/mode";
+import * as morph from "../addresses/morph";
 import * as optimism from "../addresses/optimism";
 import * as polygon from "../addresses/polygon";
 import * as scroll from "../addresses/scroll";
 import * as sepolia from "../addresses/sepolia";
-// import * as tangle from "../addresses/tangle";
+import * as tangle from "../addresses/tangle";
 import * as zksync from "../addresses/zksync";
+import definitions from "./definitions";
 
 const available = (v: { factory: unknown[] }) => {
   return v.factory.length > 0;
@@ -31,29 +32,34 @@ const filter = (list: string[][], version: string) => {
   );
 };
 
+/**
+ * Bind a viem chain definition to a sablier indexer configuration.
+ * ↪ 🚨 Chains without valid viem definitions will not be taken into account.
+ */
+
 export const chains = () => {
   const list = [
-    arbitrum,
-    avalanche,
-    base,
-    blast,
-    bsc,
-    gnosis,
-    linea,
-    mainnet,
-    // mode,
-    // morph,
-    optimism,
-    polygon,
-    scroll,
-    sepolia,
-    // tangle,
-    zksync,
+    [arbitrum, definitions.arbitrum],
+    [avalanche, definitions.avalanche],
+    [base, definitions.base],
+    [blast, definitions.blast],
+    [bsc, definitions.bsc],
+    [gnosis, definitions.gnosis],
+    [linea, definitions.linea],
+    [mainnet, definitions.mainnet],
+    [mode, definitions.mode],
+    [morph, definitions.morph],
+    [optimism, definitions.optimism],
+    [polygon, definitions.polygon],
+    [scroll, definitions.scroll],
+    [sepolia, definitions.sepolia],
+    [tangle, definitions.tangle],
+    [zksync, definitions.zksync],
   ] as const;
 
-  /** Merging the linear and dynamic arrays with a spread operator will break mustache's template engine */
+  /** Merging the arrays with a spread operator will break mustache's template engine */
 
-  return list.map((item) => {
+  return list.map(([item, definition]) => {
     const V21 = {
       factory: filter(item.factory, "V21"),
       available: false,
@@ -69,6 +75,7 @@ export const chains = () => {
     V22.available = available(V22);
 
     return {
+      definition,
       id: item.chainId,
       name: item.chain,
       start_block: item.startBlock_merkle,

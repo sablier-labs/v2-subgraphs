@@ -318,6 +318,9 @@ MerkleLockupFactoryV21.CreateMerkleStreamerLL.contractRegister(
       context.addMerkleLockupV21(event.params.merkleStreamer);
     }
   },
+  {
+    preRegisterDynamicContracts: true,
+  },
 );
 
 MerkleLockupFactoryV22.CreateMerkleLL.contractRegister(
@@ -328,6 +331,9 @@ MerkleLockupFactoryV22.CreateMerkleLL.contractRegister(
       context.addMerkleLockupV22(event.params.merkleLL);
     }
   },
+  {
+    preRegisterDynamicContracts: true,
+  },
 );
 MerkleLockupFactoryV22.CreateMerkleLT.contractRegister(
   (input: CreateTranchedRegister_V22) => {
@@ -336,5 +342,8 @@ MerkleLockupFactoryV22.CreateMerkleLT.contractRegister(
     if (isWhitelistedShape(event.chainId, event.params.lockupTranched)) {
       context.addMerkleLockupV22(event.params.merkleLT);
     }
+  },
+  {
+    preRegisterDynamicContracts: true,
   },
 );
