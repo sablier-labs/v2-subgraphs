@@ -57,7 +57,7 @@ templates:
         - name: SablierFlow
           file: ./abis/SablierFlow.json
       eventHandlers:
-        - event: AdjustFlowStream(indexed uint256,uint128,uint128,uint128)
+        - event: AdjustFlowStream(indexed uint256,uint256,uint128,uint128)
           handler: handleAdjust
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -67,7 +67,7 @@ templates:
           handler: handleCreate
         - event: DepositFlowStream(indexed uint256,indexed address,uint128)
           handler: handleDeposit
-        - event: PauseFlowStream(indexed uint256,indexed address,indexed address,uint128)
+        - event: PauseFlowStream(indexed uint256,indexed address,indexed address,uint256)
           handler: handlePause
         - event: RefundFromFlowStream(indexed uint256,indexed address,uint128)
           handler: handleRefund
@@ -77,7 +77,7 @@ templates:
           handler: handleTransfer
         - event: TransferAdmin(indexed address,indexed address)
           handler: handleTransferAdmin
-        - event: VoidFlowStream(indexed uint256,indexed address,indexed address,address,uint128,uint128)
+        - event: VoidFlowStream(indexed uint256,indexed address,indexed address,address,uint256,uint256)
           handler: handleVoid
         - event: WithdrawFromFlowStream(indexed uint256,indexed address,indexed address,address,uint128,uint128)
           handler: handleWithdraw

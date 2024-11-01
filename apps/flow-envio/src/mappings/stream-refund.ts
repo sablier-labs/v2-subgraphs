@@ -67,7 +67,7 @@ async function handler(input: RefundHandler<typeof loader>) {
   const extraAmount = availableAmount - notWithdrawn;
   /** If refunded all the available amount the stream start accruing now  */
   let depletionTime = BigInt(event.block.timestamp);
-  if (extraAmount !== 0n) {
+  if (extraAmount !== 0n && stream.ratePerSecond !== 0n) {
     depletionTime =
       BigInt(event.block.timestamp) + extraAmount / stream.ratePerSecond;
   }

@@ -185,7 +185,7 @@ export function handleRefund(event: EventRefund): void {
   const notWithdrawn = streamedAmount.minus(stream.withdrawnAmount);
   /** If refunded all the available amount the stream start accruing now  */
   const extraAmount = stream.availableAmount.minus(notWithdrawn);
-  if (extraAmount.equals(zero)) {
+  if (extraAmount.equals(zero) || stream.ratePerSecond.equals(zero)) {
     stream.depletionTime = event.block.timestamp;
   } else {
     stream.depletionTime = event.block.timestamp.plus(

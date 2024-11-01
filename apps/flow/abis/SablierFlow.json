@@ -11,9 +11,9 @@
       },
       {
         "name": "totalDebt",
-        "type": "uint128",
+        "type": "uint256",
         "indexed": false,
-        "internalType": "uint128"
+        "internalType": "uint256"
       },
       {
         "name": "oldRatePerSecond",
@@ -235,9 +235,40 @@
       },
       {
         "name": "totalDebt",
-        "type": "uint128",
+        "type": "uint256",
         "indexed": false,
-        "internalType": "uint128"
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Recover",
+    "inputs": [
+      {
+        "name": "admin",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "token",
+        "type": "address",
+        "indexed": true,
+        "internalType": "contract IERC20"
+      },
+      {
+        "name": "to",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "name": "surplus",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
       }
     ],
     "anonymous": false
@@ -306,13 +337,13 @@
         "name": "oldNFTDescriptor",
         "type": "address",
         "indexed": false,
-        "internalType": "contract ISablierFlowNFTDescriptor"
+        "internalType": "contract IFlowNFTDescriptor"
       },
       {
         "name": "newNFTDescriptor",
         "type": "address",
         "indexed": false,
-        "internalType": "contract ISablierFlowNFTDescriptor"
+        "internalType": "contract IFlowNFTDescriptor"
       }
     ],
     "anonymous": false
@@ -422,15 +453,15 @@
       },
       {
         "name": "newTotalDebt",
-        "type": "uint128",
+        "type": "uint256",
         "indexed": false,
-        "internalType": "uint128"
+        "internalType": "uint256"
       },
       {
         "name": "writtenOffDebt",
-        "type": "uint128",
+        "type": "uint256",
         "indexed": false,
-        "internalType": "uint128"
+        "internalType": "uint256"
       }
     ],
     "anonymous": false
@@ -464,13 +495,13 @@
         "internalType": "address"
       },
       {
-        "name": "protocolFeeAmount",
+        "name": "withdrawAmount",
         "type": "uint128",
         "indexed": false,
         "internalType": "uint128"
       },
       {
-        "name": "withdrawAmount",
+        "name": "protocolFeeAmount",
         "type": "uint128",
         "indexed": false,
         "internalType": "uint128"
