@@ -442,6 +442,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphprotocol/graph-cli@npm:^0.80.0":
+  version: 0.80.1
+  resolution: "@graphprotocol/graph-cli@npm:0.80.1"
+  dependencies:
+    "@float-capital/float-subgraph-uncrashable": ^0.0.0-alpha.4
+    "@oclif/core": 2.8.6
+    "@oclif/plugin-autocomplete": ^2.3.6
+    "@oclif/plugin-not-found": ^2.4.0
+    "@whatwg-node/fetch": ^0.8.4
+    assemblyscript: 0.19.23
+    binary-install-raw: 0.0.13
+    chalk: 3.0.0
+    chokidar: 3.5.3
+    debug: 4.3.4
+    docker-compose: 0.23.19
+    dockerode: 2.5.8
+    fs-extra: 9.1.0
+    glob: 9.3.5
+    gluegun: 5.1.6
+    graphql: 15.5.0
+    immutable: 4.2.1
+    ipfs-http-client: 55.0.0
+    jayson: 4.0.0
+    js-yaml: 3.14.1
+    open: 8.4.2
+    prettier: 3.0.3
+    semver: 7.4.0
+    sync-request: 6.1.0
+    tmp-promise: 3.0.3
+    web3-eth-abi: 1.7.0
+    which: 2.0.2
+    yaml: 1.10.2
+  bin:
+    graph: bin/run
+  checksum: 2984d504a1bd94767c076455cf2a363b0e7e37bd1ba646ad180f2df51fbb053c3fe39255088145dbbfec78b750fd022090362114d66ab954c620299b8af8c597
+  languageName: node
+  linkType: hard
+
 "@graphprotocol/graph-cli@npm:^0.87.0":
   version: 0.87.0
   resolution: "@graphprotocol/graph-cli@npm:0.87.0"
@@ -921,6 +959,26 @@ __metadata:
     eslint: ^8.25.0
     prettier: ^2.8.8
     rimraf: ^5.0.7
+  languageName: unknown
+  linkType: soft
+
+"@sablier/v2-subgraphs-flow@workspace:apps/flow":
+  version: 0.0.0-use.local
+  resolution: "@sablier/v2-subgraphs-flow@workspace:apps/flow"
+  dependencies:
+    "@graphprotocol/graph-cli": ^0.80.0
+    "@graphprotocol/graph-ts": ^0.35.1
+    "@trivago/prettier-plugin-sort-imports": 4.1.0
+    "@typescript-eslint/eslint-plugin": ^5.59.11
+    "@typescript-eslint/parser": ^5.59.11
+    babel-polyfill: ^6.26.0
+    babel-register: ^6.26.0
+    eslint: ^8.25.0
+    eslint-config-prettier: ^8.5.0
+    mustache: ^4.2.0
+    prettier: ^2.8.8
+    rimraf: ^5.0.7
+    typescript: 5.2.2
   languageName: unknown
   linkType: soft
 
@@ -6352,6 +6410,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:5.2.2":
+  version: 5.2.2
+  resolution: "typescript@npm:5.2.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 7912821dac4d962d315c36800fe387cdc0a6298dba7ec171b350b4a6e988b51d7b8f051317786db1094bd7431d526b648aba7da8236607febb26cf5b871d2d3c
+  languageName: node
+  linkType: hard
+
 "typescript@npm:5.5.2":
   version: 5.5.2
   resolution: "typescript@npm:5.5.2"
@@ -6359,6 +6427,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 9c5a7982dadcb2d38d129c575dd38645ae11588ae0d4a12852fb04482bbc5a1660b2371e48fd5b33b6b605cc57cefe777670054546856945a05e77bd22c8c2cd
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@5.2.2#~builtin<compat/typescript>":
+  version: 5.2.2
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=ad5954"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 07106822b4305de3f22835cbba949a2b35451cad50888759b6818421290ff95d522b38ef7919e70fb381c5fe9c1c643d7dea22c8b31652a717ddbd57b7f4d554
   languageName: node
   linkType: hard
 
