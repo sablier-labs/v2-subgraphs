@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
-name: sablier-v2-flow
+name: sablier-flow
 unordered_multichain_mode: true
 field_selection:
   transaction_fields:
@@ -33,6 +33,10 @@ networks:
   {{#chains}}
   - id: {{id}}
     start_block: {{start_block}}
+    {{#hypersync}}
+    hypersync_config:
+      url: {{{hypersync}}}
+    {{/hypersync}}
     contracts:
       {{#V10.available}}
       - name: FlowV10

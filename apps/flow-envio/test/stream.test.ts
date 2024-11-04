@@ -1,11 +1,6 @@
 import { Envio, TheGraph } from "./setup/networking";
 import { cleanup } from "./setup/cleanup";
-import {
-  chainId,
-  configuration,
-  POWER_SKIP_SUBGRAPH_ID_ASC,
-  SKIP_CLEANUP,
-} from "./setup/constants";
+import { chainId, configuration, SKIP_CLEANUP } from "./setup/constants";
 import * as envioQueries from "./setup/queries-envio";
 import * as theGraphQueries from "./setup/queries-the-graph";
 
@@ -29,7 +24,6 @@ describe(`Streams (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})
       SKIP_CLEANUP,
       "TheGraph",
     );
-
 
     console.info(
       `Comparing ${received.streams.length}, ${expected.streams.length} results.`,

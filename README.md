@@ -23,8 +23,8 @@ Subgraphs are configured using `yarn`.
 
 ### Subgraph: Lockup
 
-The **Lockup** subgraph watches over the core functionality of Sablier. It handles events such as `Create Stream`,
-`Withdraw` or `Transfer`.
+The **Lockup** subgraph watches over the core lockup functionality of Sablier. It handles events such as
+`Create Stream`, `Withdraw` or `Transfer`.
 
 [Documentation](https://docs.sablier.com/api/lockup/overview) and
 [Endpoints](https://docs.sablier.com/api/lockup/endpoints).
@@ -37,6 +37,14 @@ Airstreams.
 
 [Documentation](https://docs.sablier.com/api/drops/overview) and
 [Endpoints](https://docs.sablier.com/api/drops/endpoints).
+
+### Subgraph: Flow
+
+The **Flow** subgraph watches over the core flow functionality of Sablier. It handles events such as `Create Stream`,
+`Deposit` or `Adjust`.
+
+[Documentation](https://docs.sablier.com/api/flow/overview) and
+[Endpoints](https://docs.sablier.com/api/flow/endpoints).
 
 ---
 
@@ -53,8 +61,8 @@ Indexers are configured using `pnpm`.
 
 ### Indexer: Lockup-Envio
 
-The **Lockup-Envio** indexer watches over the core functionality of Sablier. It handles events such as `Create Stream`,
-`Withdraw` or `Transfer`.
+The **Lockup-Envio** indexer watches over the core lockup functionality of Sablier. It handles events such as
+`Create Stream`, `Withdraw` or `Transfer`.
 
 [Documentation](https://docs.sablier.com/api/lockup/overview) and
 [Endpoints](https://docs.sablier.com/api/lockup/endpoints).
@@ -67,6 +75,14 @@ for Airstreams.
 
 [Documentation](https://docs.sablier.com/api/drops/overview) and
 [Endpoints](https://docs.sablier.com/api/drops/endpoints).
+
+### Indexer: Flow-Envio
+
+The **~Flow-Envio** indexer watches over the core flow functionality of Sablier. It handles events such as
+`Create Stream`, `Deposit` or `Adjust`.
+
+[Documentation](https://docs.sablier.com/api/lockup/overview) and
+[Endpoints](https://docs.sablier.com/api/lockup/endpoints).
 
 > [!TIP]
 >
