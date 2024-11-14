@@ -297,6 +297,13 @@ export function handleVoid(event: EventVoid): void {
   action.amountA = event.params.newTotalDebt;
   action.amountB = event.params.writtenOffDebt;
 
+  const streamedAmount = stream.snapshotAmount.plus(
+    stream.ratePerSecond.times(
+      event.block.timestamp.minus(stream.lastAdjustmentTimestamp),
+    ),
+  );
+  const maxAvailable = stream.withdrawnAmount.plus(stream.availableAmount);
+
   stream.voided = true;
   stream.paused = true;
 
@@ -308,7 +315,7 @@ export function handleVoid(event: EventVoid): void {
   stream.lastAdjustmentAction = action.id;
   stream.lastAdjustmentTimestamp = event.block.timestamp;
 
-  stream.snapshotAmount = stream.withdrawnAmount.plus(stream.availableAmount);
+  stream.snapshotAmount = maxAvailable.lt(streamedAmount)? maxAvailable: streamedAmount;
   stream.forgivenDebt = event.params.writtenOffDebt;
   stream.ratePerSecond = zero;
   stream.depletionTime = zero;

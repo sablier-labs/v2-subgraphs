@@ -56,6 +56,11 @@ async function handler(input: VoidHandler<typeof loader>) {
     amountA: event.params.newTotalDebt,
     amountB: event.params.writtenOffDebt,
   };
+  const streamedAmount =
+    stream.snapshotAmount +
+    stream.ratePerSecond *
+      (BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp);
+  const maxAvailable =  stream.withdrawnAmount + stream.availableAmount;
 
   watcher = post_action.watcher;
   stream = {
@@ -70,7 +75,7 @@ async function handler(input: VoidHandler<typeof loader>) {
     lastAdjustmentAction_id: action.id,
     lastAdjustmentTimestamp: BigInt(event.block.timestamp),
 
-    snapshotAmount: stream.withdrawnAmount + stream.availableAmount,
+    snapshotAmount: maxAvailable < streamedAmount? maxAvailable: streamedAmount,
     forgivenDebt: event.params.writtenOffDebt,
     ratePerSecond: 0n,
     /** should be recomputed at the restart */
