@@ -44,6 +44,14 @@ var definitions = {
             "https://base.meowrpc.com",
         ],
     ],
+    baseSepolia: [
+        chains_1.baseSepolia,
+        [
+            "https://base-sepolia.blockpi.network/v1/rpc/public",
+            "https://base-sepolia.gateway.tenderly.co",
+            "https://sepolia.base.org",
+        ],
+    ],
     blast: [
         chains_1.blast,
         [

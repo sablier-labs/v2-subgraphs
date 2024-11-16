@@ -6,6 +6,7 @@ import {
   arbitrum,
   avalanche,
   base,
+  baseSepolia,
   blast,
   bsc,
   gnosis,
@@ -58,6 +59,14 @@ const definitions: Record<string, [Chain, string[]]> = {
       "https://base-mainnet.public.blastapi.io",
       "https://base.drpc.org",
       "https://base.meowrpc.com",
+    ],
+  ],
+  baseSepolia: [
+    baseSepolia,
+    [
+      "https://base-sepolia.blockpi.network/v1/rpc/public",
+      "https://base-sepolia.gateway.tenderly.co",
+      "https://sepolia.base.org",
     ],
   ],
   blast: [

@@ -1,6 +1,7 @@
 import * as arbitrum from "../addresses/arbitrum";
 import * as avalanche from "../addresses/avalanche";
 import * as base from "../addresses/base";
+import * as baseSepolia from "../addresses/base-sepolia";
 import * as blast from "../addresses/blast";
 import * as bsc from "../addresses/bsc";
 import * as gnosis from "../addresses/gnosis";
@@ -42,6 +43,7 @@ export const chains = () => {
     [arbitrum, definitions.arbitrum],
     [avalanche, definitions.avalanche],
     [base, definitions.base],
+    [baseSepolia, definitions.baseSepolia],
     [blast, definitions.blast],
     [bsc, definitions.bsc],
     [gnosis, definitions.gnosis],

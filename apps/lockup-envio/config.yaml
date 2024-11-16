@@ -123,6 +123,14 @@ networks:
           - 0x4cb16d4153123a74bc724d161050959754f378d8
           - 0xf9e9ed67dd2fab3b3ca024a2d66fcf0764d36742
           - 0xf4937657ed8b3f3cb379eed47b8818ee947beb1e
+  - id: 84532
+    start_block: 12641000
+    contracts:
+      - name: LockupV22
+        address:
+          - 0xfe7fc0bbde84c239c0ab89111d617dc7cc58049f
+          - 0x6dcb73e5f7e8e70be20b3b9cf50e3be4625a91c3
+          - 0xb8c724df3ec8f2bf8fa808df2cb5dbab22f3e68c
   - id: 81457
     start_block: 243800
     contracts:
