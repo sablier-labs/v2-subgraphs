@@ -219,6 +219,37 @@ const definitions: Record<string, [Chain, string[]]> = {
     }),
     [],
   ],
+  superseed: [
+    defineChain({
+      id: 53302,
+      name: "Superseed",
+      nativeCurrency: {
+        decimals: 18,
+        name: "Ether",
+        symbol: "ETH",
+      },
+      rpcUrls: {
+        default: {
+          http: ["https://mainnet.superseed.xyz"],
+          webSocket: ["wss://mainnet.superseed.xyz"],
+        },
+      },
+      blockExplorers: {
+        default: {
+          name: "Superseed Explorer",
+          url: "https://explorer.superseed.xyz",
+        },
+      },
+      testnet: false,
+      contracts: {
+        multicall3: {
+          address: "0x84c4a8984d61ef37ea16c8df8c53ae0cb037d71a",
+          blockCreated: 1108523,
+        },
+      },
+    }),
+    [],
+  ],
 } as const;
 
 export default definitions;

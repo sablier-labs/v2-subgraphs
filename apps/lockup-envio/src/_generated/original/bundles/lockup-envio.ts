@@ -1,10 +1,10 @@
 import * as arbitrum from "../addresses/arbitrum";
 import * as avalanche from "../addresses/avalanche";
 import * as base from "../addresses/base";
+import * as baseSepolia from "../addresses/base-sepolia";
 import * as blast from "../addresses/blast";
 import * as bsc from "../addresses/bsc";
 import * as gnosis from "../addresses/gnosis";
-import * as baseSepolia from "../addresses/base-sepolia";
 import * as linea from "../addresses/linea";
 import * as mainnet from "../addresses/mainnet";
 import * as mode from "../addresses/mode";
@@ -13,6 +13,7 @@ import * as optimism from "../addresses/optimism";
 import * as polygon from "../addresses/polygon";
 import * as scroll from "../addresses/scroll";
 import * as sepolia from "../addresses/sepolia";
+import * as superseed from "../addresses/superseed";
 import * as tangle from "../addresses/tangle";
 import * as zksync from "../addresses/zksync";
 import definitions from "./definitions";
@@ -59,6 +60,7 @@ export const chains = () => {
     [polygon, definitions.polygon],
     [scroll, definitions.scroll],
     [sepolia, definitions.sepolia],
+    [superseed, definitions.superseed],
     [tangle, definitions.tangle],
     [zksync, definitions.zksync],
   ] as const;

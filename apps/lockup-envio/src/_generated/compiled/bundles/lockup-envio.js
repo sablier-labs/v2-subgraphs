@@ -4,10 +4,10 @@ exports.chains = void 0;
 var arbitrum = require("../addresses/arbitrum");
 var avalanche = require("../addresses/avalanche");
 var base = require("../addresses/base");
+var baseSepolia = require("../addresses/base-sepolia");
 var blast = require("../addresses/blast");
 var bsc = require("../addresses/bsc");
 var gnosis = require("../addresses/gnosis");
-var baseSepolia = require("../addresses/base-sepolia");
 var linea = require("../addresses/linea");
 var mainnet = require("../addresses/mainnet");
 var mode = require("../addresses/mode");
@@ -16,6 +16,7 @@ var optimism = require("../addresses/optimism");
 var polygon = require("../addresses/polygon");
 var scroll = require("../addresses/scroll");
 var sepolia = require("../addresses/sepolia");
+var superseed = require("../addresses/superseed");
 var tangle = require("../addresses/tangle");
 var zksync = require("../addresses/zksync");
 var definitions_1 = require("./definitions");
@@ -55,6 +56,7 @@ var chains = function () {
         [polygon, definitions_1.default.polygon],
         [scroll, definitions_1.default.scroll],
         [sepolia, definitions_1.default.sepolia],
+        [superseed, definitions_1.default.superseed],
         [tangle, definitions_1.default.tangle],
         [zksync, definitions_1.default.zksync],
     ];

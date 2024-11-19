@@ -19,14 +19,8 @@ contracts:
   - name: MerkleLockupFactoryV22
     handler: src/mappings/index.ts
     events:
-      - event:
-          CreateMerkleLL(address indexed merkleLL, (address, bool, uint40, address, string, bytes32, string, bool)
-          baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256
-          recipientCount)
-      - event:
-          CreateMerkleLT(address indexed merkleLT, (address, bool, uint40, address, string, bytes32, string, bool)
-          baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256
-          aggregateAmount,uint256 recipientCount)
+      - event: CreateMerkleLL(address indexed merkleLL, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256 recipientCount)
+      - event: CreateMerkleLT(address indexed merkleLT, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientCount)
   - name: MerkleLockupV21
     handler: src/mappings/index.ts
     events:
@@ -195,6 +189,16 @@ networks:
       - name: MerkleLockupFactoryV22
         address:
           - 0x56e9180a8d2c35c99f2f8a1a5ab8abe79e876e8c
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
+  - id: 53302
+    start_block: 2896400
+    hypersync_config:
+      url: https://extrabud.hypersync.xyz
+    contracts:
+      - name: MerkleLockupFactoryV22
+        address:
+          - 0xf60beadefbeb98c927e13c4165bca7d85ba32cb2
       - name: MerkleLockupV21
       - name: MerkleLockupV22
   - id: 5845
