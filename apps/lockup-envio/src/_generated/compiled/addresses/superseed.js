@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initializer_merkle = exports.initializer_lockup = exports.registry = exports.factory = exports.tranched = exports.dynamic = exports.linear = exports.hypersync = exports.startBlock_merkle = exports.startBlock_lockup = exports.chain = exports.chainId = void 0;
-exports.chainId = 53302;
+exports.chainId = 5330;
 exports.chain = "superseed";
 exports.startBlock_lockup = 2896100;
 exports.startBlock_merkle = 2896400;

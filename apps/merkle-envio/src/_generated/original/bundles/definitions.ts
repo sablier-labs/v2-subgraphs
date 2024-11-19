@@ -221,7 +221,7 @@ const definitions: Record<string, [Chain, string[]]> = {
   ],
   superseed: [
     defineChain({
-      id: 53302,
+      id: 5330,
       name: "Superseed",
       nativeCurrency: {
         decimals: 18,
