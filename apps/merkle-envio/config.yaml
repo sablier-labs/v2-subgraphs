@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: sablier-merkle
 unordered_multichain_mode: true
+rollback_on_reorg: false
 field_selection:
   transaction_fields:
     - "from"
@@ -18,8 +19,14 @@ contracts:
   - name: MerkleLockupFactoryV22
     handler: src/mappings/index.ts
     events:
-      - event: CreateMerkleLL(address indexed merkleLL, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256 recipientCount)
-      - event: CreateMerkleLT(address indexed merkleLT, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientCount)
+      - event:
+          CreateMerkleLL(address indexed merkleLL, (address, bool, uint40, address, string, bytes32, string, bool)
+          baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256
+          recipientCount)
+      - event:
+          CreateMerkleLT(address indexed merkleLT, (address, bool, uint40, address, string, bytes32, string, bool)
+          baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256
+          aggregateAmount,uint256 recipientCount)
   - name: MerkleLockupV21
     handler: src/mappings/index.ts
     events:
