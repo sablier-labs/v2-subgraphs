@@ -1,4 +1,4 @@
-export let chainId = 53302;
+export let chainId = 5330;
 export let chain = "superseed";
 export let startBlock_lockup = 2896100;
 export let startBlock_merkle = 2896400;
