@@ -23,7 +23,7 @@ export const _configurations = (
   [CHAIN_SEPOLIA_ID]: {
     endpoint: {
       Envio: REMOTE
-        ? `https://indexer.bigdevenergy.link/${ENVIO_ID}/v1/graphql`
+        ? `https://indexer.hyperindex.xyz/${ENVIO_ID}/v1/graphql`
         : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.studio.thegraph.com/query/57079/sablier-v2-experimental/version/latest",
@@ -45,7 +45,7 @@ export const _configurations = (
   [CHAIN_ETHEREUM_ID]: {
     endpoint: {
       Envio: REMOTE
-        ? `https://indexer.bigdevenergy.link/${ENVIO_ID}/v1/graphql`
+        ? `https://indexer.hyperindex.xyz/${ENVIO_ID}/v1/graphql`
         : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.studio.thegraph.com/query/57079/sablier-v2/version/latest/",
@@ -63,7 +63,7 @@ export const _configurations = (
   [CHAIN_OPTIMISM_ID]: {
     endpoint: {
       Envio: REMOTE
-        ? `https://indexer.bigdevenergy.link/${ENVIO_ID}/v1/graphql`
+        ? `https://indexer.hyperindex.xyz/${ENVIO_ID}/v1/graphql`
         : "http://localhost:8080/v1/graphql",
       TheGraph:
         "https://api.studio.thegraph.com/query/57079/sablier-v2-optimism/version/latest",
