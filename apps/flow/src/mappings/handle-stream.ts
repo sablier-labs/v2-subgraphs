@@ -110,9 +110,11 @@ export function handleDeposit(event: EventDeposit): void {
   if (availableAmount.gt(notWithdrawn)) {
     const extraAmount = availableAmount.minus(notWithdrawn);
 
-    stream.depletionTime = event.block.timestamp.plus(
-      extraAmount.div(stream.ratePerSecond),
-    );
+    if(!stream.ratePerSecond.isZero()){
+      stream.depletionTime = event.block.timestamp.plus(
+        extraAmount.div(stream.ratePerSecond),
+      );
+    }
   }
 
   stream.availableAmount = availableAmount;
