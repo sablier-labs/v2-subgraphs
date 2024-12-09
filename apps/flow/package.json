@@ -55,7 +55,7 @@
     "deploy-studio:base": "CHAIN=base yarn setup && NAME=sablier-v2-fl-base yarn deploy-studio",
     "deploy-studio:base-sepolia": "CHAIN=base-sepolia yarn setup && NAME=sablier-v2-fl-base-sepolia yarn deploy-studio",
     "deploy-studio:blast": "CHAIN=blast yarn setup && NAME=sablier-v2-fl-blast yarn deploy-studio",
-    "deploy-studio:bsc": "CHAIN=bsc yarn setup && NAME=sablier-v2-bsc yarn deploy-studio",
+    "deploy-studio:bsc": "CHAIN=bsc yarn setup && NAME=sablier-v2-fl-bsc yarn deploy-studio",
     "deploy-studio:experimental": "CHAIN=experimental yarn setup && NAME=sablier-v2-fl-experimental yarn deploy-studio",
     "deploy-studio:gnosis": "CHAIN=gnosis yarn setup && NAME=sablier-v2-fl-gnosis yarn deploy-studio",
     "deploy-studio:iotex": "CHAIN=iotex yarn setup && NAME=sablier-v2-fl-iotex yarn deploy-studio",
