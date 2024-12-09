@@ -1,5 +1,5 @@
 export let chainId = 34443;
-export let chain = "mode";
+export let chain = "mode-mainnet";
 export let startBlock_lockup = 11343000;
 export let startBlock_merkle = 11343000;
 export let startBlock_flow = 16616000;
