@@ -2,6 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.chains = void 0;
 var experimental = require("../addresses/experimental");
+var arbitrum = require("../addresses/arbitrum");
+var avalanche = require("../addresses/avalanche");
+var base = require("../addresses/base");
+var baseSepolia = require("../addresses/base-sepolia");
+var blast = require("../addresses/blast");
+var bsc = require("../addresses/bsc");
+var gnosis = require("../addresses/gnosis");
+var linea = require("../addresses/linea");
+var mainnet = require("../addresses/mainnet");
+var mode = require("../addresses/mode");
+var morph = require("../addresses/morph");
+var optimism = require("../addresses/optimism");
+var polygon = require("../addresses/polygon");
+var scroll = require("../addresses/scroll");
+var superseed = require("../addresses/superseed");
+var tangle = require("../addresses/tangle");
+var zksync = require("../addresses/zksync");
 var definitions_1 = require("./definitions");
 var available = function (v) {
     return v.flow.length > 0;
@@ -24,6 +41,23 @@ var filter = function (list, version) {
  */
 var chains = function () {
     var list = [
+        [arbitrum, definitions_1.default.arbitrum],
+        [avalanche, definitions_1.default.avalanche],
+        [base, definitions_1.default.base],
+        [baseSepolia, definitions_1.default.baseSepolia],
+        [blast, definitions_1.default.blast],
+        [bsc, definitions_1.default.bsc],
+        [gnosis, definitions_1.default.gnosis],
+        [linea, definitions_1.default.linea],
+        [mainnet, definitions_1.default.mainnet],
+        [mode, definitions_1.default.mode],
+        [morph, definitions_1.default.morph],
+        [optimism, definitions_1.default.optimism],
+        [polygon, definitions_1.default.polygon],
+        [scroll, definitions_1.default.scroll],
+        [superseed, definitions_1.default.superseed],
+        [tangle, definitions_1.default.tangle],
+        [zksync, definitions_1.default.zksync],
         [experimental, definitions_1.default.sepolia],
     ];
     /** Merging the arrays with a spread operator will break mustache's template engine */
@@ -38,6 +72,8 @@ var chains = function () {
             definition: definition,
             id: item.chainId,
             name: item.chain,
+            hypersync: "hypersync" in item ? item.hypersync : undefined,
+            rpcsync: "rpcsync" in item ? item.rpcsync : undefined,
             start_block: item.startBlock_merkle,
             V10: V10,
         };

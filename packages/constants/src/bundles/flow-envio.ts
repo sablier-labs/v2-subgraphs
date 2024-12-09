@@ -56,7 +56,6 @@ export const chains = () => {
     [optimism, definitions.optimism],
     [polygon, definitions.polygon],
     [scroll, definitions.scroll],
-    [sepolia, definitions.sepolia],
     [superseed, definitions.superseed],
     [tangle, definitions.tangle],
     [zksync, definitions.zksync],
@@ -77,6 +76,8 @@ export const chains = () => {
       definition,
       id: item.chainId,
       name: item.chain,
+      hypersync: "hypersync" in item ? item.hypersync : undefined,
+      rpcsync: "rpcsync" in item ? item.rpcsync : undefined,
       start_block: item.startBlock_merkle,
       V10,
     };
