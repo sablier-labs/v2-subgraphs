@@ -46,7 +46,7 @@ export function createStream(event: EventCreate): Stream | null {
   entity.creator = event.transaction.from;
   entity.sender = event.params.sender;
   entity.recipient = event.params.recipient;
-  entity.ratePerSecond = event.params.ratePerSecond;
+  entity.ratePerSecond = event.params.ratePerSecond; /** Scaled 18D */
 
   /** --------------- */
   entity.refundedAmount = zero;

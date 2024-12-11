@@ -13,13 +13,14 @@ import {
   VoidFlowStream as EventVoid,
   WithdrawFromFlowStream as EventWithdraw,
 } from "../generated/types/templates/ContractFlow/SablierFlow";
-import { ADDRESS_ZERO, one, zero } from "../constants";
+import { ADDRESS_ZERO, FLOW_SCALED_DECIMALS, one, zero } from "../constants";
 import {
   createAction,
   createStream,
   getContractByAddress,
   getStreamByIdFromSource,
 } from "../helpers";
+import { toScaled } from "../utils";
 
 export function handleCreate(event: EventCreate): void {
   let stream = createStream(event);
@@ -30,7 +31,7 @@ export function handleCreate(event: EventCreate): void {
   action.category = "Create";
   action.addressA = event.params.sender;
   action.addressB = event.params.recipient;
-  action.amountA = event.params.ratePerSecond;
+  action.amountA = event.params.ratePerSecond; /** Scaled 18D */
 
   stream.save();
   action.stream = stream.id;
@@ -51,29 +52,50 @@ export function handleAdjust(event: EventAdjust): void {
 
   let action = createAction(event);
   action.category = "Adjust";
-  action.amountA = event.params.oldRatePerSecond;
-  action.amountB = event.params.newRatePerSecond;
+  action.amountA = event.params.oldRatePerSecond; /** Scaled 18D */
+  action.amountB = event.params.newRatePerSecond; /** Scaled 18D */
   /** --------------- */
 
   stream.lastAdjustmentAction = action.id;
-  const snapshotAmount = stream.snapshotAmount.plus(
-    stream.ratePerSecond.times(
-      event.block.timestamp.minus(stream.lastAdjustmentTimestamp),
-    ),
+
+  /** --------------- */
+
+  const timeSinceLastSnapshot = event.block.timestamp.minus(
+    stream.lastAdjustmentTimestamp,
   );
 
-  // The depletionTime should be recalculated only if it is the future at the event time (meaning extra amount exists inside the stream)
+  const snapshotAmountScaled = stream.snapshotAmount.plus(
+    stream.ratePerSecond.times(timeSinceLastSnapshot),
+  ); /** Scaled 18D */
+
+  /** The depletionTime should be recalculated only if depletion is happening in the future (meaning extra amount exists inside the stream) */
+
   if (stream.depletionTime.gt(event.block.timestamp)) {
-    const notWithdrawn = snapshotAmount.minus(stream.withdrawnAmount);
-    const extraAmount = stream.availableAmount.minus(notWithdrawn);
+    const withdrawnAmountScaled = toScaled(
+      stream.withdrawnAmount,
+      stream.asset,
+    ); /** Scaled 18D */
+
+    const notWithdrawnScaled = snapshotAmountScaled.minus(
+      withdrawnAmountScaled,
+    ); /** Scaled 18D */
+
+    const availableAmountScaled = toScaled(
+      stream.availableAmount,
+      stream.asset,
+    ); /** Scaled 18D */
+
+    const extraAmountScaled =
+      availableAmountScaled.minus(notWithdrawnScaled); /** Scaled 18D */
+
     stream.depletionTime = event.block.timestamp.plus(
-      extraAmount.div(event.params.newRatePerSecond),
+      extraAmountScaled.div(event.params.newRatePerSecond),
     );
   }
 
-  stream.ratePerSecond = event.params.newRatePerSecond;
+  stream.ratePerSecond = event.params.newRatePerSecond; /** Scaled 18D */
   stream.lastAdjustmentTimestamp = event.block.timestamp;
-  stream.snapshotAmount = snapshotAmount;
+  stream.snapshotAmount = snapshotAmountScaled; /** Scaled 18D */
 
   stream.save();
   action.stream = stream.id;
@@ -97,22 +119,41 @@ export function handleDeposit(event: EventDeposit): void {
   action.addressA = event.params.funder;
   action.amountA = event.params.amount;
 
-  const availableAmount = stream.availableAmount.plus(event.params.amount);
+  /** --------------- */
+
   stream.depositedAmount = stream.depositedAmount.plus(event.params.amount);
-  const streamedAmount = stream.snapshotAmount.plus(
-    stream.ratePerSecond.times(
-      event.block.timestamp.minus(stream.lastAdjustmentTimestamp),
-    ),
+
+  const availableAmount = stream.availableAmount.plus(event.params.amount);
+  const availableAmountScaled = toScaled(
+    stream.availableAmount,
+    stream.asset,
+  ); /** Scaled 18D */
+
+  const timeSinceLastSnapshot = event.block.timestamp.minus(
+    stream.lastAdjustmentTimestamp,
   );
-  const notWithdrawn = streamedAmount.minus(stream.withdrawnAmount);
 
-  // If the the stream still has debt mimic the contract behavior
-  if (availableAmount.gt(notWithdrawn)) {
-    const extraAmount = availableAmount.minus(notWithdrawn);
+  const snapshotAmountScaled = stream.snapshotAmount.plus(
+    stream.ratePerSecond.times(timeSinceLastSnapshot),
+  ); /** Scaled 18D */
 
-    if(!stream.ratePerSecond.isZero()){
+  const withdrawnAmountScaled = toScaled(
+    stream.withdrawnAmount,
+    stream.asset,
+  ); /** Scaled 18D */
+
+  const notWithdrawnScaled = snapshotAmountScaled.minus(
+    withdrawnAmountScaled,
+  ); /** Scaled 18D */
+
+  /** If the the stream still has debt mimic the contract behavior */
+
+  if (availableAmountScaled.gt(notWithdrawnScaled)) {
+    const extraAmountScaled = availableAmountScaled.minus(notWithdrawnScaled);
+
+    if (!stream.ratePerSecond.isZero()) {
       stream.depletionTime = event.block.timestamp.plus(
-        extraAmount.div(stream.ratePerSecond),
+        extraAmountScaled.div(stream.ratePerSecond),
       );
     }
   }
@@ -144,14 +185,22 @@ export function handlePause(event: EventPause): void {
   stream.paused = true;
   stream.pausedTime = event.block.timestamp;
   stream.pausedAction = action.id;
-  // Paused is actually an adjustment with the newRate per second equal to zero
-  stream.snapshotAmount = stream.snapshotAmount.plus(
-    stream.ratePerSecond.times(
-      event.block.timestamp.minus(stream.lastAdjustmentTimestamp),
-    ),
+
+  /** --------------- */
+
+  /* Paused is actually an adjustment with the newRate per second equal to zero */
+
+  const timeSinceLastSnapshot = event.block.timestamp.minus(
+    stream.lastAdjustmentTimestamp,
   );
+
+  const snapshotAmountScaled = stream.snapshotAmount.plus(
+    stream.ratePerSecond.times(timeSinceLastSnapshot),
+  ); /** Scaled 18D */
+
   stream.lastAdjustmentAction = action.id;
   stream.lastAdjustmentTimestamp = event.block.timestamp;
+  stream.snapshotAmount = snapshotAmountScaled; /** Scaled 18D */
 
   stream.ratePerSecond = zero;
 
@@ -177,21 +226,41 @@ export function handleRefund(event: EventRefund): void {
   action.addressA = event.params.sender;
   action.amountA = event.params.amount;
 
-  stream.availableAmount = stream.availableAmount.minus(event.params.amount);
+  /** --------------- */
+
   stream.refundedAmount = stream.refundedAmount.plus(event.params.amount);
-  const streamedAmount = stream.snapshotAmount.plus(
-    stream.ratePerSecond.times(
-      event.block.timestamp.minus(stream.lastAdjustmentTimestamp),
-    ),
+
+  stream.availableAmount = stream.availableAmount.minus(event.params.amount);
+  const availableAmountScaled = toScaled(
+    stream.availableAmount,
+    stream.asset,
+  ); /** Scaled 18D */
+
+  const timeSinceLastSnapshot = event.block.timestamp.minus(
+    stream.lastAdjustmentTimestamp,
   );
-  const notWithdrawn = streamedAmount.minus(stream.withdrawnAmount);
+
+  const snapshotAmountScaled = stream.snapshotAmount.plus(
+    stream.ratePerSecond.times(timeSinceLastSnapshot),
+  ); /** Scaled 18D */
+
+  const withdrawnAmountScaled = toScaled(
+    stream.withdrawnAmount,
+    stream.asset,
+  ); /** Scaled 18D */
+
+  const notWithdrawnScaled = snapshotAmountScaled.minus(
+    withdrawnAmountScaled,
+  ); /** Scaled 18D */
+
   /** If refunded all the available amount the stream start accruing now  */
-  const extraAmount = stream.availableAmount.minus(notWithdrawn);
-  if (extraAmount.equals(zero) || stream.ratePerSecond.equals(zero)) {
+  const extraAmountScaled = availableAmountScaled.minus(notWithdrawnScaled);
+
+  if (extraAmountScaled.equals(zero) || stream.ratePerSecond.equals(zero)) {
     stream.depletionTime = event.block.timestamp;
   } else {
     stream.depletionTime = event.block.timestamp.plus(
-      extraAmount.div(stream.ratePerSecond),
+      extraAmountScaled.div(stream.ratePerSecond),
     );
   }
 
@@ -215,7 +284,7 @@ export function handleRestart(event: EventRestart): void {
   let action = createAction(event);
   action.category = "Restart";
   action.addressA = event.params.sender;
-  action.amountA = event.params.ratePerSecond;
+  action.amountA = event.params.ratePerSecond; /** Scaled 18D */
 
   stream.paused = false;
   stream.pausedTime = null;
@@ -223,15 +292,33 @@ export function handleRestart(event: EventRestart): void {
   stream.voided = false;
   stream.voidedTime = null;
   stream.voidedAction = null;
+
   /** Restart is actually an adjustment */
+
   stream.lastAdjustmentAction = action.id;
   stream.lastAdjustmentTimestamp = event.block.timestamp;
-  stream.ratePerSecond = event.params.ratePerSecond;
-  const notWithdrawn = stream.snapshotAmount.minus(stream.withdrawnAmount);
-  if (stream.availableAmount.gt(notWithdrawn)) {
-    const extraAmount = stream.availableAmount.minus(notWithdrawn);
+  stream.ratePerSecond = event.params.ratePerSecond; /** Scaled 18D */
+
+  const withdrawnAmountScaled = toScaled(
+    stream.withdrawnAmount,
+    stream.asset,
+  ); /** Scaled 18D */
+
+  const notWithdrawnScaled = stream.snapshotAmount.minus(
+    withdrawnAmountScaled,
+  ); /** Scaled 18D */
+
+  const availableAmountScaled = toScaled(
+    stream.availableAmount,
+    stream.asset,
+  ); /** Scaled 18D */
+
+  if (availableAmountScaled.gt(notWithdrawnScaled)) {
+    const extraAmountScaled =
+      availableAmountScaled.minus(notWithdrawnScaled); /** Scaled 18D */
+
     stream.depletionTime = event.block.timestamp.plus(
-      extraAmount.div(stream.ratePerSecond),
+      extraAmountScaled.div(stream.ratePerSecond),
     );
   } else {
     stream.depletionTime = event.block.timestamp;
@@ -299,12 +386,25 @@ export function handleVoid(event: EventVoid): void {
   action.amountA = event.params.newTotalDebt;
   action.amountB = event.params.writtenOffDebt;
 
-  const streamedAmount = stream.snapshotAmount.plus(
-    stream.ratePerSecond.times(
-      event.block.timestamp.minus(stream.lastAdjustmentTimestamp),
-    ),
+  const timeSinceLastSnapshot = event.block.timestamp.minus(
+    stream.lastAdjustmentTimestamp,
   );
-  const maxAvailable = stream.withdrawnAmount.plus(stream.availableAmount);
+
+  const snapshotAmountScaled = stream.snapshotAmount.plus(
+    stream.ratePerSecond.times(timeSinceLastSnapshot),
+  ); /** Scaled 18D */
+
+  const withdrawnAmountScaled = toScaled(
+    stream.withdrawnAmount,
+    stream.asset,
+  ); /** Scaled 18D */
+
+  const availableAmountScaled = toScaled(
+    stream.availableAmount,
+    stream.asset,
+  ); /** Scaled 18D */
+
+  const maxAvailableScaled = withdrawnAmountScaled.plus(availableAmountScaled);
 
   stream.voided = true;
   stream.paused = true;
@@ -317,7 +417,9 @@ export function handleVoid(event: EventVoid): void {
   stream.lastAdjustmentAction = action.id;
   stream.lastAdjustmentTimestamp = event.block.timestamp;
 
-  stream.snapshotAmount = maxAvailable.lt(streamedAmount)? maxAvailable: streamedAmount;
+  stream.snapshotAmount = maxAvailableScaled.lt(snapshotAmountScaled)
+    ? maxAvailableScaled
+    : snapshotAmountScaled; /** Scaled 18D */
   stream.forgivenDebt = event.params.writtenOffDebt;
   stream.ratePerSecond = zero;
   stream.depletionTime = zero;
