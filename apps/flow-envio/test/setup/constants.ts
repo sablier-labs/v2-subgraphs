@@ -44,7 +44,7 @@ export const _configurations = (
 
 /** SPECIALIZED CONFIGURATION */
 
-export const REMOTE = true;
+export const REMOTE = false;
 export const SKIP_CLEANUP = false;
 export const POWER_SKIP_SUBGRAPH_ID_ASC = 0;
 

@@ -8,6 +8,7 @@ import {
   getStream,
 } from "../helpers";
 import { ActionCategory } from "../constants";
+import { toScaled } from "../utils";
 
 async function loader(input: DepositLoader) {
   const { context, event } = input;
@@ -41,6 +42,12 @@ async function handler(input: DepositHandler<typeof loader>) {
     loaded.stream ??
     (await getStream(event, event.params.streamId, context.Stream.get));
 
+  let asset = await context.Asset.get(stream.asset_id);
+
+  if (!asset) {
+    return;
+  }
+
   /** ------- Process -------- */
 
   const post_action = createAction(event, watcher);
@@ -57,21 +64,41 @@ async function handler(input: DepositHandler<typeof loader>) {
 
   watcher = post_action.watcher;
 
-  const availableAmount = stream.availableAmount + event.params.amount;
+  /** --------------- */
+
   const depositedAmount = stream.depositedAmount + event.params.amount;
-  const streamedAmount =
+
+  const availableAmount = stream.availableAmount + event.params.amount;
+  const availableAmountScaled = toScaled(
+    availableAmount,
+    asset.decimals,
+  ); /** Scaled 18D */
+
+  const timeSinceLastSnapshot =
+    BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp;
+
+  const snapshotAmountScaled =
     stream.snapshotAmount +
-    stream.ratePerSecond *
-      (BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp);
-  const notWithdrawn = streamedAmount - stream.withdrawnAmount;
+    stream.ratePerSecond * timeSinceLastSnapshot; /** Scaled 18D */
+
+  const withdrawnAmountScaled = toScaled(
+    stream.withdrawnAmount,
+    asset.decimals,
+  ); /** Scaled 18D */
+
+  const notWithdrawnScaled =
+    snapshotAmountScaled - withdrawnAmountScaled; /** Scaled 18D */
 
   let depletionTime = stream.depletionTime;
-  // If the the stream still has debt mimic the contract behavior
-  if (availableAmount > notWithdrawn) {
-    const extraAmount = availableAmount - notWithdrawn;
-    if(stream.ratePerSecond > 0){
+  /** If the the stream still has debt mimic the contract behavior  */
+  if (availableAmountScaled > notWithdrawnScaled) {
+    const extraAmountScaled =
+      availableAmountScaled - notWithdrawnScaled; /** Scaled 18D */
+
+    if (stream.ratePerSecond > 0) {
       depletionTime =
-      BigInt(event.block.timestamp) + extraAmount / stream.ratePerSecond;
+        BigInt(event.block.timestamp) +
+        extraAmountScaled / stream.ratePerSecond;
     }
   }
 

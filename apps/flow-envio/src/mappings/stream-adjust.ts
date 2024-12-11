@@ -8,6 +8,7 @@ import {
   getStream,
 } from "../helpers";
 import { ActionCategory } from "../constants";
+import { toScaled } from "../utils";
 
 async function loader(input: AdjustLoader) {
   const { context, event } = input;
@@ -41,6 +42,12 @@ async function handler(input: AdjustHandler<typeof loader>) {
     loaded.stream ??
     (await getStream(event, event.params.streamId, context.Stream.get));
 
+  let asset = await context.Asset.get(stream.asset_id);
+
+  if (!asset) {
+    return;
+  }
+
   /** ------- Process -------- */
 
   const post_action = createAction(event, watcher);
@@ -51,32 +58,53 @@ async function handler(input: AdjustHandler<typeof loader>) {
     stream_id: stream.id,
 
     /** --------------- */
-    amountA: event.params.oldRatePerSecond,
-    amountB: event.params.newRatePerSecond,
+    amountA: event.params.oldRatePerSecond /** [Scaled 18D] */,
+    amountB: event.params.newRatePerSecond /** [Scaled 18D] */,
   };
 
   watcher = post_action.watcher;
 
-  const snapshotAmount =
+  /** --------------- */
+
+  const timeSinceLastSnapshot =
+    BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp;
+
+  const snapshotAmountScaled =
     stream.snapshotAmount +
-    stream.ratePerSecond *
-      (BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp);
-  let depletionTime = stream.depletionTime;
+    stream.ratePerSecond * timeSinceLastSnapshot; /** Scaled 18D */
+
   /** The depletionTime should be recalculated only if it is the future at the event time (meaning extra amount exists inside the stream)*/
+
+  let depletionTime = stream.depletionTime;
+
   if (stream.depletionTime > BigInt(event.block.timestamp)) {
-    const notWithdrawn = snapshotAmount - stream.withdrawnAmount;
-    const extraAmount = stream.availableAmount - notWithdrawn;
+    const withdrawnAmountScaled = toScaled(
+      stream.withdrawnAmount,
+      asset.decimals,
+    ); /** Scaled 18D */
+
+    const notWithdrawnScaled =
+      snapshotAmountScaled - withdrawnAmountScaled; /** Scaled 18D */
+
+    const availableAmountScaled = toScaled(
+      stream.availableAmount,
+      asset.decimals,
+    ); /** Scaled 18D */
+
+    const extraAmountScaled =
+      availableAmountScaled - notWithdrawnScaled; /** Scaled 18D */
+
     depletionTime =
       BigInt(event.block.timestamp) +
-      extraAmount / event.params.newRatePerSecond;
+      extraAmountScaled / event.params.newRatePerSecond;
   }
 
   stream = {
     ...stream,
     depletionTime,
-    snapshotAmount,
+    snapshotAmount: snapshotAmountScaled /** Scaled 18D */,
     lastAdjustmentAction_id: action.id,
-    ratePerSecond: event.params.newRatePerSecond,
+    ratePerSecond: event.params.newRatePerSecond /** Scaled 18D */,
     lastAdjustmentTimestamp: BigInt(event.block.timestamp),
   };
 

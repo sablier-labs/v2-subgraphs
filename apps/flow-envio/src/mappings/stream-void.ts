@@ -8,6 +8,7 @@ import {
   getStream,
 } from "../helpers";
 import { ActionCategory } from "../constants";
+import { toScaled } from "../utils";
 
 async function loader(input: VoidLoader) {
   const { context, event } = input;
@@ -41,6 +42,12 @@ async function handler(input: VoidHandler<typeof loader>) {
     loaded.stream ??
     (await getStream(event, event.params.streamId, context.Stream.get));
 
+  let asset = await context.Asset.get(stream.asset_id);
+
+  if (!asset) {
+    return;
+  }
+
   /** ------- Process -------- */
 
   const post_action = createAction(event, watcher);
@@ -56,11 +63,26 @@ async function handler(input: VoidHandler<typeof loader>) {
     amountA: event.params.newTotalDebt,
     amountB: event.params.writtenOffDebt,
   };
-  const streamedAmount =
+
+  const timeSinceLastSnapshot =
+    BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp;
+
+  const snapshotAmountScaled =
     stream.snapshotAmount +
-    stream.ratePerSecond *
-      (BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp);
-  const maxAvailable =  stream.withdrawnAmount + stream.availableAmount;
+    stream.ratePerSecond * timeSinceLastSnapshot; /** Scaled 18D */
+
+  const withdrawnAmountScaled = toScaled(
+    stream.withdrawnAmount,
+    asset.decimals,
+  ); /** Scaled 18D */
+
+  const availableAmountScaled = toScaled(
+    stream.availableAmount,
+    asset.decimals,
+  ); /** Scaled 18D */
+
+  const maxAvailableScaled =
+    withdrawnAmountScaled + availableAmountScaled; /** Scaled 18D */
 
   watcher = post_action.watcher;
   stream = {
@@ -75,7 +97,10 @@ async function handler(input: VoidHandler<typeof loader>) {
     lastAdjustmentAction_id: action.id,
     lastAdjustmentTimestamp: BigInt(event.block.timestamp),
 
-    snapshotAmount: maxAvailable < streamedAmount? maxAvailable: streamedAmount,
+    snapshotAmount:
+      maxAvailableScaled < snapshotAmountScaled
+        ? maxAvailableScaled
+        : snapshotAmountScaled /** Scaled 18D */,
     forgivenDebt: event.params.writtenOffDebt,
     ratePerSecond: 0n,
     /** should be recomputed at the restart */

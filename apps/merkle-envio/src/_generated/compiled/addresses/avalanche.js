@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initializer_merkle = exports.initializer_lockup = exports.registry = exports.factory = exports.tranched = exports.dynamic = exports.linear = exports.startBlock_merkle = exports.startBlock_lockup = exports.chain = exports.chainId = void 0;
+exports.initializer_flow = exports.initializer_merkle = exports.initializer_lockup = exports.registry = exports.factory = exports.tranched = exports.flow = exports.dynamic = exports.linear = exports.startBlock_flow = exports.startBlock_merkle = exports.startBlock_lockup = exports.chain = exports.chainId = void 0;
 exports.chainId = 43114;
 exports.chain = "avalanche";
 exports.startBlock_lockup = 32164210;
 exports.startBlock_merkle = 41023950;
+exports.startBlock_flow = 53922000;
 /** Rule: keep addresses lowercased */
 /**
  * Keep aliases unique and always in sync with the frontend
@@ -19,6 +20,9 @@ exports.dynamic = [
     ["0x665d1c8337f1035cfbe13dd94bb669110b975f5f", "LD", "V21"],
     ["0x0310da0d8ff141166ed47548f00c96464880781f", "LD2", "V21"],
     ["0xe3826241e5eebb3f5fede33f9f677047674d3fbf", "LD3", "V22"],
+];
+exports.flow = [
+    ["0x8c172e42c06302e3cfe555dc4d6b71a756ee186b", "FL", "V10"],
 ];
 exports.tranched = [
     ["0xfa536049652bfb5f57ba8dcfbec1b2b2dd9803d3", "LT3", "V22"],
@@ -36,3 +40,4 @@ exports.registry = "0x584009e9ede26e212182c9745f5c000191296a78";
  */
 exports.initializer_lockup = exports.linear[0][0];
 exports.initializer_merkle = exports.factory[0][0];
+exports.initializer_flow = exports.flow[0][0];
