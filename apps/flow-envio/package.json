@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "envio": "2.7.5",
-    "viem": "2.21.37"
+    "viem": "2.21.54"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.1.0",

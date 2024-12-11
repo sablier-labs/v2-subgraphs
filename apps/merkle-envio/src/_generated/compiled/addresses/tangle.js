@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initializer_merkle = exports.initializer_lockup = exports.registry = exports.factory = exports.tranched = exports.dynamic = exports.linear = exports.hypersync = exports.startBlock_merkle = exports.startBlock_lockup = exports.chain = exports.chainId = void 0;
+exports.initializer_flow = exports.initializer_merkle = exports.initializer_lockup = exports.registry = exports.factory = exports.tranched = exports.flow = exports.dynamic = exports.linear = exports.hypersync = exports.startBlock_flow = exports.startBlock_merkle = exports.startBlock_lockup = exports.chain = exports.chainId = void 0;
 exports.chainId = 5845;
 exports.chain = "tangle";
 exports.startBlock_lockup = 2515000;
 exports.startBlock_merkle = 2516000;
+exports.startBlock_flow = 3296000;
 exports.hypersync = "https://tangle.hypersync.xyz";
 /** Rule: keep addresses lowercased */
 /**
@@ -16,6 +17,9 @@ exports.linear = [
 ];
 exports.dynamic = [
     ["0x946654ab30dd6ed10236c89f2c8b2719df653691", "LD3", "V22"],
+];
+exports.flow = [
+    ["0xcff4a803b0bf55dd1be38fb96088478f3d2eecf2", "FL", "V10"],
 ];
 exports.tranched = [
     ["0x63b92f7e2f69877184c955e63b9d8dff55e52e14", "LT3", "V22"],
@@ -32,3 +36,4 @@ exports.registry = "";
  */
 exports.initializer_lockup = exports.linear[0][0];
 exports.initializer_merkle = exports.factory[0][0];
+exports.initializer_flow = exports.flow[0][0];
