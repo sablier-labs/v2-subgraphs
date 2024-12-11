@@ -44,7 +44,7 @@ export function createStream(
     chainId: BigInt(event.chainId),
     startTime: BigInt(event.block.timestamp),
     depletionTime: BigInt(event.block.timestamp),
-    transferable: true,
+    transferable: event.params.transferable,
     creator: event.transaction.from!.toLowerCase(),
     sender: event.params.sender.toLowerCase(),
     recipient: event.params.recipient.toLowerCase(),
