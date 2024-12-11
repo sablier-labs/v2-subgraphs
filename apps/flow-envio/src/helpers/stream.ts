@@ -48,14 +48,14 @@ export function createStream(
     creator: event.transaction.from!.toLowerCase(),
     sender: event.params.sender.toLowerCase(),
     recipient: event.params.recipient.toLowerCase(),
-    ratePerSecond: event.params.ratePerSecond,
+    ratePerSecond: event.params.ratePerSecond /** [Scaled 18D] */,
 
     /** --------------- */
     refundedAmount: 0n,
     withdrawnAmount: 0n,
     availableAmount: 0n,
     depositedAmount: 0n,
-    snapshotAmount: 0n,
+    snapshotAmount: 0n /** [Scaled 18D] */,
     protocolFeeAmount: 0n,
     forgivenDebt: 0n,
 

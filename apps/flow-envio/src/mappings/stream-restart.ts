@@ -8,6 +8,7 @@ import {
   getStream,
 } from "../helpers";
 import { ActionCategory } from "../constants";
+import { toScaled } from "../utils";
 
 async function loader(input: RestartLoader) {
   const { context, event } = input;
@@ -41,6 +42,11 @@ async function handler(input: RestartHandler<typeof loader>) {
     loaded.stream ??
     (await getStream(event, event.params.streamId, context.Stream.get));
 
+  let asset = await context.Asset.get(stream.asset_id);
+
+  if (!asset) {
+    return;
+  }
   /** ------- Process -------- */
 
   const post_action = createAction(event, watcher);
@@ -52,17 +58,32 @@ async function handler(input: RestartHandler<typeof loader>) {
 
     /** --------------- */
     addressA: event.params.sender.toLowerCase(),
-    amountA: event.params.ratePerSecond,
+    amountA: event.params.ratePerSecond /** Scaled 18D */,
   };
 
   watcher = post_action.watcher;
 
-  const notWithdrawn = stream.snapshotAmount - stream.withdrawnAmount;
+  const withdrawnAmountScaled = toScaled(
+    stream.withdrawnAmount,
+    asset.decimals,
+  ); /** Scaled 18D */
+
+  const notWithdrawnScaled =
+    stream.snapshotAmount - withdrawnAmountScaled; /** Scaled 18D */
+
+  const availableAmountScaled = toScaled(
+    stream.availableAmount,
+    asset.decimals,
+  ); /** Scaled 18D */
+
   let depletionTime = BigInt(event.block.timestamp);
-  if (stream.availableAmount > notWithdrawn) {
-    const extraAmount = stream.availableAmount - notWithdrawn;
+  if (availableAmountScaled > notWithdrawnScaled) {
+    const extraAmountScaled =
+      availableAmountScaled - notWithdrawnScaled; /** Scaled 18D */
+
     depletionTime =
-      BigInt(event.block.timestamp) + extraAmount /event.params.ratePerSecond;
+      BigInt(event.block.timestamp) +
+      extraAmountScaled / event.params.ratePerSecond;
   }
 
   stream = {
@@ -76,7 +97,7 @@ async function handler(input: RestartHandler<typeof loader>) {
     /** Restart is actually an adjustment */
     lastAdjustmentAction_id: action.id,
     lastAdjustmentTimestamp: BigInt(event.block.timestamp),
-    ratePerSecond: event.params.ratePerSecond,
+    ratePerSecond: event.params.ratePerSecond /** Scaled 18D */,
     depletionTime,
   };
 

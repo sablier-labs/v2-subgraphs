@@ -149,7 +149,8 @@ export function handleDeposit(event: EventDeposit): void {
   /** If the the stream still has debt mimic the contract behavior */
 
   if (availableAmountScaled.gt(notWithdrawnScaled)) {
-    const extraAmountScaled = availableAmountScaled.minus(notWithdrawnScaled);
+    const extraAmountScaled =
+      availableAmountScaled.minus(notWithdrawnScaled); /** Scaled 18D */
 
     if (!stream.ratePerSecond.isZero()) {
       stream.depletionTime = event.block.timestamp.plus(
@@ -404,7 +405,9 @@ export function handleVoid(event: EventVoid): void {
     stream.asset,
   ); /** Scaled 18D */
 
-  const maxAvailableScaled = withdrawnAmountScaled.plus(availableAmountScaled);
+  const maxAvailableScaled = withdrawnAmountScaled.plus(
+    availableAmountScaled,
+  ); /** Scaled 18D */
 
   stream.voided = true;
   stream.paused = true;

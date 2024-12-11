@@ -8,6 +8,7 @@ import {
   getStream,
 } from "../helpers";
 import { ActionCategory } from "../constants";
+import { toScaled } from "../utils";
 
 async function loader(input: RefundLoader) {
   const { context, event } = input;
@@ -41,6 +42,12 @@ async function handler(input: RefundHandler<typeof loader>) {
     loaded.stream ??
     (await getStream(event, event.params.streamId, context.Stream.get));
 
+  let asset = await context.Asset.get(stream.asset_id);
+
+  if (!asset) {
+    return;
+  }
+
   /** ------- Process -------- */
 
   const post_action = createAction(event, watcher);
@@ -57,19 +64,40 @@ async function handler(input: RefundHandler<typeof loader>) {
 
   watcher = post_action.watcher;
 
-  const availableAmount = stream.availableAmount - event.params.amount;
+  /** --------------- */
+
   const refundedAmount = stream.refundedAmount + event.params.amount;
-  const streamedAmount =
+
+  const availableAmount = stream.availableAmount - event.params.amount;
+  const availableAmountScaled = toScaled(
+    availableAmount,
+    asset.decimals,
+  ); /** Scaled 18D */
+
+  const timeSinceLastSnapshot =
+    BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp;
+
+  const snapshotAmountScaled =
     stream.snapshotAmount +
-    stream.ratePerSecond *
-      (BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp);
-  const notWithdrawn = streamedAmount - stream.withdrawnAmount;
-  const extraAmount = availableAmount - notWithdrawn;
+    stream.ratePerSecond * timeSinceLastSnapshot; /** Scaled 18D */
+
+  const withdrawnAmountScaled = toScaled(
+    stream.withdrawnAmount,
+    asset.decimals,
+  ); /** Scaled 18D */
+
+  const notWithdrawnScaled =
+    snapshotAmountScaled - withdrawnAmountScaled; /** Scaled 18D */
+
   /** If refunded all the available amount the stream start accruing now  */
+  const extraAmountScaled =
+    availableAmountScaled - notWithdrawnScaled; /** Scaled 18D */
+
   let depletionTime = BigInt(event.block.timestamp);
-  if (extraAmount !== 0n && stream.ratePerSecond !== 0n) {
+
+  if (extraAmountScaled !== 0n && stream.ratePerSecond !== 0n) {
     depletionTime =
-      BigInt(event.block.timestamp) + extraAmount / stream.ratePerSecond;
+      BigInt(event.block.timestamp) + extraAmountScaled / stream.ratePerSecond;
   }
 
   stream = {

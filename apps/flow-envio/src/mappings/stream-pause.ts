@@ -58,10 +58,14 @@ async function handler(input: PauseHandler<typeof loader>) {
 
   watcher = post_action.watcher;
 
-  const snapshotAmount =
+  /** --------------- */
+
+  const timeSinceLastSnapshot =
+    BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp;
+
+  const snapshotAmountScaled =
     stream.snapshotAmount +
-    stream.ratePerSecond *
-      (BigInt(event.block.timestamp) - stream.lastAdjustmentTimestamp);
+    stream.ratePerSecond * timeSinceLastSnapshot; /** Scaled 18D */
 
   stream = {
     ...stream,
@@ -70,7 +74,7 @@ async function handler(input: PauseHandler<typeof loader>) {
     pausedAction_id: action.id,
     lastAdjustmentAction_id: action.id,
     lastAdjustmentTimestamp: BigInt(event.block.timestamp),
-    snapshotAmount,
+    snapshotAmount: snapshotAmountScaled /** Scaled 18D */,
     ratePerSecond: 0n,
   };
 

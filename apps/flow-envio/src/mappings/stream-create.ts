@@ -88,7 +88,7 @@ async function handler(input: CreateHandler<typeof loader>) {
     /** --------------- */
     addressA: event.params.sender.toLowerCase(),
     addressB: event.params.recipient.toLowerCase(),
-    amountA: event.params.ratePerSecond,
+    amountA: event.params.ratePerSecond /** [Scaled 18D] */,
   };
 
   watcher = post_action.watcher;
