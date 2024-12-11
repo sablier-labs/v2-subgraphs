@@ -125,7 +125,7 @@ export function handleDeposit(event: EventDeposit): void {
 
   const availableAmount = stream.availableAmount.plus(event.params.amount);
   const availableAmountScaled = toScaled(
-    stream.availableAmount,
+    availableAmount,
     stream.asset,
   ); /** Scaled 18D */
 
