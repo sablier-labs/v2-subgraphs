@@ -179,13 +179,13 @@ type Stream @entity {
   availableAmount: BigInt!
   "amount resolving to the sum of all refunds"
   refundedAmount: BigInt!
-  "current ratePerSecond of the stream"
+  "[Scaled 18D] current ratePerSecond of the stream, scaled to 18 decimals"
   ratePerSecond: BigInt!
   "amount resolving to the sum of all deposits"
   depositedAmount: BigInt!
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
-  "amount resolving to the streamed amount up until the ratePerSecond is changed"
+  "[Scaled 18D] amount resolving to the streamed amount up until the ratePerSecond is changed"
   snapshotAmount: BigInt!
   "amount resolving to the debt that has been forgiven by the void action"
   forgivenDebt: BigInt!
