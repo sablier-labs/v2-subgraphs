@@ -71,6 +71,13 @@ var definitions = {
             "https://bsc-mainnet.public.blastapi.io",
         ],
     ],
+    chiliz: [
+        chains_1.chiliz,
+        [
+            "https://chiliz.publicnode.com",
+            "https://rpc.chiliz.com",
+        ]
+    ],
     gnosis: [
         chains_1.gnosis,
         [

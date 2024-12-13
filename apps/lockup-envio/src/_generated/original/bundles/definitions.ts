@@ -9,6 +9,7 @@ import {
   baseSepolia,
   blast,
   bsc,
+  chiliz,
   gnosis,
   linea,
   mainnet,
@@ -87,6 +88,13 @@ const definitions: Record<string, [Chain, string[]]> = {
       "https://rpc.tornadoeth.cash/bsc",
       "https://bsc-mainnet.public.blastapi.io",
     ],
+  ],
+  chiliz: [
+    chiliz,
+    [
+      "https://chiliz.publicnode.com",
+      "https://rpc.chiliz.com",
+    ]
   ],
   gnosis: [
     gnosis,
