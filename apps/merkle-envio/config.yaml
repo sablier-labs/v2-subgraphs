@@ -97,6 +97,16 @@ networks:
           - 0x96aa12809cac29bba4944feca1dfdc8e1704e6c1
       - name: MerkleLockupV21
       - name: MerkleLockupV22
+  - id: 88888
+    start_block: 19125000
+    hypersync_config:
+      url: https://chiliz.hypersync.xyz
+    contracts:
+      - name: MerkleLockupFactoryV22
+        address:
+          - 0x92fc05e49c27884d554d98a5c01ff0894a9dc29a
+      - name: MerkleLockupV21
+      - name: MerkleLockupV22
   - id: 100
     start_block: 31491790
     contracts:
