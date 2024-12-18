@@ -134,6 +134,7 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   /** --------------- */
   let asset = getOrCreateAsset(event.params.asset);
   entity.asset = asset.id;
+  entity.initialUnlock = zero;
 
   /** --------------- */
   let batch = getOrCreateBatch(event, event.params.sender);

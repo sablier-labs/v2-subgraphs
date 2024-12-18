@@ -5,6 +5,7 @@ import {
   linear,
   dynamic,
   tranched,
+  lockup,
   initializer_lockup as initializer,
 } from "../generated/env";
 
@@ -51,6 +52,10 @@ export function getContractsShapes(): string[][] {
   if (tranched.length !== 0) {
     aggregate = aggregate.concat(tranched);
   }
+  if (lockup.length !== 0) {
+    aggregate = aggregate.concat(lockup);
+  }
+
 
   return aggregate.map<string[]>((item) => [
     item[0].toString().toLowerCase(),

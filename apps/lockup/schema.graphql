@@ -2,6 +2,7 @@ enum ContractCategory {
   LockupDynamic
   LockupLinear
   LockupTranched
+  Lockup
 }
 
 enum StreamCategory {
@@ -156,6 +157,8 @@ type Stream @entity {
   tokenId: BigInt!
   "extended version of the lockup contracts, prefixed with a '2' (e.g. 'V20`, `V21`, `V22`)"
   version: String!
+  "the shape of the stream (this was introduced in the merged lockup contract)"
+  shape: String
 
   "type of stream (for sorting reasons)"
   category: StreamCategory!
@@ -221,6 +224,8 @@ type Stream @entity {
   intactAmount: BigInt!
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
+  "the initial unlock amount specifically for lockup linear"
+  initialUnlock: BigInt
 
   "actions triggered in the context of this stream"
   actions: [Action!]! @derivedFrom(field: "stream")
