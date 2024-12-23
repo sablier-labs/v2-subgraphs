@@ -57,13 +57,13 @@ function createCampaign(id: string, event: ethereum.Event): Campaign | null {
 
   entity.streamCliff = false;
   entity.streamCliffDuration = zero;
-  entity.streamCliffAmount = zero;
+  entity.streamCliffPercentage = zero;
 
   entity.streamStart = false;
   entity.streamStartTime = zero;
 
   entity.streamInitial = false;
-  entity.streamInitialAmount = zero;
+  entity.streamInitialPercentage = zero;
 
   entity.streamTotalDuration = zero;
   entity.streamTransferable = false;
@@ -213,13 +213,14 @@ export function createCampaignLinear_V23(
 
   entity.streamCliff = !event.params.schedule.cliffDuration.isZero();
   entity.streamCliffDuration = event.params.schedule.cliffDuration;
+  entity.streamCliffPercentage = event.params.schedule.cliffPercentage;
   entity.streamTotalDuration = event.params.schedule.totalDuration;
 
   entity.streamStart = !event.params.schedule.startTime.isZero();
   entity.streamStartTime = event.params.schedule.startTime;
 
-  entity.streamInitial = !event.params.schedule.startAmount.isZero();
-  entity.streamInitialAmount = event.params.schedule.startAmount;
+  entity.streamInitial = !event.params.schedule.startPercentage.isZero();
+  entity.streamInitialPercentage = event.params.schedule.startPercentage;
 
   entity.name = event.params.baseParams.campaignName;
   entity.admin = event.params.baseParams.initialAdmin;

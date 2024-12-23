@@ -41,7 +41,7 @@ dataSources:
           handler: handleInitializer
         - event:
             CreateMerkleLL(indexed
-            address,(address,uint40,address,string,bytes32,string,string),address,bool,bool,(uint40,uint128,uint40,uint128,uint40),uint256,uint256,uint256)
+            address,(address,uint40,address,string,bytes32,string,string),address,bool,bool,(uint40,uint64,uint40,uint64,uint40),uint256,uint256,uint256)
           handler: handleInitializer
         - event:
             CreateMerkleLT(indexed
@@ -101,7 +101,7 @@ templates:
           handler: handleCreateCampaignLT_V22
         - event:
             CreateMerkleLL(indexed
-            address,(address,uint40,address,string,bytes32,string,string),address,bool,bool,(uint40,uint128,uint40,uint128,uint40),uint256,uint256,uint256)
+            address,(address,uint40,address,string,bytes32,string,string),address,bool,bool,(uint40,uint64,uint40,uint64,uint40),uint256,uint256,uint256)
           handler: handleCreateCampaignLL_V23
         - event:
             CreateMerkleLT(indexed

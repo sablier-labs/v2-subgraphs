@@ -317,9 +317,9 @@
         "components": [
           { "name": "startTime", "type": "uint40", "internalType": "uint40" },
           {
-            "name": "startAmount",
-            "type": "uint128",
-            "internalType": "uint128"
+            "name": "startPercentage",
+            "type": "uint64",
+            "internalType": "UD2x18"
           },
           {
             "name": "cliffDuration",
@@ -327,9 +327,9 @@
             "internalType": "uint40"
           },
           {
-            "name": "cliffAmount",
-            "type": "uint128",
-            "internalType": "uint128"
+            "name": "cliffPercentage",
+            "type": "uint64",
+            "internalType": "UD2x18"
           },
           {
             "name": "totalDuration",

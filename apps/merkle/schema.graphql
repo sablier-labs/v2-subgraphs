@@ -167,13 +167,13 @@ type Campaign @entity {
   streamCliff: Boolean!
   "timestamp for the start of the cliff, if there's a streamCliff, only available on linear streams"
   streamCliffDuration: BigInt!
-  "amount to be claimed when the stream cliff is reached, custom for > V23, proportional for early versions < V23"
-  streamCliffAmount: BigInt!
+  "percentage (from total) to be claimed when the stream cliff is reached, custom for > V23, proportional for early versions < V23"
+  streamCliffPercentage: BigInt!
 
   "flag showing if the produced stream has an initial unlock, only available on linear streams"
   streamInitial: Boolean!
-  "amount to be initially unlocked at the start of the stream, zero for < V23"
-  streamInitialAmount: BigInt!
+  "percentage (from total) to be initially unlocked at the start of the stream, zero for < V23"
+  streamInitialPercentage: BigInt!
 
   "flag showing if the produced stream has a preset start date or not - starts at claim"
   streamStart: Boolean!
