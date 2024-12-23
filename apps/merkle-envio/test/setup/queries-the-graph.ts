@@ -6,7 +6,7 @@ export const getCampaigns_ByAdminByIds = gql/* GraphQL */ `
     $first: Int!
     $skip: Int!
     $admin: Bytes!
-    $airstreamIds: [String!]
+    $airdropIds: [String!]
     $subgraphId: BigInt!
     $chainId: BigInt!
   ) {
@@ -18,7 +18,7 @@ export const getCampaigns_ByAdminByIds = gql/* GraphQL */ `
       where: {
         and: [
           { admin: $admin }
-          { id_in: $airstreamIds }
+          { id_in: $airdropIds }
           { subgraphId_lt: $subgraphId }
           { chainId: $chainId }
         ]
@@ -108,7 +108,7 @@ export const getCampaigns_ByIds = gql/* GraphQL */ `
   query getCampaigns_ByIds(
     $first: Int!
     $skip: Int!
-    $airstreamIds: [String!]
+    $airdropIds: [String!]
     $subgraphId: BigInt!
     $chainId: BigInt!
   ) {
@@ -118,7 +118,7 @@ export const getCampaigns_ByIds = gql/* GraphQL */ `
       orderBy: subgraphId
       orderDirection: desc
       where: {
-        id_in: $airstreamIds
+        id_in: $airdropIds
         subgraphId_lt: $subgraphId
         chainId: $chainId
       }
@@ -203,8 +203,8 @@ export const getCampaigns_Asc = gql/* GraphQL */ `
 `;
 
 export const getCampaignById = gql/* GraphQL */ `
-  query getCampaignById($airstreamId: ID!) {
-    campaign(id: $airstreamId) {
+  query getCampaignById($airdropId: ID!) {
+    campaign(id: $airdropId) {
       ...CampaignFragment
     }
   }
@@ -220,7 +220,7 @@ export const getCampaignById = gql/* GraphQL */ `
 export const getActions_ByCampaign = gql/* GraphQL */ `
   query getActions_ByCampaign(
     $first: Int!
-    $airstreamId: String!
+    $airdropId: String!
     $subgraphId: BigInt!
     $chainId: BigInt!
   ) {
@@ -229,7 +229,7 @@ export const getActions_ByCampaign = gql/* GraphQL */ `
       orderBy: subgraphId
       orderDirection: desc
       where: {
-        campaign: $airstreamId
+        campaign: $airdropId
         subgraphId_lt: $subgraphId
         chainId: $chainId
       }
