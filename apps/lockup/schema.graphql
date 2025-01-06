@@ -2,6 +2,7 @@ enum ContractCategory {
   LockupDynamic
   LockupLinear
   LockupTranched
+  LockupMerged
 }
 
 enum StreamCategory {
@@ -51,6 +52,9 @@ type Action @entity {
   amountA: BigInt
   "amount, differs based on action type e.g. for Withdraw it resolves to the refundedAmount"
   amountB: BigInt
+
+  "amount, records the fee paid for certain actions, in base asset (e.g. withdraw is payable >V23)"
+  fee: BigInt
 }
 
 type Asset @entity(immutable: true) {
@@ -156,6 +160,8 @@ type Stream @entity {
   tokenId: BigInt!
   "extended version of the lockup contracts, prefixed with a '2' (e.g. 'V20`, `V21`, `V22`)"
   version: String!
+  "the shape of the stream (this was introduced in the merged lockup contract)"
+  shape: String
 
   "type of stream (for sorting reasons)"
   category: StreamCategory!
@@ -184,6 +190,9 @@ type Stream @entity {
 
   "flag for linear streams with a cliff"
   cliff: Boolean!
+
+  "flag for linear streams with an initial unlock, false <V23"
+  initial: Boolean!
 
   "asset (ERC20 token) supported by this stream"
   asset: Asset!
@@ -221,6 +230,9 @@ type Stream @entity {
   intactAmount: BigInt!
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
+
+  "the initial unlock amount specifically for lockup linear, zero <V23"
+  initialAmount: BigInt
 
   "actions triggered in the context of this stream"
   actions: [Action!]! @derivedFrom(field: "stream")
