@@ -219,9 +219,10 @@ function handleCreateLinear_V23(event_: EventCreateLinear_V23): void {
   }
 
   /** Handle cliff >= V23 */
-  if (!event_.params.unlockAmounts.cliff.equals(zero)) {
+  if (!event_.params.cliffTime.equals(zero)) {
     stream.cliff = true;
     stream.cliffAmount = event_.params.unlockAmounts.cliff;
+    stream.cliffTime = event_.params.cliffTime;
   }
   if (!event_.params.unlockAmounts.start.equals(zero)) {
     stream.initial = true;
