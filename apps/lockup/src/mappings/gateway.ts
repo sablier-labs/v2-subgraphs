@@ -44,8 +44,10 @@ function handleCancel_V20(event: EventCancel_V20): void {
 }
 
 function handleCancel_V21_V22_V23(event_: EventCancel_V21_V22_V23): void {
-  /** Remove asset */
-  let parameters = event_.parameters.filter((value) => value.name != "asset");
+  /** Remove asset (<V23 called "asset", >= V23 called "token" ) */
+  let parameters = event_.parameters.filter(
+    (value) => !["asset", "token"].includes(value.name),
+  );
 
   let event = new EventCancel_V20(
     event_.address,
@@ -66,8 +68,10 @@ function handleWithdraw_V20(event: EventWithdraw_V20): void {
 }
 
 function handleWithdraw_V21_V22_V23(event_: EventWithdraw_V21_V22_V23): void {
-  /** Remove asset */
-  let parameters = event_.parameters.filter((value) => value.name != "asset");
+  /** Remove asset (<V23 called "asset", >= V23 called "token" ) */
+  let parameters = event_.parameters.filter(
+    (value) => !["asset", "token"].includes(value.name),
+  );
 
   let event = new EventWithdraw_V20(
     event_.address,

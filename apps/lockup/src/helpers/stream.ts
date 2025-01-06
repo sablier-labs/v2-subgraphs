@@ -3,14 +3,7 @@ import { Stream } from "../generated/types/schema";
 import { CreateLockupDynamicStream as EventCreateDynamic } from "../generated/types/templates/ContractLockupDynamic/SablierLockupDynamic";
 import { CreateLockupLinearStream as EventCreateLinear } from "../generated/types/templates/ContractLockupLinear/SablierLockupLinear";
 import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/types/templates/ContractLockupTranched/SablierLockupTranched";
-import {
-  StreamVersion_V20,
-  StreamVersion_V21,
-  StreamVersion_V23,
-  getChainId,
-  one,
-  zero,
-} from "../constants";
+import { getChainId, one, zero } from "../constants";
 import { getOrCreateAsset } from "./asset";
 import { getOrCreateBatch } from "./batch";
 import { getContractByAddress } from "./contract";
