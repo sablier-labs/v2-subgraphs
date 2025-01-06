@@ -6,6 +6,7 @@ import { CreateLockupTranchedStream as EventCreateTranched } from "../generated/
 import {
   StreamVersion_V20,
   StreamVersion_V21,
+  StreamVersion_V23,
   getChainId,
   one,
   zero,
@@ -51,10 +52,13 @@ function createStream(tokenId: BigInt, event: ethereum.Event): Stream | null {
   entity.chainId = getChainId();
 
   /** --------------- */
+  entity.cliff = false;
+  entity.initial = false;
   entity.proxied = false;
   entity.canceled = false;
   entity.renounceAction = null;
   entity.canceledAction = null;
+  entity.initialAmount = null;
   entity.cliffAmount = null;
   entity.cliffTime = null;
   entity.transferable = true;
@@ -110,17 +114,7 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   /** --------------- */
   let cliff = event.params.range.cliff.minus(event.params.range.start);
 
-  /** String comparisons will not work with "===", loose operators are required */
-  if (
-    contract.version != StreamVersion_V21 &&
-    contract.version != StreamVersion_V20
-  ) {
-    /** StreamVersion_V22 introduced zero cliffs for linear streams */
-    if (event.params.range.cliff.isZero()) {
-      cliff = zero;
-    }
-  }
-
+  /** Cliff logic for <V22, anything above will be handled in the gateway */
   if (!cliff.isZero()) {
     entity.cliff = true;
     entity.cliffAmount = deposit.times(cliff).div(duration);
@@ -134,7 +128,6 @@ export function createLinearStream(event: EventCreateLinear): Stream | null {
   /** --------------- */
   let asset = getOrCreateAsset(event.params.asset);
   entity.asset = asset.id;
-  entity.initialUnlock = zero;
 
   /** --------------- */
   let batch = getOrCreateBatch(event, event.params.sender);

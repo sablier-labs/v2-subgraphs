@@ -2,7 +2,7 @@ export {
   handleApproval,
   handleApprovalForAll,
   handleCancel_V20,
-  handleCancel_V21_V22,
+  handleCancel_V21_V22_V23,
   handleCreateLinear_V20,
   handleCreateLinear_V21,
   handleCreateLinear_V22,
@@ -17,13 +17,19 @@ export {
   handleTransfer,
   handleTransferAdmin,
   handleWithdraw_V20,
-  handleWithdraw_V21_V22,
+  handleWithdraw_V21_V22_V23,
 } from "./gateway";
 
 export {
-  handleInitializer_Create_V20,
-  handleInitializer_Create_V21,
-  handleInitializer_Create_V22,
   handleInitializer_Admin,
-  handleInitializer_Create_V23,
+  handleInitializer_CreateLinear_V20,
+  handleInitializer_CreateLinear_V21,
+  handleInitializer_CreateLinear_V22,
+  handleInitializer_CreateLinear_V23,
+  handleInitializer_CreateDynamic_V20,
+  handleInitializer_CreateDynamic_V21,
+  handleInitializer_CreateDynamic_V22,
+  handleInitializer_CreateDynamic_V23,
+  handleInitializer_CreateTranched_V22,
+  handleInitializer_CreateTranched_V23,
 } from "./handle-initializer";

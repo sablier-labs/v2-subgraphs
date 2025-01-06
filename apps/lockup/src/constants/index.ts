@@ -4,7 +4,7 @@ import {
   dynamic,
   initializer_lockup as initializer,
   linear,
-  lockup,
+  merged,
   registry,
   tranched,
 } from "../generated/env";
@@ -54,8 +54,8 @@ export function getContractsTranched(): string[][] {
   ]);
 }
 
-export function getContractsLockup(): string[][] {
-  return lockup.map<string[]>((item) => [
+export function getContractsMerged(): string[][] {
+  return merged.map<string[]>((item) => [
     item[0].toString().toLowerCase(),
     item[1].toString().toLowerCase(),
     item.length >= 3 ? item[2].toString() : StreamVersion_V23,

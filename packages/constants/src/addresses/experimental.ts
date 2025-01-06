@@ -37,7 +37,7 @@ export let factory: string[][] = [
   ["0x56e9180a8d2c35c99f2f8a1a5ab8abe79e876e8c", "MSF3", "V22"],
 ];
 
-export let lockup: string[][] = [
+export let merged: string[][] = [
   ["0x2dbce44ad5f944e5a588c516c408462c28b1f786", "LK", "V23"],
 ];
 
@@ -47,10 +47,8 @@ export let registry = "0x584009E9eDe26e212182c9745F5c000191296a78";
 /**
  * The initializer contract is used to trigger the indexing of all other contracts.
  * It should be a linear contract, the oldest/first one deployed on this chain.
- * ↪ 🚨 [Lockup] On any new chain, please create a Lockup Linear stream to kick-off indexing
  */
 
 export let initializer_lockup = linear[0][0];
-export let initializer_merger = lockup[0][0];
 export let initializer_merkle = factory[0][0];
 export let initializer_flow = flow[0][0];

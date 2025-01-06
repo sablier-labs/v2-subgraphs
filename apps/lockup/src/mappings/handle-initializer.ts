@@ -1,24 +1,28 @@
 import { Address } from "@graphprotocol/graph-ts";
 import {
-  ContractLockupDynamic as DynamicTemplate,
-  ContractLockupLinear as LinearTemplate,
-  ContractLockupTranched as TranchedTemplate,
-  ContractLockup as LockupTemplate
-} from "../generated/types/templates";
-import {
+  CreateLockupDynamicStream as EventCreateDynamic_V20,
+  CreateLockupDynamicStream1 as EventCreateDynamic_V21,
+  CreateLockupDynamicStream2 as EventCreateDynamic_V22,
+  CreateLockupDynamicStream3 as EventCreateDynamic_V23,
   CreateLockupLinearStream as EventCreateLinear_V20,
   CreateLockupLinearStream1 as EventCreateLinear_V21,
   CreateLockupLinearStream2 as EventCreateLinear_V22,
+  CreateLockupLinearStream3 as EventCreateLinear_V23,
+  CreateLockupTranchedStream as EventCreateTranched_V22,
+  CreateLockupTranchedStream1 as EventCreateTranched_V23,
   TransferAdmin as EventTransferAdmin,
-} from "../generated/types/templates/ContractLockupLinear/SablierLockupLinear";
+} from "../generated/types/ContractInitializer/SablierLockupInitializer";
 import {
-  CreateLockupLinearStream as EventCreateLinear_V23,
-} from "../generated/types/templates/ContractLockup/SablierLockup";
+  ContractLockupDynamic as DynamicTemplate,
+  ContractLockupLinear as LinearTemplate,
+  ContractLockupMerged as MergedTemplate,
+  ContractLockupTranched as TranchedTemplate,
+} from "../generated/types/templates";
 import {
   getContractsDynamic,
   getContractsLinear,
+  getContractsMerged,
   getContractsTranched,
-  getContractsLockup
 } from "../constants";
 import { createContract, getOrCreateWatcher } from "../helpers";
 
@@ -49,17 +53,17 @@ function createContractTranched(
   createContract(address, alias, version, "LockupTranched");
 }
 
-function createContractLockup(
+function createContractMerged(
   address: Address,
   alias: string,
   version: string,
 ): void {
-  LockupTemplate.create(address);
-  createContract(address, alias, version, "Lockup");
+  MergedTemplate.create(address);
+  createContract(address, alias, version, "LockupMerged");
 }
 
 /**
- * Use the oldest linear contract as a trigger to start indexing all the other contracts.
+ * Use the oldest contract as a trigger to start indexing all the other contracts.
  */
 
 export function handleInitializer(): void {
@@ -104,42 +108,77 @@ export function handleInitializer(): void {
     }
   }
 
-  let lockupList = getContractsLockup();
-  if (lockupList.length > 0) {
-    for (let i = 0; i < lockupList.length; i++) {
-      createContractLockup(
-        Address.fromString(lockupList[i][0]),
-        lockupList[i][1],
-        lockupList[i][2],
+  let mergedList = getContractsMerged();
+  if (mergedList.length > 0) {
+    for (let i = 0; i < mergedList.length; i++) {
+      createContractMerged(
+        Address.fromString(mergedList[i][0]),
+        mergedList[i][1],
+        mergedList[i][2],
       );
     }
   }
 }
 
-/** Genesis event from the Lockup Linear contract */
+/** Genesis event from all contracts */
 export function handleInitializer_Admin(_event: EventTransferAdmin): void {
   handleInitializer();
 }
 /** Backup genesis event from the Lockup Linear contract */
-export function handleInitializer_Create_V20(
+export function handleInitializer_CreateLinear_V20(
   _event: EventCreateLinear_V20,
 ): void {
   handleInitializer();
 }
-export function handleInitializer_Create_V21(
+export function handleInitializer_CreateLinear_V21(
   _event: EventCreateLinear_V21,
 ): void {
   handleInitializer();
 }
 
-export function handleInitializer_Create_V22(
+export function handleInitializer_CreateLinear_V22(
   _event: EventCreateLinear_V22,
 ): void {
   handleInitializer();
 }
 
-export function handleInitializer_Create_V23(
+export function handleInitializer_CreateLinear_V23(
   _event: EventCreateLinear_V23,
+): void {
+  handleInitializer();
+}
+
+/** Backup genesis event from the Lockup Dynamic contract */
+export function handleInitializer_CreateDynamic_V20(
+  _event: EventCreateDynamic_V20,
+): void {
+  handleInitializer();
+}
+export function handleInitializer_CreateDynamic_V21(
+  _event: EventCreateDynamic_V21,
+): void {
+  handleInitializer();
+}
+
+export function handleInitializer_CreateDynamic_V22(
+  _event: EventCreateDynamic_V22,
+): void {
+  handleInitializer();
+}
+export function handleInitializer_CreateDynamic_V23(
+  _event: EventCreateDynamic_V23,
+): void {
+  handleInitializer();
+}
+
+/** Backup genesis event from the Lockup Tranched contract */
+export function handleInitializer_CreateTranched_V22(
+  _event: EventCreateTranched_V22,
+): void {
+  handleInitializer();
+}
+export function handleInitializer_CreateTranched_V23(
+  _event: EventCreateTranched_V23,
 ): void {
   handleInitializer();
 }

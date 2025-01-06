@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { one, zero } from "../constants";
 
 export function convertExponentToBigInt(decimals: BigInt): BigInt {
@@ -16,4 +16,28 @@ export function convertStringToPaddedZero(source: String): String {
   }
 
   return result;
+}
+
+export function toValue(source: BigInt): ethereum.Value {
+  return ethereum.Value.fromUnsignedBigInt(source);
+}
+
+export function toEventAddress(
+  key: string,
+  value: Address,
+): ethereum.EventParam {
+  return new ethereum.EventParam(key, ethereum.Value.fromAddress(value));
+}
+
+export function toEventBoolean(
+  key: string,
+  value: boolean,
+): ethereum.EventParam {
+  return new ethereum.EventParam(key, ethereum.Value.fromBoolean(value));
+}
+export function toEventTuple(
+  key: string,
+  value: ethereum.Tuple,
+): ethereum.EventParam {
+  return new ethereum.EventParam(key, ethereum.Value.fromTuple(value));
 }
