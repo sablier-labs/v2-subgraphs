@@ -12,7 +12,7 @@ export const _configurations = (
     endpoint: Record<Vendor, string>;
     admin: string;
     asset: string;
-    airstreamIds: string[];
+    airdropIds: string[];
   }
 > => ({
   [CHAIN_SEPOLIA_ID]: {
@@ -25,7 +25,7 @@ export const _configurations = (
     },
     admin: "0xf31b00e025584486f7c37cf0ae0073c97c12c634",
     asset: "0x776b6fc2ed15d6bb5fc32e0c89de68683118c62a",
-    airstreamIds: [
+    airdropIds: [
       "0x8ca71b0f22d74a0a2ec2d176a30b4c6a07c6587c-11155111",
       "0x8ca71b0f22d74a0a2ec2d176a30b4c6a07c6587c-11155111",
       "0xc65a07656d99766998ea3f32b242a51ed06079f4-11155111",
@@ -43,7 +43,7 @@ export const _configurations = (
     },
     admin: "0x8cc40bc56f32769858061bf8b26f3dd07486e170",
     asset: "0x3bd7d4f524d09f4e331577247a048d56e4b67a7f",
-    airstreamIds: [
+    airdropIds: [
       "0x70e3e243909e9bc9027ff160c6ec5ab5ee4b951e-1",
       "0x507c45db6ecf98d0ccb3c93fb945f018eb1145b7-1",
       "0xd2e4d6e1a7e5b464e7332c1a0a58d65f3579e955-1",

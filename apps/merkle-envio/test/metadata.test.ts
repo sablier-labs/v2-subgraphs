@@ -4,11 +4,11 @@ import { chainId, configuration, SKIP_CLEANUP } from "./setup/constants";
 import * as envioQueries from "./setup/queries-envio";
 import * as theGraphQueries from "./setup/queries-the-graph";
 
-describe(`Campaigns (Campaign Id: ${configuration.airstreamIds[0]}, Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})`, () => {
+describe(`Campaigns (Campaign Id: ${configuration.airdropIds[0]}, Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})`, () => {
   test("Metadata results are the same", async () => {
     const variables = {
-      campaignId: configuration.airstreamIds[0],
-      campaignIdClone: configuration.airstreamIds[0],
+      campaignId: configuration.airdropIds[0],
+      campaignIdClone: configuration.airdropIds[0],
       dayFrom: 1,
       dayTo: 7,
     } as const;

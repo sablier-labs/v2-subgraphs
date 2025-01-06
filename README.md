@@ -29,11 +29,11 @@ The **Lockup** subgraph watches over the core lockup functionality of Sablier. I
 [Documentation](https://docs.sablier.com/api/lockup/overview) and
 [Endpoints](https://docs.sablier.com/api/lockup/endpoints).
 
-### Subgraph: Merkle/Drops (Airstreams)
+### Subgraph: Merkle/Drops
 
 The **Merkle** subgraph watches over the Merkle Lockup functionality from Sablier's periphery contracts. It handles
 events such as `Create Campaign`, `Claim` or `Clawback`. In the client interfaces it is used to track activity for
-Airstreams.
+Airdrops.
 
 [Documentation](https://docs.sablier.com/api/drops/overview) and
 [Endpoints](https://docs.sablier.com/api/drops/endpoints).
@@ -67,11 +67,11 @@ The **Lockup-Envio** indexer watches over the core lockup functionality of Sabli
 [Documentation](https://docs.sablier.com/api/lockup/overview) and
 [Endpoints](https://docs.sablier.com/api/lockup/endpoints).
 
-### Indexer: Merkle-Envio (Airstreams)
+### Indexer: Merkle-Envio
 
 The **Merkle-Envio** subgraph watches over the Merkle Lockup functionality from Sablier's periphery contracts. It
 handles events such as `Create Campaign`, `Claim` or `Clawback`. In the client interfaces it is used to track activity
-for Airstreams.
+for Airdrops.
 
 [Documentation](https://docs.sablier.com/api/drops/overview) and
 [Endpoints](https://docs.sablier.com/api/drops/endpoints).

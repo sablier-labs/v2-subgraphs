@@ -35,7 +35,7 @@ describe(`Campaigns (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio
 
   test("Get campaignById results are the same", async () => {
     const variables = {
-      airstreamId: configuration.airstreamIds[0],
+      airdropId: configuration.airdropIds[0],
     } as const;
 
     const received = cleanup.campaign(
@@ -53,10 +53,10 @@ describe(`Campaigns (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio
     expect(received.actions).toEqual(expected.actions);
   });
 
-  test("Get actions by airstream results are the same", async () => {
+  test("Get actions by airdrop results are the same", async () => {
     const variables = {
       first: 100,
-      airstreamId: configuration.airstreamIds[0],
+      airdropId: configuration.airdropIds[0],
       subgraphId: 99999,
       chainId,
     } as const;
@@ -117,7 +117,7 @@ describe(`Campaigns (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio
       first: 100,
       skip: 0,
       subgraphId: 99999,
-      airstreamIds: configuration.airstreamIds,
+      airdropIds: configuration.airdropIds,
       chainId,
     } as const;
 
@@ -210,7 +210,7 @@ describe(`Campaigns (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio
       subgraphId: 99999,
       admin: configuration.admin,
       chainId,
-      airstreamIds: configuration.airstreamIds,
+      airdropIds: configuration.airdropIds,
     } as const;
 
     const received = cleanup.campaigns(

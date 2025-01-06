@@ -6,7 +6,7 @@ export const getCampaigns_ByAdminByIds = gql/* GraphQL */ `
     $first: Int!
     $skip: Int!
     $admin: String!
-    $airstreamIds: [String!]
+    $airdropIds: [String!]
     $subgraphId: numeric!
     $chainId: numeric!
   ) {
@@ -18,7 +18,7 @@ export const getCampaigns_ByAdminByIds = gql/* GraphQL */ `
       where: {
         _and: [
           { admin: { _eq: $admin } }
-          { id: { _in: $airstreamIds } }
+          { id: { _in: $airdropIds } }
           { subgraphId: { _lt: $subgraphId } }
           { chainId: { _eq: $chainId } }
         ]
@@ -109,7 +109,7 @@ export const getCampaigns_ByIds = gql/* GraphQL */ `
   query getCampaigns_ByIds(
     $first: Int!
     $skip: Int!
-    $airstreamIds: [String!]
+    $airdropIds: [String!]
     $subgraphId: numeric!
     $chainId: numeric!
     $asset: String # Required for compatibility
@@ -121,7 +121,7 @@ export const getCampaigns_ByIds = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { id: { _in: $airstreamIds } }
+          { id: { _in: $airdropIds } }
           { subgraphId: { _lt: $subgraphId } }
           { chainId: { _eq: $chainId } }
         ]
@@ -223,8 +223,8 @@ export const getCampaigns_Asc = gql/* GraphQL */ `
 `;
 
 export const getCampaignById = gql/* GraphQL */ `
-  query getCampaignById($airstreamId: String!) {
-    Campaign(where: { id: { _eq: $airstreamId } }) {
+  query getCampaignById($airdropId: String!) {
+    Campaign(where: { id: { _eq: $airdropId } }) {
       ...CampaignFragment
     }
   }
@@ -240,7 +240,7 @@ export const getCampaignById = gql/* GraphQL */ `
 export const getActions_ByCampaign = gql/* GraphQL */ `
   query getActions_ByCampaign(
     $first: Int!
-    $airstreamId: String!
+    $airdropId: String!
     $subgraphId: numeric!
     $chainId: numeric!
   ) {
@@ -250,7 +250,7 @@ export const getActions_ByCampaign = gql/* GraphQL */ `
       order_by: { subgraphId: desc }
       where: {
         _and: [
-          { campaign_id: { _eq: $airstreamId } }
+          { campaign_id: { _eq: $airdropId } }
           { subgraphId: { _lt: $subgraphId } }
           { chainId: { _eq: $chainId } }
         ]
