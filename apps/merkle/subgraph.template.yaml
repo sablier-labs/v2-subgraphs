@@ -110,7 +110,7 @@ templates:
         - event:
             CreateMerkleInstant(indexed
             address,(address,uint40,address,string,bytes32,string,string),uint256,uint256,uint256)
-          handler: handleCreateCampaignInstant_V22
+          handler: handleCreateCampaignInstant_V23
       file: ./src/mappings/index.ts
   - kind: ethereum/contract
     name: ContractMerkleLL
