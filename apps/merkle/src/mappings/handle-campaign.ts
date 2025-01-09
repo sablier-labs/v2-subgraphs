@@ -38,6 +38,7 @@ export function handleClaimLockup(event: EventClaimLockup): void {
     campaign.lockup,
     event.params.streamId,
   );
+  action.fee = event.transaction.value;
 
   /** --------------- */
   action.save();
@@ -77,6 +78,8 @@ export function handleClaimInstant(event: EventClaimInstant): void {
   action.claimIndex = event.params.index;
   action.claimAmount = event.params.amount;
   action.claimRecipient = event.params.recipient;
+
+  action.fee = event.transaction.value;
 
   /** --------------- */
   action.save();

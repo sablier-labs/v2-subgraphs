@@ -1,6 +1,6 @@
 import { dataSource, ethereum } from "@graphprotocol/graph-ts";
 import { Action } from "../generated/types/schema";
-import { getChainId, log_exit, one } from "../constants";
+import { getChainId, log_exit, one, zero } from "../constants";
 import { generateCampaignId, getCampaignById } from "./campaign";
 import { getOrCreateWatcher } from "./watcher";
 
@@ -22,6 +22,7 @@ export function createAction(
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
   entity.subgraphId = watcher.actionIndex;
+  entity.fee = zero;
   entity.chainId = getChainId();
 
   /** --------------- */
