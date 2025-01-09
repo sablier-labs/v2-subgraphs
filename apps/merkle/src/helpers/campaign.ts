@@ -374,7 +374,7 @@ export function createCampaignInstant_V23(
   }
 
   entity.address = event.params.merkleInstant;
-  entity.category = "LockupLinear";
+  entity.category = "Instant";
 
   entity.lockup = ADDRESS_ZERO;
   entity.aggregateAmount = event.params.aggregateAmount;
