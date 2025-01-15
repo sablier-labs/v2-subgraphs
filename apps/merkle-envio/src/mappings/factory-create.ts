@@ -622,7 +622,7 @@ MerkleLockupFactoryV23.CreateMerkleLL.contractRegister(
     const { context, event } = input;
 
     if (isWhitelistedShape(event.chainId, event.params.lockup)) {
-      context.addMerkleLockupV22(event.params.merkleLL);
+      context.addMerkleLockupFactoryV23(event.params.merkleLL);
     }
   },
   {
@@ -646,7 +646,7 @@ MerkleLockupFactoryV23.CreateMerkleLT.contractRegister(
     const { context, event } = input;
 
     if (isWhitelistedShape(event.chainId, event.params.lockup)) {
-      context.addMerkleLockupV22(event.params.merkleLT);
+      context.addMerkleLockupFactoryV23(event.params.merkleLT);
     }
   },
   {

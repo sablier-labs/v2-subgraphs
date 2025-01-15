@@ -39,6 +39,12 @@ contracts:
       - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
       - event: Clawback(address indexed admin, address indexed to, uint128 amount)
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
+  - name: MerkleLockupV23
+    handler: src/mappings/index.ts
+    events:
+      - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
+      - event: Clawback(address indexed admin, address indexed to, uint128 amount)
+      - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
   - name: MerkleInstant
     handler: src/mappings/index.ts
     events:
@@ -60,4 +66,5 @@ networks:
           - 0xa8f509c7a35ff0bdeea0009d900ff7deb3f7eafb
       - name: MerkleLockupV21
       - name: MerkleLockupV22
+      - name: MerkleLockupV23
       - name: MerkleInstant

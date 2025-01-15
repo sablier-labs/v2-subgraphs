@@ -1,4 +1,4 @@
-import { MerkleInstant, MerkleLockupV21, MerkleLockupV22 } from "../../generated";
+import { MerkleInstant, MerkleLockupV21, MerkleLockupV22, MerkleLockupV23 } from "../../generated";
 import type {
   Action,
   TransferAdminHandler,
@@ -57,7 +57,6 @@ async function handler(input: TransferAdminHandler<typeof loader>) {
   let asset = loaded.asset;
 
   if (!asset) {
-    console.log("auauau: ", campaign.address)
     return;
   }
 
@@ -94,6 +93,11 @@ MerkleLockupV21.TransferAdmin.handlerWithLoader({
 });
 
 MerkleLockupV22.TransferAdmin.handlerWithLoader({
+  loader,
+  handler,
+});
+
+MerkleLockupV23.TransferAdmin.handlerWithLoader({
   loader,
   handler,
 });

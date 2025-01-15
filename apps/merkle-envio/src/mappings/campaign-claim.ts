@@ -1,4 +1,4 @@
-import { MerkleInstant, MerkleLockupV21, MerkleLockupV22 } from "../../generated";
+import { MerkleInstant, MerkleLockupV21, MerkleLockupV22, MerkleLockupV23 } from "../../generated";
 import type { Action, ClaimHandler, ClaimLoader, InstantClaimHandler, InstantClaimLoader } from "../types";
 
 import {
@@ -162,6 +162,11 @@ MerkleLockupV21.Claim.handlerWithLoader({
 });
 
 MerkleLockupV22.Claim.handlerWithLoader({
+  loader,
+  handler,
+});
+
+MerkleLockupV23.Claim.handlerWithLoader({
   loader,
   handler,
 });

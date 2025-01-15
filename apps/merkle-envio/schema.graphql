@@ -6,6 +6,7 @@ enum ActionCategory {
 }
 
 enum CampaignCategory {
+  Instant
   LockupDynamic
   LockupLinear
   LockupTranched

@@ -509,7 +509,7 @@ export async function createInstantCampaign_V23(
     aggregateAmount: BigInt(event.params.aggregateAmount),
     totalRecipients: BigInt(event.params.recipientCount),
     /** --------------- */
-    category: StreamCategory.LockupLinear,
+    category: "Instant",
     streamShape: params.shape,
     fee: params.fee,
 
