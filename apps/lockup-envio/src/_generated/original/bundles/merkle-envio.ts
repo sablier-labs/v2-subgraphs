@@ -80,6 +80,13 @@ export const chains = () => {
 
     V22.available = available(V22);
 
+    const V23 = {
+      factory: filter(item.factory, "V23"),
+      available: false,
+    };
+
+    V23.available = available(V23);
+
     return {
       definition,
       id: item.chainId,
@@ -88,6 +95,7 @@ export const chains = () => {
       hypersync: "hypersync" in item ? item.hypersync : undefined,
       V21,
       V22,
+      V23
     };
   });
 };
