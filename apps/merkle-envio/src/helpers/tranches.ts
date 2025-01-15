@@ -1,7 +1,6 @@
 import type {
   Event,
   Tranche,
-  Mutable,
   CreateTranchedArgs,
   Campaign,
 } from "../types";

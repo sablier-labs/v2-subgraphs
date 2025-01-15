@@ -1,30 +1,31 @@
-import * as arbitrum from "../addresses/arbitrum";
-import * as avalanche from "../addresses/avalanche";
-import * as base from "../addresses/base";
-import * as baseSepolia from "../addresses/base-sepolia";
-import * as blast from "../addresses/blast";
-import * as bsc from "../addresses/bsc";
-import * as chiliz from "../addresses/chiliz";
-import * as gnosis from "../addresses/gnosis";
-import * as linea from "../addresses/linea";
-import * as mainnet from "../addresses/mainnet";
-import * as mode from "../addresses/mode";
-import * as morph from "../addresses/morph";
-import * as optimism from "../addresses/optimism";
-import * as polygon from "../addresses/polygon";
-import * as scroll from "../addresses/scroll";
-import * as sepolia from "../addresses/sepolia";
-import * as superseed from "../addresses/superseed";
-import * as tangle from "../addresses/tangle";
-import * as zksync from "../addresses/zksync";
+// import * as arbitrum from "../addresses/arbitrum";
+// import * as avalanche from "../addresses/avalanche";
+// import * as base from "../addresses/base";
+// import * as baseSepolia from "../addresses/base-sepolia";
+// import * as blast from "../addresses/blast";
+// import * as bsc from "../addresses/bsc";
+// import * as gnosis from "../addresses/gnosis";
+// import * as linea from "../addresses/linea";
+// import * as mainnet from "../addresses/mainnet";
+// import * as mode from "../addresses/mode";
+// import * as morph from "../addresses/morph";
+// import * as optimism from "../addresses/optimism";
+// import * as polygon from "../addresses/polygon";
+// import * as scroll from "../addresses/scroll";
+// import * as sepolia from "../addresses/sepolia";
+// import * as superseed from "../addresses/superseed";
+// import * as tangle from "../addresses/tangle";
+// import * as zksync from "../addresses/zksync";
 import definitions from "./definitions";
+import * as experimental from "../addresses/experimental";
 
 const available = (v: {
   linear: unknown[];
   dynamic: unknown[];
   tranched: unknown[];
+  merged: unknown[];
 }) => {
-  return v.linear.length + v.dynamic.length + v.tranched.length > 0;
+  return v.linear.length + v.dynamic.length + v.tranched.length + v.merged.length > 0;
 };
 
 const filter = (list: string[][], version: string) => {
@@ -46,25 +47,25 @@ const filter = (list: string[][], version: string) => {
 
 export const chains = () => {
   const list = [
-    [arbitrum, definitions.arbitrum],
-    [avalanche, definitions.avalanche],
-    [base, definitions.base],
-    [baseSepolia, definitions.baseSepolia],
-    [blast, definitions.blast],
-    [bsc, definitions.bsc],
-    [chiliz, definitions.chiliz],
-    [gnosis, definitions.gnosis],
-    [linea, definitions.linea],
-    [mainnet, definitions.mainnet],
-    [mode, definitions.mode],
-    [morph, definitions.morph],
-    [optimism, definitions.optimism],
-    [polygon, definitions.polygon],
-    [scroll, definitions.scroll],
-    [sepolia, definitions.sepolia],
-    [superseed, definitions.superseed],
-    [tangle, definitions.tangle],
-    [zksync, definitions.zksync],
+    // [arbitrum, definitions.arbitrum],
+    // [avalanche, definitions.avalanche],
+    // [base, definitions.base],
+    // [baseSepolia, definitions.baseSepolia],
+    // [blast, definitions.blast],
+    // [bsc, definitions.bsc],
+    // [gnosis, definitions.gnosis],
+    // [linea, definitions.linea],
+    // [mainnet, definitions.mainnet],
+    // [mode, definitions.mode],
+    // [morph, definitions.morph],
+    // [optimism, definitions.optimism],
+    // [polygon, definitions.polygon],
+    // [scroll, definitions.scroll],
+    // [sepolia, definitions.sepolia],
+    // [superseed, definitions.superseed],
+    // [tangle, definitions.tangle],
+    // [zksync, definitions.zksync],
+    [experimental, definitions.sepolia]
   ] as const;
 
   /** Merging the arrays with a spread operator will break mustache's template engine */
@@ -75,6 +76,7 @@ export const chains = () => {
         dynamic: filter(item.dynamic, "V20"),
         linear: filter(item.linear, "V20"),
         tranched: [],
+        merged: [],
         available: false,
       };
 
@@ -84,6 +86,7 @@ export const chains = () => {
         dynamic: filter(item.dynamic, "V21"),
         linear: filter(item.linear, "V21"),
         tranched: [],
+        merged: [],
         available: false,
       };
 
@@ -93,10 +96,21 @@ export const chains = () => {
         dynamic: filter(item.dynamic, "V22"),
         linear: filter(item.linear, "V22"),
         tranched: filter(item.tranched || [], "V22"),
+        merged: [],
         available: false,
       };
 
       V22.available = available(V22);
+
+      const V23 = {
+        dynamic: [],
+        linear: [],
+        tranched: [],
+        merged: filter(item.merged, "V23"),
+        available: false,
+      };
+
+      V23.available = available(V23);
 
       return {
         definition,
@@ -109,6 +123,7 @@ export const chains = () => {
         V20,
         V21,
         V22,
+        V23
       };
     })
     .filter((item) => item.definition);

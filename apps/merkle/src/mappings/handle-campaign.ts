@@ -5,7 +5,7 @@ import {
   Clawback as EventClawback,
   TransferAdmin as EventTransferAdmin,
 } from "../generated/types/templates/ContractMerkleFactory/SablierMerkleLL";
-import { log_exit, one } from "../constants";
+import { ADDRESS_ZERO, log_exit, one } from "../constants";
 import {
   createAction,
   generateStreamId,
@@ -128,6 +128,10 @@ export function handleClawback(event: EventClawback): void {
   campaign.save();
 }
 export function handleTransferAdmin(event: EventTransferAdmin): void {
+  if (event.params.oldAdmin.equals(ADDRESS_ZERO)) {
+    return;
+  }
+  
   let action = createAction(event, "TransferAdmin");
   if (action == null) {
     log_exit("Campaign not registered yet, cannot bind action");
