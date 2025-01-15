@@ -1,4 +1,4 @@
-import { LockupV20, LockupV21, LockupV22 } from "../../generated";
+import { LockupV20, LockupV21, LockupV22, LockupV23 } from "../../generated";
 import type { Action, WithdrawHandler, WithdrawLoader } from "../types";
 
 import {
@@ -94,6 +94,11 @@ LockupV21.WithdrawFromLockupStream.handlerWithLoader({
 });
 
 LockupV22.WithdrawFromLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
+
+LockupV23.WithdrawFromLockupStream.handlerWithLoader({
   loader,
   handler,
 });

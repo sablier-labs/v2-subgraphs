@@ -57,7 +57,7 @@ export const _configurations = (
 
 /** SPECIALIZED CONFIGURATION */
 
-export const REMOTE = true;
+export const REMOTE = false;
 export const SKIP_CLEANUP = false;
 
 export const chainId = CHAIN_SEPOLIA_ID;

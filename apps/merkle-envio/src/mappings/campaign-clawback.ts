@@ -1,4 +1,4 @@
-import { MerkleLockupV21, MerkleLockupV22 } from "../../generated";
+import { MerkleInstant, MerkleLockupV21, MerkleLockupV22 } from "../../generated";
 import type { Action, ClawbackHandler, ClawbackLoader } from "../types";
 
 import {
@@ -69,6 +69,11 @@ MerkleLockupV21.Clawback.handlerWithLoader({
 });
 
 MerkleLockupV22.Clawback.handlerWithLoader({
+  loader,
+  handler,
+});
+
+MerkleInstant.Clawback.handlerWithLoader({
   loader,
   handler,
 });

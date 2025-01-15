@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.chains = void 0;
-var arbitrum = require("../addresses/arbitrum");
-var avalanche = require("../addresses/avalanche");
-var base = require("../addresses/base");
-var baseSepolia = require("../addresses/base-sepolia");
-var blast = require("../addresses/blast");
-var bsc = require("../addresses/bsc");
-var chiliz = require("../addresses/chiliz");
-var gnosis = require("../addresses/gnosis");
-var linea = require("../addresses/linea");
-var mainnet = require("../addresses/mainnet");
-var mode = require("../addresses/mode");
-var morph = require("../addresses/morph");
-var optimism = require("../addresses/optimism");
-var polygon = require("../addresses/polygon");
-var scroll = require("../addresses/scroll");
-var sepolia = require("../addresses/sepolia");
-var superseed = require("../addresses/superseed");
-var tangle = require("../addresses/tangle");
-var zksync = require("../addresses/zksync");
+// import * as arbitrum from "../addresses/arbitrum";
+// import * as avalanche from "../addresses/avalanche";
+// import * as base from "../addresses/base";
+// import * as baseSepolia from "../addresses/base-sepolia";
+// import * as blast from "../addresses/blast";
+// import * as bsc from "../addresses/bsc";
+// import * as gnosis from "../addresses/gnosis";
+// import * as linea from "../addresses/linea";
+// import * as mainnet from "../addresses/mainnet";
+// import * as mode from "../addresses/mode";
+// import * as morph from "../addresses/morph";
+// import * as optimism from "../addresses/optimism";
+// import * as polygon from "../addresses/polygon";
+// import * as scroll from "../addresses/scroll";
+// import * as sepolia from "../addresses/sepolia";
+// import * as superseed from "../addresses/superseed";
+// import * as tangle from "../addresses/tangle";
+// import * as zksync from "../addresses/zksync";
 var definitions_1 = require("./definitions");
+var experimental = require("../addresses/experimental");
 var available = function (v) {
-    return v.linear.length + v.dynamic.length + v.tranched.length > 0;
+    return v.linear.length + v.dynamic.length + v.tranched.length + v.merged.length > 0;
 };
 var filter = function (list, version) {
     return (list
@@ -42,25 +42,25 @@ var filter = function (list, version) {
  */
 var chains = function () {
     var list = [
-        [arbitrum, definitions_1.default.arbitrum],
-        [avalanche, definitions_1.default.avalanche],
-        [base, definitions_1.default.base],
-        [baseSepolia, definitions_1.default.baseSepolia],
-        [blast, definitions_1.default.blast],
-        [bsc, definitions_1.default.bsc],
-        [chiliz, definitions_1.default.chiliz],
-        [gnosis, definitions_1.default.gnosis],
-        [linea, definitions_1.default.linea],
-        [mainnet, definitions_1.default.mainnet],
-        [mode, definitions_1.default.mode],
-        [morph, definitions_1.default.morph],
-        [optimism, definitions_1.default.optimism],
-        [polygon, definitions_1.default.polygon],
-        [scroll, definitions_1.default.scroll],
-        [sepolia, definitions_1.default.sepolia],
-        [superseed, definitions_1.default.superseed],
-        [tangle, definitions_1.default.tangle],
-        [zksync, definitions_1.default.zksync],
+        // [arbitrum, definitions.arbitrum],
+        // [avalanche, definitions.avalanche],
+        // [base, definitions.base],
+        // [baseSepolia, definitions.baseSepolia],
+        // [blast, definitions.blast],
+        // [bsc, definitions.bsc],
+        // [gnosis, definitions.gnosis],
+        // [linea, definitions.linea],
+        // [mainnet, definitions.mainnet],
+        // [mode, definitions.mode],
+        // [morph, definitions.morph],
+        // [optimism, definitions.optimism],
+        // [polygon, definitions.polygon],
+        // [scroll, definitions.scroll],
+        // [sepolia, definitions.sepolia],
+        // [superseed, definitions.superseed],
+        // [tangle, definitions.tangle],
+        // [zksync, definitions.zksync],
+        [experimental, definitions_1.default.sepolia]
     ];
     /** Merging the arrays with a spread operator will break mustache's template engine */
     return list
@@ -71,6 +71,7 @@ var chains = function () {
             dynamic: filter(item.dynamic, "V20"),
             linear: filter(item.linear, "V20"),
             tranched: [],
+            merged: [],
             available: false,
         };
         V20.available = available(V20);
@@ -78,6 +79,7 @@ var chains = function () {
             dynamic: filter(item.dynamic, "V21"),
             linear: filter(item.linear, "V21"),
             tranched: [],
+            merged: [],
             available: false,
         };
         V21.available = available(V21);
@@ -85,9 +87,18 @@ var chains = function () {
             dynamic: filter(item.dynamic, "V22"),
             linear: filter(item.linear, "V22"),
             tranched: filter(item.tranched || [], "V22"),
+            merged: [],
             available: false,
         };
         V22.available = available(V22);
+        var V23 = {
+            dynamic: [],
+            linear: [],
+            tranched: [],
+            merged: filter(item.merged, "V23"),
+            available: false,
+        };
+        V23.available = available(V23);
         return {
             definition: definition,
             id: item.chainId,
@@ -99,6 +110,7 @@ var chains = function () {
             V20: V20,
             V21: V21,
             V22: V22,
+            V23: V23
         };
     })
         .filter(function (item) { return item.definition; });

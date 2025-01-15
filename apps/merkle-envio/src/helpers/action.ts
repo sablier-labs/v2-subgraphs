@@ -26,6 +26,7 @@ export function createAction(event: Event, watcher_: Watcher) {
     hash: event.transaction.hash.toLowerCase(),
     timestamp: BigInt(event.block.timestamp),
     subgraphId: watcher_.actionIndex,
+    fee: 0n,
     chainId: BigInt(event.chainId),
     /** --------------- */
     claimStreamId: undefined,

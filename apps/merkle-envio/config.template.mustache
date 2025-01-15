@@ -21,6 +21,12 @@ contracts:
     events:
       - event: CreateMerkleLL(address indexed merkleLL, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupLinear, (uint40, uint40) streamDurations, uint256 aggregateAmount, uint256 recipientCount)
       - event: CreateMerkleLT(address indexed merkleLT, (address, bool, uint40, address, string, bytes32, string, bool) baseParams, address lockupTranched, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientCount)
+  - name: MerkleLockupFactoryV23
+    handler: src/mappings/index.ts
+    events:
+      - event: CreateMerkleLL(address indexed merkleLL, (address, uint40, address, string, bytes32, string, string) baseParams, address lockup, bool cancelable, bool transferable, (uint40, uint64, uint40, uint64, uint40) schedule, uint256 aggregateAmount, uint256 recipientCount, uint256 fee)
+      - event: CreateMerkleLT(address indexed merkleLT, (address, uint40, address, string, bytes32, string, string) baseParams, address lockup, bool cancelable, bool transferable, uint40 streamStartTime, (uint64, uint40)[] tranchesWithPercentages, uint256 totalDuration, uint256 aggregateAmount,uint256 recipientCount, uint256 fee)
+      - event: CreateMerkleInstant(address indexed merkleInstant, (address, uint40, address, string, bytes32, string, string) baseParams, uint256 aggregateAmount, uint256 recipientCount, uint256 fee)
   - name: MerkleLockupV21
     handler: src/mappings/index.ts
     events:
@@ -31,6 +37,12 @@ contracts:
     handler: src/mappings/index.ts
     events:
       - event: Claim(uint256 index, address indexed recipient, uint128 amount, uint256 indexed streamId)
+      - event: Clawback(address indexed admin, address indexed to, uint128 amount)
+      - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
+  - name: MerkleInstant
+    handler: src/mappings/index.ts
+    events:
+      - event: Claim(uint256 index, address indexed recipient, uint128 amount)
       - event: Clawback(address indexed admin, address indexed to, uint128 amount)
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
 networks:
@@ -56,6 +68,14 @@ networks:
           - {{address}}
           {{/V22.factory}}
       {{/V22.available}}
+      {{#V23.available}}
+      - name: MerkleLockupFactoryV23
+        address:
+          {{#V23.factory}}
+          - {{address}}
+          {{/V23.factory}}
+      {{/V23.available}}
       - name: MerkleLockupV21
       - name: MerkleLockupV22
+      - name: MerkleInstant
    {{/chains}}

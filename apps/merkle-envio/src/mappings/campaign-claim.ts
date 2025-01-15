@@ -1,5 +1,5 @@
-import { MerkleLockupV21, MerkleLockupV22 } from "../../generated";
-import type { Action, ClaimHandler, ClaimLoader } from "../types";
+import { MerkleInstant, MerkleLockupV21, MerkleLockupV22 } from "../../generated";
+import type { Action, ClaimHandler, ClaimLoader, InstantClaimHandler, InstantClaimLoader } from "../types";
 
 import {
   createAction,
@@ -13,6 +13,26 @@ import {
 import { ActionCategory } from "../constants";
 
 async function loader(input: ClaimLoader) {
+  const { context, event } = input;
+
+  const campaignId = generateCampaignId(event, event.srcAddress);
+  const activityId = generateActivityId(event, campaignId);
+  const watcherId = event.chainId.toString();
+
+  const [activity, campaign, watcher] = await Promise.all([
+    context.Activity.get(activityId),
+    context.Campaign.get(campaignId),
+    context.Watcher.get(watcherId),
+  ]);
+
+  return {
+    activity,
+    campaign,
+    watcher,
+  };
+}
+
+async function instantLoader(input: InstantClaimLoader) {
   const { context, event } = input;
 
   const campaignId = generateCampaignId(event, event.srcAddress);
@@ -87,6 +107,55 @@ async function handler(input: ClaimHandler<typeof loader>) {
   context.Watcher.set(watcher);
 }
 
+async function instantHandler(input: InstantClaimHandler<typeof instantLoader>) {
+  const { context, event, loaderReturn: loaded } = input;
+
+  /** ------- Fetch -------- */
+
+  let watcher =
+    loaded.watcher ?? (await getOrCreateWatcher(event, context.Watcher.get));
+  let campaign =
+    loaded.campaign ?? (await getCampaign(event, context.Campaign.get));
+  let activity =
+    loaded.activity ??
+    (await getOrCreateActivity(event, campaign?.id, context.Activity.get));
+
+  /** ------- Process -------- */
+
+  const post_action = createAction(event, watcher);
+
+  const action: Action = {
+    ...post_action.entity,
+    category: ActionCategory.Claim,
+    campaign_id: campaign.id,
+    /** --------------- */
+    claimIndex: BigInt(event.params.index),
+    claimAmount: BigInt(event.params.amount),
+    claimRecipient: event.params.recipient.toLowerCase(),
+  };
+
+  watcher = post_action.watcher;
+
+  campaign = {
+    ...campaign,
+    claimedAmount: BigInt(campaign.claimedAmount) + BigInt(event.params.amount),
+    claimedCount: BigInt(campaign.claimedCount) + 1n,
+  };
+
+  /** ------- Process: Activity -------- */
+
+  activity = {
+    ...activity,
+    claims: BigInt(activity.claims) + 1n,
+    amount: BigInt(activity.amount) + BigInt(event.params.amount),
+  };
+
+  context.Action.set(action);
+  context.Activity.set(activity);
+  context.Campaign.set(campaign);
+  context.Watcher.set(watcher);
+}
+
 MerkleLockupV21.Claim.handlerWithLoader({
   loader,
   handler,
@@ -95,4 +164,9 @@ MerkleLockupV21.Claim.handlerWithLoader({
 MerkleLockupV22.Claim.handlerWithLoader({
   loader,
   handler,
+});
+
+MerkleInstant.Claim.handlerWithLoader({
+  loader: instantLoader,
+  handler: instantHandler,
 });

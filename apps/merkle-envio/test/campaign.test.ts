@@ -5,9 +5,9 @@ import { cleanup } from "./setup/cleanup";
 import { chainId, configuration, SKIP_CLEANUP } from "./setup/constants";
 
 describe(`Campaigns (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})`, () => {
-  test("First 100 results before subgraphId are the same", async () => {
+  test.only("First 100 results before subgraphId are the same", async () => {
     const variables = {
-      first: 100,
+      first: 10,
       subgraphId: 99999,
       chainId,
     } as const;

@@ -8,12 +8,21 @@ export const StreamVersion = {
   V20: "V20",
   V21: "V21",
   V22: "V22",
+  V23: "V23"
 } as const;
 
 export const StreamCategory = {
   LockupLinear: "LockupLinear",
   LockupDynamic: "LockupDynamic",
   LockupTranched: "LockupTranched",
+} as const;
+
+
+export const ContractCategory = {
+  LockupLinear: "LockupLinear",
+  LockupDynamic: "LockupDynamic",
+  LockupTranched: "LockupTranched",
+  LockupMerged: "LockupMerged"
 } as const;
 
 export const ActionCategory = {
@@ -50,6 +59,7 @@ export function configuration(chainId: number | string | bigint) {
       ...configuration.V22.linear,
       ...configuration.V22.dynamic,
       ...configuration.V22.tranched,
+      ...configuration.V23.merged,
     ],
   };
 }
@@ -61,5 +71,7 @@ export type CacheCategory = (typeof CacheCategory)[keyof typeof CacheCategory];
 
 export type StreamCategory =
   (typeof StreamCategory)[keyof typeof StreamCategory];
+export type ContractCategory =
+  (typeof ContractCategory)[keyof typeof ContractCategory];
 
 export type StreamVersion = (typeof StreamVersion)[keyof typeof StreamVersion];
