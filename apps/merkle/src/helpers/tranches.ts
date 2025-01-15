@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import { Campaign, Tranche } from "../generated/types/schema";
-import { CreateMerkleLT as EventCreateTranched } from "../generated/types/templates/ContractMerkleLockupFactory/SablierMerkleLockupFactory";
+import { CreateMerkleLTTranchesWithPercentagesStruct } from "../generated/types/templates/ContractMerkleFactory/SablierMerkleFactory";
 import { zero } from "../constants";
 
 export class TrancheInput {
@@ -33,10 +33,8 @@ export function createTranche(
 
 export function createTranches(
   campaign: Campaign,
-  event: EventCreateTranched,
+  tranches: Array<CreateMerkleLTTranchesWithPercentagesStruct>,
 ): Campaign {
-  let tranches = event.params.tranchesWithPercentages;
-
   let last = new TrancheInput(zero, zero);
 
   for (let i = 0; i < tranches.length; i++) {

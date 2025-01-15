@@ -1,4 +1,4 @@
-import { LockupV20, LockupV21, LockupV22 } from "../../generated";
+import { LockupV20, LockupV21, LockupV22, LockupV23 } from "../../generated";
 import type { Action, TransferHandler, TransferLoader } from "../types";
 
 import {
@@ -97,6 +97,11 @@ LockupV21.Transfer.handlerWithLoader({
 });
 
 LockupV22.Transfer.handlerWithLoader({
+  loader,
+  handler,
+});
+
+LockupV23.Transfer.handlerWithLoader({
   loader,
   handler,
 });

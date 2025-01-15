@@ -2,6 +2,7 @@ enum ContractCategory {
   LockupDynamic
   LockupLinear
   LockupTranched
+  LockupMerged
 }
 
 enum StreamCategory {
@@ -92,6 +93,8 @@ type Action {
   subgraphId: BigInt!
   "transaction details: timestamp"
   timestamp: BigInt!
+  "amount, records the fee paid for certain actions, in base asset (e.g. withdraw is payable >V23)"
+  fee: BigInt
 }
 
 type Stream {
@@ -106,6 +109,8 @@ type Stream {
   tokenId: BigInt!
   "extended version of the lockup contracts, prefixed with a '2' (e.g. 'V20`, `V21`, `V22`)"
   version: String!
+  "the shape of the stream (this was introduced in the merged lockup contract)"
+  shape: String
 
   "asset (ERC20 token) supported by this stream"
   asset: Asset!
@@ -135,6 +140,8 @@ type Stream {
 
   "flag for linear streams with a cliff"
   cliff: Boolean!
+  "flag for linear streams with an initial unlock, false <V23"
+  initial: Boolean!
   "flag showing the cancelability of the stream (making it false is a one-way trip)"
   cancelable: Boolean!
   "flag showing if the stream was (making it true is a one-way trip)"
@@ -172,6 +179,8 @@ type Stream {
   protocolFeeAmount: BigInt!
   "amount resolving to the sum of all withdrawals"
   withdrawnAmount: BigInt!
+  "the initial unlock amount specifically for lockup linear, zero <V23"
+  initialAmount: BigInt
 
   "batch the stream is part of, only available when created within a batch create transaction"
   batch: Batch!

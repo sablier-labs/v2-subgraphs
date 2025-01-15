@@ -6,16 +6,20 @@ import type {
   /** Event: Cancel (Lockup) */
   LockupV20_CancelLockupStream_eventArgs as EventCancelArgs_V20,
   LockupV21_CancelLockupStream_eventArgs as EventCancelArgs_V21_V22,
+  LockupV23_CancelLockupStream_eventArgs as EventCancelArgs_V23,
   /** Event: Create Dynamic (Lockup) */
   LockupV20_CreateLockupDynamicStream_eventArgs as EventCreateDynamicArgs_V20,
   LockupV21_CreateLockupDynamicStream_eventArgs as EventCreateDynamicArgs_V21,
   LockupV22_CreateLockupDynamicStream_eventArgs as EventCreateDynamicArgs_V22,
+  LockupV23_CreateLockupDynamicStream_eventArgs as EventCreateDynamicArgs_V23,
   /** Event: Create Linear (Lockup) */
   LockupV20_CreateLockupLinearStream_eventArgs as EventCreateLinearArgs_V20,
   LockupV21_CreateLockupLinearStream_eventArgs as EventCreateLinearArgs_V21,
   LockupV22_CreateLockupLinearStream_eventArgs as EventCreateLinearArgs_V22,
+  LockupV23_CreateLockupLinearStream_eventArgs as EventCreateLinearArgs_V23,
   /** Event: Create Tranched (Lockup) */
   LockupV22_CreateLockupTranchedStream_eventArgs as EventCreateTranchedArgs_V22,
+  LockupV23_CreateLockupTranchedStream_eventArgs as EventCreateTranchedArgs_V23,
   /** Event: Renounce (Lockup) */
   LockupV20_RenounceLockupStream_eventArgs as EventRenounceArgs_V20_V21_V22,
   /** Event: Transfer (NFT) */
@@ -25,6 +29,7 @@ import type {
   /** Event: Withdraw (Lockup) */
   LockupV20_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V20,
   LockupV21_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V21_V22,
+  LockupV23_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V23,
 } from "../src/Types.gen";
 
 import type { Loader, Handler } from "./general";
@@ -36,19 +41,24 @@ import type { Loader, Handler } from "./general";
 export type CreateLinearArgs =
   | EventCreateLinearArgs_V20
   | EventCreateLinearArgs_V21
-  | EventCreateLinearArgs_V22;
+  | EventCreateLinearArgs_V22
 export type CreateDynamicArgs =
   | EventCreateDynamicArgs_V20
   | EventCreateDynamicArgs_V21
-  | EventCreateDynamicArgs_V22;
+  | EventCreateDynamicArgs_V22
 export type CreateTranchedArgs = EventCreateTranchedArgs_V22;
-export type CancelArgs = EventCancelArgs_V20 | EventCancelArgs_V21_V22;
+
+export type CreateLinearMergedArgs = EventCreateLinearArgs_V23;
+export type CreateDynamicMergedArgs = EventCreateDynamicArgs_V23;
+export type CreateTranchedMergedArgs = EventCreateTranchedArgs_V23;
+
+export type CancelArgs = EventCancelArgs_V20 | EventCancelArgs_V21_V22 | EventCancelArgs_V23;
 export type ApprovalArgs = EventApprovalArgs_V20_V21_V22;
 export type ApprovalForAllArgs = EventApprovalForAllArgs_V20_V21_V22;
 export type RenounceArgs = EventRenounceArgs_V20_V21_V22;
 export type TransferArgs = EventTransferArgs_V20_V21_V22;
 export type TransferAdminArgs = EventTransferAdminArgs_V20_V21_V22;
-export type WithdrawArgs = EventWithdrawArgs_V20 | EventWithdrawArgs_V21_V22;
+export type WithdrawArgs = EventWithdrawArgs_V20 | EventWithdrawArgs_V21_V22 | EventWithdrawArgs_V23;
 
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
@@ -84,6 +94,11 @@ export type CreateLinearHandler<
   E = CreateLinearArgs,
 > = Handler<E, Awaited<ReturnType<L>>>;
 
+export type CreateLinearMergedLoader = Loader<CreateLinearMergedArgs>;
+export type CreateLinearMergedHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateLinearMergedArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
 /** ------------------------------------------------------------- */
 
 export type CreateDynamicLoader = Loader<CreateDynamicArgs>;
@@ -92,12 +107,24 @@ export type CreateDynamicHandler<
   E = CreateDynamicArgs,
 > = Handler<E, Awaited<ReturnType<L>>>;
 
+export type CreateDynamicMergedLoader = Loader<CreateDynamicMergedArgs>;
+export type CreateDynamicMergedHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateDynamicMergedArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
 /** ------------------------------------------------------------- */
 
 export type CreateTranchedLoader = Loader<CreateTranchedArgs>;
 export type CreateTranchedHandler<
   L extends (_1: Loader<E>) => Promise<object>,
   E = CreateTranchedArgs,
+> = Handler<E, Awaited<ReturnType<L>>>;
+
+export type CreateTranchedMergedLoader = Loader<CreateTranchedMergedArgs>;
+export type CreateTranchedMergedHandler<
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateTranchedMergedArgs,
 > = Handler<E, Awaited<ReturnType<L>>>;
 
 /** ------------------------------------------------------------- */

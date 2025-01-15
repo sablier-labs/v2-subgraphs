@@ -8,6 +8,7 @@ field_selection:
     - "to"
     - "hash"
     - "transactionIndex"
+    - "value"
 contracts:
   - name: LockupV20
     handler: src/mappings/index.ts
@@ -75,6 +76,28 @@ contracts:
       - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
       - event:
           WithdrawFromLockupStream(uint256 indexed streamId, address indexed to, address indexed asset, uint128 amount)
+  - name: LockupV23
+    handler: src/mappings/index.ts
+    events:
+      - event: Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)
+      - event: ApprovalForAll(address indexed owner, address indexed operator, bool approved)
+      - event:
+          CancelLockupStream(uint256 streamId, address indexed sender, address indexed recipient, address indexed token,
+          uint128 senderAmount, uint128 recipientAmount)
+      - event:
+          CreateLockupLinearStream(uint256 indexed streamId,(address,address,address,(uint128,uint128),address,bool,bool,(uint40,uint40),string,address) commonParams,
+          uint40 cliffTime,(uint128,uint128) unlockAmounts)
+      - event:
+          CreateLockupDynamicStream(uint256 indexed streamId,(address,address,address,(uint128,uint128),address,bool,bool,(uint40,uint40),string,address) commonParams,
+          (uint128,uint64,uint40)[] segments)
+      - event:
+          CreateLockupTranchedStream(uint256 indexed streamId,(address,address,address,(uint128,uint128),address,bool,bool,(uint40,uint40),string,address) commonParams,
+          (uint128,uint40)[] tranches)
+      - event: RenounceLockupStream(uint256 indexed streamId)
+      - event: Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+      - event: TransferAdmin(address indexed oldAdmin, address indexed newAdmin)
+      - event:
+          WithdrawFromLockupStream(uint256 indexed streamId, address indexed to, address indexed token, uint128 amount)
 networks:
   {{#chains}}
   - id: {{id}}
@@ -121,4 +144,11 @@ networks:
           - {{address}}
           {{/V22.tranched}}
       {{/V22.available}}
+      {{#V23.available}}
+      - name: LockupV23
+        address:
+          {{#V23.merged}}
+          - {{address}}
+          {{/V23.merged}}
+      {{/V23.available}}
    {{/chains}}

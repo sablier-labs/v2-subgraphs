@@ -1,5 +1,5 @@
 import type { Action, CancelHandler, CancelLoader } from "../types";
-import { LockupV20, LockupV21, LockupV22 } from "../../generated";
+import { LockupV20, LockupV21, LockupV22, LockupV23 } from "../../generated";
 
 import {
   createAction,
@@ -81,6 +81,11 @@ LockupV21.CancelLockupStream.handlerWithLoader({
 });
 
 LockupV22.CancelLockupStream.handlerWithLoader({
+  loader,
+  handler,
+});
+
+LockupV23.CancelLockupStream.handlerWithLoader({
   loader,
   handler,
 });

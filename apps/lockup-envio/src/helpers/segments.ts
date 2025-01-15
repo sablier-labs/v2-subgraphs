@@ -4,6 +4,7 @@ import type {
   Segment,
   Stream,
   Mutable,
+  CreateDynamicMergedArgs,
 } from "../types";
 
 type Entity = Partial<Mutable<Segment>>;
@@ -43,7 +44,7 @@ function createSegment(
 }
 
 export function createSegments(
-  event: Event<CreateDynamicArgs>,
+  event: Event<CreateDynamicArgs | CreateDynamicMergedArgs>,
   stream: Pick<Stream, "id" | "startTime">,
 ) {
   let streamed = 0n;

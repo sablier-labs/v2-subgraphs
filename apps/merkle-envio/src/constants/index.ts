@@ -9,6 +9,7 @@ export const StreamVersion = {
   V20: "V20",
   V21: "V21",
   V22: "V22",
+  V23: "V23",
 } as const;
 
 export const StreamCategory = {
@@ -39,7 +40,7 @@ export function configuration(chainId: number | string | bigint) {
 
   return {
     ...configuration,
-    contracts: [...configuration.V21.factory, ...configuration.V22.factory],
+    contracts: [...configuration.V21.factory, ...configuration.V22.factory, ...configuration.V23.factory],
   };
 }
 
@@ -54,11 +55,12 @@ export function isWhitelistedShape(
     throw new Error("Missing chain configuration");
   }
 
-  const contracts = [configuration?.V20, configuration?.V21, configuration?.V22]
+  const contracts = [configuration?.V20, configuration?.V21, configuration?.V22, configuration?.V23]
     .map((item) => [
       ...(item?.linear || []),
       ...(item?.dynamic || []),
       ...(item?.tranched || []),
+      ...(item?.merged || [])
     ])
     .flat();
 

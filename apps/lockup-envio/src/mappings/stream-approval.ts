@@ -31,7 +31,6 @@ async function loader(input: ApprovalLoader) {
 
 async function handler(input: ApprovalHandler<typeof loader>) {
   const { context, event, loaderReturn: loaded } = input;
-
   /** ------- Fetch -------- */
 
   let watcher =

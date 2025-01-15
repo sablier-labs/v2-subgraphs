@@ -1,11 +1,12 @@
 import { Address, BigInt, Bytes, log } from "@graphprotocol/graph-ts";
 import {
   chainId,
-  factory,
-  linear,
   dynamic,
-  tranched,
+  factory,
   initializer_lockup as initializer,
+  linear,
+  merged,
+  tranched,
 } from "../generated/env";
 
 export let zero = BigInt.fromI32(0);
@@ -23,6 +24,7 @@ export let ADDRESS_ZERO = Bytes.fromHexString(
 export let StreamVersion_V20 = "V20"; /** Not in use */
 export let StreamVersion_V21 = "V21";
 export let StreamVersion_V22 = "V22";
+export let StreamVersion_V23 = "V23";
 
 export function getContractInitializer(): string {
   return initializer.toLowerCase();
@@ -50,6 +52,9 @@ export function getContractsShapes(): string[][] {
   }
   if (tranched.length !== 0) {
     aggregate = aggregate.concat(tranched);
+  }
+  if (merged.length !== 0) {
+    aggregate = aggregate.concat(merged);
   }
 
   return aggregate.map<string[]>((item) => [
