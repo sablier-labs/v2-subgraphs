@@ -19,6 +19,7 @@ export function createAction(event: ethereum.Event): Action {
   entity.timestamp = event.block.timestamp;
   entity.subgraphId = watcher.actionIndex;
   entity.chainId = getChainId();
+  entity.fee = event.transaction.value;
 
   /** --------------- */
   let contract = getContractByAddress(dataSource.address());

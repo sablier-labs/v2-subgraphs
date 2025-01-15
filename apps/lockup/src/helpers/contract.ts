@@ -1,7 +1,6 @@
 import { Address } from "@graphprotocol/graph-ts";
+import { SablierLockupInitializer as SablierLockupContract } from "../generated/types/ContractInitializer/SablierLockupInitializer";
 import { Contract } from "../generated/types/schema";
-import { SablierLockupDynamic as SablierLockupDynamicContract } from "../generated/types/templates/ContractLockupDynamic/SablierLockupDynamic";
-import { SablierLockupLinear as SablierLockupLinearContract } from "../generated/types/templates/ContractLockupLinear/SablierLockupLinear";
 
 export function getContractByAddress(address: Address): Contract | null {
   return Contract.load(generateContractId(address));
@@ -30,18 +29,10 @@ export function createContract(
    * For initializers, the following code will resolve the admin address as the TransferAdmin event may not be picked up.
    */
 
-  if (category === "LockupLinear") {
-    let contract = SablierLockupLinearContract.bind(address);
-    let admin = contract.try_admin();
-    if (!admin.reverted) {
-      entity.admin = admin.value;
-    }
-  } else if (category === "LockupDynamic") {
-    let contract = SablierLockupDynamicContract.bind(address);
-    let admin = contract.try_admin();
-    if (!admin.reverted) {
-      entity.admin = admin.value;
-    }
+  let contract = SablierLockupContract.bind(address);
+  let admin = contract.try_admin();
+  if (!admin.reverted) {
+    entity.admin = admin.value;
   }
 
   entity.save();

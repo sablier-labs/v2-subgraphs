@@ -1,4 +1,4 @@
-import { LockupV20, LockupV21, LockupV22 } from "../../generated";
+import { LockupV20, LockupV21, LockupV22, LockupV23 } from "../../generated";
 import type { TransferAdminHandler, TransferAdminLoader } from "../types";
 
 import { generateContractIdFromEvent, initialize } from "../helpers";
@@ -72,6 +72,11 @@ LockupV21.TransferAdmin.handlerWithLoader({
 });
 
 LockupV22.TransferAdmin.handlerWithLoader({
+  loader,
+  handler,
+});
+
+LockupV23.TransferAdmin.handlerWithLoader({
   loader,
   handler,
 });

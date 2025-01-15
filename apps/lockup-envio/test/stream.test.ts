@@ -19,6 +19,7 @@ describe(`Streams (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})
       chainId,
     } as const;
 
+
     const received = cleanup.streams(
       await Envio(envioQueries.getStreams, variables),
       SKIP_CLEANUP,
@@ -29,10 +30,6 @@ describe(`Streams (Chain Id: ${chainId}, Envio: ${configuration.endpoint.Envio})
       await TheGraph(theGraphQueries.getStreams, variables),
       SKIP_CLEANUP,
       "TheGraph",
-    );
-
-    console.info(
-      `Comparing ${received.streams.length}, ${expected.streams.length} results.`,
     );
 
     expect(received.streams.length).toBeGreaterThan(0);

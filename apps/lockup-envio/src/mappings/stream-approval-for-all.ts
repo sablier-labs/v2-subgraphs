@@ -3,7 +3,7 @@ import type {
   ApprovalForAllHandler,
   ApprovalForAllLoader,
 } from "../types";
-import { LockupV20, LockupV21, LockupV22 } from "../../generated";
+import { LockupV20, LockupV21, LockupV22, LockupV23 } from "../../generated";
 import { createAction, getOrCreateWatcher } from "../helpers";
 import { ActionCategory } from "../constants";
 
@@ -55,6 +55,11 @@ LockupV21.ApprovalForAll.handlerWithLoader({
 });
 
 LockupV22.ApprovalForAll.handlerWithLoader({
+  loader,
+  handler,
+});
+
+LockupV23.ApprovalForAll.handlerWithLoader({
   loader,
   handler,
 });

@@ -4,6 +4,7 @@ import type {
   Stream,
   Mutable,
   CreateTranchedArgs,
+  CreateTranchedMergedArgs,
 } from "../types";
 
 type Entity = Partial<Mutable<Tranche>>;
@@ -40,7 +41,7 @@ function createTranche(
 }
 
 export function createTranches(
-  event: Event<CreateTranchedArgs>,
+  event: Event<CreateTranchedArgs | CreateTranchedMergedArgs>,
   stream: Pick<Stream, "id" | "startTime">,
 ) {
   let streamed = 0n;

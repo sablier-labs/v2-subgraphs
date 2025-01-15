@@ -1,5 +1,5 @@
 import type { Address, Contract, Event } from "../types";
-import { chains, StreamCategory, StreamVersion } from "../constants";
+import { chains, ContractCategory, StreamVersion } from "../constants";
 
 export async function getContract(
   event: Event,
@@ -20,7 +20,7 @@ export function createContract(
   address: Address,
   alias: string,
   version: StreamVersion,
-  category: StreamCategory,
+  category: ContractCategory,
 ) {
   const entity: Contract = {
     id: generateContractId(event, address),
@@ -54,7 +54,7 @@ export function generateContractIdFromEvent(event: Event) {
 }
 
 export function _initialize(event: Event): Contract[] {
-  const versions = [StreamVersion.V20, StreamVersion.V21, StreamVersion.V22];
+  const versions = [StreamVersion.V20, StreamVersion.V21, StreamVersion.V22, StreamVersion.V23];
 
   return chains
     .map((chain) => {
@@ -66,7 +66,7 @@ export function _initialize(event: Event): Contract[] {
               linear.address,
               linear.alias,
               version,
-              StreamCategory.LockupLinear,
+              ContractCategory.LockupLinear,
             ),
           );
 
@@ -76,7 +76,7 @@ export function _initialize(event: Event): Contract[] {
               dynamic.address,
               dynamic.alias,
               version,
-              StreamCategory.LockupDynamic,
+              ContractCategory.LockupDynamic,
             ),
           );
 
@@ -86,11 +86,21 @@ export function _initialize(event: Event): Contract[] {
               tranched.address,
               tranched.alias,
               version,
-              StreamCategory.LockupTranched,
+              ContractCategory.LockupTranched,
             ),
           );
 
-          return [LL, LD, LT].flat();
+          const LK = chain[version].merged.map((merged) =>
+            createContract(
+              event,
+              merged.address,
+              merged.alias,
+              version,
+              ContractCategory.LockupMerged,
+            ),
+          );
+
+          return [LL, LD, LT, LK].flat();
         })
         .flat();
     })
