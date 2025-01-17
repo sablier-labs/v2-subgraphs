@@ -31,12 +31,16 @@ export type CreateLinearArgs =
   | EventCreateLinearArgs_V22;
 export type CreateTranchedArgs_V22 = EventCreateTranchedArgs_V22;
 export type CreateTranchedArgs_V23 = EventCreateTranchedArgs_V23;
-export type CreateTranchedArgs = EventCreateTranchedArgs_V22 | EventCreateTranchedArgs_V23;
+export type CreateTranchedArgs =
+  | EventCreateTranchedArgs_V22
+  | EventCreateTranchedArgs_V23;
 export type CreateInstantArgs_V23 = EventCreateInstantArgs_V23;
 export type ClaimArgs = EventClaimArgs_V21_V22;
 export type InstantClaimArgs = EventInstantClaimArgs_V23;
 export type ClawbackArgs = EventClawbackArgs_V21_V22;
-export type TransferAdminArgs = EventTransferAdminArgs_V21_V22 | EventTransferAdminArgs_V23;
+export type TransferAdminArgs =
+  | EventTransferAdminArgs_V21_V22
+  | EventTransferAdminArgs_V23;
 
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */
@@ -83,11 +87,10 @@ export type CreateTranchedRegister_V23<E = CreateTranchedArgs_V23> =
 
 export type CreateInstantLoader_V23 = Loader<CreateInstantArgs_V23>;
 export type CreateInstantHandler_V23<
-    L extends (_1: Loader<E>) => Promise<object>,
-    E = CreateInstantArgs_V23,
-  > = Handler<E, Awaited<ReturnType<L>>>;
-  export type CreateInstantRegister_V23<E = CreateInstantArgs_V23> =
-    Register<E>;
+  L extends (_1: Loader<E>) => Promise<object>,
+  E = CreateInstantArgs_V23,
+> = Handler<E, Awaited<ReturnType<L>>>;
+export type CreateInstantRegister_V23<E = CreateInstantArgs_V23> = Register<E>;
 
 /** ------------------------------------------------------------- */
 

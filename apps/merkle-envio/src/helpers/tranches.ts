@@ -1,9 +1,4 @@
-import type {
-  Event,
-  Tranche,
-  CreateTranchedArgs,
-  Campaign,
-} from "../types";
+import type { Event, Tranche, CreateTranchedArgs, Campaign } from "../types";
 
 class TrancheInput {
   percentage: bigint;

@@ -1,6 +1,5 @@
 import { erc20Abi, erc20Abi_bytes32 } from "viem";
 import { Address } from "../../types";
-import type { getClient } from "./client";
 
 export function getERC20Contract(address: Address) {
   return {

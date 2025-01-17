@@ -34,6 +34,8 @@ export function createAction(event: Event, watcher_: Watcher) {
     addressB: undefined,
     amountA: undefined,
     amountB: undefined,
+    /** --------------- */
+    fee: event.transaction.value,
   } satisfies Entity;
 
   const watcher: Watcher = {

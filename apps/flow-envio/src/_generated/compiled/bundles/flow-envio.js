@@ -1,14 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.chains = void 0;
-var experimental = require("../addresses/experimental");
 var arbitrum = require("../addresses/arbitrum");
 var avalanche = require("../addresses/avalanche");
 var base = require("../addresses/base");
 var baseSepolia = require("../addresses/base-sepolia");
 var blast = require("../addresses/blast");
 var bsc = require("../addresses/bsc");
-var chiliz = require("../addresses/chiliz");
+var experimental = require("../addresses/experimental");
 var gnosis = require("../addresses/gnosis");
 var linea = require("../addresses/linea");
 var mainnet = require("../addresses/mainnet");
@@ -17,6 +16,7 @@ var morph = require("../addresses/morph");
 var optimism = require("../addresses/optimism");
 var polygon = require("../addresses/polygon");
 var scroll = require("../addresses/scroll");
+var sepolia = require("../addresses/sepolia");
 var superseed = require("../addresses/superseed");
 var tangle = require("../addresses/tangle");
 var zksync = require("../addresses/zksync");
@@ -48,7 +48,6 @@ var chains = function () {
         [baseSepolia, definitions_1.default.baseSepolia],
         [blast, definitions_1.default.blast],
         [bsc, definitions_1.default.bsc],
-        [chiliz, definitions_1.default.chiliz],
         [gnosis, definitions_1.default.gnosis],
         [linea, definitions_1.default.linea],
         [mainnet, definitions_1.default.mainnet],
@@ -56,20 +55,26 @@ var chains = function () {
         [morph, definitions_1.default.morph],
         [optimism, definitions_1.default.optimism],
         [polygon, definitions_1.default.polygon],
+        [true ? experimental : sepolia, definitions_1.default.sepolia],
         [scroll, definitions_1.default.scroll],
         [superseed, definitions_1.default.superseed],
         [tangle, definitions_1.default.tangle],
         [zksync, definitions_1.default.zksync],
-        [experimental, definitions_1.default.sepolia],
     ];
     /** Merging the arrays with a spread operator will break mustache's template engine */
-    return list.map(function (_a) {
+    return list
+        .map(function (_a) {
         var item = _a[0], definition = _a[1];
         var V10 = {
             flow: filter(item.flow, "V10"),
             available: false,
         };
         V10.available = available(V10);
+        var V11 = {
+            flow: filter(item.flow, "V11"),
+            available: false,
+        };
+        V11.available = available(V11);
         return {
             definition: definition,
             id: item.chainId,
@@ -78,7 +83,9 @@ var chains = function () {
             rpcsync: "rpcsync" in item ? item.rpcsync : undefined,
             start_block: item.startBlock_merkle,
             V10: V10,
+            V11: V11,
         };
-    }).filter(function (item) { return item.definition; });
+    })
+        .filter(function (item) { return item.definition; });
 };
 exports.chains = chains;

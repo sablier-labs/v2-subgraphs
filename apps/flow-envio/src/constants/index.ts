@@ -12,6 +12,7 @@ export const StreamCategory = {
 
 export const StreamVersion = {
   V10: "V10",
+  V11: "V11",
 } as const;
 
 export const ActionCategory = {
@@ -43,7 +44,7 @@ export function configuration(chainId: number | string | bigint) {
 
   return {
     ...configuration,
-    contracts: [...configuration.V10.flow],
+    contracts: [...configuration.V10.flow, ...configuration.V11.flow],
   };
 }
 

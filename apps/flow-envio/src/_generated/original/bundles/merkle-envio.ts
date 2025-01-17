@@ -4,7 +4,7 @@ import * as base from "../addresses/base";
 import * as baseSepolia from "../addresses/base-sepolia";
 import * as blast from "../addresses/blast";
 import * as bsc from "../addresses/bsc";
-import * as chiliz from "../addresses/chiliz";
+import * as experimental from "../addresses/experimental";
 import * as gnosis from "../addresses/gnosis";
 import * as linea from "../addresses/linea";
 import * as mainnet from "../addresses/mainnet";
@@ -48,7 +48,6 @@ export const chains = () => {
     [baseSepolia, definitions.baseSepolia],
     [blast, definitions.blast],
     [bsc, definitions.bsc],
-    [chiliz, definitions.chiliz],
     [gnosis, definitions.gnosis],
     [linea, definitions.linea],
     [mainnet, definitions.mainnet],
@@ -57,7 +56,7 @@ export const chains = () => {
     [optimism, definitions.optimism],
     [polygon, definitions.polygon],
     [scroll, definitions.scroll],
-    [sepolia, definitions.sepolia],
+    [true ? experimental : sepolia, definitions.sepolia],
     [superseed, definitions.superseed],
     [tangle, definitions.tangle],
     [zksync, definitions.zksync],
@@ -80,6 +79,13 @@ export const chains = () => {
 
     V22.available = available(V22);
 
+    const V23 = {
+      factory: filter(item.factory, "V23"),
+      available: false,
+    };
+
+    V23.available = available(V23);
+
     return {
       definition,
       id: item.chainId,
@@ -88,6 +94,7 @@ export const chains = () => {
       hypersync: "hypersync" in item ? item.hypersync : undefined,
       V21,
       V22,
+      V23,
     };
   });
 };

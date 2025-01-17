@@ -1,5 +1,16 @@
-import { MerkleInstant, MerkleLockupV21, MerkleLockupV22, MerkleLockupV23 } from "../../generated";
-import type { Action, ClaimHandler, ClaimLoader, InstantClaimHandler, InstantClaimLoader } from "../types";
+import {
+  MerkleInstant,
+  MerkleLockupV21,
+  MerkleLockupV22,
+  MerkleLockupV23,
+} from "../../generated";
+import type {
+  Action,
+  ClaimHandler,
+  ClaimLoader,
+  InstantClaimHandler,
+  InstantClaimLoader,
+} from "../types";
 
 import {
   createAction,
@@ -107,7 +118,9 @@ async function handler(input: ClaimHandler<typeof loader>) {
   context.Watcher.set(watcher);
 }
 
-async function instantHandler(input: InstantClaimHandler<typeof instantLoader>) {
+async function instantHandler(
+  input: InstantClaimHandler<typeof instantLoader>,
+) {
   const { context, event, loaderReturn: loaded } = input;
 
   /** ------- Fetch -------- */

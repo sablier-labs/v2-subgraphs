@@ -18,6 +18,7 @@ export function createAction(event: ethereum.Event): Action {
   entity.hash = event.transaction.hash;
   entity.timestamp = event.block.timestamp;
   entity.subgraphId = watcher.actionIndex;
+  entity.fee = event.transaction.value;
   entity.chainId = getChainId();
 
   /** --------------- */

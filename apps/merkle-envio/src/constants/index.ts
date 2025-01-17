@@ -40,7 +40,11 @@ export function configuration(chainId: number | string | bigint) {
 
   return {
     ...configuration,
-    contracts: [...configuration.V21.factory, ...configuration.V22.factory, ...configuration.V23.factory],
+    contracts: [
+      ...configuration.V21.factory,
+      ...configuration.V22.factory,
+      ...configuration.V23.factory,
+    ],
   };
 }
 
@@ -55,12 +59,17 @@ export function isWhitelistedShape(
     throw new Error("Missing chain configuration");
   }
 
-  const contracts = [configuration?.V20, configuration?.V21, configuration?.V22, configuration?.V23]
+  const contracts = [
+    configuration?.V20,
+    configuration?.V21,
+    configuration?.V22,
+    configuration?.V23,
+  ]
     .map((item) => [
       ...(item?.linear || []),
       ...(item?.dynamic || []),
       ...(item?.tranched || []),
-      ...(item?.merged || [])
+      ...(item?.merged || []),
     ])
     .flat();
 

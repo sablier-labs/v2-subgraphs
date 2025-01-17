@@ -8,6 +8,7 @@ field_selection:
     - "to"
     - "hash"
     - "transactionIndex"
+    - "value"
 contracts:
   - name: FlowV10
     handler: src/mappings/index.ts
@@ -67,14 +68,6 @@ networks:
       - name: FlowV10
         address:
           - 0xfce01f79247cf450062545e7155d7bd568551d0e
-  - id: 88888
-    start_block: 19125000
-    hypersync_config:
-      url: https://chiliz.hypersync.xyz
-    contracts:
-      - name: FlowV10
-        address:
-          - 0x9efc8663cab0e2d97ad17c9fbfc8392445517e94
   - id: 100
     start_block: 31491790
     contracts:
@@ -121,6 +114,12 @@ networks:
       - name: FlowV10
         address:
           - 0xcf2d812d5aad4e6fec3b05850ff056b21159d496
+  - id: 11155111
+    start_block: 4904890
+    contracts:
+      - name: FlowV10
+        address:
+          - 0x83dd52fca44e069020b58155b761a590f12b59d3
   - id: 534352
     start_block: 1675330
     contracts:
@@ -149,9 +148,3 @@ networks:
       - name: FlowV10
         address:
           - 0x015899a075b7c181e357cd0ed000683dbb4f1fce
-  - id: 11155111
-    start_block: 4904890
-    contracts:
-      - name: FlowV10
-        address:
-          - 0x83dd52fca44e069020b58155b761a590f12b59d3
