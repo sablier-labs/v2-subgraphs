@@ -1,10 +1,10 @@
-import * as experimental from "../addresses/experimental";
 import * as arbitrum from "../addresses/arbitrum";
 import * as avalanche from "../addresses/avalanche";
 import * as base from "../addresses/base";
 import * as baseSepolia from "../addresses/base-sepolia";
 import * as blast from "../addresses/blast";
 import * as bsc from "../addresses/bsc";
+import * as experimental from "../addresses/experimental";
 import * as gnosis from "../addresses/gnosis";
 import * as linea from "../addresses/linea";
 import * as mainnet from "../addresses/mainnet";
@@ -64,22 +64,32 @@ export const chains = () => {
 
   /** Merging the arrays with a spread operator will break mustache's template engine */
 
-  return list.map(([item, definition]) => {
-    const V10 = {
-      flow: filter(item.flow, "V10"),
-      available: false,
-    };
+  return list
+    .map(([item, definition]) => {
+      const V10 = {
+        flow: filter(item.flow, "V10"),
+        available: false,
+      };
 
-    V10.available = available(V10);
+      V10.available = available(V10);
 
-    return {
-      definition,
-      id: item.chainId,
-      name: item.chain,
-      hypersync: "hypersync" in item ? item.hypersync : undefined,
-      rpcsync: "rpcsync" in item ? item.rpcsync : undefined,
-      start_block: item.startBlock_merkle,
-      V10,
-    };
-  }).filter((item) => item.definition);
+      const V11 = {
+        flow: filter(item.flow, "V11"),
+        available: false,
+      };
+
+      V11.available = available(V11);
+
+      return {
+        definition,
+        id: item.chainId,
+        name: item.chain,
+        hypersync: "hypersync" in item ? item.hypersync : undefined,
+        rpcsync: "rpcsync" in item ? item.rpcsync : undefined,
+        start_block: item.startBlock_merkle,
+        V10,
+        V11,
+      };
+    })
+    .filter((item) => item.definition);
 };
