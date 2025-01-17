@@ -48,6 +48,9 @@ type Action @entity {
   amountA: BigInt
   "amount, differs based on action type e.g. for Withdraw it resolves to the refundedAmount"
   amountB: BigInt
+
+  "amount, records the fee paid for certain actions, in base asset (e.g. withdraw is payable >V10)"
+  fee: BigInt
 }
 
 type Asset @entity(immutable: true) {
