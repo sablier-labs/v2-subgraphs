@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.chains = void 0;
-// import * as arbitrum from "../addresses/arbitrum";
-// import * as avalanche from "../addresses/avalanche";
-// import * as base from "../addresses/base";
-// import * as baseSepolia from "../addresses/base-sepolia";
-// import * as blast from "../addresses/blast";
-// import * as bsc from "../addresses/bsc";
-// import * as gnosis from "../addresses/gnosis";
-// import * as linea from "../addresses/linea";
-// import * as mainnet from "../addresses/mainnet";
-// import * as mode from "../addresses/mode";
-// import * as morph from "../addresses/morph";
-// import * as optimism from "../addresses/optimism";
-// import * as polygon from "../addresses/polygon";
-// import * as scroll from "../addresses/scroll";
-// import * as sepolia from "../addresses/sepolia";
-// import * as superseed from "../addresses/superseed";
-// import * as tangle from "../addresses/tangle";
-// import * as zksync from "../addresses/zksync";
+var arbitrum = require("../addresses/arbitrum");
+var avalanche = require("../addresses/avalanche");
+var base = require("../addresses/base");
+var baseSepolia = require("../addresses/base-sepolia");
+var blast = require("../addresses/blast");
+var bsc = require("../addresses/bsc");
 var experimental = require("../addresses/experimental");
+var gnosis = require("../addresses/gnosis");
+var linea = require("../addresses/linea");
+var mainnet = require("../addresses/mainnet");
+var mode = require("../addresses/mode");
+var morph = require("../addresses/morph");
+var optimism = require("../addresses/optimism");
+var polygon = require("../addresses/polygon");
+var scroll = require("../addresses/scroll");
+var sepolia = require("../addresses/sepolia");
+var superseed = require("../addresses/superseed");
+var tangle = require("../addresses/tangle");
+var zksync = require("../addresses/zksync");
 var definitions_1 = require("./definitions");
 var available = function (v) {
     return v.factory.length > 0;
@@ -42,25 +42,24 @@ var filter = function (list, version) {
  */
 var chains = function () {
     var list = [
-        // [arbitrum, definitions.arbitrum],
-        // [avalanche, definitions.avalanche],
-        // [base, definitions.base],
-        // [baseSepolia, definitions.baseSepolia],
-        // [blast, definitions.blast],
-        // [bsc, definitions.bsc],
-        // [gnosis, definitions.gnosis],
-        // [linea, definitions.linea],
-        // [mainnet, definitions.mainnet],
-        // [mode, definitions.mode],
-        // [morph, definitions.morph],
-        // [optimism, definitions.optimism],
-        // [polygon, definitions.polygon],
-        // [scroll, definitions.scroll],
-        // [sepolia, definitions.sepolia],
-        // [superseed, definitions.superseed],
-        // [tangle, definitions.tangle],
-        // [zksync, definitions.zksync],
-        [experimental, definitions_1.default.sepolia]
+        [arbitrum, definitions_1.default.arbitrum],
+        [avalanche, definitions_1.default.avalanche],
+        [base, definitions_1.default.base],
+        [baseSepolia, definitions_1.default.baseSepolia],
+        [blast, definitions_1.default.blast],
+        [bsc, definitions_1.default.bsc],
+        [gnosis, definitions_1.default.gnosis],
+        [linea, definitions_1.default.linea],
+        [mainnet, definitions_1.default.mainnet],
+        [mode, definitions_1.default.mode],
+        [morph, definitions_1.default.morph],
+        [optimism, definitions_1.default.optimism],
+        [polygon, definitions_1.default.polygon],
+        [scroll, definitions_1.default.scroll],
+        [true ? experimental : sepolia, definitions_1.default.sepolia],
+        [superseed, definitions_1.default.superseed],
+        [tangle, definitions_1.default.tangle],
+        [zksync, definitions_1.default.zksync],
     ];
     /** Merging the arrays with a spread operator will break mustache's template engine */
     return list.map(function (_a) {
@@ -88,7 +87,7 @@ var chains = function () {
             hypersync: "hypersync" in item ? item.hypersync : undefined,
             V21: V21,
             V22: V22,
-            V23: V23
+            V23: V23,
         };
     });
 };

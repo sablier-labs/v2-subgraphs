@@ -502,7 +502,6 @@ async function handlerInstant_V23(
 ) {
   const { context, event } = input;
 
-
   /** ------- Initialize -------- */
 
   let { watcher, factory, factories } = await initialize(
@@ -521,14 +520,11 @@ async function handlerInstant_V23(
 
   /** ------- Process -------- */
 
-  let { campaign, ...post_create } = await createInstantCampaign_V23(
-    event,
-    {
-      asset,
-      factory,
-      watcher,
-    },
-  );
+  let { campaign, ...post_create } = await createInstantCampaign_V23(event, {
+    asset,
+    factory,
+    watcher,
+  });
 
   watcher = post_create.watcher;
 
@@ -553,7 +549,6 @@ async function handlerInstant_V23(
       await context.Factory.set(factories[i]);
     }
   }
-
 
   await context.Action.set(action);
   await context.Campaign.set(campaign);
@@ -656,7 +651,7 @@ MerkleLockupFactoryV23.CreateMerkleLT.contractRegister(
 MerkleLockupFactoryV23.CreateMerkleInstant.contractRegister(
   (input: CreateInstantRegister_V23) => {
     const { context, event } = input;
-      context.addMerkleInstant(event.params.merkleInstant);
+    context.addMerkleInstant(event.params.merkleInstant);
   },
   {
     preRegisterDynamicContracts: true,

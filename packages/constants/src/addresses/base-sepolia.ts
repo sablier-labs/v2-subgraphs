@@ -27,6 +27,8 @@ export let tranched: string[][] = [
   ["0xb8c724df3ec8f2bf8fa808df2cb5dbab22f3e68c", "LT3", "V22"],
 ];
 
+export let merged: string[][] = [];
+
 export let factory: string[][] = [
   ["0x899a05feb160fe912f621733a1d0b39c1446b3eb", "MSF3", "V22"],
 ];

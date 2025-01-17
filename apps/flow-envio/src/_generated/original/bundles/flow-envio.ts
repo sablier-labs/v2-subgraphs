@@ -55,11 +55,11 @@ export const chains = () => {
     [morph, definitions.morph],
     [optimism, definitions.optimism],
     [polygon, definitions.polygon],
+    [true ? experimental : sepolia, definitions.sepolia],
     [scroll, definitions.scroll],
     [superseed, definitions.superseed],
     [tangle, definitions.tangle],
     [zksync, definitions.zksync],
-    [experimental, definitions.sepolia],
   ] as const;
 
   /** Merging the arrays with a spread operator will break mustache's template engine */

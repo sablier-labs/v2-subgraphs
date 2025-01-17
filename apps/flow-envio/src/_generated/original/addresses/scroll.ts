@@ -30,6 +30,7 @@ export let flow: string[][] = [
 export let tranched: string[][] = [
   ["0xb0f78ddc01d829d8b567821eb193de8082b57d9d", "LT3", "V22"],
 ];
+export let merged: string[][] = [];
 
 export let factory: string[][] = [
   ["0xb3ade5463000e6c0d376e7d7570f372ebf98bdaf", "MSF2", "V21"],
