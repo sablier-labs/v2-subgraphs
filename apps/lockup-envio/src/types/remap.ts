@@ -30,7 +30,7 @@ import type {
   LockupV20_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V20,
   LockupV21_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V21_V22,
   LockupV23_WithdrawFromLockupStream_eventArgs as EventWithdrawArgs_V23,
-} from "../src/Types.gen";
+} from "../../generated/src/Types.gen";
 
 import type { Loader, Handler } from "./general";
 
@@ -41,24 +41,30 @@ import type { Loader, Handler } from "./general";
 export type CreateLinearArgs =
   | EventCreateLinearArgs_V20
   | EventCreateLinearArgs_V21
-  | EventCreateLinearArgs_V22
+  | EventCreateLinearArgs_V22;
 export type CreateDynamicArgs =
   | EventCreateDynamicArgs_V20
   | EventCreateDynamicArgs_V21
-  | EventCreateDynamicArgs_V22
+  | EventCreateDynamicArgs_V22;
 export type CreateTranchedArgs = EventCreateTranchedArgs_V22;
 
 export type CreateLinearMergedArgs = EventCreateLinearArgs_V23;
 export type CreateDynamicMergedArgs = EventCreateDynamicArgs_V23;
 export type CreateTranchedMergedArgs = EventCreateTranchedArgs_V23;
 
-export type CancelArgs = EventCancelArgs_V20 | EventCancelArgs_V21_V22 | EventCancelArgs_V23;
+export type CancelArgs =
+  | EventCancelArgs_V20
+  | EventCancelArgs_V21_V22
+  | EventCancelArgs_V23;
 export type ApprovalArgs = EventApprovalArgs_V20_V21_V22;
 export type ApprovalForAllArgs = EventApprovalForAllArgs_V20_V21_V22;
 export type RenounceArgs = EventRenounceArgs_V20_V21_V22;
 export type TransferArgs = EventTransferArgs_V20_V21_V22;
 export type TransferAdminArgs = EventTransferAdminArgs_V20_V21_V22;
-export type WithdrawArgs = EventWithdrawArgs_V20 | EventWithdrawArgs_V21_V22 | EventWithdrawArgs_V23;
+export type WithdrawArgs =
+  | EventWithdrawArgs_V20
+  | EventWithdrawArgs_V21_V22
+  | EventWithdrawArgs_V23;
 
 /** --------------------------------------------------------------------------------------------------------- */
 /** --------------------------------------------------------------------------------------------------------- */

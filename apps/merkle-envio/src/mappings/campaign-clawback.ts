@@ -1,4 +1,9 @@
-import { MerkleInstant, MerkleLockupV21, MerkleLockupV22, MerkleLockupV23 } from "../../generated";
+import {
+  MerkleInstant,
+  MerkleLockupV21,
+  MerkleLockupV22,
+  MerkleLockupV23,
+} from "../../generated";
 import type { Action, ClawbackHandler, ClawbackLoader } from "../types";
 
 import {
